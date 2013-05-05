@@ -16,6 +16,14 @@
 		FD36C146172F108C00519C51 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD36C145172F108C00519C51 /* GLKit.framework */; };
 		FD36C148172F109600519C51 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD36C147172F109600519C51 /* OpenGLES.framework */; };
 		FD36C14A172F10B500519C51 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD36C149172F10B500519C51 /* CoreData.framework */; };
+		FD36C14D172F113200519C51 /* WorldViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD36C14C172F113200519C51 /* WorldViewController.m */; };
+		FD978AC817353E1900751253 /* Background.m in Sources */ = {isa = PBXBuildFile; fileRef = FD978AC717353E1900751253 /* Background.m */; };
+		FD978ACB17353FD500751253 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = FD978ACA17353FD500751253 /* background.png */; };
+		FDB286681730E9E6001573A2 /* tile.png in Resources */ = {isa = PBXBuildFile; fileRef = FDB286671730E9E6001573A2 /* tile.png */; };
+		FDB2866C17310F19001573A2 /* Sprite.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB2866B17310F19001573A2 /* Sprite.m */; };
+		FDB2866F1731632E001573A2 /* TextureAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB2866E1731632E001573A2 /* TextureAtlas.m */; };
+		FDB41D2117361DE40069CD81 /* Node.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB41D2017361DE40069CD81 /* Node.m */; };
+		FDB41D2517361F420069CD81 /* SceneGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB41D2417361F420069CD81 /* SceneGraph.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +40,20 @@
 		FD36C145172F108C00519C51 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		FD36C147172F109600519C51 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		FD36C149172F10B500519C51 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		FD36C14B172F113200519C51 /* WorldViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldViewController.h; sourceTree = "<group>"; };
+		FD36C14C172F113200519C51 /* WorldViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorldViewController.m; sourceTree = "<group>"; };
+		FD978AC617353E1900751253 /* Background.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Background.h; sourceTree = "<group>"; };
+		FD978AC717353E1900751253 /* Background.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Background.m; sourceTree = "<group>"; };
+		FD978ACA17353FD500751253 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
+		FDB286671730E9E6001573A2 /* tile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tile.png; sourceTree = "<group>"; };
+		FDB2866A17310F19001573A2 /* Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sprite.h; sourceTree = "<group>"; };
+		FDB2866B17310F19001573A2 /* Sprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sprite.m; sourceTree = "<group>"; };
+		FDB2866D1731632E001573A2 /* TextureAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureAtlas.h; sourceTree = "<group>"; };
+		FDB2866E1731632E001573A2 /* TextureAtlas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextureAtlas.m; sourceTree = "<group>"; };
+		FDB41D1F17361DE40069CD81 /* Node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Node.h; path = "App Stream/Node.h"; sourceTree = "<group>"; };
+		FDB41D2017361DE40069CD81 /* Node.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Node.m; path = "App Stream/Node.m"; sourceTree = "<group>"; };
+		FDB41D2317361F420069CD81 /* SceneGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SceneGraph.h; path = "App Stream/SceneGraph.h"; sourceTree = "<group>"; };
+		FDB41D2417361F420069CD81 /* SceneGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SceneGraph.m; path = "App Stream/SceneGraph.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +107,8 @@
 		FD36C130172F0F9F00519C51 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FD978ACA17353FD500751253 /* background.png */,
+				FDB286671730E9E6001573A2 /* tile.png */,
 				FD36C132172F0F9F00519C51 /* App Stream-Info.plist */,
 				FD36C133172F0F9F00519C51 /* InfoPlist.strings */,
 			);
@@ -102,6 +126,16 @@
 		FD36C142172F0FB100519C51 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				FDB2866A17310F19001573A2 /* Sprite.h */,
+				FDB2866B17310F19001573A2 /* Sprite.m */,
+				FDB2866D1731632E001573A2 /* TextureAtlas.h */,
+				FDB2866E1731632E001573A2 /* TextureAtlas.m */,
+				FD978AC617353E1900751253 /* Background.h */,
+				FD978AC717353E1900751253 /* Background.m */,
+				FDB41D1F17361DE40069CD81 /* Node.h */,
+				FDB41D2017361DE40069CD81 /* Node.m */,
+				FDB41D2317361F420069CD81 /* SceneGraph.h */,
+				FDB41D2417361F420069CD81 /* SceneGraph.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -123,6 +157,8 @@
 			children = (
 				FD36C139172F0FA000519C51 /* AppDelegate.h */,
 				FD36C13A172F0FA000519C51 /* AppDelegate.m */,
+				FD36C14B172F113200519C51 /* WorldViewController.h */,
+				FD36C14C172F113200519C51 /* WorldViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -178,6 +214,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD36C135172F0F9F00519C51 /* InfoPlist.strings in Resources */,
+				FDB286681730E9E6001573A2 /* tile.png in Resources */,
+				FD978ACB17353FD500751253 /* background.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -190,6 +228,12 @@
 			files = (
 				FD36C137172F0F9F00519C51 /* main.m in Sources */,
 				FD36C13B172F0FA000519C51 /* AppDelegate.m in Sources */,
+				FD36C14D172F113200519C51 /* WorldViewController.m in Sources */,
+				FDB2866C17310F19001573A2 /* Sprite.m in Sources */,
+				FDB2866F1731632E001573A2 /* TextureAtlas.m in Sources */,
+				FD978AC817353E1900751253 /* Background.m in Sources */,
+				FDB41D2117361DE40069CD81 /* Node.m in Sources */,
+				FDB41D2517361F420069CD81 /* SceneGraph.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,6 +341,7 @@
 				FD36C140172F0FA000519C51 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
