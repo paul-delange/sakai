@@ -9,13 +9,19 @@
 #import <GLKit/GLKit.h>
 
 #import "Node.h"
+#import "Background.h"
 
 @interface SceneGraph : NSObject <GLKViewControllerDelegate>
 
 @property (nonatomic, assign) CGPoint offset;
-@property (nonatomic, assign) CGFloat scale;
+@property (nonatomic, assign) CGFloat zoom;
 
 - (void) addNode: (Node*) node;
+
+- (void) setBackground: (Background*) background;
+
+- (void) setCenter: (CGPoint) center animated: (BOOL) animated;
+
 - (NSSet*) nodesIntersectingRect: (CGRect) rect;
 
 @end

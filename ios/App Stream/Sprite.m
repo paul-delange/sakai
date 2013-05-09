@@ -31,6 +31,7 @@
 - (instancetype) initWithFilename: (NSString*) filename andTextureAtlas: (TextureAtlas*) atlas
 {
     NSParameterAssert(filename);
+    NSParameterAssert([EAGLContext currentContext]);
     
     self = [super init];
     if( self ) {

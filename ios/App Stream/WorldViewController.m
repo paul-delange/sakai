@@ -70,7 +70,7 @@
     view.delegate = self;
     
     Background* background = [Background new];
-    [_graph addNode: background];
+    [_graph setBackground: background];
     
     GLint max;
     glGetIntegerv(GL_MAX_TEXTURE_SIZE, &max);
@@ -84,6 +84,10 @@
     UIPinchGestureRecognizer* pinch = [[UIPinchGestureRecognizer alloc] initWithTarget: self
                                                                                 action: @selector(pinchPushed:)];
     [view addGestureRecognizer: pinch];
+    
+    UILongPressGestureRecognizer* lon = [[UILongPressGestureRecognizer alloc] initWithTarget: self
+                                                                                      action: @selector(longPushed:)];
+    [view addGestureRecognizer: lon];
 }
 
 - (void)viewDidUnload
@@ -109,13 +113,22 @@
 }*/
 
 - (IBAction) panPushed:(UIPanGestureRecognizer*)sender {
-    
     CGPoint translation = [sender translationInView: sender.view];
-    _graph.offset = translation;
+    CGPoint offset = _graph.offset;
+    offset.x += translation.x;
+    offset.y += translation.y;
+    
+    _graph.offset = offset;
+    [sender setTranslation: CGPointZero inView: sender.view];
 }
 
 - (IBAction) pinchPushed: (UIPinchGestureRecognizer*)sender {
-    _graph.scale = sender.scale;
+    _graph.zoom = sender.scale;
+}
+
+- (IBAction) longPushed: (UILongPressGestureRecognizer*)sender {
+    CGPoint loc = [sender locationInView: sender.view];
+    [_graph setCenter: loc animated: YES];
 }
 
 #pragma mark - GLKViewDelegate

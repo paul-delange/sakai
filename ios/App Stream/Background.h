@@ -11,4 +11,6 @@
 
 @interface Background : Node
 
+@property (readonly, nonatomic) GLKVector2 size;
+
 @end

@@ -11,13 +11,6 @@
 #import <GLKit/GLKit.h>
 
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
-    //x, y, z, normX, normY, normZ, texU, texV
-const CGFloat gCubeVertexData[] = {
-    -1024, -1024, -0.5,   0.0, 0.0, -1.0,   0.0, 0.0,
-    1024, -1024, -0.5,    0.0, 0.0, -1.0,   1.0, 0.0,
-    -1024, 1024, -0.5,    0.0, 0.0, -1.0,   0.0, 1.0,
-    1024, 1024, -0.5,     0.0, 0.0, -1.0,   1.0, 1.0
-};
 
 @interface Background () {
     GLKTextureInfo* _texture;
@@ -35,7 +28,21 @@ const CGFloat gCubeVertexData[] = {
 {
     self = [super init];
     if( self ) {
-
+        NSParameterAssert([EAGLContext currentContext]);
+        
+        if(!_texture) {
+            NSError* error;
+            NSDictionary* params = [NSDictionary dictionaryWithObject: [NSNumber numberWithBool: YES]
+                                                               forKey: GLKTextureLoaderOriginBottomLeft];
+            NSString* path = [[NSBundle mainBundle] pathForResource:@"background.png"
+                                                             ofType: nil];
+            NSParameterAssert([[NSFileManager defaultManager] fileExistsAtPath: path]);
+            _texture = [GLKTextureLoader textureWithContentsOfFile: path
+                                                           options: params
+                                                             error: &error];
+            NSAssert(!error, @"Error loading background texture: %@", error);
+            NSParameterAssert(_texture.width == _texture.height);   //Should be square for good aspect ratio
+        }
     }
     return self;
 }
@@ -47,25 +54,26 @@ const CGFloat gCubeVertexData[] = {
     _effect = nil;
 }
 
+- (GLKVector2) size {
+    return GLKVector2Make(_texture.width, _texture.height);
+}
+
+#pragma mark - Renderable
 - (void) render
-{
-    NSParameterAssert([EAGLContext currentContext]);
-    
-    if(!_texture) {
-        NSError* error;
-        NSDictionary* params = [NSDictionary dictionaryWithObject: [NSNumber numberWithBool: YES]
-                                                           forKey: GLKTextureLoaderOriginBottomLeft];
-        NSString* path = [[NSBundle mainBundle] pathForResource:@"background.png"
-                                                         ofType: nil];
-        NSParameterAssert([[NSFileManager defaultManager] fileExistsAtPath: path]);
-        _texture = [GLKTextureLoader textureWithContentsOfFile: path
-                                                       options: params
-                                                         error: &error];
-        NSAssert(!error, @"Error loading background texture: %@", error);
-    }
-    
+{    
     if( !_effect ) {
         NSParameterAssert(_texture);
+        
+        CGFloat halfWidth = _texture.width / 2.f;
+        CGFloat halfHeight = _texture.height / 2.f;
+        
+        //x, y, z, normX, normY, normZ, texU, texV
+        const CGFloat gCubeVertexData[] = {
+            -halfWidth, -halfHeight, -0.5,   0.0, 0.0, -1.0,   0.0, 0.0,
+            halfWidth, -halfHeight, -0.5,    0.0, 0.0, -1.0,   1.0, 0.0,
+            -halfWidth, halfHeight, -0.5,    0.0, 0.0, -1.0,   0.0, 1.0,
+            halfWidth, halfHeight, -0.5,     0.0, 0.0, -1.0,   1.0, 1.0
+        };
         
         glGenVertexArraysOES(1, &_vertexArray);
         glBindVertexArrayOES(_vertexArray);
@@ -94,9 +102,11 @@ const CGFloat gCubeVertexData[] = {
 }
 
 - (CGRect) projectionInScreenRect: (CGRect) viewport {
+    CGFloat halfWidth = _texture.width / 2.f;
+    CGFloat halfHeight = _texture.height / 2.f;
     
-    GLKVector3 upperLeft = GLKVector3Make(-1024, 1024, -0.5);
-    GLKVector3 lowerRight = GLKVector3Make(1024, -1024, -0.5);
+    GLKVector3 upperLeft = GLKVector3Make(-halfWidth, halfHeight, -0.5);
+    GLKVector3 lowerRight = GLKVector3Make(halfWidth, -halfHeight, -0.5);
     
     GLKMatrix4 model = _effect.transform.modelviewMatrix;
     GLKMatrix4 proj = _effect.transform.projectionMatrix;
