@@ -17,6 +17,7 @@
 		FD36C148172F109600519C51 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD36C147172F109600519C51 /* OpenGLES.framework */; };
 		FD36C14A172F10B500519C51 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD36C149172F10B500519C51 /* CoreData.framework */; };
 		FD36C14D172F113200519C51 /* WorldViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD36C14C172F113200519C51 /* WorldViewController.m */; };
+		FD921B9C173B9F8100786877 /* Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = FD921B9B173B9F8100786877 /* Animation.m */; };
 		FD978AC817353E1900751253 /* Background.m in Sources */ = {isa = PBXBuildFile; fileRef = FD978AC717353E1900751253 /* Background.m */; };
 		FD978ACB17353FD500751253 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = FD978ACA17353FD500751253 /* background.png */; };
 		FDB286681730E9E6001573A2 /* tile.png in Resources */ = {isa = PBXBuildFile; fileRef = FDB286671730E9E6001573A2 /* tile.png */; };
@@ -42,6 +43,8 @@
 		FD36C149172F10B500519C51 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		FD36C14B172F113200519C51 /* WorldViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldViewController.h; sourceTree = "<group>"; };
 		FD36C14C172F113200519C51 /* WorldViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorldViewController.m; sourceTree = "<group>"; };
+		FD921B9A173B9F8100786877 /* Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Animation.h; sourceTree = "<group>"; };
+		FD921B9B173B9F8100786877 /* Animation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Animation.m; sourceTree = "<group>"; };
 		FD978AC617353E1900751253 /* Background.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Background.h; sourceTree = "<group>"; };
 		FD978AC717353E1900751253 /* Background.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Background.m; sourceTree = "<group>"; };
 		FD978ACA17353FD500751253 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
@@ -136,6 +139,8 @@
 				FDB41D2017361DE40069CD81 /* Node.m */,
 				FDB41D2317361F420069CD81 /* SceneGraph.h */,
 				FDB41D2417361F420069CD81 /* SceneGraph.m */,
+				FD921B9A173B9F8100786877 /* Animation.h */,
+				FD921B9B173B9F8100786877 /* Animation.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -234,6 +239,7 @@
 				FD978AC817353E1900751253 /* Background.m in Sources */,
 				FDB41D2117361DE40069CD81 /* Node.m in Sources */,
 				FDB41D2517361F420069CD81 /* SceneGraph.m in Sources */,
+				FD921B9C173B9F8100786877 /* Animation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

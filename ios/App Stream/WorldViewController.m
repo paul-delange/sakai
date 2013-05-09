@@ -127,8 +127,16 @@
 }
 
 - (IBAction) longPushed: (UILongPressGestureRecognizer*)sender {
-    CGPoint loc = [sender locationInView: sender.view];
-    [_graph setCenter: loc animated: YES];
+    switch (sender.state) {
+        case UIGestureRecognizerStateRecognized:
+        {
+            CGPoint loc = [sender locationInView: sender.view];
+            [_graph setCenter: loc animated: YES];
+            break;
+        }
+        default:
+            break;
+    }
 }
 
 #pragma mark - GLKViewDelegate

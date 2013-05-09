@@ -15,6 +15,7 @@
 - (GLKMatrix4) modelViewMatrix;
 - (void) setModelViewMatrix: (GLKMatrix4) modelViewMatrix;
 
+- (GLKMatrix4) projectionMatrix;
 - (void) setProjectionMatrix: (GLKMatrix4) projectionMatrix;
 
 - (CGRect) projectionInScreenRect: (CGRect) viewport;

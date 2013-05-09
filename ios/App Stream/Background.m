@@ -135,6 +135,10 @@
     _effect.transform.modelviewMatrix = modelViewMatrix;
 }
 
+- (GLKMatrix4) projectionMatrix {
+    return _effect.transform.projectionMatrix;
+}
+
 - (void) setProjectionMatrix: (GLKMatrix4) projectionMatrix
 {
     NSParameterAssert(_effect);

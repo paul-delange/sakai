@@ -12,10 +12,14 @@
     NSMutableSet* _nodes;
     CGRect _viewRect;
     Background* _background;
+    
+    dispatch_source_t _animationSource;
 }
 
 @property (nonatomic, assign) CGFloat minimumZoom;
 @property (nonatomic, assign) CGFloat maximumZoom;
+
+- (void) setOffset:(CGPoint)offset animated: (BOOL) animated;
 
 @end
 
@@ -56,6 +60,58 @@
 
 - (void) setOffset: (CGPoint)offset
 {
+    [self setOffset: offset animated: NO];
+}
+
+- (CGRect) visibleRect {
+    CGRect rect = _viewRect;
+    rect.origin.x -= _offset.x;
+    rect.origin.y -= _offset.y;
+    
+    rect.origin.x /= _scale;
+    rect.origin.y /= _scale;
+    
+    rect.size.width /= _scale;
+    rect.size.height /= _scale;
+    
+    return rect;
+}
+
+#pragma mark - Animations
+- (BOOL) isAnimating {
+    return _animationSource != nil;
+}
+
+- (void) cancelAnimation {
+    if( _animationSource ) {
+        dispatch_source_cancel(_animationSource);
+        _animationSource = nil;
+    }
+}
+   
+- (void) setCenter: (CGPoint) center animated: (BOOL) animated {
+    NSParameterAssert(_background);
+    
+    [self cancelAnimation];
+    
+    GLKMatrix4 projection = _background.projectionMatrix;
+    GLKMatrix4 modelView = _background.modelViewMatrix;
+    GLKVector3 windowCenter = GLKVector3Make(center.x, center.y, 0.0);
+    
+    int vp[4] = {0, 0, (int)CGRectGetWidth(_viewRect), (int)CGRectGetHeight(_viewRect)};
+    
+    bool success;
+        
+    GLKVector3 worldCenter = GLKMathUnproject(windowCenter,
+                                              modelView,
+                                              projection, 
+                                              vp, 
+                                              &success);
+    NSParameterAssert(success);
+    [self setOffset: CGPointMake(worldCenter.x, worldCenter.y) animated: animated];
+}
+
+- (void) setOffset: (CGPoint)offset animated: (BOOL) animated {
     GLKVector2 bgSize = _background.size;
     CGFloat maxZoom = 1./self.minimumZoom;
     
@@ -85,33 +141,47 @@
         return;
     }
     
-    if( !CGPointEqualToPoint(offset, _offset) ) {
-        _offset = offset;
-        [_nodes enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-            GLKMatrix4 existing = [obj modelViewMatrix];
-            existing.m30 = -_offset.x;
-            existing.m31 = _offset.y;
-            [obj setModelViewMatrix: existing];
-        }];
+    __block CGFloat progress = 0.f;
+    __block CGPoint initial = _offset;
+    
+    void (^animation)(void) = ^{
+        
+        if( _animationSource ) {
+            unsigned long timesFired = dispatch_source_get_data(_animationSource);
+            progress += .1 * timesFired;
+        }
+        else {
+            progress = 1.f;
+        }
+        
+        CGFloat x = (offset.x - initial.x) * progress;
+        CGFloat y = (offset.y - initial.y) * progress;
+        
+        CGPoint offset = CGPointMake(x, y);
+        
+        if( !CGPointEqualToPoint(offset, _offset) ) {
+            _offset = offset;
+            [_nodes enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+                GLKMatrix4 existing = [obj modelViewMatrix];
+                existing.m30 = -_offset.x;
+                existing.m31 = _offset.y;
+                [obj setModelViewMatrix: existing];
+            }];
+        }
+        
+        if( progress >= 1.f )
+            [self cancelAnimation];
+    };
+    
+    if( animated ) {
+        _animationSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
+        dispatch_source_set_timer(_animationSource, DISPATCH_TIME_NOW, 1 / 30.f * NSEC_PER_SEC, 1 / 300. * NSEC_PER_SEC);
+        dispatch_source_set_event_handler(_animationSource, animation);
+        dispatch_resume(_animationSource);
     }
-}
-
-- (void) setCenter: (CGPoint) center animated: (BOOL) animated {
-    
-}
-
-- (CGRect) visibleRect {
-    CGRect rect = _viewRect;
-    rect.origin.x -= _offset.x;
-    rect.origin.y -= _offset.y;
-    
-    rect.origin.x /= _scale;
-    rect.origin.y /= _scale;
-    
-    rect.size.width /= _scale;
-    rect.size.height /= _scale;
-    
-    return rect;
+    else {
+        animation();
+    }
 }
 
 #pragma mark - Object Graph
