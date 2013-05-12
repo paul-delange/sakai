@@ -11,6 +11,7 @@
 #import "SceneGraph.h"
 
 #import "Background.h"
+#import "Sprite.h"
 
 @interface WorldViewController() <GLKViewDelegate> {
     SceneGraph* _graph;
@@ -71,6 +72,9 @@
     
     Background* background = [Background new];
     [_graph setBackground: background];
+    
+    Sprite* tile = [[Sprite alloc] initWithFilename: @"tile.png"];
+    [_graph addNode: tile];
     
     GLint max;
     glGetIntegerv(GL_MAX_TEXTURE_SIZE, &max);

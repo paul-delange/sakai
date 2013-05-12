@@ -8,15 +8,10 @@
 
 #import "Node.h"
 
-@class TextureAtlas;
-
-@interface Sprite : NSObject
+@interface Sprite : Node
 
 @property (readonly, nonatomic) NSString* filename;
 
 - (instancetype) initWithFilename: (NSString*) filename;
-- (instancetype) initWithFilename: (NSString*) filename andTextureAtlas: (TextureAtlas*) atlas;
-
-- (void) render;
 
 @end
