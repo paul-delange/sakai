@@ -71,10 +71,10 @@
         
         //x, y, z, normX, normY, normZ, texU, texV
         const CGFloat gCubeVertexData[] = {
-            -halfWidth, -halfHeight, -0.2,   0.0, 0.0, -1.0,   0.0, 0.0,
-            halfWidth, -halfHeight, -0.2,    0.0, 0.0, -1.0,   1.0, 0.0,
-            -halfWidth, halfHeight, -0.2,    0.0, 0.0, -1.0,   0.0, 1.0,
-            halfWidth, halfHeight, -0.2,     0.0, 0.0, -1.0,   1.0, 1.0
+            -halfWidth, -halfHeight, 0,   0.0, 0.0, -1.0,   0.0, 0.0,
+            halfWidth, -halfHeight, 0,    0.0, 0.0, -1.0,   1.0, 0.0,
+            -halfWidth, halfHeight, 0,    0.0, 0.0, -1.0,   0.0, 1.0,
+            halfWidth, halfHeight, 0,     0.0, 0.0, -1.0,   1.0, 1.0
         };
         
         glGenVertexArraysOES(1, &_vertexArray);
@@ -107,8 +107,8 @@
     CGFloat halfWidth = _texture.width / 2.f;
     CGFloat halfHeight = _texture.height / 2.f;
     
-    GLKVector3 upperLeft = GLKVector3Make(-halfWidth, halfHeight, -0.2);
-    GLKVector3 lowerRight = GLKVector3Make(halfWidth, -halfHeight, -0.2);
+    GLKVector3 upperLeft = GLKVector3Make(-halfWidth, halfHeight, 0);
+    GLKVector3 lowerRight = GLKVector3Make(halfWidth, -halfHeight, 0);
     
     GLKMatrix4 model = _effect.transform.modelviewMatrix;
     GLKMatrix4 proj = _effect.transform.projectionMatrix;
@@ -123,8 +123,8 @@
     GLKVector3 ulViewport = GLKMathProject(upperLeft, model, proj, vp);
     GLKVector3 lrViewport = GLKMathProject(lowerRight, model, proj, vp);
     
-    return CGRectMake(ulViewport.x, CGRectGetMaxY(viewport)-ulViewport.y, 
-                      lrViewport.x, CGRectGetMaxX(viewport)-lrViewport.y);
+    return CGRectMake(ulViewport.x, CGRectGetWidth(viewport)-ulViewport.y, 
+                      lrViewport.x, CGRectGetHeight(viewport)-lrViewport.y);
 }
 
 - (GLKMatrix4) modelViewMatrix {

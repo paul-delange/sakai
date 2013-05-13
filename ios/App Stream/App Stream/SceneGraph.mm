@@ -68,7 +68,7 @@
         [_nodes enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
             //TODO: Does not handle rotation
             GLKMatrix4 existing = GLKMatrix4MakeScale(_scale, _scale, 1.0);
-            existing = GLKMatrix4Multiply(existing, GLKMatrix4MakeTranslation(-_offset.x, -_offset.y, 0));
+            existing = GLKMatrix4Multiply(existing, GLKMatrix4MakeTranslation(_offset.x, -_offset.y, 0));
             [obj setModelViewMatrix: existing];
         }];
     }
@@ -81,15 +81,8 @@
 
 - (CGRect) visibleRect {
     CGRect rect = _viewRect;
-    rect.origin.x -= _offset.x;
-    rect.origin.y -= _offset.y;
-    
-    rect.origin.x /= _scale;
-    rect.origin.y /= _scale;
-    
-    rect.size.width /= _scale;
-    rect.size.height /= _scale;
-    
+    rect.origin.x -= _offset.x;// + CGRectGetWidth(_viewRect)/2.f;
+    rect.origin.y -= _offset.y;// + CGRectGetWidth(_viewRect)/2.f;    
     return rect;
 }
 
@@ -110,21 +103,13 @@
     
     [self cancelAnimation];
     
-    GLKMatrix4 projection = _background.projectionMatrix;
-    GLKMatrix4 modelView = _background.modelViewMatrix;
-    GLKVector3 windowCenter = GLKVector3Make(center.x, center.y, 0.0);
+    center.x -= CGRectGetWidth(_viewRect)/2.f;
+    center.y -= CGRectGetHeight(_viewRect)/2.f;
     
-    int vp[4] = {0, 0, (int)CGRectGetWidth(_viewRect), (int)CGRectGetHeight(_viewRect)};
+    center.x -= self.offset.x;
+    center.y -= self.offset.y;
     
-    bool success;
-        
-    GLKVector3 worldCenter = GLKMathUnproject(windowCenter,
-                                              modelView,
-                                              projection, 
-                                              vp, 
-                                              &success);
-    NSParameterAssert(success);
-    [self setOffset: CGPointMake(worldCenter.x, worldCenter.y) animated: animated];
+    [self setOffset: CGPointMake(-center.x, -center.y) animated: animated];
 }
 
 - (void) setOffset: (CGPoint)offset animated: (BOOL) animated {
@@ -136,8 +121,8 @@
     CGFloat rangeX = bgSize.x / maxZoom;
     CGFloat rangeY = bgSize.y / maxZoom;
     
-    CGFloat maxXOffset = (rangeX-CGRectGetWidth(_viewRect))/4.f;
-    CGFloat maxYOffset = (rangeY-CGRectGetHeight(_viewRect))/4.f;
+    CGFloat maxXOffset = (rangeX-CGRectGetWidth(_viewRect))/2.f;
+    CGFloat maxYOffset = (rangeY-CGRectGetHeight(_viewRect))/2.f;
     
     NSParameterAssert(maxXOffset > 0);
     NSParameterAssert(maxYOffset > 0);
@@ -201,7 +186,6 @@
     // Create ball body and shape
     b2BodyDef ballBodyDef;
     ballBodyDef.type = b2_dynamicBody;
-    ballBodyDef.position.Set(100/PTM_RATIO, 300/PTM_RATIO);
     ballBodyDef.userData = (__bridge void*)node;
     _body = _world->CreateBody(&ballBodyDef);
     
@@ -246,9 +230,12 @@
 
 - (NSSet*) nodesIntersectingRect: (CGRect) rect 
 {
+    CGRect visible = [self visibleRect];
     NSPredicate* inRectPredicate = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
         CGRect box = [evaluatedObject projectionInScreenRect: rect];
-        return CGRectIntersectsRect([self visibleRect], box) || evaluatedObject == _background;
+        if( evaluatedObject != _background )
+        NSLog(@"Visible: %@, Box: %@", NSStringFromCGRect(visible), NSStringFromCGRect(box));
+        return CGRectIntersectsRect(visible, box);
     }];
     
     return [_nodes filteredSetUsingPredicate: inRectPredicate];
@@ -272,21 +259,21 @@
             [obj setProjectionMatrix: projectionMatrix]; 
         }];
     }
-    
+    /*
     _world->Step(controller.timeSinceLastUpdate, 10, 10);
     for(b2Body *b = _world->GetBodyList(); b; b=b->GetNext()) {    
         if (b->GetUserData() != NULL) {
             Node *ballData = (__bridge Node *)b->GetUserData();
             GLKMatrix4 mvm = [ballData modelViewMatrix];
-            mvm.m30 = (b->GetPosition().x + self.offset.x) / self.zoom;
-            mvm.m31 = (b->GetPosition().y - self.offset.y) / self.zoom;
+            mvm.m30 = b->GetPosition().x + self.offset.x;
+            mvm.m31 = b->GetPosition().y - self.offset.y;
             [ballData setModelViewMatrix: mvm];
         }        
-    }
+    }*/
     
     GLKMatrix4 world = _background.modelViewMatrix;
-    world.m30 = self.offset.x / self.zoom;
-    world.m31 = -self.offset.y / self.zoom;
+    world.m30 = self.offset.x;
+    world.m31 = -self.offset.y;
     [_background setModelViewMatrix: world];
 }
 

@@ -146,7 +146,7 @@
 
 - (IBAction) longPushed: (UILongPressGestureRecognizer*)sender {
     switch (sender.state) {
-        case UIGestureRecognizerStateRecognized:
+        case UIGestureRecognizerStateBegan:
         {
             CGPoint loc = [sender locationInView: sender.view];
             [_graph setCenter: loc animated: YES];
