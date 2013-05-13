@@ -117,17 +117,31 @@
 }*/
 
 - (IBAction) panPushed:(UIPanGestureRecognizer*)sender {
+    
     CGPoint translation = [sender translationInView: sender.view];
+    
     CGPoint offset = _graph.offset;
     offset.x += translation.x;
     offset.y += translation.y;
     
     _graph.offset = offset;
+    
     [sender setTranslation: CGPointZero inView: sender.view];
 }
 
 - (IBAction) pinchPushed: (UIPinchGestureRecognizer*)sender {
-    _graph.zoom = sender.scale;
+    //Incrementally change the zoom to avoid jumps in scale
+    switch (sender.state) {
+        case UIGestureRecognizerStateChanged:
+        case UIGestureRecognizerStateEnded:
+        {
+            _graph.zoom *= sender.scale;
+            sender.scale = 1.f;
+            break;
+        }
+        default:
+            break;
+    }
 }
 
 - (IBAction) longPushed: (UILongPressGestureRecognizer*)sender {

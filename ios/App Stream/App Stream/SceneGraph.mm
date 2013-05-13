@@ -128,33 +128,31 @@
 }
 
 - (void) setOffset: (CGPoint)offset animated: (BOOL) animated {
+    [self cancelAnimation];
+    
     GLKVector2 bgSize = _background.size;
     CGFloat maxZoom = 1./self.minimumZoom;
     
-    CGFloat rangeX = bgSize.x /= maxZoom;
-    CGFloat rangeY = bgSize.y /= maxZoom;
+    CGFloat rangeX = bgSize.x / maxZoom;
+    CGFloat rangeY = bgSize.y / maxZoom;
     
-    CGFloat maxXOffset = (rangeX-CGRectGetWidth(_viewRect))/2.f;
-    CGFloat maxYOffset = (rangeY-CGRectGetHeight(_viewRect))/2.f;
+    CGFloat maxXOffset = (rangeX-CGRectGetWidth(_viewRect))/4.f;
+    CGFloat maxYOffset = (rangeY-CGRectGetHeight(_viewRect))/4.f;
     
     NSParameterAssert(maxXOffset > 0);
     NSParameterAssert(maxYOffset > 0);
     
     if( offset.x < -maxXOffset ) {
-        //NSLog(@"Moving off left");
-        return;
+        offset.x = -maxXOffset;
     }
     else if( offset.x > maxXOffset ) {
-        //NSLog(@"Moving off right");
-        return;
+        offset.x = maxXOffset;
     }
     else if(offset.y < -maxYOffset ) {
-        //NSLog(@"Moving off top");
-        return;
+        offset.y = -maxYOffset;
     }
     else if(offset.y > maxYOffset ) {
-        //NSLog(@"Moving off bottom");
-        return;
+        offset.y = maxYOffset;
     }
     
     __block CGFloat progress = 0.f;
@@ -170,19 +168,13 @@
             progress = 1.f;
         }
         
-        CGFloat x = (offset.x - initial.x) * progress;
-        CGFloat y = (offset.y - initial.y) * progress;
+        CGFloat x = (offset.x - initial.x) * progress + initial.x;
+        CGFloat y = (offset.y - initial.y) * progress + initial.y;
         
         CGPoint offset = CGPointMake(x, y);
         
         if( !CGPointEqualToPoint(offset, _offset) ) {
             _offset = offset;
-            [_nodes enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-                GLKMatrix4 existing = [obj modelViewMatrix];
-                existing.m30 = -_offset.x;
-                existing.m31 = _offset.y;
-                [obj setModelViewMatrix: existing];
-            }];
         }
         
         if( progress >= 1.f )
@@ -201,7 +193,7 @@
 }
 
 #pragma mark - Object Graph
-- (void) addNode:(Node *)node 
+- (void) addNode:(Node *)node
 {
     NSParameterAssert([node isKindOfClass: [Node class]]);
     [_nodes addObject: node];
@@ -256,7 +248,7 @@
 {
     NSPredicate* inRectPredicate = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
         CGRect box = [evaluatedObject projectionInScreenRect: rect];
-        return CGRectIntersectsRect([self visibleRect], box);
+        return CGRectIntersectsRect([self visibleRect], box) || evaluatedObject == _background;
     }];
     
     return [_nodes filteredSetUsingPredicate: inRectPredicate];
@@ -286,14 +278,19 @@
         if (b->GetUserData() != NULL) {
             Node *ballData = (__bridge Node *)b->GetUserData();
             GLKMatrix4 mvm = [ballData modelViewMatrix];
-            mvm.m30 = b->GetPosition().x;
-            mvm.m31 = b->GetPosition().y;
+            mvm.m30 = (b->GetPosition().x + self.offset.x) / self.zoom;
+            mvm.m31 = (b->GetPosition().y - self.offset.y) / self.zoom;
             [ballData setModelViewMatrix: mvm];
         }        
     }
+    
+    GLKMatrix4 world = _background.modelViewMatrix;
+    world.m30 = self.offset.x / self.zoom;
+    world.m31 = -self.offset.y / self.zoom;
+    [_background setModelViewMatrix: world];
 }
 
-- (void)glkViewController:(GLKViewController *)controller willPause:(BOOL)pause 
+- (void)glkViewController:(GLKViewController *)controller willPause:(BOOL)pause
 {
     
 }
