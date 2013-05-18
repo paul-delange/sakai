@@ -9,7 +9,7 @@
 #import "Node.h"
 
 @implementation Node
-
+@synthesize position = _position;
 @end
 
 

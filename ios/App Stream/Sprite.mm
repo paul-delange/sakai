@@ -1,20 +1,22 @@
 //
-//  Background.m
+//  Sprite.m
 //  App Stream
 //
-//  Created by de Lange Paul on 5/4/13.
+//  Created by de Lange Paul on 5/1/13.
 //  Copyright (c) 2013 __MyCompanyName__. All rights reserved.
 //
 
-#import "Background.h"
+#import "Sprite.h"
 
 #import <GLKit/GLKit.h>
 
-#define Z_DEPTH -0.5
-
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
 
-@interface Background () {
+#define Z_DEPTH -0.25
+
+@interface Sprite () {
+    NSString* _filename;
+    
     GLKTextureInfo* _texture;
     GLKBaseEffect* _effect;
     
@@ -24,25 +26,26 @@
 
 @end
 
-@implementation Background
+@implementation Sprite
 
-- (id) init 
+- (instancetype) initWithFilename: (NSString*) filename 
 {
+    NSParameterAssert(filename);
+    NSParameterAssert([EAGLContext currentContext]);
+    
     self = [super init];
     if( self ) {
-        NSParameterAssert([EAGLContext currentContext]);
-        
         if(!_texture) {
             NSError* error;
             NSDictionary* params = [NSDictionary dictionaryWithObject: [NSNumber numberWithBool: YES]
                                                                forKey: GLKTextureLoaderOriginBottomLeft];
-            NSString* path = [[NSBundle mainBundle] pathForResource:@"background.png"
+            NSString* path = [[NSBundle mainBundle] pathForResource: filename
                                                              ofType: nil];
             NSParameterAssert([[NSFileManager defaultManager] fileExistsAtPath: path]);
             _texture = [GLKTextureLoader textureWithContentsOfFile: path
                                                            options: params
                                                              error: &error];
-            NSAssert(!error, @"Error loading background texture: %@", error);
+            NSAssert1(!error, @"Error loading background texture: %@", error);
             NSParameterAssert(_texture.width == _texture.height);   //Should be square for good aspect ratio
             
             NSParameterAssert(_texture);
@@ -72,37 +75,47 @@
             glEnableVertexAttribArray(GLKVertexAttribTexCoord0);
             glVertexAttribPointer(GLKVertexAttribTexCoord0, 2, GL_FLOAT, GL_FALSE, 32, BUFFER_OFFSET(24));
             
-            glBindBuffer(GL_ARRAY_BUFFER, 0);
+            NSParameterAssert(glGetError() == GL_NO_ERROR);
             
             _effect = [[GLKBaseEffect alloc] init];
             _effect.texture2d0.name = _texture.name;
-            _effect.texture2d0.envMode = GLKTextureEnvModeReplace;
-
+            _effect.texture2d0.envMode = GLKTextureEnvModeModulate;
         }
     }
     return self;
 }
 
-- (void) dealloc 
-{
+- (void) dealloc {
     glDeleteBuffers(1, &_vertexBuffer);
     glDeleteVertexArraysOES(1, &_vertexArray);
     _effect = nil;
 }
 
-- (GLKVector2) size {
-    return GLKVector2Make(_texture.width, _texture.height);
+- (NSString*) filename 
+{
+    return _filename;
+}
+
+- (CGSize) size
+{
+    return CGSizeMake(_texture.width, _texture.height);
 }
 
 #pragma mark - Renderable
 - (void) render
-{   
+{    
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
     glBindVertexArrayOES(_vertexArray);
     
     [_effect prepareToDraw];
     
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    
+    glDisable(GL_BLEND);
+    
+    NSParameterAssert(glGetError() == GL_NO_ERROR);
 }
 
 - (CGRect) projectionInScreenRect: (CGRect) viewport {
@@ -125,8 +138,8 @@
     GLKVector3 ulViewport = GLKMathProject(upperLeft, model, proj, vp);
     GLKVector3 lrViewport = GLKMathProject(lowerRight, model, proj, vp);
     
-    return CGRectMake(ulViewport.x, CGRectGetMaxY(viewport)-ulViewport.y, 
-                      lrViewport.x, CGRectGetMaxX(viewport)-lrViewport.y);
+    return CGRectMake(ulViewport.x, CGRectGetHeight(viewport)-ulViewport.y, 
+                      lrViewport.x-ulViewport.x, ulViewport.y-lrViewport.y);
 }
 
 - (GLKMatrix4) modelViewMatrix {
@@ -146,7 +159,13 @@
 - (void) setProjectionMatrix: (GLKMatrix4) projectionMatrix
 {
     NSParameterAssert(_effect);
+    
+    //NSLog(@"Proj: %@", NSStringFromGLKMatrix4(projectionMatrix));
+    
     _effect.transform.projectionMatrix = projectionMatrix;
 }
+
+#pragma mark - Node
+
 
 @end

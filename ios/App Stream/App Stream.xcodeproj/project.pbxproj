@@ -21,7 +21,7 @@
 		FD978AC817353E1900751253 /* Background.m in Sources */ = {isa = PBXBuildFile; fileRef = FD978AC717353E1900751253 /* Background.m */; };
 		FD978ACB17353FD500751253 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = FD978ACA17353FD500751253 /* background.png */; };
 		FDB286681730E9E6001573A2 /* tile.png in Resources */ = {isa = PBXBuildFile; fileRef = FDB286671730E9E6001573A2 /* tile.png */; };
-		FDB2866C17310F19001573A2 /* Sprite.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB2866B17310F19001573A2 /* Sprite.m */; };
+		FDB2866C17310F19001573A2 /* Sprite.mm in Sources */ = {isa = PBXBuildFile; fileRef = FDB2866B17310F19001573A2 /* Sprite.mm */; };
 		FDB41D2117361DE40069CD81 /* Node.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB41D2017361DE40069CD81 /* Node.m */; };
 		FDD8E491173FBAFD005E4A96 /* Box2DConfig.cmake in Resources */ = {isa = PBXBuildFile; fileRef = FDD8E42E173FBAFD005E4A96 /* Box2DConfig.cmake */; };
 		FDD8E492173FBAFD005E4A96 /* CMakeLists.txt in Resources */ = {isa = PBXBuildFile; fileRef = FDD8E42F173FBAFD005E4A96 /* CMakeLists.txt */; };
@@ -96,7 +96,7 @@
 		FD978ACA17353FD500751253 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		FDB286671730E9E6001573A2 /* tile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tile.png; sourceTree = "<group>"; };
 		FDB2866A17310F19001573A2 /* Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sprite.h; sourceTree = "<group>"; };
-		FDB2866B17310F19001573A2 /* Sprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sprite.m; sourceTree = "<group>"; };
+		FDB2866B17310F19001573A2 /* Sprite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Sprite.mm; sourceTree = "<group>"; };
 		FDB41D1F17361DE40069CD81 /* Node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Node.h; path = "App Stream/Node.h"; sourceTree = "<group>"; };
 		FDB41D2017361DE40069CD81 /* Node.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Node.m; path = "App Stream/Node.m"; sourceTree = "<group>"; };
 		FDB41D2317361F420069CD81 /* SceneGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SceneGraph.h; path = "App Stream/SceneGraph.h"; sourceTree = "<group>"; };
@@ -268,7 +268,7 @@
 			isa = PBXGroup;
 			children = (
 				FDB2866A17310F19001573A2 /* Sprite.h */,
-				FDB2866B17310F19001573A2 /* Sprite.m */,
+				FDB2866B17310F19001573A2 /* Sprite.mm */,
 				FD978AC617353E1900751253 /* Background.h */,
 				FD978AC717353E1900751253 /* Background.m */,
 				FDB41D1F17361DE40069CD81 /* Node.h */,
@@ -537,7 +537,7 @@
 				FD36C137172F0F9F00519C51 /* main.m in Sources */,
 				FD36C13B172F0FA000519C51 /* AppDelegate.m in Sources */,
 				FD36C14D172F113200519C51 /* WorldViewController.m in Sources */,
-				FDB2866C17310F19001573A2 /* Sprite.m in Sources */,
+				FDB2866C17310F19001573A2 /* Sprite.mm in Sources */,
 				FD978AC817353E1900751253 /* Background.m in Sources */,
 				FDB41D2117361DE40069CD81 /* Node.m in Sources */,
 				FD921B9C173B9F8100786877 /* Animation.m in Sources */,

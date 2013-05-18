@@ -13,5 +13,6 @@
 @property (readonly, nonatomic) NSString* filename;
 
 - (instancetype) initWithFilename: (NSString*) filename;
+- (CGSize) size;
 
 @end

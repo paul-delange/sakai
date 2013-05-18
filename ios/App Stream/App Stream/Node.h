@@ -29,6 +29,8 @@
 
 @interface Node : NSObject <Renderable>
 
+@property (nonatomic, assign) CGPoint position;
+
 @end
 
 extern GLKVector3 GLKMatrix4GetScale(GLKMatrix4 matrix);

@@ -8,7 +8,7 @@
 
 #import <GLKit/GLKit.h>
 
-#import "Node.h"
+#import "Sprite.h"
 #import "Background.h"
 
 @interface SceneGraph : NSObject <GLKViewControllerDelegate>
@@ -17,6 +17,7 @@
 @property (nonatomic, assign) CGFloat zoom;
 
 - (void) addNode: (Node*) node;
+- (void) addSprite: (Sprite*) sprite;
 
 - (void) setBackground: (Background*) background;
 

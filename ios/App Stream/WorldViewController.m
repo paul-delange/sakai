@@ -73,8 +73,14 @@
     Background* background = [Background new];
     [_graph setBackground: background];
     
-    Sprite* tile = [[Sprite alloc] initWithFilename: @"tile.png"];
-    [_graph addNode: tile];
+    NSUInteger multiplier = 2;
+    for(NSUInteger i=0;i<multiplier;i++) {
+        for(NSUInteger j=0;j<multiplier;j++) {
+            Sprite* tile = [[Sprite alloc] initWithFilename: @"tile.png"];
+            tile.position = CGPointMake((i-multiplier/2.f)*128, (j-multiplier/2.f)*128);
+            [_graph addSprite: tile];
+        }
+    }
     
     GLint max;
     glGetIntegerv(GL_MAX_TEXTURE_SIZE, &max);
@@ -160,14 +166,17 @@
 #pragma mark - GLKViewDelegate
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect 
 {
-    glClearColor(0, 104.0/255.0, 55.0/255.0, 1.0);
-    glClear(GL_COLOR_BUFFER_BIT); 
+    NSArray* nodes = [_graph nodesIntersectingRect: rect];
     
-    for(Node* node in [_graph nodesIntersectingRect: rect]) {
+    NSLog(@"Draw %d nodes", nodes.count);
+    
+    for(Node* node in nodes) {
 #if DEBUG
         if( [node respondsToSelector: @selector(debugRender)])
             [node debugRender];
 #endif
+        //CGRect proj = [node projectionInScreenRect: rect];
+        //NSLog(@"Draw: %@", NSStringFromRect(proj));
         [node render];
     }
 }

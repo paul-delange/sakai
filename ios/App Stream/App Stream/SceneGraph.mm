@@ -8,9 +8,11 @@
 
 #import "SceneGraph.h"
 
+#import "Sprite.h"
+
 #import <Box2D/Box2D.h>
 
-#define PTM_RATIO   200
+#define PTM_RATIO   20
 
 @interface SceneGraph () {
     NSMutableSet* _nodes;
@@ -45,10 +47,9 @@
         self.minimumZoom = 0.5;
         self.maximumZoom = 2.0;
         
-        b2Vec2 gravity;
-        gravity.y = 4;
+        b2Vec2 gravity = b2Vec2_zero;
         _world = new b2World(gravity);
-        
+        _world->SetContinuousPhysics(true);
     }
     
     return self;
@@ -68,7 +69,7 @@
         [_nodes enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
             //TODO: Does not handle rotation
             GLKMatrix4 existing = GLKMatrix4MakeScale(_scale, _scale, 1.0);
-            existing = GLKMatrix4Multiply(existing, GLKMatrix4MakeTranslation(_offset.x, -_offset.y, 0));
+            existing = GLKMatrix4Multiply(GLKMatrix4MakeTranslation(_offset.x, -_offset.y, 0), existing);
             [obj setModelViewMatrix: existing];
         }];
     }
@@ -80,9 +81,17 @@
 }
 
 - (CGRect) visibleRect {
-    CGRect rect = _viewRect;
-    rect.origin.x -= _offset.x;// + CGRectGetWidth(_viewRect)/2.f;
-    rect.origin.y -= _offset.y;// + CGRectGetWidth(_viewRect)/2.f;    
+    
+    CGFloat height = CGRectGetHeight(_viewRect) / self.zoom;
+    CGFloat width = CGRectGetWidth(_viewRect) / self.zoom;
+    CGFloat x = 0;//-CGRectGetWidth(_viewRect) / 2.f;
+    CGFloat y = 0;//- CGRectGetHeight(_viewRect) / 2.f;
+    
+    
+    CGRect rect = CGRectMake(x, y, width, height);
+    
+    //NSLog(@"Visible: %@", NSStringFromCGRect(rect));
+    
     return rect;
 }
 
@@ -182,21 +191,44 @@
 {
     NSParameterAssert([node isKindOfClass: [Node class]]);
     [_nodes addObject: node];
+}
+
+- (void) addSprite: (Sprite*) sprite
+{
+    [self addNode: sprite];
     
     // Create ball body and shape
     b2BodyDef ballBodyDef;
-    ballBodyDef.type = b2_dynamicBody;
-    ballBodyDef.userData = (__bridge void*)node;
+    ballBodyDef.type = b2_dynamicBody;;
+    ballBodyDef.userData = (__bridge void*)sprite;
+    
+    double x = (double)arc4random() / ARC4RANDOM_MAX;
+    double y = (double)arc4random() / ARC4RANDOM_MAX;
+    
+    x -= 0.5;
+    y -= 0.5;
+    
+    b2Vec2 initialForce = b2Vec2(x, y);
+    initialForce *= 5;
+    
     _body = _world->CreateBody(&ballBodyDef);
+    _body->SetTransform(b2Vec2(sprite.position.x / PTM_RATIO, sprite.position.y / PTM_RATIO), 0);
+    
+    b2Vec2 center = _body->GetWorldCenter();
+    _body->ApplyLinearImpulse(initialForce, center);
+    
+    NSParameterAssert(sprite.size.width == sprite.size.height);
+    CGFloat radius = MAX(sprite.size.width, sprite.size.height) / 2.f;
     
     b2CircleShape circle;
-    circle.m_radius = 100.0/PTM_RATIO;
+    circle.m_radius = radius/PTM_RATIO;
     
     b2FixtureDef ballShapeDef;
     ballShapeDef.shape = &circle;
     ballShapeDef.density = 1.0f;
     ballShapeDef.friction = 0.2f;
     ballShapeDef.restitution = 0.8f;
+    
     _body->CreateFixture(&ballShapeDef);
 }
 
@@ -231,11 +263,30 @@
 - (NSSet*) nodesIntersectingRect: (CGRect) rect 
 {
     CGRect visible = [self visibleRect];
+    
+    if( CGRectEqualToRect(visible, CGRectZero) )
+        return [NSSet set];
+    
+    rect.size.width /= self.zoom;
+    rect.size.height /= self.zoom;
+    
     NSPredicate* inRectPredicate = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
         CGRect box = [evaluatedObject projectionInScreenRect: rect];
-        if( evaluatedObject != _background )
-        NSLog(@"Visible: %@, Box: %@", NSStringFromCGRect(visible), NSStringFromCGRect(box));
-        return CGRectIntersectsRect(visible, box);
+        //NSLog(@"Box: %@", NSStringFromCGRect(box));
+        if( evaluatedObject == _background )
+            return  YES;
+        
+        if( CGRectGetMinX(box) > CGRectGetMaxX(visible) )
+            return NO;
+        if( CGRectGetMinY(box) > CGRectGetMaxY(visible) )
+            return NO;
+        if( CGRectGetMaxX(box) < CGRectGetMinX(visible) )
+            return NO;
+        if( CGRectGetMaxY(box) < CGRectGetMinY(visible) )
+            return NO;
+        
+        return YES;
+        //return CGRectIntersectsRect(visible, box);
     }];
     
     return [_nodes filteredSetUsingPredicate: inRectPredicate];
@@ -246,6 +297,7 @@
 {
     NSParameterAssert([controller isViewLoaded]);
     CGRect viewRect = controller.view.bounds;
+    
     if( !CGRectEqualToRect(viewRect, _viewRect) ) {
         _viewRect = viewRect;
         
@@ -259,21 +311,26 @@
             [obj setProjectionMatrix: projectionMatrix]; 
         }];
     }
-    /*
+    
     _world->Step(controller.timeSinceLastUpdate, 10, 10);
-    for(b2Body *b = _world->GetBodyList(); b; b=b->GetNext()) {    
+    for(b2Body *b = _world->GetBodyList(); b; b=b->GetNext()) {
+        
         if (b->GetUserData() != NULL) {
             Node *ballData = (__bridge Node *)b->GetUserData();
+            b2Vec2 position = b->GetPosition();
+            
             GLKMatrix4 mvm = [ballData modelViewMatrix];
-            mvm.m30 = b->GetPosition().x + self.offset.x;
-            mvm.m31 = b->GetPosition().y - self.offset.y;
-            [ballData setModelViewMatrix: mvm];
-        }        
-    }*/
+            mvm.m30 = b->GetPosition().x * PTM_RATIO * _scale + self.offset.x;
+            mvm.m31 = b->GetPosition().y * PTM_RATIO * _scale - self.offset.y;
+            
+            [ballData setModelViewMatrix: mvm];        
+        }
+    }
     
     GLKMatrix4 world = _background.modelViewMatrix;
     world.m30 = self.offset.x;
     world.m31 = -self.offset.y;
+
     [_background setModelViewMatrix: world];
 }
 
