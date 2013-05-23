@@ -215,7 +215,7 @@
     _body->SetTransform(b2Vec2(sprite.position.x / PTM_RATIO, sprite.position.y / PTM_RATIO), 0);
     
     b2Vec2 center = _body->GetWorldCenter();
-    _body->ApplyLinearImpulse(initialForce, center);
+    //_body->ApplyLinearImpulse(initialForce, center);
     
     NSParameterAssert(sprite.size.width == sprite.size.height);
     CGFloat radius = MAX(sprite.size.width, sprite.size.height) / 2.f;
@@ -274,7 +274,7 @@
         CGRect box = [evaluatedObject projectionInScreenRect: rect];
         //NSLog(@"Box: %@", NSStringFromCGRect(box));
         if( evaluatedObject == _background )
-            return  YES;
+            return YES;
         
         if( CGRectGetMinX(box) > CGRectGetMaxX(visible) )
             return NO;
@@ -322,6 +322,7 @@
             GLKMatrix4 mvm = [ballData modelViewMatrix];
             mvm.m30 = b->GetPosition().x * PTM_RATIO * _scale + self.offset.x;
             mvm.m31 = b->GetPosition().y * PTM_RATIO * _scale - self.offset.y;
+            mvm.m32 = -0.25;
             
             [ballData setModelViewMatrix: mvm];        
         }

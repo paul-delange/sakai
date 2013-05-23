@@ -73,7 +73,7 @@
     Background* background = [Background new];
     [_graph setBackground: background];
     
-    NSUInteger multiplier = 2;
+    NSUInteger multiplier = 4;
     for(NSUInteger i=0;i<multiplier;i++) {
         for(NSUInteger j=0;j<multiplier;j++) {
             Sprite* tile = [[Sprite alloc] initWithFilename: @"tile.png"];
