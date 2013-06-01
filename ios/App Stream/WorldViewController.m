@@ -12,6 +12,7 @@
 
 #import "Background.h"
 #import "Sprite.h"
+#import "Magnet.h"
 
 @interface WorldViewController() <GLKViewDelegate> {
     SceneGraph* _graph;
@@ -78,7 +79,7 @@
     for(NSUInteger i=0;i<multiplier;i++) {
         for(NSUInteger j=0;j<multiplier;j++) {
             Sprite* tile = [[Sprite alloc] initWithFilename: @"tile.png"];
-            tile.position = CGPointMake((i-multiplier/2.f)*128+2, (j-multiplier/2.f)*128+2);
+            tile.position = CGPointZero;//CGPointMake((i-multiplier/2.f)*128+2, (j-multiplier/2.f)*128+2);
             [_graph addSprite: tile];
         }
     }
@@ -156,9 +157,21 @@
         case UIGestureRecognizerStateBegan:
         {
             CGPoint loc = [sender locationInView: sender.view];
-            [_graph setCenter: loc animated: YES];
+            CGPoint wloc = [_graph locationInWorld: loc];
+            
+            [_graph setCenter: wloc animated: YES];
+            
+            Magnet* magnet = [Magnet new];
+            magnet.position = wloc;
+            [_graph addSprite: magnet];
+            
+            //self.paused = YES;
             break;
         }
+        case UIGestureRecognizerStateEnded:
+        case UIGestureRecognizerStateCancelled:
+            self.paused = NO;
+            break;
         default:
             break;
     }
@@ -167,10 +180,11 @@
 #pragma mark - GLKViewDelegate
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect 
 {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glEnable(GL_DEPTH_TEST);
+    glClear(GL_COLOR_BUFFER_BIT);
     
     NSArray* nodes = [_graph nodesIntersectingRect: rect];
+    
+    NSLog(@"Draw %d nodes", nodes.count);
     
     for(Node* node in nodes) {
 #if DEBUG

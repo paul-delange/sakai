@@ -17,6 +17,8 @@
 @interface SceneGraph () {
     NSMutableSet* _nodes;
     CGRect _viewRect;
+    GLKMatrix4 _projectionViewMatrix;
+    
     Background* _background;
     
     dispatch_source_t _animationSource;
@@ -106,19 +108,13 @@
         _animationSource = nil;
     }
 }
-   
+
 - (void) setCenter: (CGPoint) center animated: (BOOL) animated {
     NSParameterAssert(_background);
     
     [self cancelAnimation];
-    
-    center.x -= CGRectGetWidth(_viewRect)/2.f;
-    center.y -= CGRectGetHeight(_viewRect)/2.f;
-    
-    center.x -= self.offset.x;
-    center.y -= self.offset.y;
-    
-    [self setOffset: CGPointMake(-center.x, -center.y) animated: animated];
+
+    [self setOffset: CGPointMake(-center.x, center.y) animated: animated];
 }
 
 - (void) setOffset: (CGPoint)offset animated: (BOOL) animated {
@@ -197,39 +193,62 @@
 {
     [self addNode: sprite];
     
-    // Create ball body and shape
-    b2BodyDef ballBodyDef;
-    ballBodyDef.type = b2_dynamicBody;;
-    ballBodyDef.userData = (__bridge void*)sprite;
+    if( sprite.dynamic ) {
+        // Create ball body and shape
+        b2BodyDef ballBodyDef;
+        ballBodyDef.type = b2_dynamicBody;;
+        ballBodyDef.userData = (__bridge void*)sprite;
+        
+        double x = (double)arc4random() / ARC4RANDOM_MAX;
+        double y = (double)arc4random() / ARC4RANDOM_MAX;
+        
+        x -= 0.5;
+        y -= 0.5;
+        
+        b2Vec2 initialForce = b2Vec2(x, y);
+        initialForce *= 5;
+        
+        _body = _world->CreateBody(&ballBodyDef);
+        _body->SetTransform(b2Vec2(sprite.position.x / PTM_RATIO, sprite.position.y / PTM_RATIO), 0);
+        
+        b2Vec2 center = _body->GetWorldCenter();
+        _body->ApplyLinearImpulse(initialForce, center);
+        
+        NSParameterAssert(sprite.size.width == sprite.size.height);
+        CGFloat radius = MAX(sprite.size.width, sprite.size.height) / 2.f;
+        
+        b2CircleShape circle;
+        circle.m_radius = radius/PTM_RATIO;
+        
+        b2FixtureDef ballShapeDef;
+        ballShapeDef.shape = &circle;
+        ballShapeDef.density = 1.0f;
+        ballShapeDef.friction = 0.2f;
+        ballShapeDef.restitution = 0.8f;
+        
+        _body->CreateFixture(&ballShapeDef);
+    }
+    else {
+        b2BodyDef groundBodyDef;
+        groundBodyDef.type = b2_staticBody;
+        groundBodyDef.userData = (__bridge void*)sprite;
+        
+        _body = _world->CreateBody(&groundBodyDef);
+        _body->SetTransform(b2Vec2(sprite.position.x / PTM_RATIO, sprite.position.y / PTM_RATIO), 0);
+        
+        NSParameterAssert(sprite.size.width == sprite.size.height);
+        CGFloat radius = MAX(sprite.size.width, sprite.size.height) / 2.f;
+        
+        b2CircleShape circle;
+        circle.m_radius = radius/PTM_RATIO;
+        
+        b2FixtureDef fd;
+        fd.shape = &circle;
+        
+        _body->CreateFixture(&fd);
+    }
     
-    double x = (double)arc4random() / ARC4RANDOM_MAX;
-    double y = (double)arc4random() / ARC4RANDOM_MAX;
-    
-    x -= 0.5;
-    y -= 0.5;
-    
-    b2Vec2 initialForce = b2Vec2(x, y);
-    initialForce *= 5;
-    
-    _body = _world->CreateBody(&ballBodyDef);
-    _body->SetTransform(b2Vec2(sprite.position.x / PTM_RATIO, sprite.position.y / PTM_RATIO), 0);
-    
-    b2Vec2 center = _body->GetWorldCenter();
-    _body->ApplyLinearImpulse(initialForce, center);
-    
-    NSParameterAssert(sprite.size.width == sprite.size.height);
-    CGFloat radius = MAX(sprite.size.width, sprite.size.height) / 2.f;
-    
-    b2CircleShape circle;
-    circle.m_radius = radius/PTM_RATIO;
-    
-    b2FixtureDef ballShapeDef;
-    ballShapeDef.shape = &circle;
-    ballShapeDef.density = 1.0f;
-    ballShapeDef.friction = 0.2f;
-    ballShapeDef.restitution = 0.8f;
-    
-    _body->CreateFixture(&ballShapeDef);
+    [sprite setModelViewMatrix: GLKMatrix4MakeScale(_scale, _scale, 1.0)];
 }
 
 - (void) setBackground: (Background*) background 
@@ -283,6 +302,21 @@
     return [world arrayByAddingObjectsFromArray: others.allObjects];
 }
 
+- (CGPoint) locationInWorld: (CGPoint) point {
+    
+    //Center around screen center
+    point.x -= CGRectGetWidth(_viewRect)/2.f;
+    point.y -= CGRectGetHeight(_viewRect)/2.f;
+    
+    //Flip y coordinate
+    point.y = -point.y;
+    
+    point.x -= self.offset.x;
+    point.y += self.offset.y;
+    
+    return CGPointMake(point.x, point.y);
+}
+
 #pragma mark - GLKViewControllerDelegate
 - (void) glkViewControllerUpdate:(GLKViewController *)controller 
 {
@@ -295,12 +329,10 @@
         CGFloat halfWidth = CGRectGetWidth(viewRect) / 2.f;
         CGFloat halfHeight = CGRectGetHeight(viewRect) / 2.f;
         
-        GLKMatrix4 projectionMatrix = GLKMatrix4MakeOrtho(-halfWidth, halfWidth,
-                                                          -halfHeight, halfHeight,
-                                                          0.1, 100);
-        [_nodes enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-            [obj setProjectionMatrix: projectionMatrix]; 
-        }];
+        _projectionViewMatrix = GLKMatrix4MakeOrtho(-halfWidth, halfWidth,
+                                                    -halfHeight, halfHeight,
+                                                    0.1, 100);
+        [_background setProjectionMatrix: _projectionViewMatrix];
     }
     
     _world->Step(controller.timeSinceLastUpdate, 10, 10);
@@ -315,7 +347,8 @@
             mvm.m31 = b->GetPosition().y * PTM_RATIO * _scale - self.offset.y;
             mvm.m32 = -0.25;
             
-            [ballData setModelViewMatrix: mvm];        
+            [ballData setModelViewMatrix: mvm];    
+            [ballData setProjectionMatrix: _projectionViewMatrix];
         }
     }
     

@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FD2A919F1759EA03008A3B3F /* Sprite.vsh in Sources */ = {isa = PBXBuildFile; fileRef = FD2A919E1759EA03008A3B3F /* Sprite.vsh */; };
-		FD2A91A21759EA0F008A3B3F /* Sprite.fsh in Sources */ = {isa = PBXBuildFile; fileRef = FD2A91A11759EA0F008A3B3F /* Sprite.fsh */; };
+		FD2A91A7175A2A63008A3B3F /* magnet.png in Resources */ = {isa = PBXBuildFile; fileRef = FD2A91A6175A2A63008A3B3F /* magnet.png */; };
+		FD2A91AA175A2A84008A3B3F /* Magnet.m in Sources */ = {isa = PBXBuildFile; fileRef = FD2A91A9175A2A83008A3B3F /* Magnet.m */; };
 		FD36C12B172F0F9F00519C51 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD36C12A172F0F9F00519C51 /* UIKit.framework */; };
 		FD36C12D172F0F9F00519C51 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD36C12C172F0F9F00519C51 /* Foundation.framework */; };
 		FD36C12F172F0F9F00519C51 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD36C12E172F0F9F00519C51 /* CoreGraphics.framework */; };
@@ -19,11 +19,10 @@
 		FD36C148172F109600519C51 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD36C147172F109600519C51 /* OpenGLES.framework */; };
 		FD36C14A172F10B500519C51 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD36C149172F10B500519C51 /* CoreData.framework */; };
 		FD36C14D172F113200519C51 /* WorldViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD36C14C172F113200519C51 /* WorldViewController.m */; };
-		FD921B9C173B9F8100786877 /* Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = FD921B9B173B9F8100786877 /* Animation.m */; };
 		FD978AC817353E1900751253 /* Background.m in Sources */ = {isa = PBXBuildFile; fileRef = FD978AC717353E1900751253 /* Background.m */; };
 		FD978ACB17353FD500751253 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = FD978ACA17353FD500751253 /* background.png */; };
 		FDB286681730E9E6001573A2 /* tile.png in Resources */ = {isa = PBXBuildFile; fileRef = FDB286671730E9E6001573A2 /* tile.png */; };
-		FDB2866C17310F19001573A2 /* Sprite.mm in Sources */ = {isa = PBXBuildFile; fileRef = FDB2866B17310F19001573A2 /* Sprite.mm */; };
+		FDB2866C17310F19001573A2 /* Sprite.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB2866B17310F19001573A2 /* Sprite.m */; };
 		FDB41D2117361DE40069CD81 /* Node.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB41D2017361DE40069CD81 /* Node.m */; };
 		FDD8E491173FBAFD005E4A96 /* Box2DConfig.cmake in Resources */ = {isa = PBXBuildFile; fileRef = FDD8E42E173FBAFD005E4A96 /* Box2DConfig.cmake */; };
 		FDD8E492173FBAFD005E4A96 /* CMakeLists.txt in Resources */ = {isa = PBXBuildFile; fileRef = FDD8E42F173FBAFD005E4A96 /* CMakeLists.txt */; };
@@ -76,8 +75,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		FD2A919E1759EA03008A3B3F /* Sprite.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Sprite.vsh; sourceTree = "<group>"; };
-		FD2A91A11759EA0F008A3B3F /* Sprite.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Sprite.fsh; sourceTree = "<group>"; };
+		FD2A91A6175A2A63008A3B3F /* magnet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = magnet.png; sourceTree = "<group>"; };
+		FD2A91A8175A2A83008A3B3F /* Magnet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Magnet.h; sourceTree = "<group>"; };
+		FD2A91A9175A2A83008A3B3F /* Magnet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Magnet.m; sourceTree = "<group>"; };
 		FD36C126172F0F9F00519C51 /* App Stream.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "App Stream.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD36C12A172F0F9F00519C51 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		FD36C12C172F0F9F00519C51 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -93,14 +93,12 @@
 		FD36C149172F10B500519C51 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		FD36C14B172F113200519C51 /* WorldViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldViewController.h; sourceTree = "<group>"; };
 		FD36C14C172F113200519C51 /* WorldViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorldViewController.m; sourceTree = "<group>"; };
-		FD921B9A173B9F8100786877 /* Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Animation.h; sourceTree = "<group>"; };
-		FD921B9B173B9F8100786877 /* Animation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Animation.m; sourceTree = "<group>"; };
 		FD978AC617353E1900751253 /* Background.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Background.h; sourceTree = "<group>"; };
 		FD978AC717353E1900751253 /* Background.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Background.m; sourceTree = "<group>"; };
 		FD978ACA17353FD500751253 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		FDB286671730E9E6001573A2 /* tile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tile.png; sourceTree = "<group>"; };
 		FDB2866A17310F19001573A2 /* Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sprite.h; sourceTree = "<group>"; };
-		FDB2866B17310F19001573A2 /* Sprite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Sprite.mm; sourceTree = "<group>"; };
+		FDB2866B17310F19001573A2 /* Sprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sprite.m; sourceTree = "<group>"; };
 		FDB41D1F17361DE40069CD81 /* Node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Node.h; path = "App Stream/Node.h"; sourceTree = "<group>"; };
 		FDB41D2017361DE40069CD81 /* Node.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Node.m; path = "App Stream/Node.m"; sourceTree = "<group>"; };
 		FDB41D2317361F420069CD81 /* SceneGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SceneGraph.h; path = "App Stream/SceneGraph.h"; sourceTree = "<group>"; };
@@ -252,12 +250,11 @@
 		FD36C130172F0F9F00519C51 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FD2A91A6175A2A63008A3B3F /* magnet.png */,
 				FD978ACA17353FD500751253 /* background.png */,
 				FDB286671730E9E6001573A2 /* tile.png */,
 				FD36C132172F0F9F00519C51 /* App Stream-Info.plist */,
 				FD36C133172F0F9F00519C51 /* InfoPlist.strings */,
-				FD2A919E1759EA03008A3B3F /* Sprite.vsh */,
-				FD2A91A11759EA0F008A3B3F /* Sprite.fsh */,
 			);
 			name = Resources;
 			path = "App Stream";
@@ -274,15 +271,15 @@
 			isa = PBXGroup;
 			children = (
 				FDB2866A17310F19001573A2 /* Sprite.h */,
-				FDB2866B17310F19001573A2 /* Sprite.mm */,
+				FDB2866B17310F19001573A2 /* Sprite.m */,
 				FD978AC617353E1900751253 /* Background.h */,
 				FD978AC717353E1900751253 /* Background.m */,
 				FDB41D1F17361DE40069CD81 /* Node.h */,
 				FDB41D2017361DE40069CD81 /* Node.m */,
 				FDB41D2317361F420069CD81 /* SceneGraph.h */,
 				FDD8E4C0173FBC4F005E4A96 /* SceneGraph.mm */,
-				FD921B9A173B9F8100786877 /* Animation.h */,
-				FD921B9B173B9F8100786877 /* Animation.m */,
+				FD2A91A8175A2A83008A3B3F /* Magnet.h */,
+				FD2A91A9175A2A83008A3B3F /* Magnet.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -530,6 +527,7 @@
 				FD978ACB17353FD500751253 /* background.png in Resources */,
 				FDD8E491173FBAFD005E4A96 /* Box2DConfig.cmake in Resources */,
 				FDD8E492173FBAFD005E4A96 /* CMakeLists.txt in Resources */,
+				FD2A91A7175A2A63008A3B3F /* magnet.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -543,10 +541,9 @@
 				FD36C137172F0F9F00519C51 /* main.m in Sources */,
 				FD36C13B172F0FA000519C51 /* AppDelegate.m in Sources */,
 				FD36C14D172F113200519C51 /* WorldViewController.m in Sources */,
-				FDB2866C17310F19001573A2 /* Sprite.mm in Sources */,
+				FDB2866C17310F19001573A2 /* Sprite.m in Sources */,
 				FD978AC817353E1900751253 /* Background.m in Sources */,
 				FDB41D2117361DE40069CD81 /* Node.m in Sources */,
-				FD921B9C173B9F8100786877 /* Animation.m in Sources */,
 				FDD8E493173FBAFD005E4A96 /* b2BroadPhase.cpp in Sources */,
 				FDD8E494173FBAFD005E4A96 /* b2CollideCircle.cpp in Sources */,
 				FDD8E495173FBAFD005E4A96 /* b2CollideEdge.cpp in Sources */,
@@ -593,8 +590,7 @@
 				FDD8E4BE173FBAFD005E4A96 /* b2WheelJoint.cpp in Sources */,
 				FDD8E4BF173FBAFD005E4A96 /* b2Rope.cpp in Sources */,
 				FDD8E4C1173FBC4F005E4A96 /* SceneGraph.mm in Sources */,
-				FD2A919F1759EA03008A3B3F /* Sprite.vsh in Sources */,
-				FD2A91A21759EA0F008A3B3F /* Sprite.fsh in Sources */,
+				FD2A91AA175A2A84008A3B3F /* Magnet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

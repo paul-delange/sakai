@@ -25,5 +25,6 @@
 - (void) setCenter: (CGPoint) center animated: (BOOL) animated;
 
 - (NSArray*) nodesIntersectingRect: (CGRect) rect;
+- (CGPoint) locationInWorld: (CGPoint) point;
 
 @end

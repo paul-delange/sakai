@@ -12,6 +12,7 @@
 
 @property (readonly, nonatomic) NSString* filename;
 @property (assign, nonatomic) CGFloat zDepth;
+@property (assign, nonatomic) BOOL dynamic;
 
 - (instancetype) initWithFilename: (NSString*) filename;
 - (CGSize) size;
