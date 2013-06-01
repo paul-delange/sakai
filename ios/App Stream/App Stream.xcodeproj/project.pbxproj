@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FD2A919F1759EA03008A3B3F /* Sprite.vsh in Sources */ = {isa = PBXBuildFile; fileRef = FD2A919E1759EA03008A3B3F /* Sprite.vsh */; };
+		FD2A91A21759EA0F008A3B3F /* Sprite.fsh in Sources */ = {isa = PBXBuildFile; fileRef = FD2A91A11759EA0F008A3B3F /* Sprite.fsh */; };
 		FD36C12B172F0F9F00519C51 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD36C12A172F0F9F00519C51 /* UIKit.framework */; };
 		FD36C12D172F0F9F00519C51 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD36C12C172F0F9F00519C51 /* Foundation.framework */; };
 		FD36C12F172F0F9F00519C51 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD36C12E172F0F9F00519C51 /* CoreGraphics.framework */; };
@@ -74,6 +76,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FD2A919E1759EA03008A3B3F /* Sprite.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Sprite.vsh; sourceTree = "<group>"; };
+		FD2A91A11759EA0F008A3B3F /* Sprite.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Sprite.fsh; sourceTree = "<group>"; };
 		FD36C126172F0F9F00519C51 /* App Stream.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "App Stream.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD36C12A172F0F9F00519C51 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		FD36C12C172F0F9F00519C51 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -252,6 +256,8 @@
 				FDB286671730E9E6001573A2 /* tile.png */,
 				FD36C132172F0F9F00519C51 /* App Stream-Info.plist */,
 				FD36C133172F0F9F00519C51 /* InfoPlist.strings */,
+				FD2A919E1759EA03008A3B3F /* Sprite.vsh */,
+				FD2A91A11759EA0F008A3B3F /* Sprite.fsh */,
 			);
 			name = Resources;
 			path = "App Stream";
@@ -587,6 +593,8 @@
 				FDD8E4BE173FBAFD005E4A96 /* b2WheelJoint.cpp in Sources */,
 				FDD8E4BF173FBAFD005E4A96 /* b2Rope.cpp in Sources */,
 				FDD8E4C1173FBC4F005E4A96 /* SceneGraph.mm in Sources */,
+				FD2A919F1759EA03008A3B3F /* Sprite.vsh in Sources */,
+				FD2A91A21759EA0F008A3B3F /* Sprite.fsh in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

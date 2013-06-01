@@ -124,11 +124,11 @@
 - (void) setOffset: (CGPoint)offset animated: (BOOL) animated {
     [self cancelAnimation];
     
-    GLKVector2 bgSize = _background.size;
+    CGSize bgSize = _background.size;
     CGFloat maxZoom = 1./self.minimumZoom;
     
-    CGFloat rangeX = bgSize.x / maxZoom;
-    CGFloat rangeY = bgSize.y / maxZoom;
+    CGFloat rangeX = bgSize.width / maxZoom;
+    CGFloat rangeY = bgSize.height / maxZoom;
     
     CGFloat maxXOffset = (rangeX-CGRectGetWidth(_viewRect))/2.f;
     CGFloat maxYOffset = (rangeY-CGRectGetHeight(_viewRect))/2.f;
@@ -215,7 +215,7 @@
     _body->SetTransform(b2Vec2(sprite.position.x / PTM_RATIO, sprite.position.y / PTM_RATIO), 0);
     
     b2Vec2 center = _body->GetWorldCenter();
-    //_body->ApplyLinearImpulse(initialForce, center);
+    _body->ApplyLinearImpulse(initialForce, center);
     
     NSParameterAssert(sprite.size.width == sprite.size.height);
     CGFloat radius = MAX(sprite.size.width, sprite.size.height) / 2.f;
@@ -234,33 +234,24 @@
 
 - (void) setBackground: (Background*) background 
 {
-#if DEBUG
-    CGRect screen = [UIScreen mainScreen].bounds;
-    screen.size.width /= self.minimumZoom;
-    screen.size.height /= self.minimumZoom;
-    GLKVector2 size = background.size;
-    
-    NSAssert4(size.x >= screen.size.width, @"Background is %dx%d and the minimum is %dx%d", 
-             (int)size.x, (int)size.y, 
-             (int)screen.size.width, (int)screen.size.height);
-    NSAssert4(size.y >= screen.size.height, @"Background is %dx%d and the minimum is %dx%d", 
-             (int)size.x, (int)size.y, 
-             (int)screen.size.width, (int)screen.size.height);
-#endif
-    
     if( background != _background ) {
         if(_background ) {
             NSParameterAssert([_nodes containsObject: _background]);
             [_nodes removeObject: _background];
         }
+        
         _background = background;
         
-        if( _background )
-            [_nodes addObject: _background];
+        if( background )
+            [_nodes addObject: background];
     }
 }
 
-- (NSSet*) nodesIntersectingRect: (CGRect) rect 
+- (Background*) background {
+    return _background;
+}
+
+- (NSArray*) nodesIntersectingRect: (CGRect) rect 
 {
     CGRect visible = [self visibleRect];
     
@@ -272,9 +263,8 @@
     
     NSPredicate* inRectPredicate = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
         CGRect box = [evaluatedObject projectionInScreenRect: rect];
-        //NSLog(@"Box: %@", NSStringFromCGRect(box));
         if( evaluatedObject == _background )
-            return YES;
+            return NO;
         
         if( CGRectGetMinX(box) > CGRectGetMaxX(visible) )
             return NO;
@@ -286,10 +276,11 @@
             return NO;
         
         return YES;
-        //return CGRectIntersectsRect(visible, box);
     }];
     
-    return [_nodes filteredSetUsingPredicate: inRectPredicate];
+    NSSet* others = [_nodes filteredSetUsingPredicate: inRectPredicate];
+    NSArray* world = [NSArray arrayWithObject: _background];
+    return [world arrayByAddingObjectsFromArray: others.allObjects];
 }
 
 #pragma mark - GLKViewControllerDelegate
@@ -331,7 +322,8 @@
     GLKMatrix4 world = _background.modelViewMatrix;
     world.m30 = self.offset.x;
     world.m31 = -self.offset.y;
-
+    world.m32 = -0.5;
+    
     [_background setModelViewMatrix: world];
 }
 

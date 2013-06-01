@@ -11,6 +11,7 @@
 @interface Sprite : Node
 
 @property (readonly, nonatomic) NSString* filename;
+@property (assign, nonatomic) CGFloat zDepth;
 
 - (instancetype) initWithFilename: (NSString*) filename;
 - (CGSize) size;

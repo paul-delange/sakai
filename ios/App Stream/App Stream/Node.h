@@ -33,5 +33,6 @@
 
 @end
 
+extern BOOL GLKMatrix4EqualMatrix4(GLKMatrix4 matrix1, GLKMatrix4 matrix2);
 extern GLKVector3 GLKMatrix4GetScale(GLKMatrix4 matrix);
 extern GLKVector3 GLKMatrix4GetTranslation(GLKMatrix4 matrix);

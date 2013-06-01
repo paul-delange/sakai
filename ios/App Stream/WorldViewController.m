@@ -71,13 +71,14 @@
     view.delegate = self;
     
     Background* background = [Background new];
+    background.position = CGPointMake(100, 100);
     [_graph setBackground: background];
     
     NSUInteger multiplier = 4;
     for(NSUInteger i=0;i<multiplier;i++) {
         for(NSUInteger j=0;j<multiplier;j++) {
             Sprite* tile = [[Sprite alloc] initWithFilename: @"tile.png"];
-            tile.position = CGPointMake((i-multiplier/2.f)*128, (j-multiplier/2.f)*128);
+            tile.position = CGPointMake((i-multiplier/2.f)*128+2, (j-multiplier/2.f)*128+2);
             [_graph addSprite: tile];
         }
     }
@@ -166,9 +167,10 @@
 #pragma mark - GLKViewDelegate
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect 
 {
-    NSArray* nodes = [_graph nodesIntersectingRect: rect];
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glEnable(GL_DEPTH_TEST);
     
-    NSLog(@"Draw %d nodes", nodes.count);
+    NSArray* nodes = [_graph nodesIntersectingRect: rect];
     
     for(Node* node in nodes) {
 #if DEBUG
@@ -176,7 +178,7 @@
             [node debugRender];
 #endif
         //CGRect proj = [node projectionInScreenRect: rect];
-        //NSLog(@"Draw: %@", NSStringFromRect(proj));
+        //NSLog(@"Draw: %@", NSStringFromCGRect(proj));
         [node render];
     }
 }

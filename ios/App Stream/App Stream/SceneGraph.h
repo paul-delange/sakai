@@ -20,9 +20,10 @@
 - (void) addSprite: (Sprite*) sprite;
 
 - (void) setBackground: (Background*) background;
+- (Background*) background;
 
 - (void) setCenter: (CGPoint) center animated: (BOOL) animated;
 
-- (NSSet*) nodesIntersectingRect: (CGRect) rect;
+- (NSArray*) nodesIntersectingRect: (CGRect) rect;
 
 @end

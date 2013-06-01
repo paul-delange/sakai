@@ -7,10 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Node.h"
+#import "Sprite.h"
 
-@interface Background : Node
-
-@property (readonly, nonatomic) GLKVector2 size;
+@interface Background : Sprite
 
 @end

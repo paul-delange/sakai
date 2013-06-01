@@ -10,143 +10,15 @@
 
 #import <GLKit/GLKit.h>
 
-#define Z_DEPTH -0.5
-
-#define BUFFER_OFFSET(i) ((char *)NULL + (i))
-
-@interface Background () {
-    GLKTextureInfo* _texture;
-    GLKBaseEffect* _effect;
-    
-    GLuint _vertexBuffer;
-    GLuint _vertexArray;
-}
-
-@end
-
 @implementation Background
 
 - (id) init 
 {
-    self = [super init];
+    self = [super initWithFilename: @"background.png"];
     if( self ) {
-        NSParameterAssert([EAGLContext currentContext]);
-        
-        if(!_texture) {
-            NSError* error;
-            NSDictionary* params = [NSDictionary dictionaryWithObject: [NSNumber numberWithBool: YES]
-                                                               forKey: GLKTextureLoaderOriginBottomLeft];
-            NSString* path = [[NSBundle mainBundle] pathForResource:@"background.png"
-                                                             ofType: nil];
-            NSParameterAssert([[NSFileManager defaultManager] fileExistsAtPath: path]);
-            _texture = [GLKTextureLoader textureWithContentsOfFile: path
-                                                           options: params
-                                                             error: &error];
-            NSAssert(!error, @"Error loading background texture: %@", error);
-            NSParameterAssert(_texture.width == _texture.height);   //Should be square for good aspect ratio
-            
-            NSParameterAssert(_texture);
-            
-            CGFloat halfWidth = _texture.width / 2.f;
-            CGFloat halfHeight = _texture.height / 2.f;
-            
-            //x, y, z, normX, normY, normZ, texU, texV
-            const CGFloat gCubeVertexData[] = {
-                -halfWidth, -halfHeight, Z_DEPTH,   0.0, 0.0, -1.0,   0.0, 0.0,
-                halfWidth, -halfHeight, Z_DEPTH,    0.0, 0.0, -1.0,   1.0, 0.0,
-                -halfWidth, halfHeight, Z_DEPTH,    0.0, 0.0, -1.0,   0.0, 1.0,
-                halfWidth, halfHeight, Z_DEPTH,     0.0, 0.0, -1.0,   1.0, 1.0
-            };
-            
-            glGenVertexArraysOES(1, &_vertexArray);
-            glBindVertexArrayOES(_vertexArray);
-            
-            glGenBuffers(1, &_vertexBuffer);
-            glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
-            glBufferData(GL_ARRAY_BUFFER, sizeof(gCubeVertexData), gCubeVertexData, GL_STATIC_DRAW);
-            
-            glEnableVertexAttribArray(GLKVertexAttribPosition);
-            glVertexAttribPointer(GLKVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, 32, BUFFER_OFFSET(0));
-            glEnableVertexAttribArray(GLKVertexAttribNormal);
-            glVertexAttribPointer(GLKVertexAttribNormal, 3, GL_FLOAT, GL_FALSE, 32, BUFFER_OFFSET(12));
-            glEnableVertexAttribArray(GLKVertexAttribTexCoord0);
-            glVertexAttribPointer(GLKVertexAttribTexCoord0, 2, GL_FLOAT, GL_FALSE, 32, BUFFER_OFFSET(24));
-            
-            glBindBuffer(GL_ARRAY_BUFFER, 0);
-            
-            _effect = [[GLKBaseEffect alloc] init];
-            _effect.texture2d0.name = _texture.name;
-            _effect.texture2d0.envMode = GLKTextureEnvModeReplace;
-
-        }
+       
     }
     return self;
-}
-
-- (void) dealloc 
-{
-    glDeleteBuffers(1, &_vertexBuffer);
-    glDeleteVertexArraysOES(1, &_vertexArray);
-    _effect = nil;
-}
-
-- (GLKVector2) size {
-    return GLKVector2Make(_texture.width, _texture.height);
-}
-
-#pragma mark - Renderable
-- (void) render
-{   
-    
-    glBindVertexArrayOES(_vertexArray);
-    
-    [_effect prepareToDraw];
-    
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-}
-
-- (CGRect) projectionInScreenRect: (CGRect) viewport {
-    CGFloat halfWidth = _texture.width / 2.f;
-    CGFloat halfHeight = _texture.height / 2.f;
-    
-    GLKVector3 upperLeft = GLKVector3Make(-halfWidth, halfHeight, Z_DEPTH);
-    GLKVector3 lowerRight = GLKVector3Make(halfWidth, -halfHeight, Z_DEPTH);
-    
-    GLKMatrix4 model = _effect.transform.modelviewMatrix;
-    GLKMatrix4 proj = _effect.transform.projectionMatrix;
-    
-    int vp[4] = {
-        0,
-        0,
-        (int)CGRectGetWidth(viewport),
-        (int)CGRectGetHeight(viewport)
-    };
-    
-    GLKVector3 ulViewport = GLKMathProject(upperLeft, model, proj, vp);
-    GLKVector3 lrViewport = GLKMathProject(lowerRight, model, proj, vp);
-    
-    return CGRectMake(ulViewport.x, CGRectGetMaxY(viewport)-ulViewport.y, 
-                      lrViewport.x, CGRectGetMaxX(viewport)-lrViewport.y);
-}
-
-- (GLKMatrix4) modelViewMatrix {
-    return _effect.transform.modelviewMatrix;
-}
-
-- (void) setModelViewMatrix: (GLKMatrix4) modelViewMatrix 
-{
-    NSParameterAssert(_effect);
-    _effect.transform.modelviewMatrix = modelViewMatrix;
-}
-
-- (GLKMatrix4) projectionMatrix {
-    return _effect.transform.projectionMatrix;
-}
-
-- (void) setProjectionMatrix: (GLKMatrix4) projectionMatrix
-{
-    NSParameterAssert(_effect);
-    _effect.transform.projectionMatrix = projectionMatrix;
 }
 
 @end
