@@ -34,6 +34,14 @@
 		FD6DF4DE17F2BD7C00E708A9 /* Participant.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6DF4DD17F2BD7C00E708A9 /* Participant.m */; };
 		FD6DF4DF17F2BD7C00E708A9 /* Participant.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6DF4DD17F2BD7C00E708A9 /* Participant.m */; };
 		FD6DF4E217F2DFBE00E708A9 /* ParticipantsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6DF4E117F2DFBE00E708A9 /* ParticipantsViewController.m */; };
+		FD6DF4E517F2E03A00E708A9 /* ParticipantTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6DF4E417F2E03A00E708A9 /* ParticipantTableViewCell.m */; };
+		FD6DF4E717F2FD5100E708A9 /* libzbar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD6DF4E617F2FD5100E708A9 /* libzbar.a */; };
+		FD6DF4E917F2FFA800E708A9 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FD6DF4E817F2FFA800E708A9 /* libiconv.dylib */; };
+		FD6DF4EB17F2FFAE00E708A9 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD6DF4EA17F2FFAE00E708A9 /* AVFoundation.framework */; };
+		FD6DF4ED17F2FFB300E708A9 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD6DF4EC17F2FFB300E708A9 /* CoreMedia.framework */; };
+		FD6DF4EF17F2FFB700E708A9 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD6DF4EE17F2FFB700E708A9 /* CoreVideo.framework */; };
+		FD6DF4F117F2FFBD00E708A9 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD6DF4F017F2FFBD00E708A9 /* QuartzCore.framework */; };
+		FD6DF4F417F3006B00E708A9 /* ScannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6DF4F317F3006B00E708A9 /* ScannerViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +86,16 @@
 		FD6DF4DD17F2BD7C00E708A9 /* Participant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Participant.m; sourceTree = "<group>"; };
 		FD6DF4E017F2DFBE00E708A9 /* ParticipantsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticipantsViewController.h; sourceTree = "<group>"; };
 		FD6DF4E117F2DFBE00E708A9 /* ParticipantsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticipantsViewController.m; sourceTree = "<group>"; };
+		FD6DF4E317F2E03A00E708A9 /* ParticipantTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticipantTableViewCell.h; sourceTree = "<group>"; };
+		FD6DF4E417F2E03A00E708A9 /* ParticipantTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticipantTableViewCell.m; sourceTree = "<group>"; };
+		FD6DF4E617F2FD5100E708A9 /* libzbar.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libzbar.a; path = "zbar/build/Debug-iphoneos/libzbar.a"; sourceTree = "<group>"; };
+		FD6DF4E817F2FFA800E708A9 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
+		FD6DF4EA17F2FFAE00E708A9 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		FD6DF4EC17F2FFB300E708A9 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		FD6DF4EE17F2FFB700E708A9 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		FD6DF4F017F2FFBD00E708A9 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		FD6DF4F217F3006B00E708A9 /* ScannerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScannerViewController.h; sourceTree = "<group>"; };
+		FD6DF4F317F3006B00E708A9 /* ScannerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScannerViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +103,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD6DF4F117F2FFBD00E708A9 /* QuartzCore.framework in Frameworks */,
+				FD6DF4EF17F2FFB700E708A9 /* CoreVideo.framework in Frameworks */,
+				FD6DF4ED17F2FFB300E708A9 /* CoreMedia.framework in Frameworks */,
+				FD6DF4EB17F2FFAE00E708A9 /* AVFoundation.framework in Frameworks */,
+				FD6DF4E917F2FFA800E708A9 /* libiconv.dylib in Frameworks */,
+				FD6DF4E717F2FD5100E708A9 /* libzbar.a in Frameworks */,
 				FD6DF4D117F2BADD00E708A9 /* SystemConfiguration.framework in Frameworks */,
 				FD6DF4CF17F2BAD900E708A9 /* Security.framework in Frameworks */,
 				FD6DF4CD17F2BAD500E708A9 /* MobileCoreServices.framework in Frameworks */,
@@ -132,6 +156,12 @@
 		FD2B32BC17F2B7F2002E87A8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FD6DF4F017F2FFBD00E708A9 /* QuartzCore.framework */,
+				FD6DF4EE17F2FFB700E708A9 /* CoreVideo.framework */,
+				FD6DF4EC17F2FFB300E708A9 /* CoreMedia.framework */,
+				FD6DF4EA17F2FFAE00E708A9 /* AVFoundation.framework */,
+				FD6DF4E817F2FFA800E708A9 /* libiconv.dylib */,
+				FD6DF4E617F2FD5100E708A9 /* libzbar.a */,
 				FD6DF4D017F2BADD00E708A9 /* SystemConfiguration.framework */,
 				FD6DF4CE17F2BAD900E708A9 /* Security.framework */,
 				FD6DF4CC17F2BAD500E708A9 /* MobileCoreServices.framework */,
@@ -184,6 +214,8 @@
 				FD2B32CD17F2B7F2002E87A8 /* AppDelegate.m */,
 				FD6DF4E017F2DFBE00E708A9 /* ParticipantsViewController.h */,
 				FD6DF4E117F2DFBE00E708A9 /* ParticipantsViewController.m */,
+				FD6DF4F217F3006B00E708A9 /* ScannerViewController.h */,
+				FD6DF4F317F3006B00E708A9 /* ScannerViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -191,6 +223,8 @@
 		FD2B32F317F2B80B002E87A8 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FD6DF4E317F2E03A00E708A9 /* ParticipantTableViewCell.h */,
+				FD6DF4E417F2E03A00E708A9 /* ParticipantTableViewCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -372,6 +406,8 @@
 				FD6DF4DE17F2BD7C00E708A9 /* Participant.m in Sources */,
 				FD2B32CA17F2B7F2002E87A8 /* main.m in Sources */,
 				FD6DF4D417F2BB4100E708A9 /* Model.xcdatamodeld in Sources */,
+				FD6DF4F417F3006B00E708A9 /* ScannerViewController.m in Sources */,
+				FD6DF4E517F2E03A00E708A9 /* ParticipantTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -511,6 +547,8 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"\"$(BUILT_PRODUCTS_DIR)/../../Headers\"",
+					"\"zbar/include\"",
+					"\"zbar/iphone/include\"",
 				);
 				INFOPLIST_FILE = "QREvents/QREvents-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
@@ -537,6 +575,8 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"\"$(BUILT_PRODUCTS_DIR)/../../Headers\"",
+					"\"zbar/include\"",
+					"\"zbar/iphone/include\"",
 				);
 				INFOPLIST_FILE = "QREvents/QREvents-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;

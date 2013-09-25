@@ -10,4 +10,9 @@
 
 @interface ParticipantsViewController : UITableViewController
 
+@property (strong, nonatomic) IBOutlet UIBarButtonItem* settingsButton;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem* codeButton;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem* refreshButton;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem* searchButton;
+
 @end

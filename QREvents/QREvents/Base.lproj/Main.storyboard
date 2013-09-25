@@ -5,6 +5,24 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
     </dependencies>
     <scenes>
+        <!--Scanner View Controller-->
+        <scene sceneID="Rax-k7-peG">
+            <objects>
+                <viewController id="Rn2-DZ-aCy" customClass="ScannerViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="hRB-Va-XwQ"/>
+                        <viewControllerLayoutGuide type="bottom" id="Jyx-HV-YK5"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="HKY-fk-Add" customClass="ZBarReaderView">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="p05-ZU-t0b" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1587" y="-1827"/>
+        </scene>
         <!--Participants View Controller-->
         <scene sceneID="xZt-Ca-SLk">
             <objects>
@@ -14,7 +32,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Hh9-Tq-ZuE">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ParticipantTableViewCell" id="Hh9-Tq-ZuE" customClass="ParticipantTableViewCell">
                                 <rect key="frame" x="0.0" y="86" width="768" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Hh9-Tq-ZuE" id="sTr-ke-Ucs">
@@ -29,8 +47,32 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="wL0-qd-bXA"/>
+                    <connections>
+                        <outlet property="codeButton" destination="vZE-xE-3mc" id="gqR-B3-MlF"/>
+                        <outlet property="refreshButton" destination="9oJ-H9-7WV" id="W0h-WE-TUn"/>
+                        <outlet property="searchButton" destination="N89-yr-h8X" id="oad-xl-t0h"/>
+                        <outlet property="settingsButton" destination="RWH-hw-9qC" id="PT8-39-zV0"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EqU-GA-qdE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <barButtonItem systemItem="refresh" id="9oJ-H9-7WV">
+                    <connections>
+                        <action selector="refreshPushed:" destination="ug3-GS-11k" id="of8-kY-SGM"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem systemItem="camera" id="vZE-xE-3mc">
+                    <connections>
+                        <segue destination="Rn2-DZ-aCy" kind="popover" identifier="ScannerSegue" popoverAnchorBarButtonItem="vZE-xE-3mc" id="1KK-MZ-fy6">
+                            <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                        </segue>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem systemItem="search" id="N89-yr-h8X">
+                    <connections>
+                        <action selector="searchPushed:" destination="ug3-GS-11k" id="ukB-1Y-hsd"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem systemItem="action" id="RWH-hw-9qC"/>
             </objects>
             <point key="canvasLocation" x="202" y="-711"/>
         </scene>

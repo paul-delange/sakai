@@ -10,4 +10,7 @@
 
 @interface ParticipantTableViewCell : UITableViewCell
 
+@property (weak, nonatomic) UILabel* nameLabel;
+@property (weak, nonatomic) UILabel* organizationLabel;
+
 @end

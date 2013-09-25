@@ -3,4 +3,4 @@
 	url = https://github.com/RestKit/RestKit.git
 [submodule "QREvents/zbar"]
 	path = QREvents/zbar
-	url = https://github.com/twotoasters/zbar.git
+	url = https://github.com/ZBar/ZBar.git
