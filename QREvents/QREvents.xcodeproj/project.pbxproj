@@ -33,6 +33,7 @@
 		FD6DF4DB17F2BD6E00E708A9 /* _Participant.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6DF4D917F2BD6E00E708A9 /* _Participant.m */; };
 		FD6DF4DE17F2BD7C00E708A9 /* Participant.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6DF4DD17F2BD7C00E708A9 /* Participant.m */; };
 		FD6DF4DF17F2BD7C00E708A9 /* Participant.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6DF4DD17F2BD7C00E708A9 /* Participant.m */; };
+		FD6DF4E217F2DFBE00E708A9 /* ParticipantsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6DF4E117F2DFBE00E708A9 /* ParticipantsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +76,8 @@
 		FD6DF4D917F2BD6E00E708A9 /* _Participant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Participant.m; sourceTree = "<group>"; };
 		FD6DF4DC17F2BD7C00E708A9 /* Participant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Participant.h; sourceTree = "<group>"; };
 		FD6DF4DD17F2BD7C00E708A9 /* Participant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Participant.m; sourceTree = "<group>"; };
+		FD6DF4E017F2DFBE00E708A9 /* ParticipantsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticipantsViewController.h; sourceTree = "<group>"; };
+		FD6DF4E117F2DFBE00E708A9 /* ParticipantsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticipantsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,6 +182,8 @@
 				FD2B32D317F2B7F2002E87A8 /* ViewController.m */,
 				FD2B32CC17F2B7F2002E87A8 /* AppDelegate.h */,
 				FD2B32CD17F2B7F2002E87A8 /* AppDelegate.m */,
+				FD6DF4E017F2DFBE00E708A9 /* ParticipantsViewController.h */,
+				FD6DF4E117F2DFBE00E708A9 /* ParticipantsViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -363,6 +368,7 @@
 				FD6DF4DA17F2BD6E00E708A9 /* _Participant.m in Sources */,
 				FD2B32D417F2B7F2002E87A8 /* ViewController.m in Sources */,
 				FD2B32CE17F2B7F2002E87A8 /* AppDelegate.m in Sources */,
+				FD6DF4E217F2DFBE00E708A9 /* ParticipantsViewController.m in Sources */,
 				FD6DF4DE17F2BD7C00E708A9 /* Participant.m in Sources */,
 				FD2B32CA17F2B7F2002E87A8 /* main.m in Sources */,
 				FD6DF4D417F2BB4100E708A9 /* Model.xcdatamodeld in Sources */,
