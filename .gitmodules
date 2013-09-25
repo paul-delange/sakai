@@ -1,0 +1,3 @@
+[submodule "QREvents/RestKit"]
+	path = QREvents/RestKit
+	url = https://github.com/RestKit/RestKit.git
