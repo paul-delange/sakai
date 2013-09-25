@@ -19,4 +19,6 @@
 
     #import <RestKit/RestKit.h>
 
+    #define kWebServiceListPath             @"particpants"
+    #define kWebServiceIndividualPath       @"participants/:user_id"
 #endif

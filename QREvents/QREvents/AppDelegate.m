@@ -49,8 +49,8 @@
     
     //Configure the endpoints
     {
-        NSString* listPath = @"particpants";
-        NSString* individualPath = @"participants/:user_id";
+        NSString* listPath = kWebServiceListPath;
+        NSString* individualPath = kWebServiceIndividualPath;
         
         RKEntityMapping* getMapping = [RKEntityMapping mappingForEntityForName: NSStringFromClass([Participant class])
                                                           inManagedObjectStore: store];
