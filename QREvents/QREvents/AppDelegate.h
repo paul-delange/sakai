@@ -8,10 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+extern NSString* kApplicationResetNotification;
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) RKObjectManager* objectManager;
 
 - (RKObjectManager*) objectManagerWithBaseURL: (NSURL*) baseURL andEventName: (NSString*) uniqueEventName;
+
+- (void) showConnectionViewController;
+- (void) reset;
 
 @end

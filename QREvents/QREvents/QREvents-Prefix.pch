@@ -21,4 +21,7 @@
 
     #define kWebServiceListPath             @"particpants"
     #define kWebServiceIndividualPath       @"participants/:user_id"
+
+    #define kAppName()  ([[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"])
+    #define kAppVersion() ([[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString*)kCFBundleVersionKey])
 #endif

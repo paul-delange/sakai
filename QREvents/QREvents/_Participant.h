@@ -12,11 +12,13 @@ extern const struct ParticipantAttributes {
 } ParticipantAttributes;
 
 extern const struct ParticipantRelationships {
+	__unsafe_unretained NSString *event;
 } ParticipantRelationships;
 
 extern const struct ParticipantFetchedProperties {
 } ParticipantFetchedProperties;
 
+@class Event;
 
 
 
@@ -80,6 +82,13 @@ extern const struct ParticipantFetchedProperties {
 
 
 
+@property (nonatomic, strong) Event *event;
+
+//- (BOOL)validateEvent:(id*)value_ error:(NSError**)error_;
+
+
+
+
 
 @end
 
@@ -115,6 +124,11 @@ extern const struct ParticipantFetchedProperties {
 - (void)setPrimitivePrimaryKeyValue:(int16_t)value_;
 
 
+
+
+
+- (Event*)primitiveEvent;
+- (void)setPrimitiveEvent:(Event*)value;
 
 
 @end

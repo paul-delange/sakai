@@ -11,6 +11,7 @@ const struct ParticipantAttributes ParticipantAttributes = {
 };
 
 const struct ParticipantRelationships ParticipantRelationships = {
+	.event = @"event",
 };
 
 const struct ParticipantFetchedProperties ParticipantFetchedProperties = {
@@ -100,6 +101,10 @@ const struct ParticipantFetchedProperties ParticipantFetchedProperties = {
 
 
 
+
+@dynamic event;
+
+	
 
 
 

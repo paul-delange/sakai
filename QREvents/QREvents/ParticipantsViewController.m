@@ -14,14 +14,16 @@
 
 #define kParticipantTableViewCellIdentifier (NSStringFromClass([ParticipantTableViewCell class]))
 
-#define kSegueScannerPopover @"ScannerSegue"
+#define kSegueScannerPopover    @"ScannerSegue"
+#define kSegueSettingsPopover   @"SettingsSegue"
 
 @interface ParticipantsViewController () <UISearchBarDelegate, UISearchDisplayDelegate> {
     BOOL _canResignSearchBar;
 }
 
 @property (strong, nonatomic) UISearchDisplayController* searchController;
-@property (strong, nonatomic) UIPopoverController* scanController;
+@property (weak, nonatomic) UIPopoverController* scanController;
+@property (weak, nonatomic) UIPopoverController* settingsController;
 @property (strong, nonatomic) NSFetchedResultsController* resultsController;
 
 @end
@@ -30,6 +32,7 @@
 
 - (IBAction) searchPushed: (id)sender {
     [self.scanController dismissPopoverAnimated: YES];
+    [self.settingsController dismissPopoverAnimated: YES];
     
     UISearchBar* searchBar = [[UISearchBar alloc] initWithFrame: CGRectMake(0, 0, 160, 37)];
     searchBar.delegate = self;
@@ -51,12 +54,9 @@
     [searchBar becomeFirstResponder];
 }
 
-- (IBAction) settingsPushed: (id)sender {
-    
-}
-
 - (IBAction) refreshPushed: (id)sender {
     [self.scanController dismissPopoverAnimated: YES];
+    [self.settingsController dismissPopoverAnimated: YES];
     [self.searchController setActive: NO animated: YES];
     
     UIActivityIndicatorView* activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: UIActivityIndicatorViewStyleGray];
@@ -83,6 +83,30 @@
 - (RKObjectManager*) objectManager {
     NSURL* url = [NSURL URLWithString: @"http://www.imaios.com"];
     return [[self appDelegate] objectManagerWithBaseURL: url andEventName: @"I Rock"];
+}
+
+- (void) eventReset: (NSNotification*) notification {
+    [self.settingsController dismissPopoverAnimated: YES];
+    
+    [[self appDelegate] showConnectionViewController];
+}
+
+#pragma mark - NSObject
+- (id) initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder: aDecoder];
+    if( self ) {
+        [[NSNotificationCenter defaultCenter] addObserver: self
+                                                 selector: @selector(eventReset:)
+                                                     name: kApplicationResetNotification
+                                                   object: nil];
+    }
+    return self;
+}
+
+- (void) dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver: self
+                                                    name: kApplicationResetNotification
+                                                  object: nil];
 }
 
 #pragma mark - UIViewController
@@ -120,6 +144,9 @@
         }
 #endif
     }
+    else if( [identifier isEqualToString: kSegueSettingsPopover] ) {
+        return ![self.settingsController isPopoverVisible];
+    }
     
     return YES;
 }
@@ -130,8 +157,14 @@
         
         UIStoryboardPopoverSegue* popoverSegue = (UIStoryboardPopoverSegue*)segue;
         if( [segue.identifier isEqualToString: kSegueScannerPopover] ) {
+            [self.settingsController dismissPopoverAnimated: YES];
             popoverSegue.popoverController.popoverContentSize = CGSizeMake(320, 320);
             self.scanController = popoverSegue.popoverController;
+        }
+        else if( [segue.identifier isEqualToString: kSegueSettingsPopover] ) {
+            [self.scanController dismissPopoverAnimated: YES];
+            popoverSegue.popoverController.popoverContentSize = CGSizeMake(256, 320);
+            self.settingsController = popoverSegue.popoverController;
         }
     }
 }

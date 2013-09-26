@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FD20D93517F40AAD003DBBBE /* ConnectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD20D93417F40AAD003DBBBE /* ConnectViewController.m */; };
 		FD2B32BE17F2B7F2002E87A8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD2B32BD17F2B7F2002E87A8 /* Foundation.framework */; };
 		FD2B32C017F2B7F2002E87A8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD2B32BF17F2B7F2002E87A8 /* CoreGraphics.framework */; };
 		FD2B32C217F2B7F2002E87A8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD2B32C117F2B7F2002E87A8 /* UIKit.framework */; };
@@ -14,7 +15,6 @@
 		FD2B32CA17F2B7F2002E87A8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FD2B32C917F2B7F2002E87A8 /* main.m */; };
 		FD2B32CE17F2B7F2002E87A8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FD2B32CD17F2B7F2002E87A8 /* AppDelegate.m */; };
 		FD2B32D117F2B7F2002E87A8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD2B32CF17F2B7F2002E87A8 /* Main.storyboard */; };
-		FD2B32D417F2B7F2002E87A8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD2B32D317F2B7F2002E87A8 /* ViewController.m */; };
 		FD2B32D617F2B7F2002E87A8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD2B32D517F2B7F2002E87A8 /* Images.xcassets */; };
 		FD2B32DD17F2B7F2002E87A8 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD2B32DC17F2B7F2002E87A8 /* XCTest.framework */; };
 		FD2B32DE17F2B7F2002E87A8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD2B32BD17F2B7F2002E87A8 /* Foundation.framework */; };
@@ -42,6 +42,7 @@
 		FD6DF4EF17F2FFB700E708A9 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD6DF4EE17F2FFB700E708A9 /* CoreVideo.framework */; };
 		FD6DF4F117F2FFBD00E708A9 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD6DF4F017F2FFBD00E708A9 /* QuartzCore.framework */; };
 		FD6DF4F417F3006B00E708A9 /* ScannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6DF4F317F3006B00E708A9 /* ScannerViewController.m */; };
+		FD6DF4F717F30DA800E708A9 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6DF4F617F30DA800E708A9 /* SettingsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FD20D93317F40AAD003DBBBE /* ConnectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectViewController.h; sourceTree = "<group>"; };
+		FD20D93417F40AAD003DBBBE /* ConnectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectViewController.m; sourceTree = "<group>"; };
 		FD2B32BA17F2B7F2002E87A8 /* QREvents.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QREvents.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD2B32BD17F2B7F2002E87A8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FD2B32BF17F2B7F2002E87A8 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -66,15 +69,13 @@
 		FD2B32CC17F2B7F2002E87A8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		FD2B32CD17F2B7F2002E87A8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		FD2B32D017F2B7F2002E87A8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		FD2B32D217F2B7F2002E87A8 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		FD2B32D317F2B7F2002E87A8 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		FD2B32D517F2B7F2002E87A8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FD2B32DB17F2B7F2002E87A8 /* QREventsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QREventsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD2B32DC17F2B7F2002E87A8 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		FD2B32E417F2B7F2002E87A8 /* QREventsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "QREventsTests-Info.plist"; sourceTree = "<group>"; };
 		FD2B32E617F2B7F2002E87A8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FD2B32E817F2B7F3002E87A8 /* QREventsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QREventsTests.m; sourceTree = "<group>"; };
-		FD6DF4C617F2BAB400E708A9 /* libRestKit.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libRestKit.a; path = "RestKit/Build/Products/Debug-iphoneos/libRestKit.a"; sourceTree = "<group>"; };
+		FD6DF4C617F2BAB400E708A9 /* libRestKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libRestKit.a; path = "RestKit/Build/Products/Debug-iphoneos/libRestKit.a"; sourceTree = "<group>"; };
 		FD6DF4C817F2BACA00E708A9 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		FD6DF4CA17F2BAD000E708A9 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		FD6DF4CC17F2BAD500E708A9 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -88,7 +89,7 @@
 		FD6DF4E117F2DFBE00E708A9 /* ParticipantsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticipantsViewController.m; sourceTree = "<group>"; };
 		FD6DF4E317F2E03A00E708A9 /* ParticipantTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticipantTableViewCell.h; sourceTree = "<group>"; };
 		FD6DF4E417F2E03A00E708A9 /* ParticipantTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticipantTableViewCell.m; sourceTree = "<group>"; };
-		FD6DF4E617F2FD5100E708A9 /* libzbar.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libzbar.a; path = "zbar/build/Debug-iphoneos/libzbar.a"; sourceTree = "<group>"; };
+		FD6DF4E617F2FD5100E708A9 /* libzbar.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzbar.a; path = "zbar/build/Debug-iphoneos/libzbar.a"; sourceTree = "<group>"; };
 		FD6DF4E817F2FFA800E708A9 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		FD6DF4EA17F2FFAE00E708A9 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		FD6DF4EC17F2FFB300E708A9 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -96,6 +97,8 @@
 		FD6DF4F017F2FFBD00E708A9 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		FD6DF4F217F3006B00E708A9 /* ScannerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScannerViewController.h; sourceTree = "<group>"; };
 		FD6DF4F317F3006B00E708A9 /* ScannerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScannerViewController.m; sourceTree = "<group>"; };
+		FD6DF4F517F30DA800E708A9 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		FD6DF4F617F30DA800E708A9 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,14 +211,16 @@
 		FD2B32F217F2B803002E87A8 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				FD2B32D217F2B7F2002E87A8 /* ViewController.h */,
-				FD2B32D317F2B7F2002E87A8 /* ViewController.m */,
 				FD2B32CC17F2B7F2002E87A8 /* AppDelegate.h */,
 				FD2B32CD17F2B7F2002E87A8 /* AppDelegate.m */,
 				FD6DF4E017F2DFBE00E708A9 /* ParticipantsViewController.h */,
 				FD6DF4E117F2DFBE00E708A9 /* ParticipantsViewController.m */,
 				FD6DF4F217F3006B00E708A9 /* ScannerViewController.h */,
 				FD6DF4F317F3006B00E708A9 /* ScannerViewController.m */,
+				FD6DF4F517F30DA800E708A9 /* SettingsViewController.h */,
+				FD6DF4F617F30DA800E708A9 /* SettingsViewController.m */,
+				FD20D93317F40AAD003DBBBE /* ConnectViewController.h */,
+				FD20D93417F40AAD003DBBBE /* ConnectViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -400,12 +405,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD6DF4DA17F2BD6E00E708A9 /* _Participant.m in Sources */,
-				FD2B32D417F2B7F2002E87A8 /* ViewController.m in Sources */,
 				FD2B32CE17F2B7F2002E87A8 /* AppDelegate.m in Sources */,
 				FD6DF4E217F2DFBE00E708A9 /* ParticipantsViewController.m in Sources */,
 				FD6DF4DE17F2BD7C00E708A9 /* Participant.m in Sources */,
 				FD2B32CA17F2B7F2002E87A8 /* main.m in Sources */,
 				FD6DF4D417F2BB4100E708A9 /* Model.xcdatamodeld in Sources */,
+				FD6DF4F717F30DA800E708A9 /* SettingsViewController.m in Sources */,
+				FD20D93517F40AAD003DBBBE /* ConnectViewController.m in Sources */,
 				FD6DF4F417F3006B00E708A9 /* ScannerViewController.m in Sources */,
 				FD6DF4E517F2E03A00E708A9 /* ParticipantTableViewCell.m in Sources */,
 			);

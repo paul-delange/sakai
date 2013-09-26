@@ -37,6 +37,10 @@
     return self;
 }
 
+- (void) dealloc {
+    [[self readerView] setReaderDelegate: nil];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
