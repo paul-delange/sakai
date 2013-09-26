@@ -55,6 +55,7 @@
 }
 
 - (IBAction) refreshPushed: (id)sender {
+    NSParameterAssert([self objectManager]);
     [self.scanController dismissPopoverAnimated: YES];
     [self.settingsController dismissPopoverAnimated: YES];
     [self.searchController setActive: NO animated: YES];
@@ -81,8 +82,7 @@
 }
 
 - (RKObjectManager*) objectManager {
-    NSURL* url = [NSURL URLWithString: @"http://www.imaios.com"];
-    return [[self appDelegate] objectManagerWithBaseURL: url andEventName: @"I Rock"];
+    return [[self appDelegate] objectManager];
 }
 
 - (void) eventReset: (NSNotification*) notification {
