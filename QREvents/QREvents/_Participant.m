@@ -8,10 +8,10 @@ const struct ParticipantAttributes ParticipantAttributes = {
 	.exitTime = @"exitTime",
 	.name = @"name",
 	.primaryKey = @"primaryKey",
+	.updatedAt = @"updatedAt",
 };
 
 const struct ParticipantRelationships ParticipantRelationships = {
-	.event = @"event",
 };
 
 const struct ParticipantFetchedProperties ParticipantFetchedProperties = {
@@ -43,11 +43,6 @@ const struct ParticipantFetchedProperties ParticipantFetchedProperties = {
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
-	if ([key isEqualToString:@"primaryKeyValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"primaryKey"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-		return keyPaths;
-	}
 
 	return keyPaths;
 }
@@ -80,31 +75,15 @@ const struct ParticipantFetchedProperties ParticipantFetchedProperties = {
 
 
 
-- (int16_t)primaryKeyValue {
-	NSNumber *result = [self primaryKey];
-	return [result shortValue];
-}
 
-- (void)setPrimaryKeyValue:(int16_t)value_ {
-	[self setPrimaryKey:[NSNumber numberWithShort:value_]];
-}
 
-- (int16_t)primitivePrimaryKeyValue {
-	NSNumber *result = [self primitivePrimaryKey];
-	return [result shortValue];
-}
 
-- (void)setPrimitivePrimaryKeyValue:(int16_t)value_ {
-	[self setPrimitivePrimaryKey:[NSNumber numberWithShort:value_]];
-}
+@dynamic updatedAt;
 
 
 
 
 
-@dynamic event;
-
-	
 
 
 

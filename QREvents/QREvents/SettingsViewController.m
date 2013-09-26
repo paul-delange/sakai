@@ -14,11 +14,6 @@
 
 #define  kTableViewCellIdentifier       @"SettingsTableViewCell"
 
-typedef enum {
-    kSettingsTableCellTypeReset = 0,
-    kSettingsTableCellTypeCount
-} kSettingsTableCellType;
-
 @interface SettingsViewController () <UIAlertViewDelegate>
 
 @end
@@ -61,8 +56,10 @@ typedef enum {
     
     switch (indexPath.row) {
         case kSettingsTableCellTypeReset:
-            cell.textLabel.text = NSLocalizedString(@"初期化", @"");
+            cell.textLabel.text = NSLocalizedString(@"Reset", @"");
             break;
+        case kSettingsTableCellTypeCreate:
+            cell.textLabel.text = NSLocalizedString(@"Add a participant", @"");
         default:
             break;
     }
@@ -77,15 +74,22 @@ typedef enum {
     switch (indexPath.row) {
         case kSettingsTableCellTypeReset:
         {
-            NSString* title = NSLocalizedString(@"初期化しますか？", @"");
-            NSString* msg = NSLocalizedString(@"すべてのデータを除去して、ログイン画面にもどりますか？", @"");
+            NSString* title = NSLocalizedString(@"Are you sure?", @"");
+            NSString* msg = NSLocalizedString(@"This will remove all event data and return you to the event login screen.", @"");
             UIAlertView* alert = [[UIAlertView alloc] initWithTitle: title
                                                             message: msg
                                                            delegate: self
-                                                  cancelButtonTitle: NSLocalizedString(@"キャンセル", @"")
-                                                  otherButtonTitles: NSLocalizedString(@"はい", @""), nil];
+                                                  cancelButtonTitle: NSLocalizedString(@"Cancel", @"")
+                                                  otherButtonTitles: NSLocalizedString(@"OK", @""), nil];
             alert.tag = kAlertViewTagConfirmReset;
             [alert show];
+            
+            break;
+        }
+        case kSettingsTableCellTypeCreate:
+        {
+            if( self.dismiss )
+                self.dismiss(kSettingsTableCellTypeCreate);
             
             break;
         }

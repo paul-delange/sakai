@@ -42,7 +42,9 @@
         
         [[self appDelegate] setObjectManager: objectManager];
         [self dismissViewControllerAnimated: YES completion: ^{
-            
+            [[NSNotificationCenter defaultCenter] postNotificationName: kApplicationResetNotification
+                                                                object: nil
+                                                              userInfo: nil];
         }];
         
     } failure: ^(RKObjectRequestOperation *operation, NSError *error) {
@@ -59,6 +61,7 @@
          *
          *  -1003 = hostname could not be found
          *  -1011 = Unexpected status code
+         *  -1012 = SSL failure (close_notify during handshake) - probably a proxy problem
          */
         
         switch (error.code) {
@@ -69,6 +72,9 @@
                 title = NSLocalizedString(@"Could not find host", @"");
                 msg = NSLocalizedString(@"The server you specified could not be found. Please verify your internet connection.", @"");
                 break;
+            case -1012:
+                title = @"SSL Failure";
+                msg = @"SSL handshake has failed, this is usually due to a proxy server interrupting the request. Perhaps try with http?";
             default:
                 msg = [NSString stringWithFormat: format, kAppVersion(), kAppName(), error.code];
                 break;
@@ -153,6 +159,10 @@
     self.serverURLField.placeholder = NSLocalizedString(@"http://www.example.com", @"");
     
     self.connectButton.enabled = NO;
+#if USING_PARSE_DOT_COM
+    self.serverURLField.text = @"https://api.parse.com/1/classes";
+    self.connectButton.enabled = YES;
+#endif
 }
 
 - (void)didReceiveMemoryWarning
@@ -162,7 +172,6 @@
     
 }
 
-// http://stackoverflow.com/questions/3372333/ipad-keyboard-will-not-dismiss-if-modal-view-controller-presentation-style-is-ui
 - (BOOL)disablesAutomaticKeyboardDismissal {
     return NO;
 }

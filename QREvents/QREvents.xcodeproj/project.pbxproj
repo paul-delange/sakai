@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		FD20D93517F40AAD003DBBBE /* ConnectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD20D93417F40AAD003DBBBE /* ConnectViewController.m */; };
+		FD20D93817F4396D003DBBBE /* CreateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD20D93717F4396D003DBBBE /* CreateViewController.m */; };
+		FD20D93B17F45B9B003DBBBE /* ResignableNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD20D93A17F45B9B003DBBBE /* ResignableNavigationViewController.m */; };
 		FD2B32BE17F2B7F2002E87A8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD2B32BD17F2B7F2002E87A8 /* Foundation.framework */; };
 		FD2B32C017F2B7F2002E87A8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD2B32BF17F2B7F2002E87A8 /* CoreGraphics.framework */; };
 		FD2B32C217F2B7F2002E87A8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD2B32C117F2B7F2002E87A8 /* UIKit.framework */; };
@@ -58,6 +60,10 @@
 /* Begin PBXFileReference section */
 		FD20D93317F40AAD003DBBBE /* ConnectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectViewController.h; sourceTree = "<group>"; };
 		FD20D93417F40AAD003DBBBE /* ConnectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectViewController.m; sourceTree = "<group>"; };
+		FD20D93617F4396D003DBBBE /* CreateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateViewController.h; sourceTree = "<group>"; };
+		FD20D93717F4396D003DBBBE /* CreateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateViewController.m; sourceTree = "<group>"; };
+		FD20D93917F45B9B003DBBBE /* ResignableNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResignableNavigationViewController.h; sourceTree = "<group>"; };
+		FD20D93A17F45B9B003DBBBE /* ResignableNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResignableNavigationViewController.m; sourceTree = "<group>"; };
 		FD2B32BA17F2B7F2002E87A8 /* QREvents.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QREvents.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD2B32BD17F2B7F2002E87A8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FD2B32BF17F2B7F2002E87A8 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -221,6 +227,8 @@
 				FD6DF4F617F30DA800E708A9 /* SettingsViewController.m */,
 				FD20D93317F40AAD003DBBBE /* ConnectViewController.h */,
 				FD20D93417F40AAD003DBBBE /* ConnectViewController.m */,
+				FD20D93617F4396D003DBBBE /* CreateViewController.h */,
+				FD20D93717F4396D003DBBBE /* CreateViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -239,6 +247,8 @@
 			children = (
 				FD6DF4DC17F2BD7C00E708A9 /* Participant.h */,
 				FD6DF4DD17F2BD7C00E708A9 /* Participant.m */,
+				FD20D93917F45B9B003DBBBE /* ResignableNavigationViewController.h */,
+				FD20D93A17F45B9B003DBBBE /* ResignableNavigationViewController.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -406,10 +416,12 @@
 			files = (
 				FD6DF4DA17F2BD6E00E708A9 /* _Participant.m in Sources */,
 				FD2B32CE17F2B7F2002E87A8 /* AppDelegate.m in Sources */,
+				FD20D93B17F45B9B003DBBBE /* ResignableNavigationViewController.m in Sources */,
 				FD6DF4E217F2DFBE00E708A9 /* ParticipantsViewController.m in Sources */,
 				FD6DF4DE17F2BD7C00E708A9 /* Participant.m in Sources */,
 				FD2B32CA17F2B7F2002E87A8 /* main.m in Sources */,
 				FD6DF4D417F2BB4100E708A9 /* Model.xcdatamodeld in Sources */,
+				FD20D93817F4396D003DBBBE /* CreateViewController.m in Sources */,
 				FD6DF4F717F30DA800E708A9 /* SettingsViewController.m in Sources */,
 				FD20D93517F40AAD003DBBBE /* ConnectViewController.m in Sources */,
 				FD6DF4F417F3006B00E708A9 /* ScannerViewController.m in Sources */,

@@ -7,8 +7,13 @@
 //
 
 #import "ParticipantsViewController.h"
+#import "SettingsViewController.h"
+
 #import "ParticipantTableViewCell.h"
+
 #import "AppDelegate.h"
+
+#import "Participant.h"
 
 #import <MobileCoreServices/MobileCoreServices.h>
 
@@ -16,8 +21,9 @@
 
 #define kSegueScannerPopover    @"ScannerSegue"
 #define kSegueSettingsPopover   @"SettingsSegue"
+#define kSegueCreate            @"CreateSegue"
 
-@interface ParticipantsViewController () <UISearchBarDelegate, UISearchDisplayDelegate> {
+@interface ParticipantsViewController () <UISearchBarDelegate, UISearchDisplayDelegate, NSFetchedResultsControllerDelegate> {
     BOOL _canResignSearchBar;
 }
 
@@ -29,6 +35,11 @@
 @end
 
 @implementation ParticipantsViewController
+
+- (IBAction) unwindCreate: (UIStoryboardSegue*)sender {
+    [self dismissViewControllerAnimated: YES
+                             completion: nil];
+}
 
 - (IBAction) searchPushed: (id)sender {
     [self.scanController dismissPopoverAnimated: YES];
@@ -55,7 +66,9 @@
 }
 
 - (IBAction) refreshPushed: (id)sender {
-    NSParameterAssert([self objectManager]);
+    if(![self objectManager])
+        return;
+    
     [self.scanController dismissPopoverAnimated: YES];
     [self.settingsController dismissPopoverAnimated: YES];
     [self.searchController setActive: NO animated: YES];
@@ -88,7 +101,43 @@
 - (void) eventReset: (NSNotification*) notification {
     [self.settingsController dismissPopoverAnimated: YES];
     
-    [[self appDelegate] showConnectionViewController];
+    if( ![self objectManager] )
+        [[self appDelegate] showConnectionViewController];
+    else {
+        __autoreleasing NSError* error;
+        [self.resultsController performFetch: &error];
+        NSAssert(!error, @"Error fetching results: %@", error);
+        [self.tableView reloadData];
+        
+        [self refreshPushed: nil];
+    }
+}
+
+- (NSFetchedResultsController*) resultsController {
+    if( !_resultsController ) {
+        if( [self objectManager] ) {
+            NSFetchRequest* fetchRequest = [[NSFetchRequest alloc] initWithEntityName: NSStringFromClass([Participant class])];
+            [fetchRequest setSortDescriptors: @[[NSSortDescriptor sortDescriptorWithKey: @"name" ascending: YES]]];
+            [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"primaryKey != nil"]];           //Ignore transient participants
+            
+            NSManagedObjectContext* context = [self objectManager].managedObjectStore.mainQueueManagedObjectContext;
+            
+            _resultsController = [[NSFetchedResultsController alloc] initWithFetchRequest: fetchRequest
+                                                                     managedObjectContext: context
+                                                                       sectionNameKeyPath: nil
+                                                                                cacheName: nil];
+            _resultsController.delegate = self;
+        }
+    }
+    
+    return _resultsController;
+}
+
+- (void) configureCell: (ParticipantTableViewCell*) cell atIndexPath: (NSIndexPath*) indexPath {
+    NSParameterAssert([cell isKindOfClass: [ParticipantTableViewCell class]]);
+    
+    Participant* participant = [self.resultsController objectAtIndexPath: indexPath];
+    cell.textLabel.text = participant.name;
 }
 
 #pragma mark - NSObject
@@ -165,6 +214,21 @@
             [self.scanController dismissPopoverAnimated: YES];
             popoverSegue.popoverController.popoverContentSize = CGSizeMake(256, 320);
             self.settingsController = popoverSegue.popoverController;
+            
+            SettingsViewController* settingsVC = (SettingsViewController*)segue.destinationViewController;
+            settingsVC.dismiss = ^(kSettingsTableCellType reason) {
+                [self.settingsController dismissPopoverAnimated: YES];
+                
+                switch (reason) {
+                    case kSettingsTableCellTypeCreate:
+                    {
+                        [self performSegueWithIdentifier: kSegueCreate sender: nil];
+                        break;
+                    }
+                    default:
+                        break;
+                }
+            };
         }
     }
 }
@@ -179,7 +243,44 @@
     }
 }
 
-#pragma mark UITableViewDelegate
+- (NSArray*) sectionIndexTitlesForTableView:(UITableView *)tableView {
+    return [[UILocalizedIndexedCollation currentCollation] sectionIndexTitles];
+}
+
+- (NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    id<NSFetchedResultsSectionInfo> info = [[self.resultsController sections] objectAtIndex: section];
+    return [info name];
+}
+
+- (NSInteger) tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
+    NSInteger localizedIndex = [[UILocalizedIndexedCollation currentCollation] sectionForSectionIndexTitleAtIndex:index];
+    NSArray *localizedIndexTitles = [[UILocalizedIndexedCollation currentCollation] sectionIndexTitles];
+    
+    for(int currentLocalizedIndex = localizedIndex; currentLocalizedIndex > 0; currentLocalizedIndex--) {
+        for(int frcIndex = 0; frcIndex < [[self.resultsController sections] count]; frcIndex++) {
+            id<NSFetchedResultsSectionInfo> sectionInfo = [[self.resultsController sections] objectAtIndex:frcIndex];
+            NSString *indexTitle = sectionInfo.indexTitle;
+            if([indexTitle isEqualToString: [localizedIndexTitles objectAtIndex:currentLocalizedIndex]]) {
+                return frcIndex;
+            }
+        }
+    }
+    
+    
+    /* or
+     NSInteger section = 0;
+     for (id <NSFetchedResultsSectionInfo> sectionInfo in [_fetchedResultsController sections]) {
+     if ([sectionInfo.indexTitle compare:title] >= 0)
+     break;
+     section++;
+     }
+     return section;
+     */
+    
+    return 0;
+}
+
+#pragma mark - UITableViewDelegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if( tableView == self.tableView ) {
         id<NSFetchedResultsSectionInfo> sectioninfo = [[self.resultsController sections] objectAtIndex: section];
@@ -200,7 +301,7 @@
         cell = [self.tableView dequeueReusableCellWithIdentifier: kParticipantTableViewCellIdentifier];
     }
     
-    //Do something incredible!!
+    [self configureCell: (ParticipantTableViewCell*)cell atIndexPath: indexPath];
     
     return cell;
 }
@@ -233,8 +334,64 @@
     }
 }
 
-- (void) searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+#pragma mark - NSFetchedResultsController
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+    [self.tableView beginUpdates];
+}
+
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
+           atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
     
+    switch(type) {
+        case NSFetchedResultsChangeInsert:
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex]
+                          withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex]
+                          withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
+       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
+      newIndexPath:(NSIndexPath *)newIndexPath {
+    
+    UITableView *tableView = self.tableView;
+    
+    switch(type) {
+            
+        case NSFetchedResultsChangeInsert:
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
+                             withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                             withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+            [self configureCell: (ParticipantTableViewCell*)[tableView cellForRowAtIndexPath:indexPath]
+                    atIndexPath: indexPath];
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                             withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
+                             withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    [self.tableView endUpdates];
 }
 
 @end

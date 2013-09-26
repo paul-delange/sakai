@@ -45,8 +45,14 @@ NSString* kApplicationResetNotification =  @"ApplicationReset";
     AFHTTPClient* client = [AFHTTPClient clientWithBaseURL: baseURL];
     NSParameterAssert(client);
     
+#if USING_PARSE_DOT_COM
+    [client setDefaultHeader: @"X-Parse-Application-Id" value: @"ZThZP9VzlTd9YiLzeX1LP5QlstqRkRzWI95qfOGB"];
+    [client setDefaultHeader: @"X-Parse-REST-API-Key" value: @"81WAqdMD2xtOo93FMtTFnGX5o3a6LUf5z19RgXPM"];
+#endif
+    
     RKObjectManager* manager = [[RKObjectManager alloc] initWithHTTPClient: client];
     NSParameterAssert(manager);
+    manager.requestSerializationMIMEType = RKMIMETypeJSON;
     
     //Configure the local store
     RKManagedObjectStore* store;
@@ -58,7 +64,7 @@ NSString* kApplicationResetNotification =  @"ApplicationReset";
         NSParameterAssert(store);
         
         NSString* storeName = [uniqueEventName stringByAppendingPathExtension: @"sqlite"];
-        NSString* storePath = [RKApplicationDataDirectory() stringByAppendingString: storeName];
+        NSString* storePath = [RKApplicationDataDirectory() stringByAppendingPathComponent: storeName];
         [store addSQLitePersistentStoreAtPath: storePath
                        fromSeedDatabaseAtPath: nil
                             withConfiguration: nil
@@ -75,31 +81,39 @@ NSString* kApplicationResetNotification =  @"ApplicationReset";
     {
         NSString* listPath = kWebServiceListPath;
         NSString* individualPath = kWebServiceIndividualPath;
+        NSString* serverPrimaryKeyName = USING_PARSE_DOT_COM ? @"objectId" : @"user_id";
         
         RKEntityMapping* getMapping = [RKEntityMapping mappingForEntityForName: NSStringFromClass([Participant class])
                                                           inManagedObjectStore: store];
         getMapping.identificationAttributes = @[@"primaryKey"];
         [getMapping addAttributeMappingsFromArray: @[
-                                                     @"name"
+                                                     @"name",
+                                                     @"updatedAt"
                                                      ]];
         [getMapping addAttributeMappingsFromDictionary: @{
-                                                          @"user_id": @"primaryKey",
+                                                          serverPrimaryKeyName : @"primaryKey",
                                                           @"entry_time" : @"entryTime",
                                                           @"exit_time" : @"exitTime"
                                                           }];
+        [getMapping setModificationAttributeForName: @"updatedAt"];
+        getMapping.deletionPredicate = [NSPredicate predicateWithFormat: @"primaryKey == nil"];
         
+        RKObjectMapping* postMapping = [getMapping inverseMappingWithPropertyMappingsPassingTest: ^BOOL(RKPropertyMapping *propertyMapping) {
+            return ![propertyMapping.sourceKeyPath isEqualToString: serverPrimaryKeyName];
+        }];
         
-        RKObjectMapping* postMapping = [getMapping inverseMapping];
+        RKObjectMapping* putMapping = [getMapping inverseMapping];
+        RKObjectMapping* errorMapping = [RKObjectMapping mappingForClass: [RKErrorMessage class]];
+        [errorMapping addPropertyMapping: [RKAttributeMapping attributeMappingFromKeyPath: @"msg" toKeyPath: @"errorMessage"]];
         
         NSIndexSet* successStatusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful);
-        
-        //TODO: Error codes...
+        NSIndexSet* creationFailedCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassClientError);
         
         //GET participant list
         RKResponseDescriptor* listResponse = [RKResponseDescriptor responseDescriptorWithMapping: getMapping
                                                                                           method: RKRequestMethodGET
                                                                                      pathPattern: listPath
-                                                                                         keyPath: nil
+                                                                                         keyPath: USING_PARSE_DOT_COM ? @"results" : nil
                                                                                      statusCodes: successStatusCodes];
         
         //GET participant
@@ -110,18 +124,30 @@ NSString* kApplicationResetNotification =  @"ApplicationReset";
                                                                                             statusCodes: successStatusCodes];
         
         //PUT participant
-        RKRequestDescriptor* createRequest = [RKRequestDescriptor requestDescriptorWithMapping: postMapping
+        RKRequestDescriptor* createRequest = [RKRequestDescriptor requestDescriptorWithMapping: putMapping
                                                                                    objectClass: [Participant class]
                                                                                    rootKeyPath: nil
                                                                                         method: RKRequestMethodPUT];
         
+        RKResponseDescriptor* createResponse = [RKResponseDescriptor responseDescriptorWithMapping: getMapping
+                                                                                            method: RKRequestMethodPOST
+                                                                                       pathPattern: kWebServiceListPath
+                                                                                           keyPath: nil
+                                                                                       statusCodes: successStatusCodes];
         //POST participant
         RKRequestDescriptor* updateRequest = [RKRequestDescriptor requestDescriptorWithMapping: postMapping
                                                                                    objectClass: [Participant class]
                                                                                    rootKeyPath: nil
                                                                                         method: RKRequestMethodPOST];
         
-        [manager addResponseDescriptorsFromArray: @[listResponse, participantResponse]];
+        //Errors
+        RKResponseDescriptor* errorResponse = [RKResponseDescriptor responseDescriptorWithMapping: errorMapping
+                                                                                           method: RKRequestMethodAny
+                                                                                      pathPattern: nil
+                                                                                          keyPath: @"error"
+                                                                                      statusCodes: creationFailedCodes];
+        
+        [manager addResponseDescriptorsFromArray: @[listResponse, participantResponse, createResponse, errorResponse]];
         [manager addRequestDescriptorsFromArray: @[createRequest, updateRequest]];
     }
     
@@ -130,6 +156,16 @@ NSString* kApplicationResetNotification =  @"ApplicationReset";
 
 #pragma mark - UIApplicationDelegate
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    NSString* uniqueEventName = kAppName();
+    NSString* storeName = [uniqueEventName stringByAppendingPathExtension: @"sqlite"];
+    NSString* storePath = [RKApplicationDataDirectory() stringByAppendingPathComponent: storeName];
+    if( [[NSFileManager defaultManager] fileExistsAtPath: storePath] ) {
+        __autoreleasing NSError* error;
+        [[NSFileManager defaultManager] removeItemAtPath: storePath error: &error];
+        NSAssert(!error, @"Could not delete old database at %@. Error %@", storePath, error);
+    }
+    
     return YES;
 }
 

@@ -19,8 +19,15 @@
 
     #import <RestKit/RestKit.h>
 
-    #define kWebServiceListPath             @"particpants"
+    #define USING_PARSE_DOT_COM     1
+
+#if USING_PARSE_DOT_COM
+    #define kWebServiceListPath             @"Participant"
+    #define kWebServiceIndividualPath       @"Participant/:user_id"
+#else
+    #define kWebServiceListPath             @"participants"
     #define kWebServiceIndividualPath       @"participants/:user_id"
+#endif
 
     #define kAppName()  ([[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"])
     #define kAppVersion() ([[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString*)kCFBundleVersionKey])

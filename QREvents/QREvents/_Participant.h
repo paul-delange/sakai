@@ -9,16 +9,16 @@ extern const struct ParticipantAttributes {
 	__unsafe_unretained NSString *exitTime;
 	__unsafe_unretained NSString *name;
 	__unsafe_unretained NSString *primaryKey;
+	__unsafe_unretained NSString *updatedAt;
 } ParticipantAttributes;
 
 extern const struct ParticipantRelationships {
-	__unsafe_unretained NSString *event;
 } ParticipantRelationships;
 
 extern const struct ParticipantFetchedProperties {
 } ParticipantFetchedProperties;
 
-@class Event;
+
 
 
 
@@ -68,13 +68,9 @@ extern const struct ParticipantFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSNumber* primaryKey;
+@property (nonatomic, strong) NSString* primaryKey;
 
 
-
-@property int16_t primaryKeyValue;
-- (int16_t)primaryKeyValue;
-- (void)setPrimaryKeyValue:(int16_t)value_;
 
 //- (BOOL)validatePrimaryKey:(id*)value_ error:(NSError**)error_;
 
@@ -82,9 +78,12 @@ extern const struct ParticipantFetchedProperties {
 
 
 
-@property (nonatomic, strong) Event *event;
+@property (nonatomic, strong) NSDate* updatedAt;
 
-//- (BOOL)validateEvent:(id*)value_ error:(NSError**)error_;
+
+
+//- (BOOL)validateUpdatedAt:(id*)value_ error:(NSError**)error_;
+
 
 
 
@@ -117,18 +116,16 @@ extern const struct ParticipantFetchedProperties {
 
 
 
-- (NSNumber*)primitivePrimaryKey;
-- (void)setPrimitivePrimaryKey:(NSNumber*)value;
-
-- (int16_t)primitivePrimaryKeyValue;
-- (void)setPrimitivePrimaryKeyValue:(int16_t)value_;
+- (NSString*)primitivePrimaryKey;
+- (void)setPrimitivePrimaryKey:(NSString*)value;
 
 
 
 
+- (NSDate*)primitiveUpdatedAt;
+- (void)setPrimitiveUpdatedAt:(NSDate*)value;
 
-- (Event*)primitiveEvent;
-- (void)setPrimitiveEvent:(Event*)value;
+
 
 
 @end
