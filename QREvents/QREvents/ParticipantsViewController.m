@@ -256,7 +256,7 @@
 
 - (NSArray*) sectionIndexTitlesForTableView:(UITableView *)tableView {
     if( tableView == self.tableView ) {
-    return [[UILocalizedIndexedCollation currentCollation] sectionIndexTitles];
+        return [[UILocalizedIndexedCollation currentCollation] sectionIndexTitles];
     }
     else {
         return nil;
@@ -265,8 +265,8 @@
 
 - (NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if( tableView == self.tableView ) {
-    id<NSFetchedResultsSectionInfo> info = [[self.resultsController sections] objectAtIndex: section];
-    return [info name];
+        id<NSFetchedResultsSectionInfo> info = [[self.resultsController sections] objectAtIndex: section];
+        return [info name];
     }
     else {
         return nil;
@@ -275,18 +275,18 @@
 
 - (NSInteger) tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
     if( tableView == self.tableView ) {
-    NSInteger localizedIndex = [[UILocalizedIndexedCollation currentCollation] sectionForSectionIndexTitleAtIndex:index];
-    NSArray *localizedIndexTitles = [[UILocalizedIndexedCollation currentCollation] sectionIndexTitles];
-    
-    for(int currentLocalizedIndex = localizedIndex; currentLocalizedIndex > 0; currentLocalizedIndex--) {
-        for(int frcIndex = 0; frcIndex < [[self.resultsController sections] count]; frcIndex++) {
-            id<NSFetchedResultsSectionInfo> sectionInfo = [[self.resultsController sections] objectAtIndex:frcIndex];
-            NSString *indexTitle = sectionInfo.indexTitle;
-            if([indexTitle isEqualToString: [localizedIndexTitles objectAtIndex:currentLocalizedIndex]]) {
-                return frcIndex;
+        NSInteger localizedIndex = [[UILocalizedIndexedCollation currentCollation] sectionForSectionIndexTitleAtIndex:index];
+        NSArray *localizedIndexTitles = [[UILocalizedIndexedCollation currentCollation] sectionIndexTitles];
+        
+        for(int currentLocalizedIndex = localizedIndex; currentLocalizedIndex > 0; currentLocalizedIndex--) {
+            for(int frcIndex = 0; frcIndex < [[self.resultsController sections] count]; frcIndex++) {
+                id<NSFetchedResultsSectionInfo> sectionInfo = [[self.resultsController sections] objectAtIndex:frcIndex];
+                NSString *indexTitle = sectionInfo.indexTitle;
+                if([indexTitle isEqualToString: [localizedIndexTitles objectAtIndex:currentLocalizedIndex]]) {
+                    return frcIndex;
+                }
             }
         }
-    }
     }
     
     /* or
@@ -300,7 +300,7 @@
      */
     
     return 0;
-        
+    
 }
 
 #pragma mark - UITableViewDelegate
@@ -356,18 +356,25 @@
                         afterDelay: 0.01];
     }
     else {
-        NSFetchRequest* request = [self.resultsController.fetchRequest copy];
-        NSPredicate* notNilPredicate = request.predicate;
-        NSPredicate* searchTermPredicate = [NSPredicate predicateWithFormat: @"name CONTAINS[cd] %@", searchText];
-        
-        [request setPredicate: [NSCompoundPredicate andPredicateWithSubpredicates: @[notNilPredicate, searchTermPredicate]]];
-        
-        NSManagedObjectContext* context = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
-        
-        __autoreleasing NSError* error;
-        _searchResults = [context executeFetchRequest: request error: &error];
-        NSAssert(!error, @"Error occurred while searching the results: %@", error);
+        if( searchText.length ) {
+            NSFetchRequest* request = [self.resultsController.fetchRequest copy];
+            NSPredicate* notNilPredicate = request.predicate;
+            NSParameterAssert(notNilPredicate);
+            
+            NSPredicate* searchTermPredicate = [NSPredicate predicateWithFormat: @"name CONTAINS[cd] %@", searchText];
+            
+            [request setPredicate: [NSCompoundPredicate andPredicateWithSubpredicates: @[notNilPredicate, searchTermPredicate]]];
+            
+            NSManagedObjectContext* context = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
+            
+            __autoreleasing NSError* error;
+            _searchResults = [context executeFetchRequest: request error: &error];
+            NSAssert(!error, @"Error occurred while searching the results: %@", error);
+            return;
+        }
     }
+    
+    _searchResults = nil;
 }
 
 #pragma mark - NSFetchedResultsController
