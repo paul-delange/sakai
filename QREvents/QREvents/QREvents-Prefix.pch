@@ -6,8 +6,8 @@
 
 #import <Availability.h>
 
-#ifndef __IPHONE_5_0
-#warning "This project uses features only available in iOS SDK 5.0 and later."
+#ifndef __IPHONE_6_0
+#warning "This project uses features only available in iOS SDK 6.0 and later."
 #endif
 
 #ifdef __OBJC__
@@ -19,6 +19,7 @@
 
     #import <RestKit/RestKit.h>
 
+    //Set this to 1 to use parse.com API, or set to 0 to use the WS docs
     #define USING_PARSE_DOT_COM     1
 
 #if USING_PARSE_DOT_COM

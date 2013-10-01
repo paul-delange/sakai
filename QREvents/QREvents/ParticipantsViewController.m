@@ -25,6 +25,8 @@
 
 @interface ParticipantsViewController () <UISearchBarDelegate, UISearchDisplayDelegate, NSFetchedResultsControllerDelegate> {
     BOOL _canResignSearchBar;
+    
+    __strong NSArray* _searchResults;
 }
 
 @property (strong, nonatomic) UISearchDisplayController* searchController;
@@ -133,10 +135,19 @@
     return _resultsController;
 }
 
-- (void) configureCell: (ParticipantTableViewCell*) cell atIndexPath: (NSIndexPath*) indexPath {
+- (void) configureCell: (ParticipantTableViewCell*) cell atIndexPath: (NSIndexPath*) indexPath forSearch: (BOOL) isSearch {
     NSParameterAssert([cell isKindOfClass: [ParticipantTableViewCell class]]);
     
-    Participant* participant = [self.resultsController objectAtIndexPath: indexPath];
+    Participant* participant;
+    
+    if( isSearch ) {
+        NSUInteger index = indexPath.row;
+        participant = [_searchResults objectAtIndex: index];
+    }
+    else {
+        participant = [self.resultsController objectAtIndexPath: indexPath];
+    }
+    
     cell.textLabel.text = participant.name;
 }
 
@@ -239,20 +250,31 @@
         return [[self.resultsController sections] count];
     }
     else {
-        return 10;
+        return 1;
     }
 }
 
 - (NSArray*) sectionIndexTitlesForTableView:(UITableView *)tableView {
+    if( tableView == self.tableView ) {
     return [[UILocalizedIndexedCollation currentCollation] sectionIndexTitles];
+    }
+    else {
+        return nil;
+    }
 }
 
 - (NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if( tableView == self.tableView ) {
     id<NSFetchedResultsSectionInfo> info = [[self.resultsController sections] objectAtIndex: section];
     return [info name];
+    }
+    else {
+        return nil;
+    }
 }
 
 - (NSInteger) tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
+    if( tableView == self.tableView ) {
     NSInteger localizedIndex = [[UILocalizedIndexedCollation currentCollation] sectionForSectionIndexTitleAtIndex:index];
     NSArray *localizedIndexTitles = [[UILocalizedIndexedCollation currentCollation] sectionIndexTitles];
     
@@ -265,7 +287,7 @@
             }
         }
     }
-    
+    }
     
     /* or
      NSInteger section = 0;
@@ -278,6 +300,7 @@
      */
     
     return 0;
+        
 }
 
 #pragma mark - UITableViewDelegate
@@ -287,7 +310,7 @@
         return [sectioninfo numberOfObjects];
     }
     else {
-        return 2;
+        return _searchResults.count;
     }
 }
 
@@ -301,7 +324,7 @@
         cell = [self.tableView dequeueReusableCellWithIdentifier: kParticipantTableViewCellIdentifier];
     }
     
-    [self configureCell: (ParticipantTableViewCell*)cell atIndexPath: indexPath];
+    [self configureCell: (ParticipantTableViewCell*)cell atIndexPath: indexPath forSearch: tableView != self.tableView];
     
     return cell;
 }
@@ -331,6 +354,19 @@
         [searchBar performSelector: @selector(resignFirstResponder)
                         withObject: nil
                         afterDelay: 0.01];
+    }
+    else {
+        NSFetchRequest* request = [self.resultsController.fetchRequest copy];
+        NSPredicate* notNilPredicate = request.predicate;
+        NSPredicate* searchTermPredicate = [NSPredicate predicateWithFormat: @"name CONTAINS[cd] %@", searchText];
+        
+        [request setPredicate: [NSCompoundPredicate andPredicateWithSubpredicates: @[notNilPredicate, searchTermPredicate]]];
+        
+        NSManagedObjectContext* context = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
+        
+        __autoreleasing NSError* error;
+        _searchResults = [context executeFetchRequest: request error: &error];
+        NSAssert(!error, @"Error occurred while searching the results: %@", error);
     }
 }
 
@@ -377,7 +413,8 @@
             
         case NSFetchedResultsChangeUpdate:
             [self configureCell: (ParticipantTableViewCell*)[tableView cellForRowAtIndexPath:indexPath]
-                    atIndexPath: indexPath];
+                    atIndexPath: indexPath
+                      forSearch: NO];
             break;
             
         case NSFetchedResultsChangeMove:
