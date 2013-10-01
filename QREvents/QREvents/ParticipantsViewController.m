@@ -8,6 +8,7 @@
 
 #import "ParticipantsViewController.h"
 #import "SettingsViewController.h"
+#import "ScannerViewController.h"
 
 #import "ParticipantTableViewCell.h"
 
@@ -197,8 +198,8 @@
         }
         else {
             //No camera available!!
-            UIAlertView* alert = [[UIAlertView alloc] initWithTitle: ];
-            [alert show];
+            //UIAlertView* alert = [[UIAlertView alloc] initWithTitle: ];
+            //[alert show];
             
             return NO;
         }
@@ -220,6 +221,19 @@
             [self.settingsController dismissPopoverAnimated: YES];
             popoverSegue.popoverController.popoverContentSize = CGSizeMake(320, 320);
             self.scanController = popoverSegue.popoverController;
+            
+            ScannerViewController* scannerVC = (ScannerViewController*)segue.destinationViewController;
+            scannerVC.manuallyAddParticipant = ^(NSString* participantCode) {
+                [self.scanController dismissPopoverAnimated: YES];
+                
+                [self performSegueWithIdentifier: kSegueCreate sender: nil];
+            };
+            scannerVC.scannedParticipant = ^(Participant* participant) {
+                NSIndexPath* indexPath = [self.resultsController indexPathForObject: participant];
+                [self.tableView selectRowAtIndexPath: indexPath
+                                            animated: YES
+                                      scrollPosition: UITableViewScrollPositionTop];
+            };
         }
         else if( [segue.identifier isEqualToString: kSegueSettingsPopover] ) {
             [self.scanController dismissPopoverAnimated: YES];

@@ -7,16 +7,24 @@
 //
 
 #import "ScannerViewController.h"
+#import "AppDelegate.h"
+#import "Participant.h"
 
 #import <ZBarSDK/ZBarReaderView.h>
 #if TARGET_IPHONE_SIMULATOR
 #import <ZBarSDK/ZBarCameraSimulator.h>
 #endif
 
-@interface ScannerViewController () <ZBarReaderViewDelegate> {
+#define kAlertViewTagInvalidQRCode  4561
+#define kAlertViewTagUnknownParticipant  4562
+
+@interface ScannerViewController () <ZBarReaderViewDelegate, UIAlertViewDelegate> {
 #if TARGET_IPHONE_SIMULATOR
     ZBarCameraSimulator* cameraSimulator;
 #endif
+    
+    BOOL _canScanEventCode;
+    NSString* _participantCode;
 }
 
 @end
@@ -25,6 +33,19 @@
 
 - (ZBarReaderView*) readerView {
     return (ZBarReaderView*)self.view;
+}
+
+- (void) animateParticipantRecognitionSequence {
+    _canScanEventCode = NO;
+    double delayInSeconds = 4.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        _canScanEventCode = YES;
+    });
+}
+
+- (AppDelegate*) appDelegate {
+    return (AppDelegate*)[[UIApplication sharedApplication] delegate];
 }
 
 #pragma mark - UIViewController
@@ -75,11 +96,91 @@
     [[self readerView] stop];
 }
 
+- (BOOL) isValidEventCode: (NSString*) code {
+    NSUInteger length = [code length];
+    BOOL containsHyphenCorrectly = [code characterAtIndex: 3] == '-';
+    return length == 8 && containsHyphenCorrectly;
+}
+
 #pragma mark - ZBarReaderViewDelegate
 - (void) readerView:(ZBarReaderView *)readerView didReadSymbols:(ZBarSymbolSet *)symbols fromImage:(UIImage *)image {
-    NSLog(@"Read");
+    if( !_canScanEventCode )
+        return;
+    
     for(ZBarSymbol* sym in symbols) {
-        NSLog(@"Data: %@", sym.data);
+        if( [self isValidEventCode: sym.data] ) {
+            NSString* eventCode = [sym.data substringToIndex: 3];
+            NSString* participantCode = [sym.data substringFromIndex: 4];
+            
+            NSLog(@"Update %@ for event %@", participantCode, eventCode);
+            RKObjectManager* objectManager = [self appDelegate].objectManager;
+            NSManagedObjectContext* context = objectManager.managedObjectStore.mainQueueManagedObjectContext;
+            NSFetchRequest* request = [NSFetchRequest fetchRequestWithEntityName: NSStringFromClass([Participant class])];
+            [request setFetchLimit: 1];
+            [request setPredicate: [NSPredicate predicateWithFormat: @"primaryKey = %@", participantCode]];
+            
+            __autoreleasing NSError* error;
+            NSArray* results = [context executeFetchRequest: request error: &error];
+            NSAssert(!error, @"Error fetching participant: %@", error);
+            
+            if( results.count ) {
+                Participant* participant = results.lastObject;
+                
+                //TODO: Update times...
+                
+                [self animateParticipantRecognitionSequence];
+                
+                self.scannedParticipant(participant);
+            }
+            else {
+                _participantCode = participantCode;
+                NSString* title = NSLocalizedString(@"Unknown Particpant code", @"");
+                NSString* msg = NSLocalizedString(@"This participant could not be found in this event. Would you like to manually add them?", @"");
+                
+                UIAlertView* alert = [[UIAlertView alloc] initWithTitle: title
+                                                                message: msg
+                                                               delegate: self
+                                                      cancelButtonTitle: NSLocalizedString(@"No", @"")
+                                                      otherButtonTitles: NSLocalizedString(@"Yes", @""), nil];
+                alert.tag = kAlertViewTagUnknownParticipant;
+                [alert show];
+            }
+        }
+        else {
+            NSString* title = NSLocalizedString(@"Invalid QR code", @"");
+            NSString* msg = NSLocalizedString(@"This QR code is not compatible with %@ version %@. Please try another.", @"");
+            
+            UIAlertView* alert = [[UIAlertView alloc] initWithTitle: title
+                                                            message: msg
+                                                           delegate: self
+                                                  cancelButtonTitle: NSLocalizedString(@"OK", @"")
+                                                  otherButtonTitles: nil];
+            alert.tag = kAlertViewTagInvalidQRCode;
+            [alert show];
+        }
+    }
+}
+
+#pragma mark - UIAlertViewDelegate
+- (void) alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    switch (alertView.tag) {
+        case kAlertViewTagInvalidQRCode:
+        {
+            _canScanEventCode = YES;
+            break;
+        }
+        case kAlertViewTagUnknownParticipant:
+        {
+            if( alertView.cancelButtonIndex == buttonIndex ) {
+                _canScanEventCode = YES;
+            }
+            else {
+                self.manuallyAddParticipant(_participantCode);
+            }
+            break;
+        }
+        default:
+            break;
     }
 }
 

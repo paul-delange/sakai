@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class Participant;
+
 @interface ScannerViewController : UIViewController
+
+@property (copy, nonatomic) void(^manuallyAddParticipant)(NSString* participantCode);
+@property (copy, nonatomic) void(^scannedParticipant)(Participant* participant);
 
 @end
