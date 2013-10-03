@@ -9,6 +9,7 @@ extern const struct ParticipantAttributes {
 	__unsafe_unretained NSString *exitTime;
 	__unsafe_unretained NSString *name;
 	__unsafe_unretained NSString *primaryKey;
+	__unsafe_unretained NSString *qrcode;
 	__unsafe_unretained NSString *updatedAt;
 } ParticipantAttributes;
 
@@ -17,6 +18,7 @@ extern const struct ParticipantRelationships {
 
 extern const struct ParticipantFetchedProperties {
 } ParticipantFetchedProperties;
+
 
 
 
@@ -78,6 +80,16 @@ extern const struct ParticipantFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSString* qrcode;
+
+
+
+//- (BOOL)validateQrcode:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
 @property (nonatomic, strong) NSDate* updatedAt;
 
 
@@ -118,6 +130,12 @@ extern const struct ParticipantFetchedProperties {
 
 - (NSString*)primitivePrimaryKey;
 - (void)setPrimitivePrimaryKey:(NSString*)value;
+
+
+
+
+- (NSString*)primitiveQrcode;
+- (void)setPrimitiveQrcode:(NSString*)value;
 
 
 

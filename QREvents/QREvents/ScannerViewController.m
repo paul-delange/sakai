@@ -194,7 +194,7 @@
                                  NSManagedObjectContext* context = objectManager.managedObjectStore.mainQueueManagedObjectContext;
                                  NSFetchRequest* request = [NSFetchRequest fetchRequestWithEntityName: NSStringFromClass([Participant class])];
                                  [request setFetchLimit: 1];
-                                 [request setPredicate: [NSPredicate predicateWithFormat: @"primaryKey = %@", participantCode]];
+                                 [request setPredicate: [NSPredicate predicateWithFormat: @"qrcode = %@", sym.data]];
                                  
                                  __autoreleasing NSError* error;
                                  NSArray* results = [context executeFetchRequest: request error: &error];
@@ -215,9 +215,18 @@
                                      NSAssert(!error, @"Error updating particpant: %@", error);
  
                                      self.scannedParticipant(participant);
+                                     [UIView transitionWithView: self.view
+                                                       duration: [UIApplication sharedApplication].statusBarOrientationAnimationDuration
+                                                        options: UIViewAnimationOptionCurveEaseIn
+                                                     animations: ^{
+                                                         _capturedImageView.alpha = 0.f;
+                                                     } completion:^(BOOL finished) {
+                                                         [_capturedImageView removeFromSuperview];
+                                                          _canScanEventCode = YES;
+                                                     }];
                                  }
                                  else {
-                                     _participantCode = participantCode;
+                                     _participantCode = sym.data;
                                      NSString* title = NSLocalizedString(@"Unknown Particpant code", @"");
                                      NSString* msg = NSLocalizedString(@"This participant could not be found in this event. Would you like to manually add them?", @"");
                                      
@@ -229,8 +238,6 @@
                                      alert.tag = kAlertViewTagUnknownParticipant;
                                      [alert show];
                                  }
-                                 
-                                 _canScanEventCode = YES;
                              }];
         }
         else {

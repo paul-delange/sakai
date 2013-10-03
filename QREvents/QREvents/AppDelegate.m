@@ -88,7 +88,8 @@ NSString* kApplicationResetNotification =  @"ApplicationReset";
         getMapping.identificationAttributes = @[@"primaryKey"];
         [getMapping addAttributeMappingsFromArray: @[
                                                      @"name",
-                                                     @"updatedAt"
+                                                     @"updatedAt",
+                                                     @"qrcode"
                                                      ]];
         [getMapping addAttributeMappingsFromDictionary: @{
                                                           serverPrimaryKeyName : @"primaryKey",
@@ -149,6 +150,19 @@ NSString* kApplicationResetNotification =  @"ApplicationReset";
         
         [manager addResponseDescriptorsFromArray: @[listResponse, participantResponse, createResponse, errorResponse]];
         [manager addRequestDescriptorsFromArray: @[createRequest, updateRequest]];
+        
+        //Managed orphaned results
+        // http://restkit.org/api/0.20.0/Classes/RKManagedObjectRequestOperation.html
+        [manager addFetchRequestBlock: ^NSFetchRequest *(NSURL *URL) {
+            RKPathMatcher* pathMatcher = [RKPathMatcher pathMatcherWithPattern: kWebServiceListPath];
+            NSDictionary* argsDict;
+            BOOL match = [pathMatcher matchesPath: [URL relativePath] tokenizeQueryStrings: NO parsedArguments: &argsDict];
+            if( match ) {
+                return [NSFetchRequest fetchRequestWithEntityName: NSStringFromClass([Participant class])];
+            }
+            
+            return nil;
+        }];
     }
     
     return manager;

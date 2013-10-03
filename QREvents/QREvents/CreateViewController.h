@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UITextField *nameField;
 @property (weak, nonatomic) IBOutlet UIButton *addButton;
+@property (copy, nonatomic) NSString* participantCode;
 
 - (IBAction)addPushed:(id)sender;
 

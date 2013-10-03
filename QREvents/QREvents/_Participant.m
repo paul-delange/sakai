@@ -8,6 +8,7 @@ const struct ParticipantAttributes ParticipantAttributes = {
 	.exitTime = @"exitTime",
 	.name = @"name",
 	.primaryKey = @"primaryKey",
+	.qrcode = @"qrcode",
 	.updatedAt = @"updatedAt",
 };
 
@@ -72,6 +73,13 @@ const struct ParticipantFetchedProperties ParticipantFetchedProperties = {
 
 
 @dynamic primaryKey;
+
+
+
+
+
+
+@dynamic qrcode;
 
 
 

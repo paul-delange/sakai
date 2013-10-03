@@ -9,6 +9,7 @@
 #import "ParticipantsViewController.h"
 #import "SettingsViewController.h"
 #import "ScannerViewController.h"
+#import "CreateViewController.h"
 
 #import "ParticipantTableViewCell.h"
 
@@ -28,6 +29,7 @@
     BOOL _canResignSearchBar;
     
     __strong NSArray* _searchResults;
+    NSString* _participantCodeToPassOn;
 }
 
 @property (strong, nonatomic) UISearchDisplayController* searchController;
@@ -225,7 +227,7 @@
             ScannerViewController* scannerVC = (ScannerViewController*)segue.destinationViewController;
             scannerVC.manuallyAddParticipant = ^(NSString* participantCode) {
                 [self.scanController dismissPopoverAnimated: YES];
-                
+                _participantCodeToPassOn = participantCode;
                 [self performSegueWithIdentifier: kSegueCreate sender: nil];
             };
             scannerVC.scannedParticipant = ^(Participant* participant) {
@@ -233,6 +235,13 @@
                 [self.tableView selectRowAtIndexPath: indexPath
                                             animated: YES
                                       scrollPosition: UITableViewScrollPositionTop];
+                
+                
+                double delayInSeconds = 3.0;
+                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                    [self.tableView deselectRowAtIndexPath: indexPath animated: YES];
+                });
             };
         }
         else if( [segue.identifier isEqualToString: kSegueSettingsPopover] ) {
@@ -254,6 +263,14 @@
                         break;
                 }
             };
+        }
+    }
+    else {
+        if( [segue.identifier isEqualToString: kSegueCreate] ) {
+            UINavigationController* navController = (UINavigationController*)segue.destinationViewController;
+            CreateViewController* createVC = (CreateViewController*)navController.viewControllers.lastObject;
+            createVC.participantCode = _participantCodeToPassOn;
+            _participantCodeToPassOn = nil;
         }
     }
 }

@@ -56,6 +56,7 @@
         
         Participant* newParticipant = [context insertNewObjectForEntityForName: NSStringFromClass([Participant class])];
         newParticipant.name = self.nameField.text;
+        newParticipant.qrcode = self.participantCode;
         
         [[RKObjectManager sharedManager] postObject: newParticipant
                                                path: kWebServiceListPath
