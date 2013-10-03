@@ -16,8 +16,51 @@
                     <view key="view" contentMode="scaleToFill" id="HKY-fk-Add" customClass="ZBarReaderView">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <subviews>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LWr-Dg-rQW">
+                                <rect key="frame" x="699" y="973" width="51" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="cameraToggleChanged:" destination="Rn2-DZ-aCy" eventType="valueChanged" id="7X4-HO-AYg"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Front" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QTg-d1-yTk">
+                                <rect key="frame" x="699" y="953" width="25" height="12"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Back" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OsK-uh-fcC">
+                                <rect key="frame" x="724" y="953" width="24" height="12"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="etQ-rb-Kao">
+                                <rect key="frame" x="374" y="502" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="LWr-Dg-rQW" firstAttribute="top" secondItem="OsK-uh-fcC" secondAttribute="bottom" constant="8" symbolic="YES" id="9Zc-kV-GLO"/>
+                            <constraint firstItem="OsK-uh-fcC" firstAttribute="trailing" secondItem="LWr-Dg-rQW" secondAttribute="trailing" id="PNj-Qs-q3h"/>
+                            <constraint firstAttribute="bottom" secondItem="LWr-Dg-rQW" secondAttribute="bottom" constant="20" symbolic="YES" id="Xdg-Jy-jM9"/>
+                            <constraint firstAttribute="trailing" secondItem="LWr-Dg-rQW" secondAttribute="trailing" constant="20" symbolic="YES" id="g4w-A4-KxL"/>
+                            <constraint firstItem="QTg-d1-yTk" firstAttribute="baseline" secondItem="OsK-uh-fcC" secondAttribute="baseline" id="gfa-fF-A7L"/>
+                            <constraint firstItem="etQ-rb-Kao" firstAttribute="centerY" secondItem="HKY-fk-Add" secondAttribute="centerY" id="q5f-tL-n56"/>
+                            <constraint firstItem="QTg-d1-yTk" firstAttribute="leading" secondItem="LWr-Dg-rQW" secondAttribute="leading" id="xwx-bI-31e"/>
+                            <constraint firstItem="etQ-rb-Kao" firstAttribute="centerX" secondItem="HKY-fk-Add" secondAttribute="centerX" id="zpu-Lo-W6k"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="activityIndicator" destination="etQ-rb-Kao" id="Pqx-aG-pyN"/>
+                        <outlet property="backLabel" destination="OsK-uh-fcC" id="HF4-YX-2Gs"/>
+                        <outlet property="cameraToggle" destination="LWr-Dg-rQW" id="PM7-eq-dgC"/>
+                        <outlet property="frontLabel" destination="QTg-d1-yTk" id="CiL-FF-cOp"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p05-ZU-t0b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
