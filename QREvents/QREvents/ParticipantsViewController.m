@@ -30,6 +30,8 @@
     
     __strong NSArray* _searchResults;
     NSString* _participantCodeToPassOn;
+    
+    dispatch_source_t _refreshTimer;
 }
 
 @property (strong, nonatomic) UISearchDisplayController* searchController;
@@ -104,18 +106,21 @@
 }
 
 - (void) eventReset: (NSNotification*) notification {
+    _resultsController = nil;
     [self.settingsController dismissPopoverAnimated: YES];
     
-    if( ![self objectManager] )
+    if( ![self objectManager] ) {
         [[self appDelegate] showConnectionViewController];
+    }
     else {
         __autoreleasing NSError* error;
         [self.resultsController performFetch: &error];
         NSAssert(!error, @"Error fetching results: %@", error);
-        [self.tableView reloadData];
         
         [self refreshPushed: nil];
     }
+    
+    [self.tableView reloadData];
 }
 
 - (NSFetchedResultsController*) resultsController {
@@ -162,11 +167,18 @@
                                                  selector: @selector(eventReset:)
                                                      name: kApplicationResetNotification
                                                    object: nil];
+        
+        _refreshTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
+        dispatch_source_set_timer(_refreshTimer, DISPATCH_TIME_NOW, 60 * 2 * NSEC_PER_SEC, DISPATCH_TIME_FOREVER);
+        dispatch_source_set_event_handler(_refreshTimer, ^{
+            [self refreshPushed: self.refreshButton];
+        });
     }
     return self;
 }
 
 - (void) dealloc {
+    dispatch_source_cancel(_refreshTimer);
     [[NSNotificationCenter defaultCenter] removeObserver: self
                                                     name: kApplicationResetNotification
                                                   object: nil];
@@ -271,6 +283,9 @@
             CreateViewController* createVC = (CreateViewController*)navController.viewControllers.lastObject;
             createVC.participantCode = _participantCodeToPassOn;
             _participantCodeToPassOn = nil;
+        }
+        else if([segue.identifier isEqualToString: kSegueConnectModal] ) {
+            
         }
     }
 }

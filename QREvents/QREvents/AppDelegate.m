@@ -11,8 +11,6 @@
 
 #import <RestKit/RKManagedObjectStore.h>
 
-#define kSegueConnectModal @"ConnectSegue"
-
 NSString* kApplicationResetNotification =  @"ApplicationReset";
 
 @implementation AppDelegate
@@ -28,6 +26,7 @@ NSString* kApplicationResetNotification =  @"ApplicationReset";
     NSParameterAssert([NSThread isMainThread]);
     
     //Do the tricky stuff here
+    
     self.objectManager = nil;
     [RKObjectManager setSharedManager: nil];
     [RKManagedObjectStore setDefaultStore: nil];

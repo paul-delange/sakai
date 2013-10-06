@@ -214,16 +214,43 @@
                                      [context saveToPersistentStore: &error];
                                      NSAssert(!error, @"Error updating particpant: %@", error);
  
-                                     self.scannedParticipant(participant);
-                                     [UIView transitionWithView: self.view
-                                                       duration: [UIApplication sharedApplication].statusBarOrientationAnimationDuration
-                                                        options: UIViewAnimationOptionCurveEaseIn
-                                                     animations: ^{
-                                                         _capturedImageView.alpha = 0.f;
-                                                     } completion:^(BOOL finished) {
-                                                         [_capturedImageView removeFromSuperview];
-                                                          _canScanEventCode = YES;
-                                                     }];
+                                     RKObjectManager* objectManager = [[self appDelegate] objectManager];
+                                     [objectManager putObject: participant
+                                                         path: kWebServiceIndividualPath
+                                                   parameters: nil
+                                                      success: ^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                                          self.scannedParticipant(participant);
+                                                          [UIView transitionWithView: self.view
+                                                                            duration: [UIApplication sharedApplication].statusBarOrientationAnimationDuration
+                                                                             options: UIViewAnimationOptionCurveEaseIn
+                                                                          animations: ^{
+                                                                              _capturedImageView.alpha = 0.f;
+                                                                          } completion:^(BOOL finished) {
+                                                                              [_capturedImageView removeFromSuperview];
+                                                                              _canScanEventCode = YES;
+                                                                          }];
+                                                      } failure: ^(RKObjectRequestOperation *operation, NSError *error) {
+                                                          NSString* title = NSLocalizedString(@"Server synchronization error", @"");
+                                                          NSString* format = NSLocalizedString(@"'%@' could not be saved on the server. Please check your internet settings and try again.", @"");
+                                                          NSString* msg = [NSString stringWithFormat: format, participant.name];
+                                                          
+                                                          UIAlertView* alert = [[UIAlertView alloc] initWithTitle: title
+                                                                                                          message: msg
+                                                                                                         delegate: nil
+                                                                                                cancelButtonTitle: NSLocalizedString(@"OK", @"")
+                                                                                                otherButtonTitles: nil];
+                                                          [alert show];
+                                                          
+                                                          [UIView transitionWithView: self.view
+                                                                            duration: [UIApplication sharedApplication].statusBarOrientationAnimationDuration
+                                                                             options: UIViewAnimationOptionCurveEaseIn
+                                                                          animations: ^{
+                                                                              _capturedImageView.alpha = 0.f;
+                                                                          } completion:^(BOOL finished) {
+                                                                              [_capturedImageView removeFromSuperview];
+                                                                              _canScanEventCode = YES;
+                                                                          }];
+                                                      }];
                                  }
                                  else {
                                      _participantCode = sym.data;

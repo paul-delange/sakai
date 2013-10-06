@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#define kSegueConnectModal @"ConnectSegue"
+
 extern NSString* kApplicationResetNotification;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
