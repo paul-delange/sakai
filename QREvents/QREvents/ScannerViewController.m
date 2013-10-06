@@ -215,8 +215,11 @@
                                      NSAssert(!error, @"Error updating particpant: %@", error);
  
                                      RKObjectManager* objectManager = [[self appDelegate] objectManager];
+                                     RKPathMatcher* pathMatcher = [RKPathMatcher pathMatcherWithPattern: kWebServiceIndividualPath];
+                                     NSString* path = [pathMatcher pathFromObject: participant addingEscapes: YES interpolatedParameters: nil];
+                                     
                                      [objectManager putObject: participant
-                                                         path: kWebServiceIndividualPath
+                                                         path: path
                                                    parameters: nil
                                                       success: ^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                                           self.scannedParticipant(participant);

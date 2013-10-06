@@ -139,6 +139,11 @@ NSString* kApplicationResetNotification =  @"ApplicationReset";
                                                                                    objectClass: [Participant class]
                                                                                    rootKeyPath: nil
                                                                                         method: RKRequestMethodPOST];
+        RKResponseDescriptor* updateResponse = [RKResponseDescriptor responseDescriptorWithMapping: postMapping
+                                                                                            method: RKRequestMethodPUT
+                                                                                       pathPattern: kWebServiceIndividualPath
+                                                                                           keyPath: nil
+                                                                                       statusCodes: successStatusCodes];
         
         //Errors
         RKResponseDescriptor* errorResponse = [RKResponseDescriptor responseDescriptorWithMapping: errorMapping
@@ -147,7 +152,7 @@ NSString* kApplicationResetNotification =  @"ApplicationReset";
                                                                                           keyPath: @"error"
                                                                                       statusCodes: creationFailedCodes];
         
-        [manager addResponseDescriptorsFromArray: @[listResponse, participantResponse, createResponse, errorResponse]];
+        [manager addResponseDescriptorsFromArray: @[listResponse, participantResponse, createResponse, updateResponse, errorResponse]];
         [manager addRequestDescriptorsFromArray: @[createRequest, updateRequest]];
         
         //Managed orphaned results

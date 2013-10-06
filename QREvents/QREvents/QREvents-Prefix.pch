@@ -24,7 +24,7 @@
 
 #if USING_PARSE_DOT_COM
     #define kWebServiceListPath             @"Participant"
-    #define kWebServiceIndividualPath       @"Participant/:user_id"
+    #define kWebServiceIndividualPath       @"Participant/:primaryKey"
 #else
     #define kWebServiceListPath             @"participants"
     #define kWebServiceIndividualPath       @"participants/:user_id"
