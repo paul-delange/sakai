@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "container:QREvents.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:RestKit/RestKit.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:zbar/iphone/zbar.xcodeproj">
+   </FileRef>
+</Workspace>
