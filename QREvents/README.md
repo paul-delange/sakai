@@ -6,9 +6,8 @@ Building
 
 1. Install [mogenerator](http://rentzsch.github.io/mogenerator/). mogenerator, manages Core Data entities better.
 2. Download this repo: ```git clone https://github.com/paul-delange/sakai.git ```
-3. Navigate to the new folder and update git with: ```git submodule update --init```. This will install dependent projects (RestKit, zbar)
-4. RestKit will fail (I made a mistake adding it - sorry). Move into the folder ```cd QREvents/RestKit```, and then use this command ```git checkout ed7657020c9804364447c5b438c7504a85545cf7``` followed by ```git submodule update --init```
-5. Open **QREvents.xcworkspace** and build　**QREvents** target
+3. Navigate to the new folder and update git with: ```git submodule update --init --recursive```. This will install dependent projects (RestKit, zbar)
+4. Open **QREvents.xcworkspace** and build　**QREvents** target
 
 Project Help
 ------
