@@ -15,4 +15,6 @@
 @property (strong, nonatomic) IBOutlet UIBarButtonItem* refreshButton;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem* searchButton;
 
+- (IBAction)cameraTogglePushed:(id)sender;
+
 @end

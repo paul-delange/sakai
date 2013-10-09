@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="m06-qg-kAn">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="bMk-oq-kWs">
     <dependencies>
         <deployment defaultVersion="1536" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
@@ -8,51 +8,63 @@
         <!--Scanner View Controller-->
         <scene sceneID="Rax-k7-peG">
             <objects>
-                <viewController id="Rn2-DZ-aCy" customClass="ScannerViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MasterViewController" id="Rn2-DZ-aCy" customClass="ScannerViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hRB-Va-XwQ"/>
                         <viewControllerLayoutGuide type="bottom" id="Jyx-HV-YK5"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="HKY-fk-Add" customClass="ZBarReaderView">
+                    <view key="view" contentMode="scaleToFill" id="HKY-fk-Add">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bsb-D7-4Tq" customClass="ZBarReaderView">
+                                <rect key="frame" x="20" y="28" width="728" height="728"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="728" placeholder="YES" id="zKQ-is-i1j"/>
+                                </constraints>
+                            </view>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LWr-Dg-rQW">
-                                <rect key="frame" x="699" y="973" width="51" height="31"/>
+                                <rect key="frame" x="699" y="725" width="51" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <action selector="cameraToggleChanged:" destination="Rn2-DZ-aCy" eventType="valueChanged" id="7X4-HO-AYg"/>
                                 </connections>
                             </switch>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Front" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QTg-d1-yTk">
-                                <rect key="frame" x="699" y="953" width="25" height="12"/>
+                                <rect key="frame" x="699" y="705" width="25" height="12"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Back" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OsK-uh-fcC">
-                                <rect key="frame" x="724" y="953" width="24" height="12"/>
+                                <rect key="frame" x="724" y="705" width="24" height="12"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="etQ-rb-Kao">
-                                <rect key="frame" x="374" y="502" width="20" height="20"/>
+                                <rect key="frame" x="374" y="382" width="20" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="LWr-Dg-rQW" firstAttribute="top" secondItem="OsK-uh-fcC" secondAttribute="bottom" constant="8" symbolic="YES" id="9Zc-kV-GLO"/>
+                            <constraint firstItem="LWr-Dg-rQW" firstAttribute="bottom" secondItem="bsb-D7-4Tq" secondAttribute="bottom" id="A1H-Sg-KcF"/>
+                            <constraint firstItem="OsK-uh-fcC" firstAttribute="trailing" secondItem="bsb-D7-4Tq" secondAttribute="trailing" id="ND5-6G-3a3"/>
+                            <constraint firstItem="bsb-D7-4Tq" firstAttribute="leading" secondItem="HKY-fk-Add" secondAttribute="leading" constant="20" symbolic="YES" id="PHG-yY-ie2"/>
                             <constraint firstItem="OsK-uh-fcC" firstAttribute="trailing" secondItem="LWr-Dg-rQW" secondAttribute="trailing" id="PNj-Qs-q3h"/>
-                            <constraint firstAttribute="bottom" secondItem="LWr-Dg-rQW" secondAttribute="bottom" constant="20" symbolic="YES" id="Xdg-Jy-jM9"/>
-                            <constraint firstAttribute="trailing" secondItem="LWr-Dg-rQW" secondAttribute="trailing" constant="20" symbolic="YES" id="g4w-A4-KxL"/>
+                            <constraint firstItem="LWr-Dg-rQW" firstAttribute="trailing" secondItem="bsb-D7-4Tq" secondAttribute="trailing" id="Rbh-uM-Yb1"/>
+                            <constraint firstItem="etQ-rb-Kao" firstAttribute="centerX" secondItem="bsb-D7-4Tq" secondAttribute="centerX" id="TTY-B0-rtl"/>
                             <constraint firstItem="QTg-d1-yTk" firstAttribute="baseline" secondItem="OsK-uh-fcC" secondAttribute="baseline" id="gfa-fF-A7L"/>
-                            <constraint firstItem="etQ-rb-Kao" firstAttribute="centerY" secondItem="HKY-fk-Add" secondAttribute="centerY" id="q5f-tL-n56"/>
+                            <constraint firstItem="bsb-D7-4Tq" firstAttribute="top" secondItem="hRB-Va-XwQ" secondAttribute="bottom" constant="20" symbolic="YES" id="giw-pR-1Cy"/>
+                            <constraint firstAttribute="trailing" secondItem="OsK-uh-fcC" secondAttribute="trailing" constant="20" symbolic="YES" id="mvv-TO-Che"/>
+                            <constraint firstItem="etQ-rb-Kao" firstAttribute="centerY" secondItem="bsb-D7-4Tq" secondAttribute="centerY" id="nVD-Lr-h39"/>
                             <constraint firstItem="QTg-d1-yTk" firstAttribute="leading" secondItem="LWr-Dg-rQW" secondAttribute="leading" id="xwx-bI-31e"/>
-                            <constraint firstItem="etQ-rb-Kao" firstAttribute="centerX" secondItem="HKY-fk-Add" secondAttribute="centerX" id="zpu-Lo-W6k"/>
                         </constraints>
                     </view>
                     <connections>
@@ -60,11 +72,12 @@
                         <outlet property="backLabel" destination="OsK-uh-fcC" id="HF4-YX-2Gs"/>
                         <outlet property="cameraToggle" destination="LWr-Dg-rQW" id="PM7-eq-dgC"/>
                         <outlet property="frontLabel" destination="QTg-d1-yTk" id="CiL-FF-cOp"/>
+                        <outlet property="readerView" destination="bsb-D7-4Tq" id="Zfh-eX-lEe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p05-ZU-t0b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1665" y="-2115"/>
+            <point key="canvasLocation" x="-783" y="1737"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="aSb-Yx-l4e">
@@ -163,7 +176,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UKj-ww-See" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1657" y="667"/>
+            <point key="canvasLocation" x="-683" y="813"/>
         </scene>
         <!--Create View Controller-->
         <scene sceneID="VJ2-fe-PG4">
@@ -254,7 +267,6 @@
                         <outlet property="refreshButton" destination="9oJ-H9-7WV" id="W0h-WE-TUn"/>
                         <outlet property="searchButton" destination="N89-yr-h8X" id="oad-xl-t0h"/>
                         <outlet property="settingsButton" destination="RWH-hw-9qC" id="PT8-39-zV0"/>
-                        <segue destination="5Hz-Rw-VCB" kind="modal" identifier="ConnectSegue" modalPresentationStyle="formSheet" modalTransitionStyle="crossDissolve" id="t6N-uV-ISi"/>
                         <segue destination="cex-T1-NSH" kind="modal" identifier="CreateSegue" modalPresentationStyle="formSheet" modalTransitionStyle="crossDissolve" id="Dtp-We-BcN"/>
                     </connections>
                 </tableViewController>
@@ -267,9 +279,7 @@
                 </barButtonItem>
                 <barButtonItem systemItem="camera" id="vZE-xE-3mc">
                     <connections>
-                        <segue destination="Rn2-DZ-aCy" kind="popover" identifier="ScannerSegue" popoverAnchorBarButtonItem="vZE-xE-3mc" id="1KK-MZ-fy6">
-                            <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                        </segue>
+                        <action selector="cameraTogglePushed:" destination="ug3-GS-11k" id="8li-3c-eT7"/>
                     </connections>
                 </barButtonItem>
                 <barButtonItem systemItem="search" id="N89-yr-h8X">
@@ -287,10 +297,31 @@
             </objects>
             <point key="canvasLocation" x="202" y="-711"/>
         </scene>
+        <!--Peekaboo View Controller-->
+        <scene sceneID="ETQ-H8-S0m">
+            <objects>
+                <viewController id="bMk-oq-kWs" customClass="PeekabooViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1Xn-ks-hax"/>
+                        <viewControllerLayoutGuide type="bottom" id="Dmm-Ee-7KA"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="lpg-cf-8VA">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="5Hz-Rw-VCB" kind="modal" identifier="ConnectSegue" modalPresentationStyle="formSheet" id="VRw-75-7X3"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cZZ-Xt-Kfr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1719" y="30"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="txI-nj-BV9">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="m06-qg-kAn" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="DetailViewController" automaticallyAdjustsScrollViewInsets="NO" id="m06-qg-kAn" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="pc6-Le-agd">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>

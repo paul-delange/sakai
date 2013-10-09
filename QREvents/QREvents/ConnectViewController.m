@@ -132,7 +132,13 @@
         self.wifiStatusLabel.text = NSLocalizedString(@"No Network Detected!", @"");
         self.wifiStatusLabel.textColor = [UIColor redColor];
     }
+    /*
+    NSURLRequest* request = [NSURLRequest requestWithURL: [NSURL URLWithString: @"http://api.qrevents.com/events"]];
+    NSData* data = [NSURLConnection sendSynchronousRequest: request returningResponse: Nil error: nil];
+    NSArray* parsed = [NSJSONSerialization JSONObjectWithData: data options: 0 error: nil];
     
+    self.navigationItem.title = [[parsed objectAtIndex: 0] valueForKey: @"title"];
+    */
     NSString* connect = NSLocalizedString(@"Start", @"");
     NSString* format = NSLocalizedString(@"Welcome to %@!\n\nBefore using this app, you must connect to an event. Please enter the address of a valid event server below and then push '%@'", @"");
     NSString* welcomeMessage = [NSString stringWithFormat: format, appName, connect];
@@ -153,7 +159,9 @@
     [attrString setAttributes: msgAttributes range: msgRange];
     
     self.welcomeLabel.attributedText = attrString;
-    
+    /*NSDictionary* anEvent = [parsed objectAtIndex: 0];
+    self.welcomeLabel.text = [anEvent valueForKey: @"name"];
+    */
     [self.connectButton setTitle: connect forState: UIControlStateNormal];
     
     self.serverURLField.placeholder = NSLocalizedString(@"http://www.example.com", @"");

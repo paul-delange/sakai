@@ -9,9 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @class Participant;
+@class ZBarReaderView;
 
 @interface ScannerViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet ZBarReaderView *readerView;
 @property (weak, nonatomic) IBOutlet UISwitch *cameraToggle;
 @property (weak, nonatomic) IBOutlet UILabel *frontLabel;
 @property (weak, nonatomic) IBOutlet UILabel *backLabel;

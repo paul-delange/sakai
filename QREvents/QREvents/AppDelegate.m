@@ -9,15 +9,41 @@
 #import "AppDelegate.h"
 #import "Participant.h"
 
+#import "PeekabooViewController.h"
+
 #import <RestKit/RKManagedObjectStore.h>
 
 NSString* kApplicationResetNotification =  @"ApplicationReset";
 
+@implementation NSString (unicode)
+
+- (NSString *) escapedUnicode
+{
+    NSMutableString *uniString = [ [ NSMutableString alloc ] init ];
+    UniChar *uniBuffer = (UniChar *) malloc ( sizeof(UniChar) * [ self length ] );
+    CFRange stringRange = CFRangeMake ( 0, [ self length ] );
+    
+    CFStringGetCharacters ( (CFStringRef)self, stringRange, uniBuffer );
+    
+    for ( int i = 0; i < [ self length ]; i++ ) {
+        if ( uniBuffer[i] > 0x7e )
+            [ uniString appendFormat: @"\\u%04x", uniBuffer[i] ];
+        else
+            [ uniString appendFormat: @"%c", uniBuffer[i] ];
+    }
+    
+    free ( uniBuffer );
+    
+    return [ NSString stringWithString: uniString ];
+    
+}
+
+@end
+
 @implementation AppDelegate
 
 - (void) showConnectionViewController {
-    UINavigationController* navigationController = (UINavigationController*)self.window.rootViewController;
-    UIViewController* topLevelController = navigationController.viewControllers.lastObject;
+    PeekabooViewController* topLevelController = (PeekabooViewController*)self.window.rootViewController;
     NSParameterAssert(!topLevelController.presentedViewController);
     [topLevelController performSegueWithIdentifier: kSegueConnectModal sender: nil];
 }
@@ -183,6 +209,12 @@ NSString* kApplicationResetNotification =  @"ApplicationReset";
         [[NSFileManager defaultManager] removeItemAtPath: storePath error: &error];
         NSAssert(!error, @"Could not delete old database at %@. Error %@", storePath, error);
     }
+    
+    PeekabooViewController* splitViewController = (PeekabooViewController*)self.window.rootViewController;
+    
+    splitViewController.masterViewController = [splitViewController.storyboard instantiateViewControllerWithIdentifier: @"MasterViewController"];
+    splitViewController.detailViewController =[splitViewController.storyboard instantiateViewControllerWithIdentifier: @"DetailViewController"];
+    
     
     return YES;
 }

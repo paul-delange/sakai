@@ -10,6 +10,7 @@
 #import "SettingsViewController.h"
 #import "ScannerViewController.h"
 #import "CreateViewController.h"
+#import "PeekabooViewController.h"
 
 #import "ParticipantTableViewCell.h"
 
@@ -97,6 +98,13 @@
                                    }];
 }
 
+- (IBAction)cameraTogglePushed:(id)sender {
+    AppDelegate* delegate = [self appDelegate];
+    PeekabooViewController* splitViewController = (PeekabooViewController*)delegate.window.rootViewController;
+    
+    [splitViewController togglePeekingController: sender];
+}
+
 - (AppDelegate*) appDelegate {
     return (AppDelegate*)[[UIApplication sharedApplication] delegate];
 }
@@ -163,6 +171,7 @@
 - (id) initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder: aDecoder];
     if( self ) {
+        
         [[NSNotificationCenter defaultCenter] addObserver: self
                                                  selector: @selector(eventReset:)
                                                      name: kApplicationResetNotification
