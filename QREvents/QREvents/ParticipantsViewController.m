@@ -22,7 +22,6 @@
 
 #define kParticipantTableViewCellIdentifier (NSStringFromClass([ParticipantTableViewCell class]))
 
-#define kSegueScannerPopover    @"ScannerSegue"
 #define kSegueSettingsPopover   @"SettingsSegue"
 #define kSegueCreate            @"CreateSegue"
 
@@ -103,6 +102,27 @@
     PeekabooViewController* splitViewController = (PeekabooViewController*)delegate.window.rootViewController;
     
     [splitViewController togglePeekingController: sender];
+    
+    ScannerViewController* scannerVC = (ScannerViewController*)splitViewController.masterViewController;
+            scannerVC.manuallyAddParticipant = ^(NSString* participantCode) {
+                [self.scanController dismissPopoverAnimated: YES];
+                _participantCodeToPassOn = participantCode;
+                [self performSegueWithIdentifier: kSegueCreate sender: nil];
+            };
+            scannerVC.scannedParticipant = ^(Participant* participant) {
+                NSIndexPath* indexPath = [self.resultsController indexPathForObject: participant];
+                [self.tableView selectRowAtIndexPath: indexPath
+                                            animated: YES
+                                      scrollPosition: UITableViewScrollPositionTop];
+                
+                
+                double delayInSeconds = 3.0;
+                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                    [self.tableView deselectRowAtIndexPath: indexPath animated: YES];
+                });
+            };
+    
 }
 
 - (AppDelegate*) appDelegate {
@@ -206,29 +226,7 @@
 }
 
 - (BOOL) shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
-    if( [identifier isEqualToString: kSegueScannerPopover] ) {
-        
-        //Check if we are already visible...
-        if( [self.scanController isPopoverVisible] )
-            return NO;
-        
-        //Check if we have a camera
-#if TARGET_IPHONE_SIMULATOR
-        return YES;
-#else
-        if([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera]) {
-            return YES;
-        }
-        else {
-            //No camera available!!
-            //UIAlertView* alert = [[UIAlertView alloc] initWithTitle: ];
-            //[alert show];
-            
-            return NO;
-        }
-#endif
-    }
-    else if( [identifier isEqualToString: kSegueSettingsPopover] ) {
+    if( [identifier isEqualToString: kSegueSettingsPopover] ) {
         return ![self.settingsController isPopoverVisible];
     }
     
@@ -240,32 +238,7 @@
         [self.searchController setActive: NO];
         
         UIStoryboardPopoverSegue* popoverSegue = (UIStoryboardPopoverSegue*)segue;
-        if( [segue.identifier isEqualToString: kSegueScannerPopover] ) {
-            [self.settingsController dismissPopoverAnimated: YES];
-            popoverSegue.popoverController.popoverContentSize = CGSizeMake(320, 320);
-            self.scanController = popoverSegue.popoverController;
-            
-            ScannerViewController* scannerVC = (ScannerViewController*)segue.destinationViewController;
-            scannerVC.manuallyAddParticipant = ^(NSString* participantCode) {
-                [self.scanController dismissPopoverAnimated: YES];
-                _participantCodeToPassOn = participantCode;
-                [self performSegueWithIdentifier: kSegueCreate sender: nil];
-            };
-            scannerVC.scannedParticipant = ^(Participant* participant) {
-                NSIndexPath* indexPath = [self.resultsController indexPathForObject: participant];
-                [self.tableView selectRowAtIndexPath: indexPath
-                                            animated: YES
-                                      scrollPosition: UITableViewScrollPositionTop];
-                
-                
-                double delayInSeconds = 3.0;
-                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                    [self.tableView deselectRowAtIndexPath: indexPath animated: YES];
-                });
-            };
-        }
-        else if( [segue.identifier isEqualToString: kSegueSettingsPopover] ) {
+        if( [segue.identifier isEqualToString: kSegueSettingsPopover] ) {
             [self.scanController dismissPopoverAnimated: YES];
             popoverSegue.popoverController.popoverContentSize = CGSizeMake(256, 320);
             self.settingsController = popoverSegue.popoverController;
