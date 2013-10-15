@@ -9,9 +9,16 @@
 #import "ConnectViewController.h"
 #import "AppDelegate.h"
 
+#import "Event.h"
+
+#import "SBTableAlert.h"
+
 #import <SystemConfiguration/CaptiveNetwork.h>
 
-@interface ConnectViewController () <UITextFieldDelegate>
+@interface ConnectViewController () <UITextFieldDelegate, SBTableAlertDataSource, SBTableAlertDelegate> {
+    SBTableAlert* _alert;
+    NSArray* _events;
+}
 
 @end
 
@@ -36,18 +43,11 @@
     
     RKObjectRequestOperation *operation = [objectManager appropriateObjectRequestOperationWithObject: nil
                                                                                               method: RKRequestMethodHEAD
-                                                                                                path: kWebServiceListPath
+                                                                                                path: kWebServiceEventListPath
                                                                                           parameters: nil];
-    [operation setCompletionBlockWithSuccess: ^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        
-        [[self appDelegate] setObjectManager: objectManager];
-        [self dismissViewControllerAnimated: YES completion: ^{
-            [[NSNotificationCenter defaultCenter] postNotificationName: kApplicationResetNotification
-                                                                object: nil
-                                                              userInfo: nil];
-        }];
-        
-    } failure: ^(RKObjectRequestOperation *operation, NSError *error) {
+    
+    
+    void (^failureHandler)(RKObjectRequestOperation*, NSError*) = ^(RKObjectRequestOperation* operation, NSError* error) {
         self.serverURLField.enabled = YES;
         self.connectButton.enabled = YES;
         [activityView removeFromSuperview];
@@ -86,7 +86,52 @@
                                               cancelButtonTitle: NSLocalizedString(@"OK", @"")
                                               otherButtonTitles: nil];
         [alert show];
-    }];
+
+    };
+    
+    [operation setCompletionBlockWithSuccess: ^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        //This server seems to respond to the correct services, so we can go ahead and save our object manager
+        [[self appDelegate] setObjectManager: objectManager];
+        
+        //Now ask for event data
+        [objectManager getObjectsAtPath: kWebServiceEventListPath
+                             parameters: nil
+                                success: ^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                    _events = [mappingResult array];
+                                    if( _events.count == 1 ) {
+                                        [self dismissViewControllerAnimated: YES completion: ^{
+                                            [[NSNotificationCenter defaultCenter] postNotificationName: kApplicationResetNotification
+                                                                                                object: nil
+                                                                                              userInfo: nil];
+                                        }];
+                                    }
+                                    else if( _events.count > 1 ) {
+                                        NSString* title = NSLocalizedString(@"Please select an event", @"");
+                                        _alert = [[SBTableAlert alloc] initWithTitle: title cancelButtonTitle: NSLocalizedString(@"Cancel", @"") messageFormat: @""];
+                                        _alert.dataSource = self;
+                                        _alert.delegate = self;
+                                        [_alert show];
+                                    }
+                                    else {
+                                        //Didn't find any events...
+                                        NSString* title = NSLocalizedString(@"No events available", @"");
+                                        NSString* format = NSLocalizedString(@"%@ could not locate any event data on this server. Please check the configuration with an event organizer.", @"");
+                                        NSString* msg = [NSString stringWithFormat: format, kAppName()];
+                                        
+                                        UIAlertView* alert = [[UIAlertView alloc] initWithTitle: title
+                                                                                        message: msg
+                                                                                       delegate: nil
+                                                                              cancelButtonTitle: NSLocalizedString(@"OK", @"")
+                                                                              otherButtonTitles: nil];
+                                        [alert show];
+                                    }
+
+                                    self.serverURLField.enabled = YES;
+                                    self.connectButton.enabled = YES;
+                                    [activityView removeFromSuperview];
+                                    
+                                } failure: failureHandler];
+    } failure: failureHandler];
     
     [objectManager enqueueObjectRequestOperation:operation];
 }
@@ -194,6 +239,52 @@
 - (BOOL) textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
+}
+
+#pragma mark - SBTableAlertDataSource
+- (UITableViewCell*) tableAlert:(SBTableAlert *)tableAlert cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString* cellIdentifier = @"AlertTableViewCellIdentifier";
+    UITableViewCell* cell = [tableAlert.tableView dequeueReusableCellWithIdentifier: cellIdentifier];
+    if( !cell ) {
+        cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: cellIdentifier];
+    }
+    
+    Event* event = [_events objectAtIndex: indexPath.row];
+    
+    cell.textLabel.text = event.name;
+    
+    return cell;
+}
+
+- (NSInteger) tableAlert:(SBTableAlert *)tableAlert numberOfRowsInSection:(NSInteger)section {
+    return _events.count;
+}
+
+#pragma mark - SBTableAlertDelegate
+- (void)tableAlert:(SBTableAlert *)tableAlert didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    Event* selectedEvent = [_events objectAtIndex: indexPath.row];
+    NSMutableArray* toDelete = [_events mutableCopy];
+    [toDelete removeObject: selectedEvent];
+    
+    _events = nil;
+    
+    //Delete
+    RKObjectManager* manager = [[self appDelegate] objectManager];
+    RKManagedObjectStore* store = [manager managedObjectStore];
+    NSManagedObjectContext* context = store.persistentStoreManagedObjectContext;
+    for(NSManagedObject* obj in toDelete) {
+        NSManagedObject* persistent = [context objectWithID: obj.objectID];
+        [store.persistentStoreManagedObjectContext deleteObject: persistent];
+    }
+    toDelete = nil;
+    
+    [store.persistentStoreManagedObjectContext saveToPersistentStore: nil];
+    
+    [self dismissViewControllerAnimated: YES completion: ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName: kApplicationResetNotification
+                                                            object: nil
+                                                          userInfo: nil];
+    }];
 }
 
 @end

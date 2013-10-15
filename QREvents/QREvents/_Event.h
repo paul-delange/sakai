@@ -5,6 +5,8 @@
 
 
 extern const struct EventAttributes {
+	__unsafe_unretained NSString *baseURL;
+	__unsafe_unretained NSString *code;
 	__unsafe_unretained NSString *name;
 	__unsafe_unretained NSString *primaryKey;
 } EventAttributes;
@@ -17,6 +19,8 @@ extern const struct EventFetchedProperties {
 } EventFetchedProperties;
 
 @class Participant;
+
+
 
 
 
@@ -34,6 +38,26 @@ extern const struct EventFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSString* baseURL;
+
+
+
+//- (BOOL)validateBaseURL:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSString* code;
+
+
+
+//- (BOOL)validateCode:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
 @property (nonatomic, strong) NSString* name;
 
 
@@ -44,13 +68,9 @@ extern const struct EventFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSNumber* primaryKey;
+@property (nonatomic, strong) NSString* primaryKey;
 
 
-
-@property int16_t primaryKeyValue;
-- (int16_t)primaryKeyValue;
-- (void)setPrimaryKeyValue:(int16_t)value_;
 
 //- (BOOL)validatePrimaryKey:(id*)value_ error:(NSError**)error_;
 
@@ -80,17 +100,26 @@ extern const struct EventFetchedProperties {
 @interface _Event (CoreDataGeneratedPrimitiveAccessors)
 
 
+- (NSString*)primitiveBaseURL;
+- (void)setPrimitiveBaseURL:(NSString*)value;
+
+
+
+
+- (NSString*)primitiveCode;
+- (void)setPrimitiveCode:(NSString*)value;
+
+
+
+
 - (NSString*)primitiveName;
 - (void)setPrimitiveName:(NSString*)value;
 
 
 
 
-- (NSNumber*)primitivePrimaryKey;
-- (void)setPrimitivePrimaryKey:(NSNumber*)value;
-
-- (int16_t)primitivePrimaryKeyValue;
-- (void)setPrimitivePrimaryKeyValue:(int16_t)value_;
+- (NSString*)primitivePrimaryKey;
+- (void)setPrimitivePrimaryKey:(NSString*)value;
 
 
 

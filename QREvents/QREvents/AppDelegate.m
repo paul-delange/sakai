@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "Participant.h"
+#import "Event.h"
 
 #import "PeekabooViewController.h"
 
@@ -108,21 +109,38 @@ NSString* kApplicationResetNotification =  @"ApplicationReset";
         NSString* individualPath = kWebServiceIndividualPath;
         NSString* serverPrimaryKeyName = USING_PARSE_DOT_COM ? @"objectId" : @"user_id";
         
+        RKEntityMapping* eventMapping = [RKEntityMapping mappingForEntityForName: NSStringFromClass([Event class])
+                                                            inManagedObjectStore: store];
+        eventMapping.identificationAttributes = @[@"primaryKey"];
+        [eventMapping addAttributeMappingsFromArray: @[
+                                                       @"name",
+                                                       @"code"
+                                                       ]];
+        
+        [eventMapping addAttributeMappingsFromDictionary: @{
+                                                            serverPrimaryKeyName : @"primaryKey",
+                                                            }];
+        
         RKEntityMapping* getMapping = [RKEntityMapping mappingForEntityForName: NSStringFromClass([Participant class])
                                                           inManagedObjectStore: store];
         getMapping.identificationAttributes = @[@"primaryKey"];
         [getMapping addAttributeMappingsFromArray: @[
                                                      @"name",
                                                      @"updatedAt",
-                                                     @"qrcode"
+                                                     @"qrcode",
+                                                     @"company",
+                                                     @"affiliation"
                                                      ]];
         [getMapping addAttributeMappingsFromDictionary: @{
                                                           serverPrimaryKeyName : @"primaryKey",
                                                           @"entry_time" : @"entryTime",
-                                                          @"exit_time" : @"exitTime"
+                                                          @"exit_time" : @"exitTime",
+                                                          @"participation_type" : @"participationType"
                                                           }];
         [getMapping setModificationAttributeForName: @"updatedAt"];
-        getMapping.deletionPredicate = [NSPredicate predicateWithFormat: @"primaryKey == nil"];
+        
+        [eventMapping addRelationshipMappingWithSourceKeyPath: @"participants" mapping: getMapping];
+        
         
         RKObjectMapping* postMapping = [getMapping inverseMappingWithPropertyMappingsPassingTest: ^BOOL(RKPropertyMapping *propertyMapping) {
             return ![propertyMapping.sourceKeyPath isEqualToString: serverPrimaryKeyName];
@@ -134,6 +152,13 @@ NSString* kApplicationResetNotification =  @"ApplicationReset";
         
         NSIndexSet* successStatusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful);
         NSIndexSet* creationFailedCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassClientError);
+        
+        //GET event list
+        RKResponseDescriptor* eventResponse = [RKResponseDescriptor responseDescriptorWithMapping: eventMapping
+                                                                                           method: RKRequestMethodGET
+                                                                                      pathPattern: kWebServiceEventListPath
+                                                                                          keyPath: USING_PARSE_DOT_COM ? @"results" : nil
+                                                                                      statusCodes: successStatusCodes];
         
         //GET participant list
         RKResponseDescriptor* listResponse = [RKResponseDescriptor responseDescriptorWithMapping: getMapping
@@ -178,7 +203,7 @@ NSString* kApplicationResetNotification =  @"ApplicationReset";
                                                                                           keyPath: @"error"
                                                                                       statusCodes: creationFailedCodes];
         
-        [manager addResponseDescriptorsFromArray: @[listResponse, participantResponse, createResponse, updateResponse, errorResponse]];
+        [manager addResponseDescriptorsFromArray: @[eventResponse, listResponse, participantResponse, createResponse, updateResponse, errorResponse]];
         [manager addRequestDescriptorsFromArray: @[createRequest, updateRequest]];
         
         //Managed orphaned results

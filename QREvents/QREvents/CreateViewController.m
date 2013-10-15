@@ -13,7 +13,9 @@
 
 #define     kSegueUnwind        @"UnwindCreateSegue"
 
-@interface CreateViewController () <UITextFieldDelegate>
+@interface CreateViewController () <UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate> {
+    kParticpationType _participationType;
+}
 
 @end
 
@@ -30,6 +32,10 @@
     if( self.nameField.text.length < 1 ) {
         title = NSLocalizedString(@"Invalid Name", @"");
         msg = NSLocalizedString(@"Please input this participants name", @"");
+    }
+    else if( self.companyField.text.length < 1 ) {
+        title = NSLocalizedString(@"No Company", @"");
+        msg = NSLocalizedString(@"This participant must belong to a company or other organization.", @"");
     }
     
     if( msg || title ) {
@@ -60,6 +66,10 @@
         if( self.participantCode ) {
             newParticipant.entryTime = [NSDate date];
         }
+        
+        newParticipant.participationTypeValue = _participationType;
+        newParticipant.company = self.companyField.text.length ? self.companyField.text : NSLocalizedString(@"Other", @"");
+        newParticipant.affiliation = self.affiliationField.text;
         
         [[RKObjectManager sharedManager] postObject: newParticipant
                                                path: kWebServiceListPath
@@ -111,8 +121,11 @@
     [super viewDidLoad];
     
     self.nameLabel.text = NSLocalizedString(@"Participant's Name:", @"");
+    self.companyLabel.text = NSLocalizedString(@"Company Name:", @"");
+    self.affiliationlabel.text = NSLocalizedString(@"Department:", @"");
     [self.addButton setTitle: NSLocalizedString(@"Join", @"") forState: UIControlStateNormal];
     self.addButton.enabled = NO;
+    _participationType = kParticpationTypeParticipant;
 }
 
 - (void)didReceiveMemoryWarning
@@ -136,6 +149,35 @@
 - (BOOL) textFieldShouldClear:(UITextField *)textField {
     self.addButton.enabled = NO;
     return YES;
+}
+
+#pragma mark - UIPickerViewDataSource
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    return kParticpationTypeCount;
+}
+
+#pragma mark - UIPickerViewDelegate
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    switch (row) {
+        case kParticpationTypeParticipant:
+            return NSLocalizedString(@"Participant", @"");
+        case kParticpationTypeRepresentative:
+            return NSLocalizedString(@"Representative", @"");
+        case kParticpationTypeDayVisitor:
+            return NSLocalizedString(@"Day Visitor", @"");
+        default:
+            break;
+    }
+    
+    return nil;
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    _participationType = row;
 }
 
 @end

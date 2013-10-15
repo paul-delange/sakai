@@ -8,9 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		FD0E457E180571B800EBE0E0 /* PeekabooViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0E457D180571B800EBE0E0 /* PeekabooViewController.m */; };
+		FD1D3E30180D63E200813405 /* EventSummaryView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1D3E2F180D63E200813405 /* EventSummaryView.m */; };
 		FD20D93517F40AAD003DBBBE /* ConnectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD20D93417F40AAD003DBBBE /* ConnectViewController.m */; };
 		FD20D93817F4396D003DBBBE /* CreateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD20D93717F4396D003DBBBE /* CreateViewController.m */; };
 		FD20D93B17F45B9B003DBBBE /* ResignableNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD20D93A17F45B9B003DBBBE /* ResignableNavigationViewController.m */; };
+		FD286611180BC74900BCC596 /* _Event.m in Sources */ = {isa = PBXBuildFile; fileRef = FD286610180BC74900BCC596 /* _Event.m */; };
+		FD286614180BC75200BCC596 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = FD286613180BC75200BCC596 /* Event.m */; };
+		FD286617180BCEE000BCC596 /* SBTableAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = FD286616180BCEE000BCC596 /* SBTableAlert.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FD2B32BE17F2B7F2002E87A8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD2B32BD17F2B7F2002E87A8 /* Foundation.framework */; };
 		FD2B32C017F2B7F2002E87A8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD2B32BF17F2B7F2002E87A8 /* CoreGraphics.framework */; };
 		FD2B32C217F2B7F2002E87A8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD2B32C117F2B7F2002E87A8 /* UIKit.framework */; };
@@ -61,12 +65,19 @@
 /* Begin PBXFileReference section */
 		FD0E457C180571B800EBE0E0 /* PeekabooViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeekabooViewController.h; sourceTree = "<group>"; };
 		FD0E457D180571B800EBE0E0 /* PeekabooViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeekabooViewController.m; sourceTree = "<group>"; };
+		FD1D3E2E180D63E200813405 /* EventSummaryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventSummaryView.h; sourceTree = "<group>"; };
+		FD1D3E2F180D63E200813405 /* EventSummaryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventSummaryView.m; sourceTree = "<group>"; };
 		FD20D93317F40AAD003DBBBE /* ConnectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectViewController.h; sourceTree = "<group>"; };
 		FD20D93417F40AAD003DBBBE /* ConnectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectViewController.m; sourceTree = "<group>"; };
 		FD20D93617F4396D003DBBBE /* CreateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateViewController.h; sourceTree = "<group>"; };
 		FD20D93717F4396D003DBBBE /* CreateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateViewController.m; sourceTree = "<group>"; };
 		FD20D93917F45B9B003DBBBE /* ResignableNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResignableNavigationViewController.h; sourceTree = "<group>"; };
 		FD20D93A17F45B9B003DBBBE /* ResignableNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResignableNavigationViewController.m; sourceTree = "<group>"; };
+		FD286610180BC74900BCC596 /* _Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Event.m; sourceTree = "<group>"; };
+		FD286612180BC75200BCC596 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
+		FD286613180BC75200BCC596 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
+		FD286615180BCEE000BCC596 /* SBTableAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBTableAlert.h; sourceTree = "<group>"; };
+		FD286616180BCEE000BCC596 /* SBTableAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBTableAlert.m; sourceTree = "<group>"; };
 		FD2B32BA17F2B7F2002E87A8 /* QREvents.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QREvents.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD2B32BD17F2B7F2002E87A8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FD2B32BF17F2B7F2002E87A8 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -245,6 +256,8 @@
 			children = (
 				FD6DF4E317F2E03A00E708A9 /* ParticipantTableViewCell.h */,
 				FD6DF4E417F2E03A00E708A9 /* ParticipantTableViewCell.m */,
+				FD1D3E2E180D63E200813405 /* EventSummaryView.h */,
+				FD1D3E2F180D63E200813405 /* EventSummaryView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -252,6 +265,8 @@
 		FD2B32F417F2B811002E87A8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				FD286612180BC75200BCC596 /* Event.h */,
+				FD286613180BC75200BCC596 /* Event.m */,
 				FD6DF4DC17F2BD7C00E708A9 /* Participant.h */,
 				FD6DF4DD17F2BD7C00E708A9 /* Participant.m */,
 				FD20D93917F45B9B003DBBBE /* ResignableNavigationViewController.h */,
@@ -288,6 +303,8 @@
 			isa = PBXGroup;
 			children = (
 				FD6DF4D817F2BCFC00E708A9 /* Mogenerator */,
+				FD286615180BCEE000BCC596 /* SBTableAlert.h */,
+				FD286616180BCEE000BCC596 /* SBTableAlert.m */,
 			);
 			name = Vendor;
 			sourceTree = "<group>";
@@ -295,6 +312,7 @@
 		FD6DF4D817F2BCFC00E708A9 /* Mogenerator */ = {
 			isa = PBXGroup;
 			children = (
+				FD286610180BC74900BCC596 /* _Event.m */,
 				FD6DF4D917F2BD6E00E708A9 /* _Participant.m */,
 			);
 			name = Mogenerator;
@@ -422,10 +440,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD1D3E30180D63E200813405 /* EventSummaryView.m in Sources */,
 				FD6DF4DA17F2BD6E00E708A9 /* _Participant.m in Sources */,
 				FD2B32CE17F2B7F2002E87A8 /* AppDelegate.m in Sources */,
 				FD20D93B17F45B9B003DBBBE /* ResignableNavigationViewController.m in Sources */,
 				FD6DF4E217F2DFBE00E708A9 /* ParticipantsViewController.m in Sources */,
+				FD286611180BC74900BCC596 /* _Event.m in Sources */,
 				FD6DF4DE17F2BD7C00E708A9 /* Participant.m in Sources */,
 				FD2B32CA17F2B7F2002E87A8 /* main.m in Sources */,
 				FD6DF4D417F2BB4100E708A9 /* Model.xcdatamodeld in Sources */,
@@ -433,7 +453,9 @@
 				FD0E457E180571B800EBE0E0 /* PeekabooViewController.m in Sources */,
 				FD6DF4F717F30DA800E708A9 /* SettingsViewController.m in Sources */,
 				FD20D93517F40AAD003DBBBE /* ConnectViewController.m in Sources */,
+				FD286614180BC75200BCC596 /* Event.m in Sources */,
 				FD6DF4F417F3006B00E708A9 /* ScannerViewController.m in Sources */,
+				FD286617180BCEE000BCC596 /* SBTableAlert.m in Sources */,
 				FD6DF4E517F2E03A00E708A9 /* ParticipantTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

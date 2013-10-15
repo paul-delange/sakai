@@ -4,6 +4,8 @@
 #import "_Event.h"
 
 const struct EventAttributes EventAttributes = {
+	.baseURL = @"baseURL",
+	.code = @"code",
 	.name = @"name",
 	.primaryKey = @"primaryKey",
 };
@@ -41,14 +43,23 @@ const struct EventFetchedProperties EventFetchedProperties = {
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
-	if ([key isEqualToString:@"primaryKeyValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"primaryKey"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-		return keyPaths;
-	}
 
 	return keyPaths;
 }
+
+
+
+
+@dynamic baseURL;
+
+
+
+
+
+
+@dynamic code;
+
+
 
 
 
@@ -62,25 +73,6 @@ const struct EventFetchedProperties EventFetchedProperties = {
 
 @dynamic primaryKey;
 
-
-
-- (int16_t)primaryKeyValue {
-	NSNumber *result = [self primaryKey];
-	return [result shortValue];
-}
-
-- (void)setPrimaryKeyValue:(int16_t)value_ {
-	[self setPrimaryKey:[NSNumber numberWithShort:value_]];
-}
-
-- (int16_t)primitivePrimaryKeyValue {
-	NSNumber *result = [self primitivePrimaryKey];
-	return [result shortValue];
-}
-
-- (void)setPrimitivePrimaryKeyValue:(int16_t)value_ {
-	[self setPrimitivePrimaryKey:[NSNumber numberWithShort:value_]];
-}
 
 
 

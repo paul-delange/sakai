@@ -11,8 +11,13 @@
 @interface CreateViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *companyLabel;
+@property (weak, nonatomic) IBOutlet UILabel *affiliationlabel;
 @property (weak, nonatomic) IBOutlet UITextField *nameField;
+@property (weak, nonatomic) IBOutlet UITextField *companyField;
+@property (weak, nonatomic) IBOutlet UITextField *affiliationField;
 @property (weak, nonatomic) IBOutlet UIButton *addButton;
+@property (weak, nonatomic) IBOutlet UIPickerView *participationTypePicker;
 @property (copy, nonatomic) NSString* participantCode;
 
 - (IBAction)addPushed:(id)sender;

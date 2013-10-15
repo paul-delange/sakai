@@ -13,10 +13,12 @@
 #import "PeekabooViewController.h"
 
 #import "ParticipantTableViewCell.h"
+#import "EventSummaryView.h"
 
 #import "AppDelegate.h"
 
 #import "Participant.h"
+#import "Event.h"
 
 #import <MobileCoreServices/MobileCoreServices.h>
 
@@ -32,6 +34,8 @@
     NSString* _participantCodeToPassOn;
     
     dispatch_source_t _refreshTimer;
+    
+    Event* _event;
 }
 
 @property (strong, nonatomic) UISearchDisplayController* searchController;
@@ -88,7 +92,16 @@
     
     [self.navigationItem setRightBarButtonItems: @[self.settingsButton, self.codeButton, activityItem, self.searchButton] animated: YES];
     
-    [[self objectManager] getObjectsAtPath: kWebServiceListPath
+/*#if USING_PARSE_DOT_COM
+    NSDictionary* params = @{@"$relatedTo" : @{ @"object" : @{ @"__type" : @"Pointer", @"className" : @"Event", @"objectId" : _event.primaryKey}, @"key" : @"event"}};
+    NSData* parsed = [NSJSONSerialization dataWithJSONObject: params options: 0 error: nil];
+    NSString* where = [[NSString alloc] initWithData: parsed encoding: NSUTF8StringEncoding];
+    NSString* path = [NSString stringWithFormat: @"%@?where=%@", kWebServiceListPath, [where stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
+#else*/
+    NSString* path = kWebServiceListPath;
+//#endif
+    
+    [[self objectManager] getObjectsAtPath: path
                                 parameters: nil
                                    success: ^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                        [self.navigationItem setRightBarButtonItems: @[self.settingsButton, self.codeButton, self.refreshButton, self.searchButton] animated: YES];
@@ -104,24 +117,24 @@
     [splitViewController togglePeekingController: sender];
     
     ScannerViewController* scannerVC = (ScannerViewController*)splitViewController.masterViewController;
-            scannerVC.manuallyAddParticipant = ^(NSString* participantCode) {
-                [self.scanController dismissPopoverAnimated: YES];
-                _participantCodeToPassOn = participantCode;
-                [self performSegueWithIdentifier: kSegueCreate sender: nil];
-            };
-            scannerVC.scannedParticipant = ^(Participant* participant) {
-                NSIndexPath* indexPath = [self.resultsController indexPathForObject: participant];
-                [self.tableView selectRowAtIndexPath: indexPath
-                                            animated: YES
-                                      scrollPosition: UITableViewScrollPositionTop];
-                
-                
-                double delayInSeconds = 3.0;
-                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                    [self.tableView deselectRowAtIndexPath: indexPath animated: YES];
-                });
-            };
+    scannerVC.manuallyAddParticipant = ^(NSString* participantCode) {
+        [self.scanController dismissPopoverAnimated: YES];
+        _participantCodeToPassOn = participantCode;
+        [self performSegueWithIdentifier: kSegueCreate sender: nil];
+    };
+    scannerVC.scannedParticipant = ^(Participant* participant) {
+        NSIndexPath* indexPath = [self.resultsController indexPathForObject: participant];
+        [self.tableView selectRowAtIndexPath: indexPath
+                                    animated: YES
+                              scrollPosition: UITableViewScrollPositionTop];
+        
+        
+        double delayInSeconds = 3.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self.tableView deselectRowAtIndexPath: indexPath animated: YES];
+        });
+    };
     
 }
 
@@ -154,17 +167,24 @@
 - (NSFetchedResultsController*) resultsController {
     if( !_resultsController ) {
         if( [self objectManager] ) {
-            NSFetchRequest* fetchRequest = [[NSFetchRequest alloc] initWithEntityName: NSStringFromClass([Participant class])];
-            [fetchRequest setSortDescriptors: @[[NSSortDescriptor sortDescriptorWithKey: @"name" ascending: YES]]];
-            [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"primaryKey != nil"]];           //Ignore transient participants
-            
             NSManagedObjectContext* context = [self objectManager].managedObjectStore.mainQueueManagedObjectContext;
+            
+            NSFetchRequest* fetchRequest = [[NSFetchRequest alloc] initWithEntityName: NSStringFromClass([Participant class])];
+            
+            [fetchRequest setSortDescriptors: @[[NSSortDescriptor sortDescriptorWithKey: @"affiliation" ascending: YES],    //Group by department
+                                                [NSSortDescriptor sortDescriptorWithKey: @"name" ascending: YES]]];         //Then alphabetically
+            
+            [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"primaryKey != nil"]];   //TODO: change this to the event pointer
             
             _resultsController = [[NSFetchedResultsController alloc] initWithFetchRequest: fetchRequest
                                                                      managedObjectContext: context
-                                                                       sectionNameKeyPath: nil
+                                                                       sectionNameKeyPath: @"company"
                                                                                 cacheName: nil];
             _resultsController.delegate = self;
+            
+            
+            EventSummaryView* summaryView = (EventSummaryView*)self.navigationItem.titleView;
+            summaryView.event = [Event currentEvent];
         }
     }
     
@@ -184,7 +204,8 @@
         participant = [self.resultsController objectAtIndexPath: indexPath];
     }
     
-    cell.textLabel.text = participant.name;
+    cell.nameLabel.text = participant.name;
+    cell.organizationLabel.text = participant.affiliation;
 }
 
 #pragma mark - NSObject
@@ -218,6 +239,10 @@
     [super viewDidLoad];
     
     self.navigationItem.rightBarButtonItems = @[self.settingsButton, self.codeButton, self.refreshButton, self.searchButton];
+    
+    
+    EventSummaryView* summaryView = [[EventSummaryView alloc] initWithFrame: CGRectMake(0, 0, 150, 44)];
+    self.navigationItem.titleView = summaryView;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -468,6 +493,9 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     [self.tableView endUpdates];
+    
+    Event* event = [Event currentEvent];
+    
 }
 
 @end

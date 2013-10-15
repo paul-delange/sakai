@@ -4,15 +4,19 @@
 #import "_Participant.h"
 
 const struct ParticipantAttributes ParticipantAttributes = {
+	.affiliation = @"affiliation",
+	.company = @"company",
 	.entryTime = @"entryTime",
 	.exitTime = @"exitTime",
 	.name = @"name",
+	.participationType = @"participationType",
 	.primaryKey = @"primaryKey",
 	.qrcode = @"qrcode",
 	.updatedAt = @"updatedAt",
 };
 
 const struct ParticipantRelationships ParticipantRelationships = {
+	.event = @"event",
 };
 
 const struct ParticipantFetchedProperties ParticipantFetchedProperties = {
@@ -44,9 +48,28 @@ const struct ParticipantFetchedProperties ParticipantFetchedProperties = {
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
+	if ([key isEqualToString:@"participationTypeValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"participationType"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
 
 	return keyPaths;
 }
+
+
+
+
+@dynamic affiliation;
+
+
+
+
+
+
+@dynamic company;
+
+
 
 
 
@@ -72,6 +95,32 @@ const struct ParticipantFetchedProperties ParticipantFetchedProperties = {
 
 
 
+@dynamic participationType;
+
+
+
+- (int16_t)participationTypeValue {
+	NSNumber *result = [self participationType];
+	return [result shortValue];
+}
+
+- (void)setParticipationTypeValue:(int16_t)value_ {
+	[self setParticipationType:[NSNumber numberWithShort:value_]];
+}
+
+- (int16_t)primitiveParticipationTypeValue {
+	NSNumber *result = [self primitiveParticipationType];
+	return [result shortValue];
+}
+
+- (void)setPrimitiveParticipationTypeValue:(int16_t)value_ {
+	[self setPrimitiveParticipationType:[NSNumber numberWithShort:value_]];
+}
+
+
+
+
+
 @dynamic primaryKey;
 
 
@@ -92,6 +141,10 @@ const struct ParticipantFetchedProperties ParticipantFetchedProperties = {
 
 
 
+
+@dynamic event;
+
+	
 
 
 

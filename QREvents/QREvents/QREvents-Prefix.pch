@@ -23,9 +23,11 @@
     #define USING_PARSE_DOT_COM     1
 
 #if USING_PARSE_DOT_COM
+    #define kWebServiceEventListPath        @"Event"
     #define kWebServiceListPath             @"Participant"
     #define kWebServiceIndividualPath       @"Participant/:primaryKey"
 #else
+    #define kWebServiceEventListPath        @"events"
     #define kWebServiceListPath             @"participants"
     #define kWebServiceIndividualPath       @"participants/:user_id"
 #endif

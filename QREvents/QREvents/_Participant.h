@@ -5,19 +5,27 @@
 
 
 extern const struct ParticipantAttributes {
+	__unsafe_unretained NSString *affiliation;
+	__unsafe_unretained NSString *company;
 	__unsafe_unretained NSString *entryTime;
 	__unsafe_unretained NSString *exitTime;
 	__unsafe_unretained NSString *name;
+	__unsafe_unretained NSString *participationType;
 	__unsafe_unretained NSString *primaryKey;
 	__unsafe_unretained NSString *qrcode;
 	__unsafe_unretained NSString *updatedAt;
 } ParticipantAttributes;
 
 extern const struct ParticipantRelationships {
+	__unsafe_unretained NSString *event;
 } ParticipantRelationships;
 
 extern const struct ParticipantFetchedProperties {
 } ParticipantFetchedProperties;
+
+@class Event;
+
+
 
 
 
@@ -35,6 +43,26 @@ extern const struct ParticipantFetchedProperties {
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 - (ParticipantID*)objectID;
+
+
+
+
+
+@property (nonatomic, strong) NSString* affiliation;
+
+
+
+//- (BOOL)validateAffiliation:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSString* company;
+
+
+
+//- (BOOL)validateCompany:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -70,6 +98,20 @@ extern const struct ParticipantFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSNumber* participationType;
+
+
+
+@property int16_t participationTypeValue;
+- (int16_t)participationTypeValue;
+- (void)setParticipationTypeValue:(int16_t)value_;
+
+//- (BOOL)validateParticipationType:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
 @property (nonatomic, strong) NSString* primaryKey;
 
 
@@ -100,6 +142,13 @@ extern const struct ParticipantFetchedProperties {
 
 
 
+@property (nonatomic, strong) Event *event;
+
+//- (BOOL)validateEvent:(id*)value_ error:(NSError**)error_;
+
+
+
+
 
 @end
 
@@ -108,6 +157,18 @@ extern const struct ParticipantFetchedProperties {
 @end
 
 @interface _Participant (CoreDataGeneratedPrimitiveAccessors)
+
+
+- (NSString*)primitiveAffiliation;
+- (void)setPrimitiveAffiliation:(NSString*)value;
+
+
+
+
+- (NSString*)primitiveCompany;
+- (void)setPrimitiveCompany:(NSString*)value;
+
+
 
 
 - (NSDate*)primitiveEntryTime;
@@ -128,6 +189,15 @@ extern const struct ParticipantFetchedProperties {
 
 
 
+- (NSNumber*)primitiveParticipationType;
+- (void)setPrimitiveParticipationType:(NSNumber*)value;
+
+- (int16_t)primitiveParticipationTypeValue;
+- (void)setPrimitiveParticipationTypeValue:(int16_t)value_;
+
+
+
+
 - (NSString*)primitivePrimaryKey;
 - (void)setPrimitivePrimaryKey:(NSString*)value;
 
@@ -144,6 +214,11 @@ extern const struct ParticipantFetchedProperties {
 - (void)setPrimitiveUpdatedAt:(NSDate*)value;
 
 
+
+
+
+- (Event*)primitiveEvent;
+- (void)setPrimitiveEvent:(Event*)value;
 
 
 @end
