@@ -40,9 +40,9 @@
 	[super drawRect:rect];
 	
 	CGContextRef context = UIGraphicsGetCurrentContext();
-    
+
 	// Draw top shadow
-	CGFloat colors [] = {
+	CGFloat colors [] = { 
 		0, 0, 0, 0.4,
 		0, 0, 0, 0,
 	};
@@ -73,7 +73,7 @@
 	
 	if (_alertStyle == SBTableAlertStyleApple) {
 		// Draw background gradient
-		CGFloat colors [] = {
+		CGFloat colors [] = { 
 			0.922, 0.925, 0.933, 1,
 			0.749, 0.753, 0.761, 1,
 		};
@@ -100,7 +100,8 @@
 @implementation SBTableAlertCellBackgroundView
 
 - (void)drawRect:(CGRect)r {
-	[(SBTableAlertCell *)[self superview] drawCellBackgroundView:r];
+    [ SBTableAlertCell drawCellBackgroundView:r];
+	//[(SBTableAlertCell *)[self superview] drawCellBackgroundView:r];
 }
 
 @end
@@ -128,7 +129,7 @@
 	CGContextRef context = UIGraphicsGetCurrentContext();
 	
 	[[UIColor colorWithWhite:0 alpha:0.8] set];
-	[_title drawAtPoint:CGPointMake(10, 4) withFont:[UIFont boldSystemFontOfSize:12]];
+	[_title drawAtPoint:CGPointMake(10, 4) withFont:[UIFont boldSystemFontOfSize:12]];	
 	[[UIColor whiteColor] set];
 	[_title drawAtPoint:CGPointMake(10, 5) withFont:[UIFont boldSystemFontOfSize:12]];
 	
@@ -182,9 +183,9 @@
 		editingOffset = -self.contentView.frame.origin.x;
 	
 	_cellBackgroundView.frame = CGRectMake(editingOffset,
-                                           _cellBackgroundView.frame.origin.y,
-                                           self.frame.size.width - editingOffset,
-                                           _cellBackgroundView.frame.size.height);
+																			_cellBackgroundView.frame.origin.y,
+																			self.frame.size.width - editingOffset,
+																			_cellBackgroundView.frame.size.height);
 	
 	[self.textLabel setBackgroundColor:[UIColor clearColor]];
 	[self.detailTextLabel setBackgroundColor:[UIColor clearColor]];
@@ -198,18 +199,18 @@
 	[_cellBackgroundView setNeedsDisplay];
 }
 
-- (void)drawCellBackgroundView:(CGRect)r {
++ (void)drawCellBackgroundView:(CGRect)r {
 	CGContextRef context = UIGraphicsGetCurrentContext();
 	CGContextSetLineWidth(context, 1.5);
-    
+		
 	[[UIColor colorWithWhite:1 alpha:0.8] set];
 	CGContextMoveToPoint(context, 0, 0);
-	CGContextAddLineToPoint(context, self.bounds.size.width, 0);
+	CGContextAddLineToPoint(context, r.size.width, 0);
 	CGContextStrokePath(context);
-    
+		
 	[[UIColor colorWithWhite:0 alpha:0.35] set];
-	CGContextMoveToPoint(context, 0, self.bounds.size.height);
-	CGContextAddLineToPoint(context, self.bounds.size.width, self.bounds.size.height);
+	CGContextMoveToPoint(context, 0, r.size.height);
+	CGContextAddLineToPoint(context, r.size.width, r.size.height);
 	CGContextStrokePath(context);
 }
 
@@ -248,11 +249,11 @@
 	if ((self = [super init])) {
 		NSString *message = format ? [[[NSString alloc] initWithFormat:format arguments:args] autorelease] : nil;
 		
-		_alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancelTitle otherButtonTitles:nil];
+		_alertView = [[TSAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancelTitle otherButtonTitles:nil];
 		
 		_maximumVisibleRows = 4;
 		_rowHeight = 40.;
-        
+
 		_tableView = [[SBTableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
 		
 		[_tableView setDelegate:self];
@@ -262,8 +263,9 @@
 		[_tableView setSeparatorColor:[UIColor lightGrayColor]];
 		[_tableView.layer setCornerRadius:kTableCornerRadius];
 		
-		[_alertView addSubview:_tableView];
-		
+		//[_alertView addSubview:_tableView];
+		_alertView.customSubview = _tableView;
+        
 		_shadow = [[SBTableViewTopShadowView alloc] initWithFrame:CGRectZero];
 		[_shadow setBackgroundColor:[UIColor clearColor]];
 		[_shadow setHidden:YES];
@@ -273,7 +275,7 @@
 		[_alertView addSubview:_shadow];
 		[_alertView bringSubviewToFront:_shadow];
 		
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layoutAfterSomeTime) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
+		//[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layoutAfterSomeTime) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
 	}
 	
 	return self;
@@ -341,11 +343,11 @@
 	[_tableView setDataSource:tableViewDataSource];
 }
 
-- (id<UIAlertViewDelegate>)alertViewDelegate {
+- (id<TSAlertViewDelegate>)alertViewDelegate {
 	return _alertView.delegate;
 }
 
-- (void)setAlertViewDelegate:(id<UIAlertViewDelegate>)alertViewDelegate {
+- (void)setAlertViewDelegate:(id<TSAlertViewDelegate>)alertViewDelegate {
 	[_alertView setDelegate:alertViewDelegate];
 }
 
@@ -399,14 +401,16 @@
 	
 	
 	[_tableView setFrame:CGRectMake(12,
-                                    _alertView.frame.size.height - resultHeigh - 65,
-                                    _alertView.frame.size.width - 24,
-                                    resultHeigh)];
+																	_alertView.frame.size.height - resultHeigh - 65,
+																	_alertView.frame.size.width - 24,
+																	resultHeigh)];
 	
 	[_shadow setFrame:CGRectMake(_tableView.frame.origin.x,
-                                 _tableView.frame.origin.y,
-                                 _tableView.frame.size.width,
-                                 8)];
+															 _tableView.frame.origin.y,
+															 _tableView.frame.size.width,
+															 8)];
+    
+    [ _alertView setNeedsLayout ];
 }
 
 - (void)layoutAfterSomeTime{
@@ -419,7 +423,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([_delegate respondsToSelector:@selector(tableAlert:heightForRowAtIndexPath:)])
         return [_delegate tableAlert:self heightForRowAtIndexPath:indexPath];
-    
+
     return _rowHeight;
 }
 
@@ -439,7 +443,7 @@
 		
 		return [[[SBTableViewSectionHeaderView alloc] initWithTitle:title] autorelease];
 	}
-    
+
 	return nil;
 }
 
@@ -452,7 +456,7 @@
 #pragma mark -
 #pragma mark UITableViewDataSource
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {	
 	return [_dataSource tableAlert:self	cellForRowAtIndexPath:indexPath];
 }
 
@@ -463,7 +467,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 	if ([_dataSource respondsToSelector:@selector(numberOfSectionsInTableAlert:)])
 		return [_dataSource numberOfSectionsInTableAlert:self];
-    
+
 	return 1;
 }
 

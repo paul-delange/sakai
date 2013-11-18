@@ -92,18 +92,18 @@
     
     [self.navigationItem setRightBarButtonItems: @[self.settingsButton, self.codeButton, activityItem, self.searchButton] animated: YES];
     
-/*#if USING_PARSE_DOT_COM
-    NSDictionary* params = @{@"$relatedTo" : @{ @"object" : @{ @"__type" : @"Pointer", @"className" : @"Event", @"objectId" : _event.primaryKey}, @"key" : @"event"}};
-    NSData* parsed = [NSJSONSerialization dataWithJSONObject: params options: 0 error: nil];
-    NSString* where = [[NSString alloc] initWithData: parsed encoding: NSUTF8StringEncoding];
-    NSString* path = [NSString stringWithFormat: @"%@?where=%@", kWebServiceListPath, [where stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
-#else*/
+#if USING_PARSE_DOT_COM
     NSString* path = kWebServiceListPath;
-//#endif
+#else
+    RKPathMatcher* pathMatcher = [RKPathMatcher pathMatcherWithPattern: kWebServiceListPath];
+    NSString* path = [pathMatcher pathFromObject: [Event currentEvent] addingEscapes: YES interpolatedParameters: nil];
+#endif
     
     [[self objectManager] getObjectsAtPath: path
                                 parameters: nil
                                    success: ^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                       NSLog(@"Got: %@", [mappingResult array]);
+                                       
                                        [self.navigationItem setRightBarButtonItems: @[self.settingsButton, self.codeButton, self.refreshButton, self.searchButton] animated: YES];
                                    } failure: ^(RKObjectRequestOperation *operation, NSError *error) {
                                        [self.navigationItem setRightBarButtonItems: @[self.settingsButton, self.codeButton, self.refreshButton, self.searchButton] animated: YES];

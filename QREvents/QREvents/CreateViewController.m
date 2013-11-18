@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 
 #import "Participant.h"
+#import "Event.h"
 
 #define     kSegueUnwind        @"UnwindCreateSegue"
 
@@ -71,8 +72,14 @@
         newParticipant.company = self.companyField.text.length ? self.companyField.text : NSLocalizedString(@"Other", @"");
         newParticipant.affiliation = self.affiliationField.text;
         
+#if USING_PARSE_DOT_COM
+        NSString* path = kWebServiceListPath;
+#else
+        NSString* path = [kWebServiceListPath stringByReplacingOccurrencesOfString: @":primaryKey" withString: [Event currentEvent].primaryKey];
+#endif
+        
         [[RKObjectManager sharedManager] postObject: newParticipant
-                                               path: kWebServiceListPath
+                                               path: path
                                          parameters: nil
                                             success: ^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                                 

@@ -30,6 +30,9 @@
 
 #import <Foundation/Foundation.h>
 
+#import "TSAlertView.h"
+
+
 #define kTableCornerRadius 5.
 
 typedef enum {
@@ -48,7 +51,7 @@ typedef enum {
 @end
 
 @interface SBTableAlertCell : UITableViewCell {}
-- (void)drawCellBackgroundView:(CGRect)r;
++ (void)drawCellBackgroundView:(CGRect)r;
 @end
 
 @class SBTableAlert;
@@ -84,9 +87,9 @@ typedef enum {
 
 @end
 
-@interface SBTableAlert : NSObject <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate> {}
+@interface SBTableAlert : NSObject <UITableViewDelegate, UITableViewDataSource, TSAlertViewDelegate> {}
 
-@property (nonatomic, retain) UIAlertView *view;
+@property (nonatomic, retain) TSAlertView *view;
 @property (nonatomic, retain) UITableView *tableView;
 @property (nonatomic) SBTableAlertType type;
 @property (nonatomic) SBTableAlertStyle style;
@@ -98,7 +101,7 @@ typedef enum {
 
 @property (nonatomic, assign) id <UITableViewDelegate> tableViewDelegate; // default self, (set other for more advanded use)
 @property (nonatomic, assign) id <UITableViewDataSource> tableViewDataSource; // default self, (set other for more advanded use)
-@property (nonatomic, assign) id <UIAlertViewDelegate> alertViewDelegate; // default self, (set other for more advanded use)
+@property (nonatomic, assign) id <TSAlertViewDelegate> alertViewDelegate; // default self, (set other for more advanded use)
 
 - (id)initWithTitle:(NSString *)title cancelButtonTitle:(NSString *)cancelTitle messageFormat:(NSString *)message, ...;
 + (id)alertWithTitle:(NSString *)title cancelButtonTitle:(NSString *)cancelTitle messageFormat:(NSString *)message, ...;

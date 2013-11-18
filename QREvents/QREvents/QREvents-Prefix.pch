@@ -20,16 +20,16 @@
     #import <RestKit/RestKit.h>
 
     //Set this to 1 to use parse.com API, or set to 0 to use the WS docs
-    #define USING_PARSE_DOT_COM     1
+    #define USING_PARSE_DOT_COM     0
 
 #if USING_PARSE_DOT_COM
     #define kWebServiceEventListPath        @"Event"
     #define kWebServiceListPath             @"Participant"
     #define kWebServiceIndividualPath       @"Participant/:primaryKey"
 #else
-    #define kWebServiceEventListPath        @"events"
-    #define kWebServiceListPath             @"participants"
-    #define kWebServiceIndividualPath       @"participants/:user_id"
+    #define kWebServiceEventListPath        @"/events"
+    #define kWebServiceListPath             @"/events/:primaryKey/participants"
+    #define kWebServiceIndividualPath       @"/events/:event_id/participants/:user_id"
 #endif
 
     #define kAppName()  ([[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"])

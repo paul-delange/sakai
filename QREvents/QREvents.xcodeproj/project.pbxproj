@@ -50,6 +50,13 @@
 		FD6DF4F117F2FFBD00E708A9 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD6DF4F017F2FFBD00E708A9 /* QuartzCore.framework */; };
 		FD6DF4F417F3006B00E708A9 /* ScannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6DF4F317F3006B00E708A9 /* ScannerViewController.m */; };
 		FD6DF4F717F30DA800E708A9 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6DF4F617F30DA800E708A9 /* SettingsViewController.m */; };
+		FDF863D8183A46BE000219B5 /* TSAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = FDF863D1183A46BE000219B5 /* TSAlertView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		FDF863D9183A46BE000219B5 /* TSAlertViewBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = FDF863D2183A46BE000219B5 /* TSAlertViewBackground.png */; };
+		FDF863DA183A46BE000219B5 /* TSAlertViewBackground2.png in Resources */ = {isa = PBXBuildFile; fileRef = FDF863D3183A46BE000219B5 /* TSAlertViewBackground2.png */; };
+		FDF863DB183A46BE000219B5 /* TSAlertViewButtonBackground_Highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = FDF863D4183A46BE000219B5 /* TSAlertViewButtonBackground_Highlighted.png */; };
+		FDF863DC183A46BE000219B5 /* TSAlertViewButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = FDF863D5183A46BE000219B5 /* TSAlertViewButtonBackground.png */; };
+		FDF863DD183A46BE000219B5 /* TSAlertViewCancelButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = FDF863D6183A46BE000219B5 /* TSAlertViewCancelButtonBackground.png */; };
+		FDF863DE183A46BE000219B5 /* TSAlertViewMessageListViewShadow.png in Resources */ = {isa = PBXBuildFile; fileRef = FDF863D7183A46BE000219B5 /* TSAlertViewMessageListViewShadow.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -120,6 +127,14 @@
 		FD6DF4F517F30DA800E708A9 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		FD6DF4F617F30DA800E708A9 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		FDEA613317FBF5F200FB169C /* qrevents_app.pptx.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = qrevents_app.pptx.pdf; sourceTree = "<group>"; };
+		FDF863D0183A46BE000219B5 /* TSAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSAlertView.h; sourceTree = "<group>"; };
+		FDF863D1183A46BE000219B5 /* TSAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSAlertView.m; sourceTree = "<group>"; };
+		FDF863D2183A46BE000219B5 /* TSAlertViewBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TSAlertViewBackground.png; sourceTree = "<group>"; };
+		FDF863D3183A46BE000219B5 /* TSAlertViewBackground2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TSAlertViewBackground2.png; sourceTree = "<group>"; };
+		FDF863D4183A46BE000219B5 /* TSAlertViewButtonBackground_Highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TSAlertViewButtonBackground_Highlighted.png; sourceTree = "<group>"; };
+		FDF863D5183A46BE000219B5 /* TSAlertViewButtonBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TSAlertViewButtonBackground.png; sourceTree = "<group>"; };
+		FDF863D6183A46BE000219B5 /* TSAlertViewCancelButtonBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TSAlertViewCancelButtonBackground.png; sourceTree = "<group>"; };
+		FDF863D7183A46BE000219B5 /* TSAlertViewMessageListViewShadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TSAlertViewMessageListViewShadow.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -302,6 +317,7 @@
 		FD6DF4D717F2BCF700E708A9 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				FDF863CF183A46AF000219B5 /* TSAlertView */,
 				FD6DF4D817F2BCFC00E708A9 /* Mogenerator */,
 				FD286615180BCEE000BCC596 /* SBTableAlert.h */,
 				FD286616180BCEE000BCC596 /* SBTableAlert.m */,
@@ -316,6 +332,21 @@
 				FD6DF4D917F2BD6E00E708A9 /* _Participant.m */,
 			);
 			name = Mogenerator;
+			sourceTree = "<group>";
+		};
+		FDF863CF183A46AF000219B5 /* TSAlertView */ = {
+			isa = PBXGroup;
+			children = (
+				FDF863D0183A46BE000219B5 /* TSAlertView.h */,
+				FDF863D1183A46BE000219B5 /* TSAlertView.m */,
+				FDF863D2183A46BE000219B5 /* TSAlertViewBackground.png */,
+				FDF863D3183A46BE000219B5 /* TSAlertViewBackground2.png */,
+				FDF863D4183A46BE000219B5 /* TSAlertViewButtonBackground_Highlighted.png */,
+				FDF863D5183A46BE000219B5 /* TSAlertViewButtonBackground.png */,
+				FDF863D6183A46BE000219B5 /* TSAlertViewCancelButtonBackground.png */,
+				FDF863D7183A46BE000219B5 /* TSAlertViewMessageListViewShadow.png */,
+			);
+			name = TSAlertView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -404,8 +435,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD2B32D617F2B7F2002E87A8 /* Images.xcassets in Resources */,
+				FDF863DE183A46BE000219B5 /* TSAlertViewMessageListViewShadow.png in Resources */,
 				FD2B32C817F2B7F2002E87A8 /* InfoPlist.strings in Resources */,
+				FDF863DB183A46BE000219B5 /* TSAlertViewButtonBackground_Highlighted.png in Resources */,
+				FDF863D9183A46BE000219B5 /* TSAlertViewBackground.png in Resources */,
+				FDF863DD183A46BE000219B5 /* TSAlertViewCancelButtonBackground.png in Resources */,
+				FDF863DC183A46BE000219B5 /* TSAlertViewButtonBackground.png in Resources */,
 				FD2B32D117F2B7F2002E87A8 /* Main.storyboard in Resources */,
+				FDF863DA183A46BE000219B5 /* TSAlertViewBackground2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,6 +477,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDF863D8183A46BE000219B5 /* TSAlertView.m in Sources */,
 				FD1D3E30180D63E200813405 /* EventSummaryView.m in Sources */,
 				FD6DF4DA17F2BD6E00E708A9 /* _Participant.m in Sources */,
 				FD2B32CE17F2B7F2002E87A8 /* AppDelegate.m in Sources */,

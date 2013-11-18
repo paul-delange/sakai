@@ -107,14 +107,13 @@ NSString* kApplicationResetNotification =  @"ApplicationReset";
     {
         NSString* listPath = kWebServiceListPath;
         NSString* individualPath = kWebServiceIndividualPath;
-        NSString* serverPrimaryKeyName = USING_PARSE_DOT_COM ? @"objectId" : @"user_id";
+        NSString* serverPrimaryKeyName = USING_PARSE_DOT_COM ? @"objectId" : @"id";
         
         RKEntityMapping* eventMapping = [RKEntityMapping mappingForEntityForName: NSStringFromClass([Event class])
                                                             inManagedObjectStore: store];
         eventMapping.identificationAttributes = @[@"primaryKey"];
         [eventMapping addAttributeMappingsFromArray: @[
                                                        @"name",
-                                                       @"code"
                                                        ]];
         
         [eventMapping addAttributeMappingsFromDictionary: @{
@@ -128,14 +127,14 @@ NSString* kApplicationResetNotification =  @"ApplicationReset";
                                                      @"name",
                                                      @"updatedAt",
                                                      @"qrcode",
-                                                     @"company",
-                                                     @"affiliation"
                                                      ]];
         [getMapping addAttributeMappingsFromDictionary: @{
                                                           serverPrimaryKeyName : @"primaryKey",
                                                           @"entry_time" : @"entryTime",
                                                           @"exit_time" : @"exitTime",
-                                                          @"participation_type" : @"participationType"
+                                                          //@"participation_type" : @"participationType",
+                                                          @"company_name" : @"company",
+                                                          @"department" : @"affiliation"
                                                           }];
         [getMapping setModificationAttributeForName: @"updatedAt"];
         
