@@ -16,5 +16,8 @@
 @property (strong, nonatomic) IBOutlet UIBarButtonItem* searchButton;
 
 - (IBAction)cameraTogglePushed:(id)sender;
+- (IBAction)proxyValueChanged:(UISwitch *)sender;
+- (IBAction)onTheDayValueChanged:(UISwitch *)sender;
+- (IBAction)participantValueChanged:(UISwitch *)sender;
 
 @end

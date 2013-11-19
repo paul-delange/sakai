@@ -127,14 +127,17 @@ NSString* kApplicationResetNotification =  @"ApplicationReset";
                                                      @"name",
                                                      @"updatedAt",
                                                      @"qrcode",
+                                                     @"department",
+                                                     @"position",
+                                                     @"on_the_day",
+                                                     @"by_proxy"
                                                      ]];
         [getMapping addAttributeMappingsFromDictionary: @{
                                                           serverPrimaryKeyName : @"primaryKey",
                                                           @"entry_time" : @"entryTime",
                                                           @"exit_time" : @"exitTime",
-                                                          //@"participation_type" : @"participationType",
                                                           @"company_name" : @"company",
-                                                          @"department" : @"affiliation"
+                                                          @"capital_letter" : @"atama_moji"
                                                           }];
         [getMapping setModificationAttributeForName: @"updatedAt"];
         

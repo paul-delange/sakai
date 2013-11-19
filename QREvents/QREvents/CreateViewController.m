@@ -14,8 +14,8 @@
 
 #define     kSegueUnwind        @"UnwindCreateSegue"
 
-@interface CreateViewController () <UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate> {
-    kParticpationType _participationType;
+@interface CreateViewController () <UITextFieldDelegate> {
+    //kParticpationType _participationType;
 }
 
 @end
@@ -68,9 +68,13 @@
             newParticipant.entryTime = [NSDate date];
         }
         
-        newParticipant.participationTypeValue = _participationType;
+        //newParticipant.participationTypeValue = _participationType;
         newParticipant.company = self.companyField.text.length ? self.companyField.text : NSLocalizedString(@"Other", @"");
-        newParticipant.affiliation = self.affiliationField.text;
+        newParticipant.department = self.affiliationField.text;
+        newParticipant.on_the_dayValue = self.onTheDaySwitch.on;
+        newParticipant.by_proxyValue = self.proxySwitch.on;
+        
+        //newParticipant.affiliation = self.affiliationField.text;
         
 #if USING_PARSE_DOT_COM
         NSString* path = kWebServiceListPath;
@@ -132,7 +136,20 @@
     self.affiliationlabel.text = NSLocalizedString(@"Department:", @"");
     [self.addButton setTitle: NSLocalizedString(@"Join", @"") forState: UIControlStateNormal];
     self.addButton.enabled = NO;
-    _participationType = kParticpationTypeParticipant;
+    
+    NSString* participant = NSLocalizedString(@"Participant", @"sankasha");
+    NSString* ontheday = NSLocalizedString(@"On the Day", @"toujitsu");
+    NSString* proxy = NSLocalizedString(@"Representative", @"dairi");
+    
+    self.participantLabel.text = [NSString stringWithFormat: @"%@:", participant];
+    self.onTheDayLabel.text = [NSString stringWithFormat: @"%@:", ontheday];
+    self.proxyLabel.text = [NSString stringWithFormat: @"%@:", proxy];
+    
+    self.participantSwitch.on = YES;
+    self.onTheDaySwitch.on = NO;
+    self.proxySwitch.on = NO;
+    
+    //_participationType = kParticpationTypeParticipant;
 }
 
 - (void)didReceiveMemoryWarning
@@ -165,26 +182,6 @@
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     return kParticpationTypeCount;
-}
-
-#pragma mark - UIPickerViewDelegate
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    switch (row) {
-        case kParticpationTypeParticipant:
-            return NSLocalizedString(@"Participant", @"");
-        case kParticpationTypeRepresentative:
-            return NSLocalizedString(@"Representative", @"");
-        case kParticpationTypeDayVisitor:
-            return NSLocalizedString(@"Day Visitor", @"");
-        default:
-            break;
-    }
-    
-    return nil;
-}
-
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    _participationType = row;
 }
 
 @end

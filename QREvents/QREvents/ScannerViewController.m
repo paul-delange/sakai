@@ -145,12 +145,26 @@
         [metadataOutput setMetadataObjectsDelegate: (id<AVCaptureMetadataOutputObjectsDelegate>)self queue: dispatch_get_main_queue()];
         [metadataOutput setMetadataObjectTypes: @[AVMetadataObjectTypeQRCode]];
         
-        
         AVCaptureVideoPreviewLayer* previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession: self.captureSession];
         [self.view.layer insertSublayer: previewLayer atIndex: 0];
         self.previewLayer = previewLayer;
         
         [self.captureSession startRunning];
+#else
+    AVCaptureDevice* defaultDevice;
+    for(AVCaptureDevice* device in [AVCaptureDevice devicesWithMediaType: AVMediaTypeVideo]) {
+        if( device.postion == AVCaptureDevicePositionBack ) {
+            defaultDevice = device;
+            break;
+        }
+    }
+    
+    if( !defaultDevice ) {
+        defaultDevice = [AVCaptureDevice defaultDeviceWithMediaType: AVMediaTypeVideo];
+    }
+    
+    [self setCaptureDevice: defaultDevice];
+    
 #endif
     
     [self.view addConstraint: [NSLayoutConstraint constraintWithItem: self.readerView

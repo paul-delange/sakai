@@ -5,12 +5,15 @@
 
 
 extern const struct ParticipantAttributes {
-	__unsafe_unretained NSString *affiliation;
+	__unsafe_unretained NSString *atama_moji;
+	__unsafe_unretained NSString *by_proxy;
 	__unsafe_unretained NSString *company;
+	__unsafe_unretained NSString *department;
 	__unsafe_unretained NSString *entryTime;
 	__unsafe_unretained NSString *exitTime;
 	__unsafe_unretained NSString *name;
-	__unsafe_unretained NSString *participationType;
+	__unsafe_unretained NSString *on_the_day;
+	__unsafe_unretained NSString *position;
 	__unsafe_unretained NSString *primaryKey;
 	__unsafe_unretained NSString *qrcode;
 	__unsafe_unretained NSString *updatedAt;
@@ -35,6 +38,9 @@ extern const struct ParticipantFetchedProperties {
 
 
 
+
+
+
 @interface ParticipantID : NSManagedObjectID {}
 @end
 
@@ -48,11 +54,25 @@ extern const struct ParticipantFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSString* affiliation;
+@property (nonatomic, strong) NSString* atama_moji;
 
 
 
-//- (BOOL)validateAffiliation:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateAtama_moji:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSNumber* by_proxy;
+
+
+
+@property BOOL by_proxyValue;
+- (BOOL)by_proxyValue;
+- (void)setBy_proxyValue:(BOOL)value_;
+
+//- (BOOL)validateBy_proxy:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -63,6 +83,16 @@ extern const struct ParticipantFetchedProperties {
 
 
 //- (BOOL)validateCompany:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSString* department;
+
+
+
+//- (BOOL)validateDepartment:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -98,15 +128,25 @@ extern const struct ParticipantFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSNumber* participationType;
+@property (nonatomic, strong) NSNumber* on_the_day;
 
 
 
-@property int16_t participationTypeValue;
-- (int16_t)participationTypeValue;
-- (void)setParticipationTypeValue:(int16_t)value_;
+@property BOOL on_the_dayValue;
+- (BOOL)on_the_dayValue;
+- (void)setOn_the_dayValue:(BOOL)value_;
 
-//- (BOOL)validateParticipationType:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateOn_the_day:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSString* position;
+
+
+
+//- (BOOL)validatePosition:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -159,14 +199,29 @@ extern const struct ParticipantFetchedProperties {
 @interface _Participant (CoreDataGeneratedPrimitiveAccessors)
 
 
-- (NSString*)primitiveAffiliation;
-- (void)setPrimitiveAffiliation:(NSString*)value;
+- (NSString*)primitiveAtama_moji;
+- (void)setPrimitiveAtama_moji:(NSString*)value;
+
+
+
+
+- (NSNumber*)primitiveBy_proxy;
+- (void)setPrimitiveBy_proxy:(NSNumber*)value;
+
+- (BOOL)primitiveBy_proxyValue;
+- (void)setPrimitiveBy_proxyValue:(BOOL)value_;
 
 
 
 
 - (NSString*)primitiveCompany;
 - (void)setPrimitiveCompany:(NSString*)value;
+
+
+
+
+- (NSString*)primitiveDepartment;
+- (void)setPrimitiveDepartment:(NSString*)value;
 
 
 
@@ -189,11 +244,17 @@ extern const struct ParticipantFetchedProperties {
 
 
 
-- (NSNumber*)primitiveParticipationType;
-- (void)setPrimitiveParticipationType:(NSNumber*)value;
+- (NSNumber*)primitiveOn_the_day;
+- (void)setPrimitiveOn_the_day:(NSNumber*)value;
 
-- (int16_t)primitiveParticipationTypeValue;
-- (void)setPrimitiveParticipationTypeValue:(int16_t)value_;
+- (BOOL)primitiveOn_the_dayValue;
+- (void)setPrimitiveOn_the_dayValue:(BOOL)value_;
+
+
+
+
+- (NSString*)primitivePosition;
+- (void)setPrimitivePosition:(NSString*)value;
 
 
 

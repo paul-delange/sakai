@@ -215,7 +215,13 @@
 #if USING_PARSE_DOT_COM
     self.serverURLField.text = @"https://api.parse.com/1/classes";
     self.connectButton.enabled = YES;
+#else
+#if DEBUG
+    self.serverURLField.text = @"http://api.qrevents.com";
+    self.connectButton.enabled = YES;
 #endif
+#endif
+    
 }
 
 - (void)didReceiveMemoryWarning

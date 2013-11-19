@@ -102,7 +102,7 @@
     [[self objectManager] getObjectsAtPath: path
                                 parameters: nil
                                    success: ^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-                                       NSLog(@"Got: %@", [mappingResult array]);
+//                                       //NSLog(@"Got: %@", [mappingResult array]);
                                        
                                        [self.navigationItem setRightBarButtonItems: @[self.settingsButton, self.codeButton, self.refreshButton, self.searchButton] animated: YES];
                                    } failure: ^(RKObjectRequestOperation *operation, NSError *error) {
@@ -135,6 +135,28 @@
             [self.tableView deselectRowAtIndexPath: indexPath animated: YES];
         });
     };
+    
+}
+
+- (IBAction)proxyValueChanged:(UISwitch *)sender {
+    UITableViewCell* cell = (UITableViewCell*)sender;
+    while (![cell isKindOfClass: [UITableViewCell class]]) {
+        cell = (UITableViewCell*)cell.superview;
+    }
+    NSParameterAssert(cell);
+    
+    NSIndexPath* indexPath = [self.tableView indexPathForCell: cell];
+    Participant* participant = [self.resultsController objectAtIndexPath: indexPath];
+    participant.by_proxyValue = sender.on;
+    
+    [participant.managedObjectContext saveToPersistentStore: nil];
+}
+
+- (IBAction)onTheDayValueChanged:(UISwitch *)sender {
+    
+}
+
+- (IBAction)participantValueChanged:(UISwitch *)sender {
     
 }
 
@@ -171,7 +193,7 @@
             
             NSFetchRequest* fetchRequest = [[NSFetchRequest alloc] initWithEntityName: NSStringFromClass([Participant class])];
             
-            [fetchRequest setSortDescriptors: @[[NSSortDescriptor sortDescriptorWithKey: @"affiliation" ascending: YES],    //Group by department
+            [fetchRequest setSortDescriptors: @[[NSSortDescriptor sortDescriptorWithKey: @"company" ascending: YES],    //Group by department
                                                 [NSSortDescriptor sortDescriptorWithKey: @"name" ascending: YES]]];         //Then alphabetically
             
             [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"primaryKey != nil"]];   //TODO: change this to the event pointer
@@ -205,7 +227,22 @@
     }
     
     cell.nameLabel.text = participant.name;
-    cell.organizationLabel.text = participant.affiliation;
+    cell.organizationLabel.text = participant.department;
+    
+    NSString* entrydatestring = participant.entryTime ? [NSDateFormatter localizedStringFromDate: participant.entryTime
+                                                                                       dateStyle: NSDateFormatterNoStyle
+                                                                                       timeStyle: NSDateFormatterMediumStyle] :
+                                                        NSLocalizedString(@"-/-", @"");
+    
+    NSString* exitdatestring = participant.exitTime ? [NSDateFormatter localizedStringFromDate: participant.exitTime
+                                                                                     dateStyle: NSDateFormatterNoStyle
+                                                                                     timeStyle: NSDateFormatterMediumStyle] :
+                                                        NSLocalizedString(@"-/-", @"");
+    
+    cell.entryTimeLabel.text = [NSString stringWithFormat: NSLocalizedString(@"Entry: %@", @""), entrydatestring];
+    cell.exitTimeLabel.text = [NSString stringWithFormat: NSLocalizedString(@"Exit: %@", @""), exitdatestring];
+    cell.onTheDaySwitch.on = participant.on_the_dayValue;
+    cell.proxySwitch.on = participant.by_proxyValue;
 }
 
 #pragma mark - NSObject
@@ -357,6 +394,10 @@
 }
 
 #pragma mark - UITableViewDelegate
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 60.f;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if( tableView == self.tableView ) {
         id<NSFetchedResultsSectionInfo> sectioninfo = [[self.resultsController sections] objectAtIndex: section];

@@ -4,12 +4,15 @@
 #import "_Participant.h"
 
 const struct ParticipantAttributes ParticipantAttributes = {
-	.affiliation = @"affiliation",
+	.atama_moji = @"atama_moji",
+	.by_proxy = @"by_proxy",
 	.company = @"company",
+	.department = @"department",
 	.entryTime = @"entryTime",
 	.exitTime = @"exitTime",
 	.name = @"name",
-	.participationType = @"participationType",
+	.on_the_day = @"on_the_day",
+	.position = @"position",
 	.primaryKey = @"primaryKey",
 	.qrcode = @"qrcode",
 	.updatedAt = @"updatedAt",
@@ -48,8 +51,13 @@ const struct ParticipantFetchedProperties ParticipantFetchedProperties = {
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
-	if ([key isEqualToString:@"participationTypeValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"participationType"];
+	if ([key isEqualToString:@"by_proxyValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"by_proxy"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
+	if ([key isEqualToString:@"on_the_dayValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"on_the_day"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 		return keyPaths;
 	}
@@ -60,14 +68,47 @@ const struct ParticipantFetchedProperties ParticipantFetchedProperties = {
 
 
 
-@dynamic affiliation;
+@dynamic atama_moji;
 
+
+
+
+
+
+@dynamic by_proxy;
+
+
+
+- (BOOL)by_proxyValue {
+	NSNumber *result = [self by_proxy];
+	return [result boolValue];
+}
+
+- (void)setBy_proxyValue:(BOOL)value_ {
+	[self setBy_proxy:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveBy_proxyValue {
+	NSNumber *result = [self primitiveBy_proxy];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveBy_proxyValue:(BOOL)value_ {
+	[self setPrimitiveBy_proxy:[NSNumber numberWithBool:value_]];
+}
 
 
 
 
 
 @dynamic company;
+
+
+
+
+
+
+@dynamic department;
 
 
 
@@ -95,27 +136,34 @@ const struct ParticipantFetchedProperties ParticipantFetchedProperties = {
 
 
 
-@dynamic participationType;
+@dynamic on_the_day;
 
 
 
-- (int16_t)participationTypeValue {
-	NSNumber *result = [self participationType];
-	return [result shortValue];
+- (BOOL)on_the_dayValue {
+	NSNumber *result = [self on_the_day];
+	return [result boolValue];
 }
 
-- (void)setParticipationTypeValue:(int16_t)value_ {
-	[self setParticipationType:[NSNumber numberWithShort:value_]];
+- (void)setOn_the_dayValue:(BOOL)value_ {
+	[self setOn_the_day:[NSNumber numberWithBool:value_]];
 }
 
-- (int16_t)primitiveParticipationTypeValue {
-	NSNumber *result = [self primitiveParticipationType];
-	return [result shortValue];
+- (BOOL)primitiveOn_the_dayValue {
+	NSNumber *result = [self primitiveOn_the_day];
+	return [result boolValue];
 }
 
-- (void)setPrimitiveParticipationTypeValue:(int16_t)value_ {
-	[self setPrimitiveParticipationType:[NSNumber numberWithShort:value_]];
+- (void)setPrimitiveOn_the_dayValue:(BOOL)value_ {
+	[self setPrimitiveOn_the_day:[NSNumber numberWithBool:value_]];
 }
+
+
+
+
+
+@dynamic position;
+
 
 
 
