@@ -28,6 +28,7 @@
 		FD2B32DF17F2B7F2002E87A8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD2B32C117F2B7F2002E87A8 /* UIKit.framework */; };
 		FD2B32E717F2B7F2002E87A8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FD2B32E517F2B7F2002E87A8 /* InfoPlist.strings */; };
 		FD2B32E917F2B7F3002E87A8 /* QREventsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FD2B32E817F2B7F3002E87A8 /* QREventsTests.m */; };
+		FD2E270F183BEABC009BC5A8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FD2E270D183BEABC009BC5A8 /* Localizable.strings */; };
 		FD6DF4C717F2BAB400E708A9 /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD6DF4C617F2BAB400E708A9 /* libRestKit.a */; };
 		FD6DF4C917F2BACA00E708A9 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD6DF4C817F2BACA00E708A9 /* CFNetwork.framework */; };
 		FD6DF4CB17F2BAD000E708A9 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD6DF4CA17F2BAD000E708A9 /* CoreData.framework */; };
@@ -102,6 +103,10 @@
 		FD2B32E417F2B7F2002E87A8 /* QREventsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "QREventsTests-Info.plist"; sourceTree = "<group>"; };
 		FD2B32E617F2B7F2002E87A8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FD2B32E817F2B7F3002E87A8 /* QREventsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QREventsTests.m; sourceTree = "<group>"; };
+		FD2E270E183BEABC009BC5A8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		FD2E2710183BEAEA009BC5A8 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		FD2E2711183BEAEA009BC5A8 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FD2E2712183BEAEA009BC5A8 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FD6DF4C617F2BAB400E708A9 /* libRestKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libRestKit.a; path = "RestKit/Build/Products/Debug-iphoneos/libRestKit.a"; sourceTree = "<group>"; };
 		FD6DF4C817F2BACA00E708A9 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		FD6DF4CA17F2BAD000E708A9 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -293,6 +298,7 @@
 		FD2B32F517F2B81C002E87A8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FD2E270D183BEABC009BC5A8 /* Localizable.strings */,
 				FD2B32C517F2B7F2002E87A8 /* QREvents-Info.plist */,
 				FD2B32C617F2B7F2002E87A8 /* InfoPlist.strings */,
 				FD2B32D517F2B7F2002E87A8 /* Images.xcassets */,
@@ -417,6 +423,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ja,
 			);
 			mainGroup = FD2B32B117F2B7F2002E87A8;
 			productRefGroup = FD2B32BB17F2B7F2002E87A8 /* Products */;
@@ -439,6 +446,7 @@
 				FD2B32C817F2B7F2002E87A8 /* InfoPlist.strings in Resources */,
 				FDF863DB183A46BE000219B5 /* TSAlertViewButtonBackground_Highlighted.png in Resources */,
 				FDF863D9183A46BE000219B5 /* TSAlertViewBackground.png in Resources */,
+				FD2E270F183BEABC009BC5A8 /* Localizable.strings in Resources */,
 				FDF863DD183A46BE000219B5 /* TSAlertViewCancelButtonBackground.png in Resources */,
 				FDF863DC183A46BE000219B5 /* TSAlertViewButtonBackground.png in Resources */,
 				FD2B32D117F2B7F2002E87A8 /* Main.storyboard in Resources */,
@@ -524,6 +532,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				FD2B32C717F2B7F2002E87A8 /* en */,
+				FD2E2711183BEAEA009BC5A8 /* ja */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -540,8 +549,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				FD2B32E617F2B7F2002E87A8 /* en */,
+				FD2E2712183BEAEA009BC5A8 /* ja */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		FD2E270D183BEABC009BC5A8 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FD2E270E183BEABC009BC5A8 /* en */,
+				FD2E2710183BEAEA009BC5A8 /* ja */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
