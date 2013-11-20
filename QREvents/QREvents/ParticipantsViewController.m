@@ -231,12 +231,12 @@
     
     NSString* entrydatestring = participant.entryTime ? [NSDateFormatter localizedStringFromDate: participant.entryTime
                                                                                        dateStyle: NSDateFormatterNoStyle
-                                                                                       timeStyle: NSDateFormatterMediumStyle] :
+                                                                                       timeStyle: NSDateFormatterShortStyle] :
                                                         NSLocalizedString(@"-/-", @"");
     
     NSString* exitdatestring = participant.exitTime ? [NSDateFormatter localizedStringFromDate: participant.exitTime
                                                                                      dateStyle: NSDateFormatterNoStyle
-                                                                                     timeStyle: NSDateFormatterMediumStyle] :
+                                                                                     timeStyle: NSDateFormatterShortStyle] :
                                                         NSLocalizedString(@"-/-", @"");
     
     cell.entryTimeLabel.text = [NSString stringWithFormat: NSLocalizedString(@"Entry: %@", @""), entrydatestring];
@@ -395,7 +395,7 @@
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 60.f;
+    return 80.f;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
