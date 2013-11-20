@@ -43,6 +43,7 @@
         
         self.nameLabel = nl;
         self.subtitleLabel = stl;
+        self.backgroundColor = [UIColor clearColor];
         
         [self addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"V:|[nl(stl)][stl]|" options: 0 metrics: nil views: NSDictionaryOfVariableBindings(nl, stl)]];
         [self addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"H:|[nl]|" options: 0 metrics: nil views: NSDictionaryOfVariableBindings(nl)]];
