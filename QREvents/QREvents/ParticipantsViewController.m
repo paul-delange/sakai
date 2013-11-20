@@ -227,7 +227,17 @@
     }
     
     cell.nameLabel.text = participant.name;
-    cell.organizationLabel.text = participant.department;
+    
+    if( participant.position.length && participant.department.length ) {
+        cell.organizationLabel.text = [NSString stringWithFormat: @"%@ (%@)", participant.department, participant.position];
+    }
+    else if( participant.position.length ) {
+        cell.organizationLabel.text = participant.position;
+    }
+    else if (participant.department.length ) {
+        cell.organizationLabel.text = participant.department;
+    }
+    
     
     NSString* entrydatestring = participant.entryTime ? [NSDateFormatter localizedStringFromDate: participant.entryTime
                                                                                        dateStyle: NSDateFormatterNoStyle
