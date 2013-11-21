@@ -136,6 +136,9 @@
 
 - (void) viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
+    
+    self.masterViewController.view.frame = [self frameForMasterViewController];
+    self.detailViewController.view.frame = [self frameForDetailViewController];
 }
 
 #pragma mark - KVO

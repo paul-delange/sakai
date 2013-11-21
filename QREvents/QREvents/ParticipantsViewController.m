@@ -375,8 +375,8 @@
 
 - (NSInteger) tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
     if( tableView == self.tableView ) {
-        NSInteger localizedIndex = [[UILocalizedIndexedCollation currentCollation] sectionForSectionIndexTitleAtIndex:index];
-        NSArray *localizedIndexTitles = [[UILocalizedIndexedCollation currentCollation] sectionIndexTitles];
+        return [[UILocalizedIndexedCollation currentCollation] sectionForSectionIndexTitleAtIndex:index];
+        /*NSArray *localizedIndexTitles = [[UILocalizedIndexedCollation currentCollation] sectionIndexTitles];
         
         for(int currentLocalizedIndex = localizedIndex; currentLocalizedIndex > 0; currentLocalizedIndex--) {
             for(int frcIndex = 0; frcIndex < [[self.resultsController sections] count]; frcIndex++) {
@@ -386,7 +386,7 @@
                     return frcIndex;
                 }
             }
-        }
+        }*/
     }
     
     /* or
