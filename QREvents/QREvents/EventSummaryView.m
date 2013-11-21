@@ -30,12 +30,14 @@
     self = [super initWithFrame: frame];
     if( self ) {
         UILabel* nl = [UILabel new];
+        nl.backgroundColor = [UIColor clearColor];
         nl.translatesAutoresizingMaskIntoConstraints = NO;
         nl.font = [UIFont boldSystemFontOfSize: 15.f];
         nl.textAlignment = NSTextAlignmentCenter;
         [self addSubview: nl];
         
         UILabel* stl = [UILabel new];
+        stl.backgroundColor = [UIColor clearColor];
         stl.translatesAutoresizingMaskIntoConstraints = NO;
         stl.font = [UIFont systemFontOfSize: 10.f];
         stl.textAlignment = NSTextAlignmentCenter;

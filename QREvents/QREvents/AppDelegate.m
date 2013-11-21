@@ -78,7 +78,9 @@ NSString* kApplicationResetNotification =  @"ApplicationReset";
     
     RKObjectManager* manager = [[RKObjectManager alloc] initWithHTTPClient: client];
     NSParameterAssert(manager);
-    manager.requestSerializationMIMEType = RKMIMETypeJSON;
+    
+#
+    manager.requestSerializationMIMEType = RKMIMETypeFormURLEncoded ;
     
     //Configure the local store
     RKManagedObjectStore* store;
