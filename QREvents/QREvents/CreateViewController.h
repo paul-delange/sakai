@@ -23,11 +23,21 @@
 @property (weak, nonatomic) IBOutlet UISwitch *onTheDaySwitch;
 @property (weak, nonatomic) IBOutlet UILabel *proxyLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *proxySwitch;
+@property (weak, nonatomic) IBOutlet UILabel *qrcodeLabel;
+@property (weak, nonatomic) IBOutlet UITextField *qrCodeField;
+@property (weak, nonatomic) IBOutlet UILabel *entryTimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *exitTimeLabel;
+@property (weak, nonatomic) IBOutlet UITextField *entryTimeField;
+@property (weak, nonatomic) IBOutlet UITextField *exitTimeField;
 
 
 
 @property (copy, nonatomic) NSString* participantCode;
 
+
 - (IBAction)addPushed:(id)sender;
+- (IBAction)participantValueChanged:(UISwitch *)sender;
+- (IBAction)onTheDayValueChanged:(UISwitch *)sender;
+- (IBAction)proxyValueChanged:(UISwitch *)sender;
 
 @end

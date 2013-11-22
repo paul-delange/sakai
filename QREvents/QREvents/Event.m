@@ -23,4 +23,16 @@
     return events.lastObject;
 }
 
+- (NSString*) resourcePathParticipants {
+    
+#if USING_PARSE_DOT_COM
+    RKObjectManager* objectManager = [[self appDelegate] objectManager];
+    RKPathMatcher* pathMatcher = [RKPathMatcher pathMatcherWithPattern: kWebServiceIndividualPath];
+    return [pathMatcher pathFromObject: participant addingEscapes: YES interpolatedParameters: nil];
+#else
+    NSParameterAssert(self.primaryKey);
+    return [kWebServiceListPath stringByReplacingOccurrencesOfString: @":primaryKey" withString: self.primaryKey];
+#endif
+}
+
 @end

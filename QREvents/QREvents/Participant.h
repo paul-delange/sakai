@@ -2,4 +2,6 @@
 
 @interface Participant : _Participant {}
 
+- (NSString*) resourcePath;
+
 @end

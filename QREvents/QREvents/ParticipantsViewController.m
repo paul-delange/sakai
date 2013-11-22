@@ -92,13 +92,7 @@
     
     [self.navigationItem setRightBarButtonItems: @[self.settingsButton, self.codeButton, activityItem, self.searchButton] animated: YES];
     
-#if USING_PARSE_DOT_COM
-    NSString* path = kWebServiceListPath;
-#else
-    RKPathMatcher* pathMatcher = [RKPathMatcher pathMatcherWithPattern: kWebServiceListPath];
-    NSString* path = [pathMatcher pathFromObject: [Event currentEvent] addingEscapes: YES interpolatedParameters: nil];
-#endif
-    
+    NSString* path = [[Event currentEvent] resourcePathParticipants];
     [[self objectManager] getObjectsAtPath: path
                                 parameters: nil
                                    success: ^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
@@ -139,25 +133,103 @@
 }
 
 - (IBAction)proxyValueChanged:(UISwitch *)sender {
-    UITableViewCell* cell = (UITableViewCell*)sender;
-    while (![cell isKindOfClass: [UITableViewCell class]]) {
-        cell = (UITableViewCell*)cell.superview;
+    ParticipantTableViewCell* cell = (ParticipantTableViewCell*)sender;
+    while (![cell isKindOfClass: [ParticipantTableViewCell class]]) {
+        cell = (ParticipantTableViewCell*)cell.superview;
     }
     NSParameterAssert(cell);
     
     NSIndexPath* indexPath = [self.tableView indexPathForCell: cell];
     Participant* participant = [self.resultsController objectAtIndexPath: indexPath];
+    
+    if( sender.on ) {
+        [cell.participantSwitch setOn: YES animated: YES];
+        [cell.onTheDaySwitch setOn: NO animated: YES];
+        participant.on_the_dayValue = NO;
+        participant.participatingValue = YES;
+        if( !participant.entryTime ) {
+            participant.entryTime = [NSDate date];
+            participant.exitTime = nil;
+        }
+    }
+    
     participant.by_proxyValue = sender.on;
     
     [participant.managedObjectContext saveToPersistentStore: nil];
+    
+    NSString* path = [participant resourcePath];
+    [[self objectManager] putObject: participant
+                               path: path
+                         parameters: nil
+                            success: ^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                            } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                            }];
 }
 
 - (IBAction)onTheDayValueChanged:(UISwitch *)sender {
+    ParticipantTableViewCell* cell = (ParticipantTableViewCell*)sender;
+    while (![cell isKindOfClass: [ParticipantTableViewCell class]]) {
+        cell = (ParticipantTableViewCell*)cell.superview;
+    }
+    NSParameterAssert(cell);
+    NSIndexPath* indexPath = [self.tableView indexPathForCell: cell];
+    Participant* participant = [self.resultsController objectAtIndexPath: indexPath];
     
+    if( sender.on ) {
+        [cell.participantSwitch setOn: YES animated: YES];
+        [cell.proxySwitch setOn: NO animated: YES];
+        participant.by_proxyValue = NO;
+        participant.participatingValue = YES;
+        if( !participant.entryTime ) {
+            participant.entryTime = [NSDate date];
+            participant.exitTime = nil;
+        }
+    }
+    
+    participant.on_the_dayValue = sender.on;
+    
+    [participant.managedObjectContext saveToPersistentStore: nil];
+    NSString* path = [participant resourcePath];
+    [[self objectManager] putObject: participant
+                               path: path
+                         parameters: nil
+                            success: ^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                            } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                            }];
 }
 
 - (IBAction)participantValueChanged:(UISwitch *)sender {
+    ParticipantTableViewCell* cell = (ParticipantTableViewCell*)sender;
+    while (![cell isKindOfClass: [ParticipantTableViewCell class]]) {
+        cell = (ParticipantTableViewCell*)cell.superview;
+    }
+    NSParameterAssert(cell);
+    NSIndexPath* indexPath = [self.tableView indexPathForCell: cell];
+    Participant* participant = [self.resultsController objectAtIndexPath: indexPath];
     
+    if( !sender.on ) {
+        [cell.onTheDaySwitch setOn: NO animated: YES];
+        [cell.proxySwitch setOn: NO animated: YES];
+        participant.by_proxyValue = NO;
+        participant.on_the_dayValue = NO;
+        participant.entryTime = nil;
+        participant.exitTime = nil;
+    }
+    else {
+        participant.entryTime = [NSDate date];
+        participant.exitTime = nil;
+    }
+    
+    participant.participatingValue = sender.on;
+    
+    [participant.managedObjectContext saveToPersistentStore: nil];
+    NSString* path = [participant resourcePath];
+    [[self objectManager] putObject: participant
+                               path: path
+                         parameters: nil
+                            success: ^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                            } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                            }];
 }
 
 - (AppDelegate*) appDelegate {
@@ -226,33 +298,7 @@
         participant = [self.resultsController objectAtIndexPath: indexPath];
     }
     
-    cell.nameLabel.text = participant.name;
-    
-    if( participant.position.length && participant.department.length ) {
-        cell.organizationLabel.text = [NSString stringWithFormat: @"%@ (%@)", participant.department, participant.position];
-    }
-    else if( participant.position.length ) {
-        cell.organizationLabel.text = participant.position;
-    }
-    else if (participant.department.length ) {
-        cell.organizationLabel.text = participant.department;
-    }
-    
-    
-    NSString* entrydatestring = participant.entryTime ? [NSDateFormatter localizedStringFromDate: participant.entryTime
-                                                                                       dateStyle: NSDateFormatterNoStyle
-                                                                                       timeStyle: NSDateFormatterShortStyle] :
-                                                        NSLocalizedString(@"-/-", @"");
-    
-    NSString* exitdatestring = participant.exitTime ? [NSDateFormatter localizedStringFromDate: participant.exitTime
-                                                                                     dateStyle: NSDateFormatterNoStyle
-                                                                                     timeStyle: NSDateFormatterShortStyle] :
-                                                        NSLocalizedString(@"-/-", @"");
-    
-    cell.entryTimeLabel.text = [NSString stringWithFormat: NSLocalizedString(@"Entry: %@", @""), entrydatestring];
-    cell.exitTimeLabel.text = [NSString stringWithFormat: NSLocalizedString(@"Exit: %@", @""), exitdatestring];
-    cell.onTheDaySwitch.on = participant.on_the_dayValue;
-    cell.proxySwitch.on = participant.by_proxyValue;
+    [cell setParticipant: participant];
 }
 
 #pragma mark - NSObject
@@ -270,6 +316,7 @@
         dispatch_source_set_event_handler(_refreshTimer, ^{
             [self refreshPushed: self.refreshButton];
         });
+        dispatch_resume(_refreshTimer);
     }
     return self;
 }
@@ -376,6 +423,8 @@
 - (NSInteger) tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
     if( tableView == self.tableView ) {
         return [[UILocalizedIndexedCollation currentCollation] sectionForSectionIndexTitleAtIndex:index];
+        
+        //This crashes in japanese
         /*NSArray *localizedIndexTitles = [[UILocalizedIndexedCollation currentCollation] sectionIndexTitles];
         
         for(int currentLocalizedIndex = localizedIndex; currentLocalizedIndex > 0; currentLocalizedIndex--) {

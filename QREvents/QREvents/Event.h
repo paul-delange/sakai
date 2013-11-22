@@ -5,4 +5,6 @@
 
 + (instancetype) currentEvent;
 
+- (NSString*) resourcePathParticipants;
+
 @end
