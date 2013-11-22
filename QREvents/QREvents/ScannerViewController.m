@@ -153,7 +153,7 @@
 #else
     AVCaptureDevice* defaultDevice;
     for(AVCaptureDevice* device in [AVCaptureDevice devicesWithMediaType: AVMediaTypeVideo]) {
-        if( device.postion == AVCaptureDevicePositionBack ) {
+        if( device.position == AVCaptureDevicePositionBack ) {
             defaultDevice = device;
             break;
         }
