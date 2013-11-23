@@ -153,7 +153,7 @@
 #else
     AVCaptureDevice* defaultDevice;
     for(AVCaptureDevice* device in [AVCaptureDevice devicesWithMediaType: AVMediaTypeVideo]) {
-        if( device.postion == AVCaptureDevicePositionBack ) {
+        if( device.position == AVCaptureDevicePositionBack ) {
             defaultDevice = device;
             break;
         }
@@ -302,10 +302,7 @@
                                              [context saveToPersistentStore: &error];
                                              NSAssert(!error, @"Error updating particpant: %@", error);
                                              
-                                             RKObjectManager* objectManager = [[self appDelegate] objectManager];
-                                             RKPathMatcher* pathMatcher = [RKPathMatcher pathMatcherWithPattern: kWebServiceIndividualPath];
-                                             NSString* path = [pathMatcher pathFromObject: participant addingEscapes: YES interpolatedParameters: nil];
-                                             
+                                             NSString* path = [participant resourcePath];
                                              [objectManager putObject: participant
                                                                  path: path
                                                            parameters: nil

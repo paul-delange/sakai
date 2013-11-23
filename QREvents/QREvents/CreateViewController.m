@@ -16,6 +16,7 @@
 
 @interface CreateViewController () <UITextFieldDelegate> {
     //kParticpationType _participationType;
+    NSArray* dateFormatters;
 }
 
 @end
@@ -52,6 +53,20 @@
         return YES;
 }
 
+- (IBAction)onTheDayValueChanged:(UISwitch *)sender {
+    if( sender.on ) {
+        [self.participantSwitch setOn: YES animated: YES];
+        [self.proxySwitch setOn: NO animated: YES];
+    }
+}
+
+- (IBAction)proxyValueChanged:(UISwitch *)sender {
+    if( sender.on ) {
+        [self.participantSwitch setOn: YES animated: YES];
+        [self.onTheDaySwitch setOn: YES animated: YES];
+    }
+}
+
 - (IBAction)addPushed:(id)sender {
     if( [self validateInputOrDisplayError] ) {
         
@@ -73,13 +88,23 @@
         newParticipant.department = self.affiliationField.text;
         newParticipant.on_the_dayValue = self.onTheDaySwitch.on;
         newParticipant.by_proxyValue = self.proxySwitch.on;
+        newParticipant.qrcode = self.qrCodeField.text;
+        newParticipant.participatingValue = self.participantSwitch.on;
+        newParticipant.atama_moji = newParticipant.company.length > 0 ? [newParticipant.company substringToIndex: 1] : @"";
         
-        //newParticipant.affiliation = self.affiliationField.text;
+        
+        for(NSDateFormatter* formatter in dateFormatters) {
+            if( !newParticipant.entryTime )
+                newParticipant.entryTime = [formatter dateFromString: self.entryTimeField.text];
+            
+            if( !newParticipant.exitTime )
+                newParticipant.exitTime = [formatter dateFromString: self.exitTimeField.text];
+        }
         
 #if USING_PARSE_DOT_COM
         NSString* path = kWebServiceListPath;
 #else
-        NSString* path = [kWebServiceListPath stringByReplacingOccurrencesOfString: @":primaryKey" withString: [Event currentEvent].primaryKey];
+        NSString* path = [[Event currentEvent] resourcePathParticipants];
 #endif
         
         [[RKObjectManager sharedManager] postObject: newParticipant
@@ -116,11 +141,42 @@
     }
 }
 
+- (IBAction)participantValueChanged:(UISwitch *)sender {
+    if( !sender.on ) {
+        [self.onTheDaySwitch setOn: NO animated: YES];
+        [self.proxySwitch setOn: NO animated: YES];
+    }
+}
+
 #pragma mark - NSObject
 - (id) initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder: aDecoder];
     if( self ) {
         self.title = NSLocalizedString(@"Add a Participant", @"");
+        
+        NSString* format = [NSDateFormatter dateFormatFromTemplate: @"hhmm" options: 0 locale: [NSLocale currentLocale]];
+        NSLog(@"Local date format: %@", format);
+        
+        NSDate* date = [NSDate date];
+        NSTimeZone* timezone = [NSTimeZone timeZoneForSecondsFromGMT: 0];
+        
+        NSLog(@"Timezone: %@", timezone);
+        
+        NSDateFormatter* localFormatter = [NSDateFormatter new];
+        [localFormatter setDateFormat: format];
+        [localFormatter setLocale: [NSLocale currentLocale]];
+        [localFormatter setDefaultDate: date];
+        [localFormatter setTimeZone: timezone];
+        
+        NSDateFormatter* timeFormatter = [NSDateFormatter new];
+        [timeFormatter setDateFormat: @"hh:mm"];
+        [timeFormatter setLenient: YES];
+        [timeFormatter setDefaultDate: date];
+        [timeFormatter setTimeZone: timezone];
+        
+        NSLog(@"Time date format: %@", [timeFormatter dateFormat]);
+        
+        dateFormatters = @[localFormatter, timeFormatter];
     }
     
     return self;
@@ -134,6 +190,10 @@
     self.nameLabel.text = NSLocalizedString(@"Participant's Name:", @"");
     self.companyLabel.text = NSLocalizedString(@"Company Name:", @"");
     self.affiliationlabel.text = NSLocalizedString(@"Department:", @"");
+    self.qrcodeLabel.text = NSLocalizedString(@"QR code:", @"");
+    self.entryTimeLabel.text = NSLocalizedString(@"Entry time:", @"");
+    self.exitTimeLabel.text = NSLocalizedString(@"Exit time:", @"");
+    
     [self.addButton setTitle: NSLocalizedString(@"Join", @"") forState: UIControlStateNormal];
     self.addButton.enabled = NO;
     
@@ -150,6 +210,13 @@
     self.proxySwitch.on = NO;
     
     //_participationType = kParticpationTypeParticipant;
+    self.entryTimeField.placeholder = NSLocalizedString(@"Enter an entry time…", @"");
+    self.exitTimeField.placeholder = NSLocalizedString(@"Enter an exit time…", @"");
+    
+    NSDate* now = [NSDate date];
+    self.entryTimeField.text = [NSDateFormatter localizedStringFromDate: now
+                                                              dateStyle: NSDateFormatterNoStyle
+                                                              timeStyle: NSDateFormatterShortStyle];
 }
 
 - (void)didReceiveMemoryWarning
@@ -173,15 +240,6 @@
 - (BOOL) textFieldShouldClear:(UITextField *)textField {
     self.addButton.enabled = NO;
     return YES;
-}
-
-#pragma mark - UIPickerViewDataSource
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    return 1;
-}
-
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    return kParticpationTypeCount;
 }
 
 @end

@@ -13,6 +13,7 @@ extern const struct ParticipantAttributes {
 	__unsafe_unretained NSString *exitTime;
 	__unsafe_unretained NSString *name;
 	__unsafe_unretained NSString *on_the_day;
+	__unsafe_unretained NSString *participating;
 	__unsafe_unretained NSString *position;
 	__unsafe_unretained NSString *primaryKey;
 	__unsafe_unretained NSString *qrcode;
@@ -27,6 +28,7 @@ extern const struct ParticipantFetchedProperties {
 } ParticipantFetchedProperties;
 
 @class Event;
+
 
 
 
@@ -142,6 +144,20 @@ extern const struct ParticipantFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSNumber* participating;
+
+
+
+@property BOOL participatingValue;
+- (BOOL)participatingValue;
+- (void)setParticipatingValue:(BOOL)value_;
+
+//- (BOOL)validateParticipating:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
 @property (nonatomic, strong) NSString* position;
 
 
@@ -249,6 +265,15 @@ extern const struct ParticipantFetchedProperties {
 
 - (BOOL)primitiveOn_the_dayValue;
 - (void)setPrimitiveOn_the_dayValue:(BOOL)value_;
+
+
+
+
+- (NSNumber*)primitiveParticipating;
+- (void)setPrimitiveParticipating:(NSNumber*)value;
+
+- (BOOL)primitiveParticipatingValue;
+- (void)setPrimitiveParticipatingValue:(BOOL)value_;
 
 
 

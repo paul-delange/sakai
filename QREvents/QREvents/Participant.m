@@ -1,4 +1,5 @@
 #import "Participant.h"
+#import "Event.h"
 
 #import <RestKit/RKManagedObjectStore.h>
 
@@ -10,5 +11,13 @@
 
 
 @implementation Participant
+
+- (NSString*) resourcePath {
+    NSParameterAssert(self.primaryKey);
+    
+    Event* event = [Event currentEvent];
+    NSString* eventPath = [event resourcePathParticipants];
+    return [eventPath stringByAppendingPathComponent: self.primaryKey];
+}
 
 @end
