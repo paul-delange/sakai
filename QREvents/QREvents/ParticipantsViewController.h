@@ -19,5 +19,6 @@
 - (IBAction)proxyValueChanged:(UISwitch *)sender;
 - (IBAction)onTheDayValueChanged:(UISwitch *)sender;
 - (IBAction)participantValueChanged:(UISwitch *)sender;
+- (IBAction)cellRightSwiped:(UISwipeGestureRecognizer *)sender;
 
 @end

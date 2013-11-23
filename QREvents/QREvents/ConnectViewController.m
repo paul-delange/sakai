@@ -264,6 +264,7 @@
     
     self.qrcodeLabel.text = NSLocalizedString(@"or, scan a configuration code…", @"");
     self.readerView.autoresizingMask = UIViewAutoresizingNone;
+    self.readerView.backgroundColor = [UIColor whiteColor];
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -347,6 +348,11 @@
 }
 
 #pragma mark - ZBarReaderViewDelegate
+- (void) readerViewDidStart:(ZBarReaderView *)readerView {
+    //self.readerView.hidden = NO;
+    self.readerView.alpha = 1.f;
+}
+
 - (void) readerView:(ZBarReaderView *)readerView didReadSymbols:(ZBarSymbolSet *)symbols fromImage:(UIImage *)image {
     for(ZBarSymbol* sym in symbols) {
         NSString* stringValue = sym.data;

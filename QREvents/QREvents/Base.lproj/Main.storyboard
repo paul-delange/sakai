@@ -392,6 +392,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ParticipantTableViewCell" id="Hh9-Tq-ZuE" customClass="ParticipantTableViewCell">
                                 <rect key="frame" x="0.0" y="86" width="768" height="80"/>
@@ -504,6 +505,7 @@
                                         <constraint firstItem="ZIL-L1-ZQS" firstAttribute="top" secondItem="IBI-8H-f4r" secondAttribute="top" id="xqL-YA-DP7"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <gestureRecognizers/>
                                 <connections>
                                     <outlet property="entryTimeLabel" destination="Iwk-bz-5D6" id="46M-4c-9fz"/>
                                     <outlet property="exitTimeLabel" destination="I2Z-vi-uqe" id="6EO-Bw-41W"/>
