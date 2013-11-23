@@ -21,5 +21,6 @@ extern NSString* kApplicationResetNotification;
 
 - (void) showConnectionViewController;
 - (void) reset;
+- (RKEntityMapping*) eventMapping;
 
 @end

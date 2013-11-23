@@ -131,6 +131,7 @@
 		FD6DF4F317F3006B00E708A9 /* ScannerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScannerViewController.m; sourceTree = "<group>"; };
 		FD6DF4F517F30DA800E708A9 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		FD6DF4F617F30DA800E708A9 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		FDB6EEB9184106B20087DE56 /* wwdc-sample-event.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wwdc-sample-event.png"; sourceTree = "<group>"; };
 		FDEA613317FBF5F200FB169C /* qrevents_app.pptx.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = qrevents_app.pptx.pdf; sourceTree = "<group>"; };
 		FDF863D0183A46BE000219B5 /* TSAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSAlertView.h; sourceTree = "<group>"; };
 		FDF863D1183A46BE000219B5 /* TSAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSAlertView.m; sourceTree = "<group>"; };
@@ -181,6 +182,7 @@
 		FD2B32B117F2B7F2002E87A8 = {
 			isa = PBXGroup;
 			children = (
+				FDB6EEB9184106B20087DE56 /* wwdc-sample-event.png */,
 				FDEA613317FBF5F200FB169C /* qrevents_app.pptx.pdf */,
 				FD2B32C317F2B7F2002E87A8 /* QREvents */,
 				FD2B32E217F2B7F2002E87A8 /* Tests */,

@@ -13,11 +13,20 @@
 
 #import "SBTableAlert.h"
 
+@import AVFoundation;
+
+#import <ZBarSDK/ZBarReaderView.h>
 #import <SystemConfiguration/CaptiveNetwork.h>
 
-@interface ConnectViewController () <UITextFieldDelegate, SBTableAlertDataSource, SBTableAlertDelegate> {
+#define kConfigCodeServerURLKey     @"url"
+#define kConfigCodeEventKey         @"event"
+
+@interface ConnectViewController () <UITextFieldDelegate, SBTableAlertDataSource, SBTableAlertDelegate, ZBarReaderViewDelegate> {
     SBTableAlert* _alert;
     NSArray* _events;
+    
+    
+    AVCaptureDevice* _frontCamera;
 }
 
 @end
@@ -86,7 +95,7 @@
                                               cancelButtonTitle: NSLocalizedString(@"OK", @"")
                                               otherButtonTitles: nil];
         [alert show];
-
+        
     };
     
     [operation setCompletionBlockWithSuccess: ^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
@@ -125,7 +134,7 @@
                                                                               otherButtonTitles: nil];
                                         [alert show];
                                     }
-
+                                    
                                     self.serverURLField.enabled = YES;
                                     self.connectButton.enabled = YES;
                                     [activityView removeFromSuperview];
@@ -135,8 +144,8 @@
     
     [objectManager enqueueObjectRequestOperation:operation];
 }
-                                      
-                                      
+
+
 
 - (NSString*) getNetworkName {
 #if TARGET_IPHONE_SIMULATOR
@@ -159,6 +168,37 @@
     return candidateURL && candidateURL.scheme && candidateURL.host;
 }
 
+- (void) badConfigurationScanned {
+    NSString* title = NSLocalizedString(@"Not a Configuration code", @"");
+    NSString* msg = NSLocalizedString(@"Could not extract event information from this code, please try again.", @"");
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle: title
+                                                    message: msg
+                                                   delegate: nil
+                                          cancelButtonTitle: NSLocalizedString(@"OK", @"")
+                                          otherButtonTitles: nil];
+    [alert show];
+}
+
+#pragma mark - NSObject
+- (id) initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder: aDecoder];
+    if( self ) {
+        
+        
+#if !TARGET_IPHONE_SIMULATOR
+        NSArray* devices = [AVCaptureDevice devices];
+        for(AVCaptureDevice* device in devices) {
+            if( [device hasMediaType: AVMediaTypeVideo] ) {
+                if( [device position] == AVCaptureDevicePositionFront )
+                    _frontCamera = device;
+                
+            }
+        }
+#endif
+    }
+    return self;
+}
+
 #pragma mark - UIViewController
 - (void)viewDidLoad
 {
@@ -178,12 +218,12 @@
         self.wifiStatusLabel.textColor = [UIColor redColor];
     }
     /*
-    NSURLRequest* request = [NSURLRequest requestWithURL: [NSURL URLWithString: @"http://api.qrevents.com/events"]];
-    NSData* data = [NSURLConnection sendSynchronousRequest: request returningResponse: Nil error: nil];
-    NSArray* parsed = [NSJSONSerialization JSONObjectWithData: data options: 0 error: nil];
-    
-    self.navigationItem.title = [[parsed objectAtIndex: 0] valueForKey: @"title"];
-    */
+     NSURLRequest* request = [NSURLRequest requestWithURL: [NSURL URLWithString: @"http://api.qrevents.com/events"]];
+     NSData* data = [NSURLConnection sendSynchronousRequest: request returningResponse: Nil error: nil];
+     NSArray* parsed = [NSJSONSerialization JSONObjectWithData: data options: 0 error: nil];
+     
+     self.navigationItem.title = [[parsed objectAtIndex: 0] valueForKey: @"title"];
+     */
     NSString* connect = NSLocalizedString(@"Start", @"");
     NSString* format = NSLocalizedString(@"Welcome to %@!\n\nBefore using this app, you must connect to an event. Please enter the address of a valid event server below and then push '%@'", @"");
     NSString* welcomeMessage = [NSString stringWithFormat: format, appName, connect];
@@ -205,8 +245,8 @@
     
     self.welcomeLabel.attributedText = attrString;
     /*NSDictionary* anEvent = [parsed objectAtIndex: 0];
-    self.welcomeLabel.text = [anEvent valueForKey: @"name"];
-    */
+     self.welcomeLabel.text = [anEvent valueForKey: @"name"];
+     */
     [self.connectButton setTitle: connect forState: UIControlStateNormal];
     
     self.serverURLField.placeholder = NSLocalizedString(@"http://www.example.com", @"");
@@ -222,13 +262,26 @@
 #endif
 #endif
     
+    self.qrcodeLabel.text = NSLocalizedString(@"or, scan a configuration code…", @"");
+    self.readerView.autoresizingMask = UIViewAutoresizingNone;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear: animated];
     
+    if( _frontCamera ) {
+        [[self readerView] setDevice: _frontCamera];
+        [[self readerView] start];
+        [[self readerView] setReaderDelegate: self];
+        [[self readerView] willRotateToInterfaceOrientation: [UIApplication sharedApplication].statusBarOrientation
+                                                   duration: 0];
+    }
+}
+
+- (void) viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear: animated];
+    
+    [[self readerView] stop];
 }
 
 - (BOOL)disablesAutomaticKeyboardDismissal {
@@ -291,6 +344,68 @@
                                                             object: nil
                                                           userInfo: nil];
     }];
+}
+
+#pragma mark - ZBarReaderViewDelegate
+- (void) readerView:(ZBarReaderView *)readerView didReadSymbols:(ZBarSymbolSet *)symbols fromImage:(UIImage *)image {
+    for(ZBarSymbol* sym in symbols) {
+        NSString* stringValue = sym.data;
+        NSData* data = [stringValue dataUsingEncoding: NSUTF8StringEncoding];
+        
+        //Search for a valid config
+        __autoreleasing NSError* error;
+        NSDictionary* config = [NSJSONSerialization JSONObjectWithData: data options: 0 error: &error];
+        
+        if( config ) {
+            NSAssert(!error, @"Error reading config code: %@", error);
+            
+            NSString* string = config[kConfigCodeServerURLKey];
+            NSURL* url = [NSURL URLWithString: string];
+            if( url ) {
+                NSDictionary* event = config[kConfigCodeEventKey];
+                if( event ) {
+                    RKObjectManager* objectManager = [[self appDelegate] objectManagerWithBaseURL: url andEventName: kAppName()];
+                    NSManagedObjectContext* context = objectManager.managedObjectStore.persistentStoreManagedObjectContext;
+                    RKFetchRequestManagedObjectCache* cache = [RKFetchRequestManagedObjectCache new];
+                    RKManagedObjectMappingOperationDataSource* datasource = [[RKManagedObjectMappingOperationDataSource alloc] initWithManagedObjectContext: context
+                                                                                                                                                      cache: cache];
+                    NSArray* responseDescriptors = objectManager.responseDescriptors;
+                    for(RKResponseDescriptor* descriptor in responseDescriptors) {
+                        if( [descriptor matchesPath: kWebServiceEventListPath] ) {
+                            RKMapping* mapping	 = descriptor.mapping;
+                            NSDictionary* mappingDictionary = @{ [NSNull null] : mapping};
+                            RKMapperOperation* operation = [[RKMapperOperation alloc] initWithRepresentation: event
+                                                                                          mappingsDictionary: mappingDictionary];
+                            [operation setMappingOperationDataSource: datasource];
+                            [operation start];
+                        }
+                    }
+                    
+                    if( [Event currentEvent] != nil ) {
+                        //Successfully created an event
+                        [self dismissViewControllerAnimated: YES completion: ^{
+                            [[NSNotificationCenter defaultCenter] postNotificationName: kApplicationResetNotification
+                                                                                object: nil
+                                                                              userInfo: nil];
+                        }];
+                    }
+                    else {
+                        [self badConfigurationScanned];
+                    }
+                    
+                }
+                else {
+                    self.serverURLField.text = string;
+                }
+            }
+            else {
+                [self badConfigurationScanned];
+            }
+        }
+        else {
+            [self badConfigurationScanned];
+        }
+    }
 }
 
 @end
