@@ -25,5 +25,6 @@
 @property (weak, nonatomic) IBOutlet UISwitch *participantSwitch;
 
 - (void) setParticipant: (Participant*) participant;
+- (void) setSearch: (BOOL) isSearch;
 
 @end

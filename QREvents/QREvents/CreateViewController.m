@@ -75,69 +75,113 @@
         
         RKObjectManager* manager = [[self appDelegate] objectManager];
         NSManagedObjectContext* context = manager.managedObjectStore.mainQueueManagedObjectContext;
-        
-        Participant* newParticipant = [context insertNewObjectForEntityForName: NSStringFromClass([Participant class])];
-        newParticipant.name = self.nameField.text;
-        newParticipant.qrcode = self.participantCode;
-        if( self.participantCode ) {
-            newParticipant.entryTime = [NSDate date];
-        }
-        
-        //newParticipant.participationTypeValue = _participationType;
-        newParticipant.company = self.companyField.text.length ? self.companyField.text : NSLocalizedString(@"Other", @"");
-        newParticipant.department = self.affiliationField.text;
-        newParticipant.on_the_dayValue = self.onTheDaySwitch.on;
-        newParticipant.by_proxyValue = self.proxySwitch.on;
-        newParticipant.qrcode = self.qrCodeField.text;
-        newParticipant.participatingValue = self.participantSwitch.on;
-        newParticipant.atama_moji = newParticipant.company.length > 0 ? [newParticipant.company substringToIndex: 1] : @"";
-        
-        
-        for(NSDateFormatter* formatter in dateFormatters) {
-            if( !newParticipant.entryTime )
-                newParticipant.entryTime = [formatter dateFromString: self.entryTimeField.text];
+        if( self.participant ) {
+            //Going to update
+            self.participant.name = self.nameField.text;
+            self.participant.qrcode = self.qrCodeField.text;
+            self.participant.company = self.companyField.text;
+            self.participant.department = self.affiliationField.text;
+            self.participant.on_the_dayValue = self.onTheDaySwitch.on;
+            self.participant.by_proxyValue = self.proxySwitch.on;
+            self.participant.participatingValue = self.participantSwitch.on;
             
-            if( !newParticipant.exitTime )
-                newParticipant.exitTime = [formatter dateFromString: self.exitTimeField.text];
+            NSString* path = [self.participant resourcePath];
+            [manager putObject: self.participant
+                          path: path
+                    parameters: nil
+                       success: ^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                           [self performSegueWithIdentifier: kSegueUnwind sender: nil];
+                       } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                           NSString* title;
+                           NSString* msg;
+                           RKErrorMessage* errorMessage = [error userInfo][RKObjectMapperErrorObjectsKey];
+                           if( errorMessage ) {
+                               title = NSLocalizedString(@"Update Error", @"");
+                               msg = errorMessage.errorMessage;
+                           }
+                           else {
+                               title = NSLocalizedString(@"Unknown Error", @"");
+                               msg = NSLocalizedString(@"Something has gone wrong. Please check your internet connection and try again", @"");
+                           }
+                           
+                           UIAlertView* alert = [[UIAlertView alloc] initWithTitle: title
+                                                                           message: msg
+                                                                          delegate: nil
+                                                                 cancelButtonTitle: NSLocalizedString(@"OK", @"")
+                                                                 otherButtonTitles: nil];
+                           [alert show];
+                           
+                           self.nameField.enabled = YES;
+                           self.addButton.enabled = YES;
+                           
+                       }];
+            
         }
-        
+        else {
+            //Going to create new
+            Participant* newParticipant = [context insertNewObjectForEntityForName: NSStringFromClass([Participant class])];
+            newParticipant.name = self.nameField.text;
+            newParticipant.qrcode = self.participantCode;
+            if( self.participantCode ) {
+                newParticipant.entryTime = [NSDate date];
+            }
+            
+            //newParticipant.participationTypeValue = _participationType;
+            newParticipant.company = self.companyField.text.length ? self.companyField.text : NSLocalizedString(@"Other", @"");
+            newParticipant.department = self.affiliationField.text;
+            newParticipant.on_the_dayValue = self.onTheDaySwitch.on;
+            newParticipant.by_proxyValue = self.proxySwitch.on;
+            newParticipant.qrcode = self.qrCodeField.text;
+            newParticipant.participatingValue = self.participantSwitch.on;
+            newParticipant.atama_moji = newParticipant.company.length > 0 ? [newParticipant.company substringToIndex: 1] : @"";
+            
+            
+            for(NSDateFormatter* formatter in dateFormatters) {
+                if( !newParticipant.entryTime )
+                    newParticipant.entryTime = [formatter dateFromString: self.entryTimeField.text];
+                
+                if( !newParticipant.exitTime )
+                    newParticipant.exitTime = [formatter dateFromString: self.exitTimeField.text];
+            }
+            
 #if USING_PARSE_DOT_COM
-        NSString* path = kWebServiceListPath;
+            NSString* path = kWebServiceListPath;
 #else
-        NSString* path = [[Event currentEvent] resourcePathParticipants];
+            NSString* path = [[Event currentEvent] resourcePathParticipants];
 #endif
-        
-        [[RKObjectManager sharedManager] postObject: newParticipant
-                                               path: path
-                                         parameters: nil
-                                            success: ^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-                                                
-                                                [self performSegueWithIdentifier: kSegueUnwind sender: nil];
-                                                
-                                            } failure: ^(RKObjectRequestOperation *operation, NSError *error) {
-                                                
-                                                NSString* title;
-                                                NSString* msg;
-                                                RKErrorMessage* errorMessage = [error userInfo][RKObjectMapperErrorObjectsKey];
-                                                if( errorMessage ) {
-                                                    title = NSLocalizedString(@"Creation Error", @"");
-                                                    msg = errorMessage.errorMessage;
-                                                }
-                                                else {
-                                                    title = NSLocalizedString(@"Unknown Error", @"");
-                                                    msg = NSLocalizedString(@"Something has gone wrong. Please check your internet connection and try again", @"");
-                                                }
-                                                
-                                                UIAlertView* alert = [[UIAlertView alloc] initWithTitle: title
-                                                                                                message: msg
-                                                                                               delegate: nil
-                                                                                      cancelButtonTitle: NSLocalizedString(@"OK", @"")
-                                                                                      otherButtonTitles: nil];
-                                                [alert show];
-                                                
-                                                self.nameField.enabled = YES;
-                                                self.addButton.enabled = YES;
-                                            }];
+            
+            [manager postObject: newParticipant
+                           path: path
+                     parameters: nil
+                        success: ^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                            
+                            [self performSegueWithIdentifier: kSegueUnwind sender: nil];
+                            
+                        } failure: ^(RKObjectRequestOperation *operation, NSError *error) {
+                            
+                            NSString* title;
+                            NSString* msg;
+                            RKErrorMessage* errorMessage = [error userInfo][RKObjectMapperErrorObjectsKey];
+                            if( errorMessage ) {
+                                title = NSLocalizedString(@"Creation Error", @"");
+                                msg = errorMessage.errorMessage;
+                            }
+                            else {
+                                title = NSLocalizedString(@"Unknown Error", @"");
+                                msg = NSLocalizedString(@"Something has gone wrong. Please check your internet connection and try again", @"");
+                            }
+                            
+                            UIAlertView* alert = [[UIAlertView alloc] initWithTitle: title
+                                                                            message: msg
+                                                                           delegate: nil
+                                                                  cancelButtonTitle: NSLocalizedString(@"OK", @"")
+                                                                  otherButtonTitles: nil];
+                            [alert show];
+                            
+                            self.nameField.enabled = YES;
+                            self.addButton.enabled = YES;
+                        }];
+        }
     }
 }
 
@@ -217,6 +261,35 @@
     self.entryTimeField.text = [NSDateFormatter localizedStringFromDate: now
                                                               dateStyle: NSDateFormatterNoStyle
                                                               timeStyle: NSDateFormatterShortStyle];
+    
+    if( self.participant ) {
+        self.nameField.text = self.participant.name;
+        self.companyField.text = self.participant.company;
+        self.affiliationField.text = self.participant.department;
+        self.participantSwitch.on = self.participant.participatingValue;
+        self.onTheDaySwitch.on = self.participant.on_the_dayValue;
+        self.proxySwitch.on = self.participant.by_proxyValue;
+        self.qrCodeField.text = self.participant.qrcode;
+        
+        if( self.participant.entryTime )
+            self.entryTimeField.text =[NSDateFormatter localizedStringFromDate: self.participant.entryTime
+                                                                     dateStyle: NSDateFormatterNoStyle
+                                                                     timeStyle: NSDateFormatterShortStyle];
+        else
+            self.entryTimeField.text = @"";
+        
+        if( self.participant.exitTime )
+            self.exitTimeField.text =[NSDateFormatter localizedStringFromDate: self.participant.exitTime
+                                                                    dateStyle: NSDateFormatterNoStyle
+                                                                    timeStyle: NSDateFormatterShortStyle];
+        else
+            self.exitTimeField.text = @"";
+        
+        self.exitTimeField.enabled = NO;
+        self.entryTimeField.enabled = NO;
+        
+        [self.addButton setTitle: NSLocalizedString(@"Update", @"") forState: UIControlStateNormal];
+    }
 }
 
 - (void)didReceiveMemoryWarning

@@ -85,6 +85,27 @@
     }
     
     _participant = participant;
+    
+    [self setSearch: NO];
+}
+
+- (void) setSearch: (BOOL) isSearch {
+    if( isSearch ) {
+        self.proxyLabel.hidden = YES;
+        self.proxySwitch.hidden = YES;
+        self.participantLabel.hidden = YES;
+        self.participantSwitch.hidden = YES;
+        self.onTheDayLabel.hidden = YES;
+        self.onTheDaySwitch.hidden = YES;
+    }
+    else {
+        self.proxyLabel.hidden = NO;
+        self.proxySwitch.hidden = NO;
+        self.participantLabel.hidden = NO;
+        self.participantSwitch.hidden = NO;
+        self.onTheDayLabel.hidden = NO;
+        self.onTheDaySwitch.hidden = NO;
+    }
 }
 
 - (IBAction)cellRightSwiped:(UISwipeGestureRecognizer *)sender {

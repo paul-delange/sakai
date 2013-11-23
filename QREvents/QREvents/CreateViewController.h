@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class Participant;
+
 @interface CreateViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -30,10 +32,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *entryTimeField;
 @property (weak, nonatomic) IBOutlet UITextField *exitTimeField;
 
-
-
 @property (copy, nonatomic) NSString* participantCode;
-
+@property (strong, nonatomic) Participant* participant;
 
 - (IBAction)addPushed:(id)sender;
 - (IBAction)participantValueChanged:(UISwitch *)sender;

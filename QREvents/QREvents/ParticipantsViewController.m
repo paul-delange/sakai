@@ -31,11 +31,14 @@
     BOOL _canResignSearchBar;
     
     __strong NSArray* _searchResults;
-    NSString* _participantCodeToPassOn;
     
     dispatch_source_t _refreshTimer;
     
     Event* _event;
+    
+    //Hold these temporarily to pass to outgoing segues
+    NSString* _participantCodeToPassOn;
+    __weak Participant* _participantToPassOn;
 }
 
 @property (strong, nonatomic) UISearchDisplayController* searchController;
@@ -299,6 +302,8 @@
     }
     
     [cell setParticipant: participant];
+    if( isSearch )
+        [cell setSearch: YES];
 }
 
 #pragma mark - NSObject
@@ -382,8 +387,15 @@
         if( [segue.identifier isEqualToString: kSegueCreate] ) {
             UINavigationController* navController = (UINavigationController*)segue.destinationViewController;
             CreateViewController* createVC = (CreateViewController*)navController.viewControllers.lastObject;
-            createVC.participantCode = _participantCodeToPassOn;
-            _participantCodeToPassOn = nil;
+            
+            if( _participantToPassOn ) {
+                createVC.participant = _participantToPassOn;
+                _participantToPassOn = nil;
+            }
+            else {
+                createVC.participantCode = _participantCodeToPassOn;
+                _participantCodeToPassOn = nil;
+            }
         }
         else if([segue.identifier isEqualToString: kSegueConnectModal] ) {
             
@@ -477,12 +489,28 @@
         cell = [self.tableView dequeueReusableCellWithIdentifier: kParticipantTableViewCellIdentifier];
     }
     
-    [self configureCell: (ParticipantTableViewCell*)cell atIndexPath: indexPath forSearch: tableView != self.tableView];
+    [self configureCell: (ParticipantTableViewCell*)cell
+            atIndexPath: indexPath
+              forSearch: tableView != self.tableView];
     
     return cell;
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if( tableView == self.tableView ) {
+        _participantToPassOn = [self.resultsController objectAtIndexPath: indexPath];
+        [self performSegueWithIdentifier: kSegueCreate sender: nil];
+    }
+    else {
+        Participant* participant = [_searchResults objectAtIndex: indexPath.row];
+        NSIndexPath* indexPath = [self.resultsController indexPathForObject: participant];
+        [self.tableView scrollToRowAtIndexPath: indexPath
+                              atScrollPosition: UITableViewScrollPositionTop
+                                      animated: YES];
+        
+        [self.searchController.searchBar resignFirstResponder];
+    }
+    
     [tableView deselectRowAtIndexPath: indexPath animated: YES];
 }
 
