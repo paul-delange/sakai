@@ -83,7 +83,7 @@
             self.participant.department = self.affiliationField.text;
             self.participant.on_the_dayValue = self.onTheDaySwitch.on;
             self.participant.by_proxyValue = self.proxySwitch.on;
-            self.participant.participatingValue = self.participantSwitch.on;
+            //self.participant.participatingValue = self.participantSwitch.on;
             
             NSString* path = [self.participant resourcePath];
             [manager putObject: self.participant
@@ -132,7 +132,7 @@
             newParticipant.on_the_dayValue = self.onTheDaySwitch.on;
             newParticipant.by_proxyValue = self.proxySwitch.on;
             newParticipant.qrcode = self.qrCodeField.text;
-            newParticipant.participatingValue = self.participantSwitch.on;
+            //newParticipant.participatingValue = self.participantSwitch.on;
             newParticipant.atama_moji = newParticipant.company.length > 0 ? [newParticipant.company substringToIndex: 1] : @"";
             
             
@@ -266,7 +266,7 @@
         self.nameField.text = self.participant.name;
         self.companyField.text = self.participant.company;
         self.affiliationField.text = self.participant.department;
-        self.participantSwitch.on = self.participant.participatingValue;
+        self.participantSwitch.on = [self.participant participatingValue];
         self.onTheDaySwitch.on = self.participant.on_the_dayValue;
         self.proxySwitch.on = self.participant.by_proxyValue;
         self.qrCodeField.text = self.participant.qrcode;

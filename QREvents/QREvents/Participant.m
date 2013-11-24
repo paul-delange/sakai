@@ -20,4 +20,8 @@
     return [eventPath stringByAppendingPathComponent: self.primaryKey];
 }
 
+- (BOOL) participatingValue {
+    return self.entryTime != nil && self.exitTime == nil;
+}
+
 @end

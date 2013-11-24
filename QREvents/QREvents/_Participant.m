@@ -12,7 +12,6 @@ const struct ParticipantAttributes ParticipantAttributes = {
 	.exitTime = @"exitTime",
 	.name = @"name",
 	.on_the_day = @"on_the_day",
-	.participating = @"participating",
 	.position = @"position",
 	.primaryKey = @"primaryKey",
 	.qrcode = @"qrcode",
@@ -59,11 +58,6 @@ const struct ParticipantFetchedProperties ParticipantFetchedProperties = {
 	}
 	if ([key isEqualToString:@"on_the_dayValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"on_the_day"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-		return keyPaths;
-	}
-	if ([key isEqualToString:@"participatingValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"participating"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 		return keyPaths;
 	}
@@ -162,32 +156,6 @@ const struct ParticipantFetchedProperties ParticipantFetchedProperties = {
 
 - (void)setPrimitiveOn_the_dayValue:(BOOL)value_ {
 	[self setPrimitiveOn_the_day:[NSNumber numberWithBool:value_]];
-}
-
-
-
-
-
-@dynamic participating;
-
-
-
-- (BOOL)participatingValue {
-	NSNumber *result = [self participating];
-	return [result boolValue];
-}
-
-- (void)setParticipatingValue:(BOOL)value_ {
-	[self setParticipating:[NSNumber numberWithBool:value_]];
-}
-
-- (BOOL)primitiveParticipatingValue {
-	NSNumber *result = [self primitiveParticipating];
-	return [result boolValue];
-}
-
-- (void)setPrimitiveParticipatingValue:(BOOL)value_ {
-	[self setPrimitiveParticipating:[NSNumber numberWithBool:value_]];
 }
 
 

@@ -74,7 +74,7 @@
     self.exitTimeLabel.text = [NSString stringWithFormat: NSLocalizedString(@"Exit: %@", @""), exitdatestring];
     self.onTheDaySwitch.on = participant.on_the_dayValue;
     self.proxySwitch.on = participant.by_proxyValue;
-    
+    self.participantSwitch.on = [participant participatingValue];
     
     if( participant.qrcode.length ) {
         self.qrcodeLabel.hidden = NO;

@@ -27,6 +27,9 @@
 #define kSegueSettingsPopover   @"SettingsSegue"
 #define kSegueCreate            @"CreateSegue"
 
+
+#define kResultsControllerDefaultPredicate [NSPredicate predicateWithFormat: @"primaryKey != nil"]
+
 @interface ParticipantsViewController () <UISearchBarDelegate, UISearchDisplayDelegate, NSFetchedResultsControllerDelegate> {
     BOOL _canResignSearchBar;
     
@@ -49,6 +52,40 @@
 @end
 
 @implementation ParticipantsViewController
+
+- (IBAction)filterChanged:(UISegmentedControl *)sender {
+    [self.searchController.searchBar resignFirstResponder];
+    
+    NSInteger selected = sender.selectedSegmentIndex;
+    
+    NSPredicate* def = kResultsControllerDefaultPredicate;
+    NSPredicate* predicate = nil;
+    switch (selected) {
+        case 1:
+            predicate = [NSPredicate predicateWithFormat: @"entryTime != nil AND exitTime = nil"];
+            break;
+        case 2:
+            predicate = [NSPredicate predicateWithFormat: @"on_the_day = YES"];
+            break;
+        case 3:
+            predicate = [NSPredicate predicateWithFormat: @"by_proxy = YES"];
+        default:
+            break;
+    }
+    
+    NSFetchRequest* request = self.resultsController.fetchRequest;
+    
+    if( predicate )
+        predicate = [NSCompoundPredicate andPredicateWithSubpredicates: @[def, predicate]];
+    else
+        predicate = def;
+    
+    [request setPredicate: predicate];
+    
+    NSError *error = nil;
+    [self.resultsController performFetch:&error];
+    [self.tableView reloadData];
+}
 
 - (IBAction) unwindCreate: (UIStoryboardSegue*)sender {
     [self dismissViewControllerAnimated: YES
@@ -80,7 +117,10 @@
 }
 
 - (IBAction) refreshPushed: (id)sender {
-    if(![self objectManager])
+    if(![self objectManager] ||                                 //Can't refresh
+        [self.searchController.searchBar isFirstResponder] ||     //Breaks search
+        [self.searchController isActive]
+       )
         return;
     
     [self.scanController dismissPopoverAnimated: YES];
@@ -100,6 +140,8 @@
                                 parameters: nil
                                    success: ^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
 //                                       //NSLog(@"Got: %@", [mappingResult array]);
+                                       
+                                       //TODO: There is a bug here if search is active...
                                        
                                        [self.navigationItem setRightBarButtonItems: @[self.settingsButton, self.codeButton, self.refreshButton, self.searchButton] animated: YES];
                                    } failure: ^(RKObjectRequestOperation *operation, NSError *error) {
@@ -149,7 +191,7 @@
         [cell.participantSwitch setOn: YES animated: YES];
         [cell.onTheDaySwitch setOn: NO animated: YES];
         participant.on_the_dayValue = NO;
-        participant.participatingValue = YES;
+        //participant.participatingValue = YES;
         if( !participant.entryTime ) {
             participant.entryTime = [NSDate date];
             participant.exitTime = nil;
@@ -182,7 +224,7 @@
         [cell.participantSwitch setOn: YES animated: YES];
         [cell.proxySwitch setOn: NO animated: YES];
         participant.by_proxyValue = NO;
-        participant.participatingValue = YES;
+        //participant.participatingValue = YES;
         if( !participant.entryTime ) {
             participant.entryTime = [NSDate date];
             participant.exitTime = nil;
@@ -223,7 +265,7 @@
         participant.exitTime = nil;
     }
     
-    participant.participatingValue = sender.on;
+    //participant.participatingValue = sender.on;
     
     [participant.managedObjectContext saveToPersistentStore: nil];
     NSString* path = [participant resourcePath];
@@ -271,7 +313,7 @@
             [fetchRequest setSortDescriptors: @[[NSSortDescriptor sortDescriptorWithKey: @"company" ascending: YES],    //Group by department
                                                 [NSSortDescriptor sortDescriptorWithKey: @"name" ascending: YES]]];         //Then alphabetically
             
-            [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"primaryKey != nil"]];   //TODO: change this to the event pointer
+            [fetchRequest setPredicate: kResultsControllerDefaultPredicate];   //TODO: change this to the event pointer
             
             _resultsController = [[NSFetchedResultsController alloc] initWithFetchRequest: fetchRequest
                                                                      managedObjectContext: context
@@ -342,6 +384,15 @@
     
     EventSummaryView* summaryView = [[EventSummaryView alloc] initWithFrame: CGRectMake(0, 0, 150, 44)];
     self.navigationItem.titleView = summaryView;
+    
+    NSString* participant = NSLocalizedString(@"Participant", @"sankasha");
+    NSString* ontheday = NSLocalizedString(@"On the Day", @"toujitsu");
+    NSString* proxy = NSLocalizedString(@"Representative", @"dairi");
+    
+    [self.filterSegmentedControl setTitle: NSLocalizedString(@"All", @"") forSegmentAtIndex: 0];
+    [self.filterSegmentedControl setTitle: participant forSegmentAtIndex: 1];
+    [self.filterSegmentedControl setTitle: ontheday forSegmentAtIndex: 2];
+    [self.filterSegmentedControl setTitle: proxy forSegmentAtIndex: 3];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -623,7 +674,9 @@
     [self.tableView endUpdates];
     
     Event* event = [Event currentEvent];
+    EventSummaryView* summaryView = (EventSummaryView*)self.navigationItem.titleView;
+    
+    
     
 }
-
 @end

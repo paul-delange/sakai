@@ -14,11 +14,12 @@
 @property (strong, nonatomic) IBOutlet UIBarButtonItem* codeButton;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem* refreshButton;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem* searchButton;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *filterSegmentedControl;
 
 - (IBAction)cameraTogglePushed:(id)sender;
 - (IBAction)proxyValueChanged:(UISwitch *)sender;
 - (IBAction)onTheDayValueChanged:(UISwitch *)sender;
 - (IBAction)participantValueChanged:(UISwitch *)sender;
-- (IBAction)cellRightSwiped:(UISwipeGestureRecognizer *)sender;
+- (IBAction)filterChanged:(UISegmentedControl *)sender;
 
 @end

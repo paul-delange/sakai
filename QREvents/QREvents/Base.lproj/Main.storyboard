@@ -526,9 +526,26 @@
                             <outlet property="delegate" destination="ug3-GS-11k" id="XiT-J0-DZl"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="wL0-qd-bXA"/>
+                    <navigationItem key="navigationItem" id="wL0-qd-bXA">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="On5-1x-Te7">
+                            <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="g16-Ds-Bo5">
+                                <rect key="frame" x="16" y="7" width="250" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="All"/>
+                                    <segment title="Second"/>
+                                    <segment title="On The Day"/>
+                                    <segment title="Proxy"/>
+                                </segments>
+                                <connections>
+                                    <action selector="filterChanged:" destination="ug3-GS-11k" eventType="valueChanged" id="k40-oE-cTG"/>
+                                </connections>
+                            </segmentedControl>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="codeButton" destination="vZE-xE-3mc" id="gqR-B3-MlF"/>
+                        <outlet property="filterSegmentedControl" destination="g16-Ds-Bo5" id="aKR-0U-L6s"/>
                         <outlet property="refreshButton" destination="9oJ-H9-7WV" id="W0h-WE-TUn"/>
                         <outlet property="searchButton" destination="N89-yr-h8X" id="oad-xl-t0h"/>
                         <outlet property="settingsButton" destination="RWH-hw-9qC" id="PT8-39-zV0"/>

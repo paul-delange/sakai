@@ -103,6 +103,7 @@
 }
 
 - (void) databaseSaved: (NSNotification*) notification {
+    NSLog(@"Saved");
     if( [NSThread isMainThread] ) {
         AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
         RKObjectManager* manager = [delegate objectManager];
@@ -112,7 +113,7 @@
         
         NSUInteger totalCount = [context countForFetchRequest: request error: nil];
         
-        [request setPredicate: [NSPredicate predicateWithFormat: @"entryTime > %@ AND exitTime < %@", [NSDate date], [NSDate date]]];
+        [request setPredicate: [NSPredicate predicateWithFormat: @"entryTime != nil AND exitTime = nil"]];//, [NSDate date], [NSDate date]]];
         
         NSUInteger activeCount = [context countForFetchRequest: request error: nil];
         
