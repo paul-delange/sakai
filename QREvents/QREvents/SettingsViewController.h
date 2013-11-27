@@ -10,6 +10,7 @@
 
 typedef enum {
     kSettingsTableCellTypeCreate = 0,
+    kSettingsTableCellTypeViewMode,
     kSettingsTableCellTypeReset,
     kSettingsTableCellTypeCount
 } kSettingsTableCellType;

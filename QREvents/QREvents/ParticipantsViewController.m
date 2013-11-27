@@ -194,8 +194,9 @@
         //participant.participatingValue = YES;
         if( !participant.entryTime ) {
             participant.entryTime = [NSDate date];
-            participant.exitTime = nil;
         }
+        
+        participant.exitTime = nil;
     }
     
     participant.by_proxyValue = sender.on;
@@ -227,8 +228,9 @@
         //participant.participatingValue = YES;
         if( !participant.entryTime ) {
             participant.entryTime = [NSDate date];
-            participant.exitTime = nil;
         }
+        
+        participant.exitTime = nil;
     }
     
     participant.on_the_dayValue = sender.on;
@@ -286,6 +288,10 @@
 }
 
 - (void) eventReset: (NSNotification*) notification {
+    
+    [[NSUserDefaults standardUserDefaults] setBool: NO forKey: kUserPreferenceViewModeKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
     _resultsController = nil;
     [self.settingsController dismissPopoverAnimated: YES];
     
@@ -428,6 +434,13 @@
                         [self performSegueWithIdentifier: kSegueCreate sender: nil];
                         break;
                     }
+                    case kSettingsTableCellTypeViewMode:
+                    {
+                        self.codeButton.enabled = ![[NSUserDefaults standardUserDefaults] boolForKey: kUserPreferenceViewModeKey];
+                        [self.tableView reloadData];
+                        
+                        break;
+                    }
                     default:
                         break;
                 }
@@ -549,8 +562,10 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if( tableView == self.tableView ) {
-        _participantToPassOn = [self.resultsController objectAtIndexPath: indexPath];
-        [self performSegueWithIdentifier: kSegueCreate sender: nil];
+        if( ![[NSUserDefaults standardUserDefaults] boolForKey: kUserPreferenceViewModeKey] ) {
+            _participantToPassOn = [self.resultsController objectAtIndexPath: indexPath];
+            [self performSegueWithIdentifier: kSegueCreate sender: nil];
+        }
     }
     else {
         Participant* participant = [_searchResults objectAtIndex: indexPath.row];

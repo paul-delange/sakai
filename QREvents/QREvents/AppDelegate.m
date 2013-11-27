@@ -15,6 +15,7 @@
 #import <RestKit/RKManagedObjectStore.h>
 
 NSString* kApplicationResetNotification =  @"ApplicationReset";
+NSString *const  kUserPreferenceViewModeKey = @"ViewMode";
 
 @implementation NSString (unicode)
 
@@ -42,6 +43,14 @@ NSString* kApplicationResetNotification =  @"ApplicationReset";
 @end
 
 @implementation AppDelegate
+
++ (void) initialize {
+    @autoreleasepool {
+        NSDictionary* default_prefs = @{ kUserPreferenceViewModeKey :  @NO };
+        [[NSUserDefaults standardUserDefaults] registerDefaults: default_prefs];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+}
 
 - (void) showConnectionViewController {
     PeekabooViewController* topLevelController = (PeekabooViewController*)self.window.rootViewController;

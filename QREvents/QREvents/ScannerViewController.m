@@ -220,9 +220,10 @@
 #endif
 
 - (BOOL) isValidEventCode: (NSString*) code {
+    return YES;/*
     NSUInteger length = [code length];
     BOOL containsHyphenCorrectly = [code characterAtIndex: 3] == '-';
-    return length == 8 && containsHyphenCorrectly;
+    return length == 8 && containsHyphenCorrectly;*/
 }
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED > __IPHONE_7_0

@@ -34,4 +34,7 @@
 
     #define kAppName()  ([[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"])
     #define kAppVersion() ([[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString*)kCFBundleVersionKey])
+
+    FOUNDATION_EXPORT  NSString *const  kUserPreferenceViewModeKey;
+
 #endif

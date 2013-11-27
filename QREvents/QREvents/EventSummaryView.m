@@ -54,14 +54,14 @@
     
     return self;
 }
-
+/*
 - (void) layoutSubviews {
     [super layoutSubviews];
     
     NSLog(@"Self: %@", NSStringFromCGRect(self.bounds));
     NSLog(@"Title: %@", NSStringFromCGRect(self.nameLabel.frame));
     NSLog(@"Sub: %@", NSStringFromCGRect(self.subtitleLabel.frame));
-}
+}*/
 
 - (void) setEvent:(Event *)event {
     
@@ -99,11 +99,11 @@
     else
         self.subtitleLabel.text = NSLocalizedString(@"No participants found", @"");
     
-    NSLog(@"Set %d/%d", active, total);
+    //NSLog(@"Set %d/%d", active, total);
 }
 
 - (void) databaseSaved: (NSNotification*) notification {
-    NSLog(@"Saved");
+    //NSLog(@"Saved");
     if( [NSThread isMainThread] ) {
         AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
         RKObjectManager* manager = [delegate objectManager];

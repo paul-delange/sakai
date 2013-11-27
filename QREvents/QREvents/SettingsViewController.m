@@ -58,6 +58,16 @@
         case kSettingsTableCellTypeReset:
             cell.textLabel.text = NSLocalizedString(@"Reset", @"");
             break;
+        case kSettingsTableCellTypeViewMode:
+        {
+            BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey: kUserPreferenceViewModeKey];
+            if( val )
+                cell.textLabel.text = NSLocalizedString(@"Exit View Mode", @"");
+            else
+                cell.textLabel.text = NSLocalizedString(@"Enter View Mode", @"");
+            
+            break;
+        }
         case kSettingsTableCellTypeCreate:
             cell.textLabel.text = NSLocalizedString(@"Add a participant", @"");
         default:
@@ -83,6 +93,23 @@
                                                   otherButtonTitles: NSLocalizedString(@"OK", @""), nil];
             alert.tag = kAlertViewTagConfirmReset;
             [alert show];
+            
+            break;
+        }
+        case kSettingsTableCellTypeViewMode:
+        {
+            BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey: kUserPreferenceViewModeKey];
+            val = !val;
+            
+            [[NSUserDefaults standardUserDefaults] setBool: val forKey: kUserPreferenceViewModeKey];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            if( self.dismiss ) {
+                self.dismiss(kSettingsTableCellTypeViewMode);
+            }
+            else {
+                [tableView reloadRowsAtIndexPaths: @[indexPath] withRowAnimation: UITableViewRowAnimationAutomatic];
+            }
             
             break;
         }

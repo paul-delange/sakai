@@ -84,6 +84,20 @@
         self.qrcodeLabel.hidden = YES;
     }
     
+    //NSLog(@"%@ vs. %@", participant.exitTime, [NSDate date]);
+    
+    if( [participant.exitTime timeIntervalSinceNow] < 0 ) {
+        self.backgroundColor = [UIColor colorWithWhite: 0.85 alpha: 1.0];
+    }
+    else {
+        self.backgroundColor = [UIColor clearColor];
+    }
+    
+    BOOL canUpdate = ![[NSUserDefaults standardUserDefaults] boolForKey: kUserPreferenceViewModeKey];
+    self.proxySwitch.enabled = canUpdate;
+    self.onTheDaySwitch.enabled = canUpdate;
+    self.participantSwitch.enabled=  canUpdate;
+    
     _participant = participant;
     
     [self setSearch: NO];
@@ -110,6 +124,7 @@
 
 - (IBAction)cellRightSwiped:(UISwipeGestureRecognizer *)sender {
     
+    if( ![[NSUserDefaults standardUserDefaults] boolForKey: kUserPreferenceViewModeKey] ) {
     _participant.exitTime = [NSDate date];
     
     [_participant.managedObjectContext saveToPersistentStore: nil];
@@ -119,7 +134,8 @@
                          parameters: nil
                             success: ^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                             } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-                            }]; 
+                            }];
+    }
 }
 
 

@@ -192,6 +192,16 @@
     }
 }
 
+- (IBAction) entryTimePickerValueChanged:(UIDatePicker*)sender {
+    NSDateFormatter* formatter = dateFormatters.count ? dateFormatters[0] : nil;
+    self.entryTimeField.text = [formatter stringFromDate: sender.date];
+}
+
+- (IBAction) exitTimePickerValueChanged:(UIDatePicker*)sender {
+    NSDateFormatter* formatter = dateFormatters.count ? dateFormatters[0] : nil;
+    self.exitTimeField.text = [formatter stringFromDate: sender.date];
+}
+
 #pragma mark - NSObject
 - (id) initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder: aDecoder];
@@ -204,7 +214,7 @@
         NSDate* date = [NSDate date];
         NSTimeZone* timezone = [NSTimeZone timeZoneForSecondsFromGMT: 0];
         
-        NSLog(@"Timezone: %@", timezone);
+        //NSLog(@"Timezone: %@", timezone);
         
         NSDateFormatter* localFormatter = [NSDateFormatter new];
         [localFormatter setDateFormat: format];
@@ -285,11 +295,29 @@
         else
             self.exitTimeField.text = @"";
         
-        self.exitTimeField.enabled = NO;
-        self.entryTimeField.enabled = NO;
+        //self.exitTimeField.enabled = NO;
+        //self.entryTimeField.enabled = NO;
         
         [self.addButton setTitle: NSLocalizedString(@"Update", @"") forState: UIControlStateNormal];
     }
+    
+    UIDatePicker* entryPicker = [UIDatePicker new];
+    entryPicker.datePickerMode = UIDatePickerModeTime;
+    entryPicker.timeZone = [NSTimeZone timeZoneForSecondsFromGMT: 0];
+    [entryPicker setDate: [NSDate date]];
+    entryPicker.locale = [NSLocale currentLocale];
+    [entryPicker addTarget: self action: @selector(entryTimePickerValueChanged:) forControlEvents: UIControlEventValueChanged];
+    
+    self.entryTimeField.inputView = entryPicker;
+    
+    UIDatePicker* exitPicker = [UIDatePicker new];
+    exitPicker.minimumDate = entryPicker.date;
+    exitPicker.datePickerMode = UIDatePickerModeTime;
+    exitPicker.timeZone = [NSTimeZone timeZoneForSecondsFromGMT: 0];
+    exitPicker.locale = [NSLocale currentLocale];
+    [exitPicker addTarget: self action: @selector(exitTimePickerValueChanged:) forControlEvents: UIControlEventValueChanged];
+    
+    self.exitTimeField.inputView = exitPicker;
 }
 
 - (void)didReceiveMemoryWarning
@@ -302,7 +330,8 @@
 - (BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSString* finalText = [textField.text stringByReplacingCharactersInRange: range withString: string];
     self.addButton.enabled = finalText.length > 1;
-    return YES;
+    
+    return (textField == self.entryTimeField || textField == self.exitTimeField ) ? NO : YES;
 }
 
 - (BOOL) textFieldShouldReturn:(UITextField *)textField {
