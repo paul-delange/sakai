@@ -261,7 +261,8 @@ NSString *const  kUserPreferenceViewModeKey = @"ViewMode";
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-    UINavigationController* navigationController = (UINavigationController*)self.window.rootViewController;
+    PeekabooViewController* rootController = (PeekabooViewController*)self.window.rootViewController;
+    UINavigationController* navigationController = (UINavigationController*)rootController.detailViewController;
     UIViewController* topLevelController = navigationController.viewControllers.lastObject;
     [topLevelController dismissViewControllerAnimated: NO completion: nil];
 }

@@ -61,6 +61,9 @@
     NSPredicate* def = kResultsControllerDefaultPredicate;
     NSPredicate* predicate = nil;
     switch (selected) {
+        case 0:
+            predicate = def;
+            break;
         case 1:
             predicate = [NSPredicate predicateWithFormat: @"entryTime != nil AND exitTime = nil"];
             break;
@@ -75,10 +78,8 @@
     
     NSFetchRequest* request = self.resultsController.fetchRequest;
     
-    if( predicate )
+    if( predicate != def)
         predicate = [NSCompoundPredicate andPredicateWithSubpredicates: @[def, predicate]];
-    else
-        predicate = def;
     
     [request setPredicate: predicate];
     
@@ -688,8 +689,8 @@
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     [self.tableView endUpdates];
     
-    Event* event = [Event currentEvent];
-    EventSummaryView* summaryView = (EventSummaryView*)self.navigationItem.titleView;
+    //Event* event = [Event currentEvent];
+    //EventSummaryView* summaryView = (EventSummaryView*)self.navigationItem.titleView;
     
     
     

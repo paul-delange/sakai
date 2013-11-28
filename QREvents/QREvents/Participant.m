@@ -21,7 +21,7 @@
 }
 
 - (BOOL) participatingValue {
-    return self.entryTime != nil && self.exitTime == nil;
+    return self.entryTime != nil;
 }
 
 @end

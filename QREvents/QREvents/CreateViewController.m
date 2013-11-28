@@ -63,7 +63,7 @@
 - (IBAction)proxyValueChanged:(UISwitch *)sender {
     if( sender.on ) {
         [self.participantSwitch setOn: YES animated: YES];
-        [self.onTheDaySwitch setOn: YES animated: YES];
+        [self.onTheDaySwitch setOn: NO animated: YES];
     }
 }
 
