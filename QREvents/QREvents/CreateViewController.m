@@ -58,6 +58,8 @@
         [self.participantSwitch setOn: YES animated: YES];
         [self.proxySwitch setOn: NO animated: YES];
     }
+    
+    self.addButton.enabled = YES;
 }
 
 - (IBAction)proxyValueChanged:(UISwitch *)sender {
@@ -65,6 +67,8 @@
         [self.participantSwitch setOn: YES animated: YES];
         [self.onTheDaySwitch setOn: NO animated: YES];
     }
+    
+    self.addButton.enabled = YES;
 }
 
 - (IBAction)addPushed:(id)sender {
@@ -190,16 +194,22 @@
         [self.onTheDaySwitch setOn: NO animated: YES];
         [self.proxySwitch setOn: NO animated: YES];
     }
+    
+    self.addButton.enabled = YES;
 }
 
 - (IBAction) entryTimePickerValueChanged:(UIDatePicker*)sender {
     NSDateFormatter* formatter = dateFormatters.count ? dateFormatters[0] : nil;
     self.entryTimeField.text = [formatter stringFromDate: sender.date];
+    
+    self.addButton.enabled = YES;
 }
 
 - (IBAction) exitTimePickerValueChanged:(UIDatePicker*)sender {
     NSDateFormatter* formatter = dateFormatters.count ? dateFormatters[0] : nil;
     self.exitTimeField.text = [formatter stringFromDate: sender.date];
+    
+    self.addButton.enabled = YES;
 }
 
 #pragma mark - NSObject
