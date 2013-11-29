@@ -87,6 +87,7 @@
             self.participant.department = self.affiliationField.text;
             self.participant.on_the_dayValue = self.onTheDaySwitch.on;
             self.participant.by_proxyValue = self.proxySwitch.on;
+            
             //self.participant.participatingValue = self.participantSwitch.on;
             
             NSString* path = [self.participant resourcePath];
@@ -201,14 +202,14 @@
 - (IBAction) entryTimePickerValueChanged:(UIDatePicker*)sender {
     NSDateFormatter* formatter = dateFormatters.count ? dateFormatters[0] : nil;
     self.entryTimeField.text = [formatter stringFromDate: sender.date];
-    
+    self.participant.entryTime = sender.date;
     self.addButton.enabled = YES;
 }
 
 - (IBAction) exitTimePickerValueChanged:(UIDatePicker*)sender {
     NSDateFormatter* formatter = dateFormatters.count ? dateFormatters[0] : nil;
     self.exitTimeField.text = [formatter stringFromDate: sender.date];
-    
+    self.participant.exitTime = sender.date;
     self.addButton.enabled = YES;
 }
 
@@ -222,7 +223,7 @@
         NSLog(@"Local date format: %@", format);
         
         NSDate* date = [NSDate date];
-        NSTimeZone* timezone = [NSTimeZone timeZoneForSecondsFromGMT: 0];
+        //NSTimeZone* timezone = [NSTimeZone timeZoneForSecondsFromGMT: 0];
         
         //NSLog(@"Timezone: %@", timezone);
         
@@ -230,13 +231,13 @@
         [localFormatter setDateFormat: format];
         [localFormatter setLocale: [NSLocale currentLocale]];
         [localFormatter setDefaultDate: date];
-        [localFormatter setTimeZone: timezone];
+        //[localFormatter setTimeZone: timezone];
         
         NSDateFormatter* timeFormatter = [NSDateFormatter new];
         [timeFormatter setDateFormat: @"hh:mm"];
         [timeFormatter setLenient: YES];
         [timeFormatter setDefaultDate: date];
-        [timeFormatter setTimeZone: timezone];
+        //[timeFormatter setTimeZone: timezone];
         
         NSLog(@"Time date format: %@", [timeFormatter dateFormat]);
         
@@ -313,7 +314,7 @@
     
     UIDatePicker* entryPicker = [UIDatePicker new];
     entryPicker.datePickerMode = UIDatePickerModeTime;
-    entryPicker.timeZone = [NSTimeZone timeZoneForSecondsFromGMT: 0];
+   // entryPicker.timeZone = [NSTimeZone timeZoneForSecondsFromGMT: 0];
     [entryPicker setDate: [NSDate date]];
     entryPicker.locale = [NSLocale currentLocale];
     [entryPicker addTarget: self action: @selector(entryTimePickerValueChanged:) forControlEvents: UIControlEventValueChanged];
@@ -323,7 +324,7 @@
     UIDatePicker* exitPicker = [UIDatePicker new];
     exitPicker.minimumDate = entryPicker.date;
     exitPicker.datePickerMode = UIDatePickerModeTime;
-    exitPicker.timeZone = [NSTimeZone timeZoneForSecondsFromGMT: 0];
+    //exitPicker.timeZone = [NSTimeZone timeZoneForSecondsFromGMT: 0];
     exitPicker.locale = [NSLocale currentLocale];
     [exitPicker addTarget: self action: @selector(exitTimePickerValueChanged:) forControlEvents: UIControlEventValueChanged];
     

@@ -27,7 +27,6 @@
 #define kSegueSettingsPopover   @"SettingsSegue"
 #define kSegueCreate            @"CreateSegue"
 
-
 #define kResultsControllerDefaultPredicate [NSPredicate predicateWithFormat: @"primaryKey != nil"]
 
 @interface ParticipantsViewController () <UISearchBarDelegate, UISearchDisplayDelegate, NSFetchedResultsControllerDelegate> {

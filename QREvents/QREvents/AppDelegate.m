@@ -17,31 +17,6 @@
 NSString* kApplicationResetNotification =  @"ApplicationReset";
 NSString *const  kUserPreferenceViewModeKey = @"ViewMode";
 
-@implementation NSString (unicode)
-
-- (NSString *) escapedUnicode
-{
-    NSMutableString *uniString = [ [ NSMutableString alloc ] init ];
-    UniChar *uniBuffer = (UniChar *) malloc ( sizeof(UniChar) * [ self length ] );
-    CFRange stringRange = CFRangeMake ( 0, [ self length ] );
-    
-    CFStringGetCharacters ( (CFStringRef)self, stringRange, uniBuffer );
-    
-    for ( int i = 0; i < [ self length ]; i++ ) {
-        if ( uniBuffer[i] > 0x7e )
-            [ uniString appendFormat: @"\\u%04x", uniBuffer[i] ];
-        else
-            [ uniString appendFormat: @"%c", uniBuffer[i] ];
-    }
-    
-    free ( uniBuffer );
-    
-    return [ NSString stringWithString: uniString ];
-    
-}
-
-@end
-
 @implementation AppDelegate
 
 + (void) initialize {
@@ -206,7 +181,7 @@ NSString *const  kUserPreferenceViewModeKey = @"ViewMode";
                                                                                    objectClass: [Participant class]
                                                                                    rootKeyPath: nil
                                                                                         method: RKRequestMethodPOST];
-        RKResponseDescriptor* updateResponse = [RKResponseDescriptor responseDescriptorWithMapping: postMapping
+        RKResponseDescriptor* updateResponse = [RKResponseDescriptor responseDescriptorWithMapping: getMapping
                                                                                             method: RKRequestMethodPUT
                                                                                        pathPattern: kWebServiceIndividualPath
                                                                                            keyPath: nil

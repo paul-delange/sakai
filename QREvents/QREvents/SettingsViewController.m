@@ -69,7 +69,7 @@
             break;
         }
         case kSettingsTableCellTypeCreate:
-            cell.textLabel.text = NSLocalizedString(@"Add a participant", @"");
+            cell.textLabel.text = NSLocalizedString(@"Add a Participant", @"");
         default:
             break;
     }
