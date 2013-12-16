@@ -84,6 +84,7 @@
             case -1012:
                 title = @"SSL Failure";
                 msg = @"SSL handshake has failed, this is usually due to a proxy server interrupting the request. Perhaps try with http?";
+                break;
             default:
                 msg = [NSString stringWithFormat: format, kAppVersion(), kAppName(), error.code];
                 break;
@@ -257,7 +258,7 @@
     self.connectButton.enabled = YES;
 #else
 #if DEBUG
-    self.serverURLField.text = @"http://api.qrevents.com";
+    self.serverURLField.text = @"http://api2.qrevents.com";
     self.connectButton.enabled = YES;
 #endif
 #endif

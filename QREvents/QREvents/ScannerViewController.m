@@ -89,6 +89,14 @@
         [self setCaptureDevice: _backCamera];
     }
 #endif
+    
+    //stop them changing the camera too fast...
+    sender.enabled = NO;
+    double delayInSeconds = 0.25;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        sender.enabled = YES;
+    });
 }
 
 #pragma mark - UIViewController
@@ -165,6 +173,11 @@
     
     [self setCaptureDevice: defaultDevice];
     
+    if( defaultDevice.position == AVCaptureDevicePositionBack )
+        self.cameraToggle.on = YES;
+    else
+        self.cameraToggle.on = NO;
+    
 #endif
     
     [self.view addConstraint: [NSLayoutConstraint constraintWithItem: self.readerView
@@ -232,6 +245,7 @@
 #else
 #pragma mark - ZBarReaderViewDelegate
     - (void) readerViewDidStart: (ZBarReaderView*) readerView {
+        NSLog(@"Start");
         [self.activityIndicator stopAnimating];
     }
     
@@ -316,6 +330,8 @@
                                                                                       _capturedImageView.alpha = 0.f;
                                                                                   } completion:^(BOOL finished) {
                                                                                       [_capturedImageView removeFromSuperview];
+                                                                                      [self.activityIndicator stopAnimating];
+                                                                                      
                                                                                       _canScanEventCode = YES;
                                                                                   }];
                                                               } failure: ^(RKObjectRequestOperation *operation, NSError *error) {
@@ -339,9 +355,15 @@
                                                                                       [_capturedImageView removeFromSuperview];
                                                                                       _canScanEventCode = YES;
                                                                                   }];
+                                                                  
+                                                                  [_capturedImageView removeFromSuperview];
+                                                                  [self.activityIndicator stopAnimating];
                                                               }];
                                          }
                                          else {
+                                             [_capturedImageView removeFromSuperview];
+                                             [self.activityIndicator stopAnimating];
+                                             
                                              _participantCode = stringValue;
                                              NSString* title = NSLocalizedString(@"Unknown Particpant code", @"");
                                              NSString* msg = NSLocalizedString(@"This participant could not be found in this event. Would you like to manually add them?", @"");

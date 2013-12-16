@@ -229,7 +229,7 @@
         
         NSDateFormatter* localFormatter = [NSDateFormatter new];
         [localFormatter setDateFormat: format];
-        [localFormatter setLocale: [NSLocale currentLocale]];
+        //[localFormatter setLocale: [NSLocale currentLocale]];
         [localFormatter setDefaultDate: date];
         //[localFormatter setTimeZone: timezone];
         
@@ -316,7 +316,7 @@
     entryPicker.datePickerMode = UIDatePickerModeTime;
    // entryPicker.timeZone = [NSTimeZone timeZoneForSecondsFromGMT: 0];
     [entryPicker setDate: [NSDate date]];
-    entryPicker.locale = [NSLocale currentLocale];
+    //entryPicker.locale = [NSLocale currentLocale];
     [entryPicker addTarget: self action: @selector(entryTimePickerValueChanged:) forControlEvents: UIControlEventValueChanged];
     
     self.entryTimeField.inputView = entryPicker;
@@ -325,7 +325,7 @@
     exitPicker.minimumDate = entryPicker.date;
     exitPicker.datePickerMode = UIDatePickerModeTime;
     //exitPicker.timeZone = [NSTimeZone timeZoneForSecondsFromGMT: 0];
-    exitPicker.locale = [NSLocale currentLocale];
+    //exitPicker.locale = [NSLocale currentLocale];
     [exitPicker addTarget: self action: @selector(exitTimePickerValueChanged:) forControlEvents: UIControlEventValueChanged];
     
     self.exitTimeField.inputView = exitPicker;

@@ -46,7 +46,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="etQ-rb-Kao">
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="etQ-rb-Kao">
                                 <rect key="frame" x="374" y="382" width="20" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
@@ -68,7 +68,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="activityIndicator" destination="etQ-rb-Kao" id="Pqx-aG-pyN"/>
+                        <outlet property="activityIndicator" destination="etQ-rb-Kao" id="Jvr-SB-Uyj"/>
                         <outlet property="backLabel" destination="OsK-uh-fcC" id="HF4-YX-2Gs"/>
                         <outlet property="cameraToggle" destination="LWr-Dg-rQW" id="PM7-eq-dgC"/>
                         <outlet property="frontLabel" destination="QTg-d1-yTk" id="CiL-FF-cOp"/>

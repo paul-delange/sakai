@@ -137,8 +137,11 @@
 - (void) viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     
-    self.masterViewController.view.frame = [self frameForMasterViewController];
-    self.detailViewController.view.frame = [self frameForDetailViewController];
+    if( self.masterViewController.isViewLoaded )
+        self.masterViewController.view.frame = [self frameForMasterViewController];
+    
+    if( self.detailViewController.isViewLoaded )
+        self.detailViewController.view.frame = [self frameForDetailViewController];
 }
 
 #pragma mark - KVO

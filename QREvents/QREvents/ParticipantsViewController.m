@@ -77,7 +77,7 @@
     
     NSFetchRequest* request = self.resultsController.fetchRequest;
     
-    if( predicate != def)
+    if( predicate != def && predicate != nil)
         predicate = [NSCompoundPredicate andPredicateWithSubpredicates: @[def, predicate]];
     
     [request setPredicate: predicate];
@@ -309,6 +309,16 @@
     [self.tableView reloadData];
 }
 
+- (IBAction) cellDoubleTapped:(UITapGestureRecognizer*)sender {
+    UITableViewCell* cell = (UITableViewCell*)[sender view];
+    NSIndexPath* indexPath = [self.tableView indexPathForCell: cell];
+    
+    if( ![[NSUserDefaults standardUserDefaults] boolForKey: kUserPreferenceViewModeKey] ) {
+        _participantToPassOn = [self.resultsController objectAtIndexPath: indexPath];
+        [self performSegueWithIdentifier: kSegueCreate sender: nil];
+    }
+}
+
 - (NSFetchedResultsController*) resultsController {
     if( !_resultsController ) {
         if( [self objectManager] ) {
@@ -352,6 +362,8 @@
     [cell setParticipant: participant];
     if( isSearch )
         [cell setSearch: YES];
+    
+    [cell setDoubleTapGestureRecognizer: self selector: @selector(cellDoubleTapped:)];
 }
 
 #pragma mark - NSObject
@@ -530,7 +542,7 @@
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 80.f;
+    return 90.f;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -562,10 +574,7 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if( tableView == self.tableView ) {
-        if( ![[NSUserDefaults standardUserDefaults] boolForKey: kUserPreferenceViewModeKey] ) {
-            _participantToPassOn = [self.resultsController objectAtIndexPath: indexPath];
-            [self performSegueWithIdentifier: kSegueCreate sender: nil];
-        }
+
     }
     else {
         Participant* participant = [_searchResults objectAtIndex: indexPath.row];

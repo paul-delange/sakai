@@ -27,4 +27,8 @@
 - (void) setParticipant: (Participant*) participant;
 - (void) setSearch: (BOOL) isSearch;
 
+- (void) setDoubleTapGestureRecognizer: (id) target selector: (SEL) selector;
+- (UITapGestureRecognizer*) doubleTapGestureRecognizer;
+
+
 @end

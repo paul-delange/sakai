@@ -39,6 +39,10 @@
                                                                                 action:@selector(cellRightSwiped:)];
     swipe.direction = UISwipeGestureRecognizerDirectionRight;
     [self addGestureRecognizer: swipe];
+    
+    self.participantSwitch.transform = CGAffineTransformMakeScale(1.4, 1.4);
+    self.onTheDaySwitch.transform = CGAffineTransformMakeScale(1.4, 1.4);
+    self.proxySwitch.transform = CGAffineTransformMakeScale(1.4, 1.4);
 }
 
 - (void) setParticipant: (Participant*) participant {
@@ -120,6 +124,31 @@
         self.onTheDayLabel.hidden = NO;
         self.onTheDaySwitch.hidden = NO;
     }
+}
+
+- (void) setDoubleTapGestureRecognizer: (id) target selector: (SEL) selector {
+    
+    UITapGestureRecognizer* tap = [self doubleTapGestureRecognizer];
+    if( tap )
+        [self removeGestureRecognizer: tap];
+    
+    tap = [[UITapGestureRecognizer alloc] initWithTarget: target action: selector];
+    tap.cancelsTouchesInView = NO;
+    tap.delaysTouchesBegan = YES;
+    tap.numberOfTapsRequired = 2;
+    [self addGestureRecognizer: tap];
+}
+
+- (UITapGestureRecognizer*) doubleTapGestureRecognizer {
+    for(UIGestureRecognizer* gr in self.gestureRecognizers) {
+        if( [gr isKindOfClass: [UITapGestureRecognizer class]] ) {
+            UITapGestureRecognizer* tap = (UITapGestureRecognizer*)gr;
+            if( tap.numberOfTapsRequired == 2 )
+                return tap;
+        }
+    }
+    
+    return nil;
 }
 
 - (IBAction)cellRightSwiped:(UISwipeGestureRecognizer *)sender {
