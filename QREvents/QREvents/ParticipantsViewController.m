@@ -337,7 +337,7 @@
 }
 
 - (void) configureCell: (ParticipantTableViewCell*) cell atIndexPath: (NSIndexPath*) indexPath forSearch: (BOOL) isSearch {
-    NSParameterAssert([cell isKindOfClass: [ParticipantTableViewCell class]]);
+    //NSParameterAssert([cell isKindOfClass: [ParticipantTableViewCell class]]);
     
     Participant* participant;
     
