@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		99D816AA18796FC40097B462 /* qrevents-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 99D816A918796FC40097B462 /* qrevents-logo.png */; };
+		99D816AC187973540097B462 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 99D816AB187973540097B462 /* background.png */; };
 		FD0E457E180571B800EBE0E0 /* PeekabooViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0E457D180571B800EBE0E0 /* PeekabooViewController.m */; };
 		FD1D3E30180D63E200813405 /* EventSummaryView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1D3E2F180D63E200813405 /* EventSummaryView.m */; };
 		FD20D93517F40AAD003DBBBE /* ConnectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD20D93417F40AAD003DBBBE /* ConnectViewController.m */; };
@@ -71,6 +73,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		99D816A918796FC40097B462 /* qrevents-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "qrevents-logo.png"; path = "QREvents/qrevents-logo.png"; sourceTree = "<group>"; };
+		99D816AB187973540097B462 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = background.png; path = "../../../../../Dropbox/Chesterford/project/01-Logo/01-QREvents/png/font_white/background.png"; sourceTree = "<group>"; };
 		FD0E457C180571B800EBE0E0 /* PeekabooViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeekabooViewController.h; sourceTree = "<group>"; };
 		FD0E457D180571B800EBE0E0 /* PeekabooViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeekabooViewController.m; sourceTree = "<group>"; };
 		FD1D3E2E180D63E200813405 /* EventSummaryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventSummaryView.h; sourceTree = "<group>"; };
@@ -182,6 +186,7 @@
 		FD2B32B117F2B7F2002E87A8 = {
 			isa = PBXGroup;
 			children = (
+				99D816A918796FC40097B462 /* qrevents-logo.png */,
 				FDB6EEB9184106B20087DE56 /* wwdc-sample-event.png */,
 				FDEA613317FBF5F200FB169C /* qrevents_app.pptx.pdf */,
 				FD2B32C317F2B7F2002E87A8 /* QREvents */,
@@ -305,6 +310,7 @@
 				FD2B32C617F2B7F2002E87A8 /* InfoPlist.strings */,
 				FD2B32D517F2B7F2002E87A8 /* Images.xcassets */,
 				FD2B32CF17F2B7F2002E87A8 /* Main.storyboard */,
+				99D816AB187973540097B462 /* background.png */,
 				FD6DF4D217F2BB4100E708A9 /* Model.xcdatamodeld */,
 			);
 			name = Resources;
@@ -406,7 +412,7 @@
 				ORGANIZATIONNAME = "Toshimoto Sakai";
 				TargetAttributes = {
 					FD2B32B917F2B7F2002E87A8 = {
-						DevelopmentTeam = A92NV6XM6Q;
+						DevelopmentTeam = 438BDLB9WG;
 						SystemCapabilities = {
 							com.apple.DataProtection = {
 								enabled = 0;
@@ -444,6 +450,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD2B32D617F2B7F2002E87A8 /* Images.xcassets in Resources */,
+				99D816AC187973540097B462 /* background.png in Resources */,
 				FDF863DE183A46BE000219B5 /* TSAlertViewMessageListViewShadow.png in Resources */,
 				FD2B32C817F2B7F2002E87A8 /* InfoPlist.strings in Resources */,
 				FDF863DB183A46BE000219B5 /* TSAlertViewButtonBackground_Highlighted.png in Resources */,
@@ -452,6 +459,7 @@
 				FDF863DD183A46BE000219B5 /* TSAlertViewCancelButtonBackground.png in Resources */,
 				FDF863DC183A46BE000219B5 /* TSAlertViewButtonBackground.png in Resources */,
 				FD2B32D117F2B7F2002E87A8 /* Main.storyboard in Resources */,
+				99D816AA18796FC40097B462 /* qrevents-logo.png in Resources */,
 				FDF863DA183A46BE000219B5 /* TSAlertViewBackground2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
