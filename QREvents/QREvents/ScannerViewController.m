@@ -268,26 +268,40 @@
                     [self.activityIndicator startAnimating];
                     
                     UIImageView* imageView = [[UIImageView alloc] initWithImage: image];
-                    imageView.frame = self.view.bounds;
+                    imageView.frame = self.readerView.frame;
                     imageView.layer.shadowColor = [UIColor blackColor].CGColor;
                     imageView.layer.shadowOffset = CGSizeMake(2.f, 2.f);
                     imageView.layer.shadowRadius = 5.f;
                     imageView.layer.shadowOpacity = 1.f;
+                    imageView.translatesAutoresizingMaskIntoConstraints = NO;
                     
-                    [self.view addSubview: imageView];
+                    [self.readerView addSubview: imageView];
                     _capturedImageView = imageView;
+                    
+                    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"V:|-[imageView]-|"
+                                                                                       options: 0
+                                                                                       metrics: nil
+                                                                                         views: NSDictionaryOfVariableBindings(imageView)]];
+                    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"H:|-[imageView]-|"
+                                                                                       options: 0
+                                                                                       metrics: nil
+                                                                                         views: NSDictionaryOfVariableBindings(imageView)]];
                     
                     [UIView animateWithDuration: [UIApplication sharedApplication].statusBarOrientationAnimationDuration
                                           delay: 0
                                         options: UIViewAnimationOptionCurveEaseOut
                                      animations: ^{
-                                         const CGFloat reducedSizePercent = 0.9;
+                                         /*
+                                         //Request 2 sakai-san 1/5/2014 (was 0.9)
+                                         const CGFloat reducedSizePercent = 1.0;
+                                         
                                          const CGFloat width = reducedSizePercent * CGRectGetWidth(imageView.frame);
                                          const CGFloat height = reducedSizePercent * CGRectGetHeight(imageView.frame);
                                          const CGFloat x = (CGRectGetWidth(imageView.frame) - width) / 2.f;
                                          const CGFloat y = (CGRectGetHeight(imageView.frame) - height) / 2.f;
                                          
                                          imageView.frame = CGRectMake(x, y, width, height);
+                                          */
                                      } completion: ^(BOOL finished) {
                                          NSString* eventCode = [stringValue substringToIndex: 3];
                                          NSString* participantCode = [stringValue substringFromIndex: 4];
@@ -317,6 +331,10 @@
                                              [context saveToPersistentStore: &error];
                                              NSAssert(!error, @"Error updating particpant: %@", error);
                                              
+                                             //Request 3-1 sakai-san 1/5/2014
+                                             self.scannedPersonLabel.text = participant.name;
+                                             self.scannedPersonLabel.alpha = 1;
+                                             
                                              NSString* path = [participant resourcePath];
                                              [objectManager putObject: participant
                                                                  path: path
@@ -328,6 +346,8 @@
                                                                                      options: UIViewAnimationOptionCurveEaseIn
                                                                                   animations: ^{
                                                                                       _capturedImageView.alpha = 0.f;
+                                                                                      self.scannedPersonLabel.alpha = 0.f;
+                                                                                      
                                                                                   } completion:^(BOOL finished) {
                                                                                       [_capturedImageView removeFromSuperview];
                                                                                       [self.activityIndicator stopAnimating];
@@ -351,6 +371,7 @@
                                                                                      options: UIViewAnimationOptionCurveEaseIn
                                                                                   animations: ^{
                                                                                       _capturedImageView.alpha = 0.f;
+                                                                                      self.scannedPersonLabel.alpha = 0.f;
                                                                                   } completion:^(BOOL finished) {
                                                                                       [_capturedImageView removeFromSuperview];
                                                                                       _canScanEventCode = YES;
