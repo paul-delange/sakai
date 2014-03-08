@@ -19,6 +19,13 @@
 		FD3A30F618CB642F002B6990 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3A30DE18CB642F002B6990 /* UIKit.framework */; };
 		FD3A30FE18CB642F002B6990 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FD3A30FC18CB642F002B6990 /* InfoPlist.strings */; };
 		FD3A310018CB642F002B6990 /* pm25Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3A30FF18CB642F002B6990 /* pm25Tests.m */; };
+		FD6C925618CB6CAF005D28A3 /* AppContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C925518CB6CAF005D28A3 /* AppContainerViewController.m */; };
+		FD6C925818CB6CD3005D28A3 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD6C925718CB6CD3005D28A3 /* Interface.storyboard */; };
+		FD6C925B18CB6CFC005D28A3 /* CurrentLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C925A18CB6CFC005D28A3 /* CurrentLocationViewController.m */; };
+		FD6C925E18CB6D06005D28A3 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C925D18CB6D06005D28A3 /* MapViewController.m */; };
+		FD6C926118CB6D0F005D28A3 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C926018CB6D0F005D28A3 /* SettingsViewController.m */; };
+		FD6C926418CB7149005D28A3 /* PhotoGrabber.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C926318CB7149005D28A3 /* PhotoGrabber.m */; };
+		FD6C926718CBCEC8005D28A3 /* AppMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C926618CBCEC8005D28A3 /* AppMenuItem.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +55,19 @@
 		FD3A30FB18CB642F002B6990 /* pm25Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "pm25Tests-Info.plist"; sourceTree = "<group>"; };
 		FD3A30FD18CB642F002B6990 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FD3A30FF18CB642F002B6990 /* pm25Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = pm25Tests.m; sourceTree = "<group>"; };
+		FD6C925418CB6CAF005D28A3 /* AppContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppContainerViewController.h; sourceTree = "<group>"; };
+		FD6C925518CB6CAF005D28A3 /* AppContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppContainerViewController.m; sourceTree = "<group>"; };
+		FD6C925718CB6CD3005D28A3 /* Interface.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Interface.storyboard; sourceTree = "<group>"; };
+		FD6C925918CB6CFC005D28A3 /* CurrentLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentLocationViewController.h; sourceTree = "<group>"; };
+		FD6C925A18CB6CFC005D28A3 /* CurrentLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrentLocationViewController.m; sourceTree = "<group>"; };
+		FD6C925C18CB6D06005D28A3 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		FD6C925D18CB6D06005D28A3 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
+		FD6C925F18CB6D0F005D28A3 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		FD6C926018CB6D0F005D28A3 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		FD6C926218CB7149005D28A3 /* PhotoGrabber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoGrabber.h; sourceTree = "<group>"; };
+		FD6C926318CB7149005D28A3 /* PhotoGrabber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoGrabber.m; sourceTree = "<group>"; };
+		FD6C926518CBCEC8005D28A3 /* AppMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppMenuItem.h; sourceTree = "<group>"; };
+		FD6C926618CBCEC8005D28A3 /* AppMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppMenuItem.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +98,7 @@
 			isa = PBXGroup;
 			children = (
 				FD3A30E018CB642F002B6990 /* Code */,
+				FD3A310C18CB64D1002B6990 /* Resources */,
 				FD3A30F918CB642F002B6990 /* pm25Tests */,
 				FD3A30D918CB642F002B6990 /* Frameworks */,
 				FD3A30D818CB642F002B6990 /* Products */,
@@ -107,7 +128,6 @@
 		FD3A30E018CB642F002B6990 /* Code */ = {
 			isa = PBXGroup;
 			children = (
-				FD3A310C18CB64D1002B6990 /* Resources */,
 				FD3A30E818CB642F002B6990 /* pm25-Prefix.pch */,
 				FD3A30E618CB642F002B6990 /* main.m */,
 				FD3A310B18CB6486002B6990 /* Models */,
@@ -141,6 +161,14 @@
 			children = (
 				FD3A30E918CB642F002B6990 /* AppDelegate.h */,
 				FD3A30EA18CB642F002B6990 /* AppDelegate.m */,
+				FD6C925418CB6CAF005D28A3 /* AppContainerViewController.h */,
+				FD6C925518CB6CAF005D28A3 /* AppContainerViewController.m */,
+				FD6C925918CB6CFC005D28A3 /* CurrentLocationViewController.h */,
+				FD6C925A18CB6CFC005D28A3 /* CurrentLocationViewController.m */,
+				FD6C925C18CB6D06005D28A3 /* MapViewController.h */,
+				FD6C925D18CB6D06005D28A3 /* MapViewController.m */,
+				FD6C925F18CB6D0F005D28A3 /* SettingsViewController.h */,
+				FD6C926018CB6D0F005D28A3 /* SettingsViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -155,6 +183,10 @@
 		FD3A310B18CB6486002B6990 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				FD6C926218CB7149005D28A3 /* PhotoGrabber.h */,
+				FD6C926318CB7149005D28A3 /* PhotoGrabber.m */,
+				FD6C926518CBCEC8005D28A3 /* AppMenuItem.h */,
+				FD6C926618CBCEC8005D28A3 /* AppMenuItem.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -165,8 +197,10 @@
 				FD3A30E218CB642F002B6990 /* pm25-Info.plist */,
 				FD3A30E318CB642F002B6990 /* InfoPlist.strings */,
 				FD3A30EC18CB642F002B6990 /* Images.xcassets */,
+				FD6C925718CB6CD3005D28A3 /* Interface.storyboard */,
 			);
 			name = Resources;
+			path = pm25;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -245,6 +279,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD3A30E518CB642F002B6990 /* InfoPlist.strings in Resources */,
+				FD6C925818CB6CD3005D28A3 /* Interface.storyboard in Resources */,
 				FD3A30ED18CB642F002B6990 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -265,6 +300,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD3A30EB18CB642F002B6990 /* AppDelegate.m in Sources */,
+				FD6C925B18CB6CFC005D28A3 /* CurrentLocationViewController.m in Sources */,
+				FD6C926418CB7149005D28A3 /* PhotoGrabber.m in Sources */,
+				FD6C925E18CB6D06005D28A3 /* MapViewController.m in Sources */,
+				FD6C926118CB6D0F005D28A3 /* SettingsViewController.m in Sources */,
+				FD6C926718CBCEC8005D28A3 /* AppMenuItem.m in Sources */,
+				FD6C925618CB6CAF005D28A3 /* AppContainerViewController.m in Sources */,
 				FD3A30E718CB642F002B6990 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -466,6 +507,7 @@
 				FD3A310518CB642F002B6990 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FD3A310618CB642F002B6990 /* Build configuration list for PBXNativeTarget "pm25Tests" */ = {
 			isa = XCConfigurationList;
@@ -474,6 +516,7 @@
 				FD3A310818CB642F002B6990 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
