@@ -10,4 +10,12 @@
 
 @interface CurrentLocationViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UILabel *areaLabel;
+@property (weak, nonatomic) IBOutlet UILabel *locationNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *distanceAwayLabel;
+@property (weak, nonatomic) IBOutlet UILabel *pmValueLabel;
+@property (weak, nonatomic) IBOutlet UILabel *pmLabel;
+@property (weak, nonatomic) IBOutlet UILabel *lastUpdatedLabel;
+@property (weak, nonatomic) IBOutlet UILabel *recentRecordingsLabel;
+
 @end

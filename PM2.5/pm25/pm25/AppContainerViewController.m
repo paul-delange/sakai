@@ -94,7 +94,7 @@
         
         BOOL isSelectedItem = itemView == sender;
         
-        NSLog(@"Hold: %d, selected %d", shouldHoldSelection, isSelectedItem);
+        //NSLog(@"Hold: %d, selected %d", shouldHoldSelection, isSelectedItem);
         
         [UIView animateWithDuration: 0.3
                               delay: 0
@@ -180,7 +180,7 @@
     screenshot = [screenshot applyBlurWithRadius: 5
                                        tintColor: [UIColor colorWithWhite: 1.0 alpha: 0.3]
                            saturationDeltaFactor: 1.8
-                                       maskImage: [UIImage imageNamed: @"settings_icon"]];
+                                       maskImage: nil];
     
     UIImageView* imageView = [[UIImageView alloc] initWithImage: screenshot];
     imageView.userInteractionEnabled = YES;

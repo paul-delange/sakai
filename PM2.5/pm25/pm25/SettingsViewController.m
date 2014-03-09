@@ -19,7 +19,7 @@ static bool isValidPMValue(NSInteger newAlertLevel) {
 @implementation SettingsViewController
 
 #pragma mark - Actions
-- (IBAction)pushNotificationValueChanged:(id)sender {
+- (IBAction)pushNotificationValueChanged:(UISwitch*)sender {
 
 }
 
