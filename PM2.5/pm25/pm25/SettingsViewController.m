@@ -7,6 +7,7 @@
 //
 
 #import "SettingsViewController.h"
+#import "ContentLock.h"
 
 static bool isValidPMValue(NSInteger newAlertLevel) {
     return newAlertLevel > 10 && newAlertLevel < 100;
@@ -20,7 +21,22 @@ static bool isValidPMValue(NSInteger newAlertLevel) {
 
 #pragma mark - Actions
 - (IBAction)pushNotificationValueChanged:(UISwitch*)sender {
-
+    if( sender.on ) {
+        
+        if( [ContentLock tryLock] ) {
+            UIRemoteNotificationType types = UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound;
+            [[UIApplication sharedApplication] registerForRemoteNotificationTypes: types];
+        }
+        else {
+            sender.on = NO;
+        }
+    }
+    else {
+        [[UIApplication sharedApplication] unregisterForRemoteNotifications];
+    }
+    
+    [[NSUserDefaults standardUserDefaults] setBool: sender.on forKey: kUserDefaultsPushNotificationsEnabledKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (IBAction) doneEditingAlertLevelPushed:(id)sender {

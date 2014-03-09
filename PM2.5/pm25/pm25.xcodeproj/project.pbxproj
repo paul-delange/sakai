@@ -27,6 +27,18 @@
 		FD3E035C18CC87B70033845A /* Reading.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3E035B18CC87B70033845A /* Reading.m */; };
 		FD3E035E18CC87BC0033845A /* _Reading.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3E035D18CC87BC0033845A /* _Reading.m */; };
 		FD3E036118CC88360033845A /* CoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3E036018CC88360033845A /* CoreDataStack.m */; };
+		FD3E036C18CCD4E80033845A /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3E036B18CCD4E80033845A /* libGoogleAdMobAds.a */; };
+		FD3E036F18CCD6C90033845A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3E036E18CCD6C90033845A /* AVFoundation.framework */; };
+		FD3E037318CCD6DF0033845A /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3E037218CCD6DF0033845A /* AdSupport.framework */; };
+		FD3E037518CCD6F40033845A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3E037418CCD6F40033845A /* AudioToolbox.framework */; };
+		FD3E037718CCD6FD0033845A /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3E037618CCD6FD0033845A /* MessageUI.framework */; };
+		FD3E037918CCD7030033845A /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3E037818CCD7030033845A /* CoreTelephony.framework */; };
+		FD3E037B18CCD7090033845A /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3E037A18CCD7090033845A /* StoreKit.framework */; };
+		FD3E037D18CCD7110033845A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3E037C18CCD7110033845A /* SystemConfiguration.framework */; };
+		FD3E038018CCDCBB0033845A /* ContentLock.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3E037F18CCDCBB0033845A /* ContentLock.m */; };
+		FD3E038318CCDCDD0033845A /* ReceiptValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3E038218CCDCDD0033845A /* ReceiptValidator.m */; };
+		FD3E038618CCDD3B0033845A /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3E038418CCDD3B0033845A /* libcrypto.a */; };
+		FD3E038718CCDD3B0033845A /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3E038518CCDD3B0033845A /* libssl.a */; };
 		FD6C925618CB6CAF005D28A3 /* AppContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C925518CB6CAF005D28A3 /* AppContainerViewController.m */; };
 		FD6C925818CB6CD3005D28A3 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD6C925718CB6CD3005D28A3 /* Interface.storyboard */; };
 		FD6C925B18CB6CFC005D28A3 /* CurrentLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C925A18CB6CFC005D28A3 /* CurrentLocationViewController.m */; };
@@ -76,6 +88,30 @@
 		FD3E035D18CC87BC0033845A /* _Reading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Reading.m; sourceTree = "<group>"; };
 		FD3E035F18CC88360033845A /* CoreDataStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataStack.h; sourceTree = "<group>"; };
 		FD3E036018CC88360033845A /* CoreDataStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataStack.m; sourceTree = "<group>"; };
+		FD3E036218CCD4E80033845A /* GADAdMobExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADAdMobExtras.h; path = Admob/GADAdMobExtras.h; sourceTree = SOURCE_ROOT; };
+		FD3E036318CCD4E80033845A /* GADAdNetworkExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADAdNetworkExtras.h; path = Admob/GADAdNetworkExtras.h; sourceTree = SOURCE_ROOT; };
+		FD3E036418CCD4E80033845A /* GADAdSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADAdSize.h; path = Admob/GADAdSize.h; sourceTree = SOURCE_ROOT; };
+		FD3E036518CCD4E80033845A /* GADBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADBannerView.h; path = Admob/GADBannerView.h; sourceTree = SOURCE_ROOT; };
+		FD3E036618CCD4E80033845A /* GADBannerViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADBannerViewDelegate.h; path = Admob/GADBannerViewDelegate.h; sourceTree = SOURCE_ROOT; };
+		FD3E036718CCD4E80033845A /* GADInterstitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADInterstitial.h; path = Admob/GADInterstitial.h; sourceTree = SOURCE_ROOT; };
+		FD3E036818CCD4E80033845A /* GADInterstitialDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADInterstitialDelegate.h; path = Admob/GADInterstitialDelegate.h; sourceTree = SOURCE_ROOT; };
+		FD3E036918CCD4E80033845A /* GADRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADRequest.h; path = Admob/GADRequest.h; sourceTree = SOURCE_ROOT; };
+		FD3E036A18CCD4E80033845A /* GADRequestError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADRequestError.h; path = Admob/GADRequestError.h; sourceTree = SOURCE_ROOT; };
+		FD3E036B18CCD4E80033845A /* libGoogleAdMobAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAdMobAds.a; path = Admob/libGoogleAdMobAds.a; sourceTree = SOURCE_ROOT; };
+		FD3E036E18CCD6C90033845A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		FD3E037018CCD6DA0033845A /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
+		FD3E037218CCD6DF0033845A /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		FD3E037418CCD6F40033845A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		FD3E037618CCD6FD0033845A /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		FD3E037818CCD7030033845A /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		FD3E037A18CCD7090033845A /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		FD3E037C18CCD7110033845A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		FD3E037E18CCDCBB0033845A /* ContentLock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentLock.h; sourceTree = "<group>"; };
+		FD3E037F18CCDCBB0033845A /* ContentLock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentLock.m; sourceTree = "<group>"; };
+		FD3E038118CCDCDD0033845A /* ReceiptValidator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptValidator.h; sourceTree = "<group>"; };
+		FD3E038218CCDCDD0033845A /* ReceiptValidator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptValidator.m; sourceTree = "<group>"; };
+		FD3E038418CCDD3B0033845A /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = OpenSSL/libcrypto.a; sourceTree = SOURCE_ROOT; };
+		FD3E038518CCDD3B0033845A /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = OpenSSL/libssl.a; sourceTree = SOURCE_ROOT; };
 		FD6C925418CB6CAF005D28A3 /* AppContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppContainerViewController.h; sourceTree = "<group>"; };
 		FD6C925518CB6CAF005D28A3 /* AppContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppContainerViewController.m; sourceTree = "<group>"; };
 		FD6C925718CB6CD3005D28A3 /* Interface.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Interface.storyboard; sourceTree = "<group>"; };
@@ -96,10 +132,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD3E037D18CCD7110033845A /* SystemConfiguration.framework in Frameworks */,
+				FD3E037B18CCD7090033845A /* StoreKit.framework in Frameworks */,
+				FD3E038718CCDD3B0033845A /* libssl.a in Frameworks */,
+				FD3E037918CCD7030033845A /* CoreTelephony.framework in Frameworks */,
+				FD3E037718CCD6FD0033845A /* MessageUI.framework in Frameworks */,
+				FD3E037518CCD6F40033845A /* AudioToolbox.framework in Frameworks */,
+				FD3E037318CCD6DF0033845A /* AdSupport.framework in Frameworks */,
+				FD3E036F18CCD6C90033845A /* AVFoundation.framework in Frameworks */,
 				FD3BCD7318CC7A9D001170D6 /* MapKit.framework in Frameworks */,
 				FD3A30DD18CB642F002B6990 /* CoreGraphics.framework in Frameworks */,
 				FD3A30DF18CB642F002B6990 /* UIKit.framework in Frameworks */,
+				FD3E038618CCDD3B0033845A /* libcrypto.a in Frameworks */,
 				FD3A30DB18CB642F002B6990 /* Foundation.framework in Frameworks */,
+				FD3E036C18CCD4E80033845A /* libGoogleAdMobAds.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,6 +185,14 @@
 		FD3A30D918CB642F002B6990 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FD3E037C18CCD7110033845A /* SystemConfiguration.framework */,
+				FD3E037A18CCD7090033845A /* StoreKit.framework */,
+				FD3E037818CCD7030033845A /* CoreTelephony.framework */,
+				FD3E037618CCD6FD0033845A /* MessageUI.framework */,
+				FD3E037418CCD6F40033845A /* AudioToolbox.framework */,
+				FD3E037218CCD6DF0033845A /* AdSupport.framework */,
+				FD3E037018CCD6DA0033845A /* AudioUnit.framework */,
+				FD3E036E18CCD6C90033845A /* AVFoundation.framework */,
 				FD3BCD7218CC7A9D001170D6 /* MapKit.framework */,
 				FD3A30DA18CB642F002B6990 /* Foundation.framework */,
 				FD3A30DC18CB642F002B6990 /* CoreGraphics.framework */,
@@ -211,6 +265,10 @@
 		FD3A310B18CB6486002B6990 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				FD3E038118CCDCDD0033845A /* ReceiptValidator.h */,
+				FD3E038218CCDCDD0033845A /* ReceiptValidator.m */,
+				FD3E037E18CCDCBB0033845A /* ContentLock.h */,
+				FD3E037F18CCDCBB0033845A /* ContentLock.m */,
 				FD3E035F18CC88360033845A /* CoreDataStack.h */,
 				FD3E036018CC88360033845A /* CoreDataStack.m */,
 				FD3E035A18CC87B70033845A /* Reading.h */,
@@ -239,11 +297,31 @@
 		FD3BCD6B18CC5995001170D6 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				FD3E038418CCDD3B0033845A /* libcrypto.a */,
+				FD3E038518CCDD3B0033845A /* libssl.a */,
+				FD3E036D18CCD4EE0033845A /* Admob */,
 				FD3E035D18CC87BC0033845A /* _Reading.m */,
 				FD3BCD6C18CC59AC001170D6 /* UIImage+ImageEffects.h */,
 				FD3BCD6D18CC59AC001170D6 /* UIImage+ImageEffects.m */,
 			);
 			name = Vendor;
+			sourceTree = "<group>";
+		};
+		FD3E036D18CCD4EE0033845A /* Admob */ = {
+			isa = PBXGroup;
+			children = (
+				FD3E036218CCD4E80033845A /* GADAdMobExtras.h */,
+				FD3E036318CCD4E80033845A /* GADAdNetworkExtras.h */,
+				FD3E036418CCD4E80033845A /* GADAdSize.h */,
+				FD3E036518CCD4E80033845A /* GADBannerView.h */,
+				FD3E036618CCD4E80033845A /* GADBannerViewDelegate.h */,
+				FD3E036718CCD4E80033845A /* GADInterstitial.h */,
+				FD3E036818CCD4E80033845A /* GADInterstitialDelegate.h */,
+				FD3E036918CCD4E80033845A /* GADRequest.h */,
+				FD3E036A18CCD4E80033845A /* GADRequestError.h */,
+				FD3E036B18CCD4E80033845A /* libGoogleAdMobAds.a */,
+			);
+			name = Admob;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -359,6 +437,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD3E038318CCDCDD0033845A /* ReceiptValidator.m in Sources */,
 				FD3E035C18CC87B70033845A /* Reading.m in Sources */,
 				FD3A30EB18CB642F002B6990 /* AppDelegate.m in Sources */,
 				FD3BCD6A18CC57B2001170D6 /* AppMenuButton.m in Sources */,
@@ -371,6 +450,7 @@
 				FD3BCD6E18CC59AC001170D6 /* UIImage+ImageEffects.m in Sources */,
 				FD6C926718CBCEC8005D28A3 /* AppMenuItem.m in Sources */,
 				FD6C925618CB6CAF005D28A3 /* AppContainerViewController.m in Sources */,
+				FD3E038018CCDCBB0033845A /* ContentLock.m in Sources */,
 				FD3A30E718CB642F002B6990 /* main.m in Sources */,
 				FD3E035E18CC87BC0033845A /* _Reading.m in Sources */,
 				FD3BCD7118CC6891001170D6 /* ForegroundPanel.m in Sources */,
@@ -494,7 +574,19 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "pm25/pm25-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					../Admob,
+					OpenSSL,
+				);
 				INFOPLIST_FILE = "pm25/pm25-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/pauldelange/Documents/sakai/PM2.5/pm25/Admob,
+					/Users/pauldelange/Documents/sakai/PM2.5/pm25/OpenSSL,
+				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -507,7 +599,19 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "pm25/pm25-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					../Admob,
+					OpenSSL,
+				);
 				INFOPLIST_FILE = "pm25/pm25-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/pauldelange/Documents/sakai/PM2.5/pm25/Admob,
+					/Users/pauldelange/Documents/sakai/PM2.5/pm25/OpenSSL,
+				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

@@ -12,6 +12,8 @@ typedef void (^kPhotoGrabberCompleted)(UIImage* image, NSError* error);
 
 @interface PhotoGrabber : NSObject
 
-    + (UIImage*) getPhotoForLocation: (CLLocation*) location withCompletionHandler: (kPhotoGrabberCompleted) completion;
-    
++ (UIImage*) getPhotoForLocation: (CLLocation*) location withCompletionHandler: (kPhotoGrabberCompleted) completion;
+
++ (void) setPhoto: (UIImage*) image;
+
 @end
