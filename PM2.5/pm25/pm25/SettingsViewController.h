@@ -10,4 +10,12 @@
 
 @interface SettingsViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UILabel *pushNotificationLabel;
+@property (weak, nonatomic) IBOutlet UILabel *alertLevellabel;
+@property (weak, nonatomic) IBOutlet UISwitch *pushNotificationSwitch;
+@property (weak, nonatomic) IBOutlet UITextField *alertLevelField;
+@property (weak, nonatomic) IBOutlet UILabel *explanationLabel;
+
+- (IBAction)pushNotificationValueChanged:(id)sender;
+
 @end

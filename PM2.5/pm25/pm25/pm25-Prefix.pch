@@ -19,4 +19,7 @@
 extern NSString * const kCurrentLocationChangedNotification;
 extern NSString * const kCurrentLocationUserInfoKey;
 
+#define kUserDefaultsPushNotificationsEnabledKey        @"PushNotificationsEnabled"
+#define kUserDefaultsAlertLevelKey                      @"AlertLevel"
+
 #endif

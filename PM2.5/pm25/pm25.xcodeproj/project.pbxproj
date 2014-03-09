@@ -19,6 +19,9 @@
 		FD3A30F618CB642F002B6990 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3A30DE18CB642F002B6990 /* UIKit.framework */; };
 		FD3A30FE18CB642F002B6990 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FD3A30FC18CB642F002B6990 /* InfoPlist.strings */; };
 		FD3A310018CB642F002B6990 /* pm25Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3A30FF18CB642F002B6990 /* pm25Tests.m */; };
+		FD3BCD6A18CC57B2001170D6 /* AppMenuButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3BCD6918CC57B2001170D6 /* AppMenuButton.m */; };
+		FD3BCD6E18CC59AC001170D6 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3BCD6D18CC59AC001170D6 /* UIImage+ImageEffects.m */; };
+		FD3BCD7118CC6891001170D6 /* ForegroundPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3BCD7018CC6891001170D6 /* ForegroundPanel.m */; };
 		FD6C925618CB6CAF005D28A3 /* AppContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C925518CB6CAF005D28A3 /* AppContainerViewController.m */; };
 		FD6C925818CB6CD3005D28A3 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD6C925718CB6CD3005D28A3 /* Interface.storyboard */; };
 		FD6C925B18CB6CFC005D28A3 /* CurrentLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C925A18CB6CFC005D28A3 /* CurrentLocationViewController.m */; };
@@ -55,6 +58,12 @@
 		FD3A30FB18CB642F002B6990 /* pm25Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "pm25Tests-Info.plist"; sourceTree = "<group>"; };
 		FD3A30FD18CB642F002B6990 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FD3A30FF18CB642F002B6990 /* pm25Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = pm25Tests.m; sourceTree = "<group>"; };
+		FD3BCD6818CC57B2001170D6 /* AppMenuButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppMenuButton.h; sourceTree = "<group>"; };
+		FD3BCD6918CC57B2001170D6 /* AppMenuButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppMenuButton.m; sourceTree = "<group>"; };
+		FD3BCD6C18CC59AC001170D6 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
+		FD3BCD6D18CC59AC001170D6 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
+		FD3BCD6F18CC6891001170D6 /* ForegroundPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForegroundPanel.h; sourceTree = "<group>"; };
+		FD3BCD7018CC6891001170D6 /* ForegroundPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForegroundPanel.m; sourceTree = "<group>"; };
 		FD6C925418CB6CAF005D28A3 /* AppContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppContainerViewController.h; sourceTree = "<group>"; };
 		FD6C925518CB6CAF005D28A3 /* AppContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppContainerViewController.m; sourceTree = "<group>"; };
 		FD6C925718CB6CD3005D28A3 /* Interface.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Interface.storyboard; sourceTree = "<group>"; };
@@ -128,6 +137,7 @@
 		FD3A30E018CB642F002B6990 /* Code */ = {
 			isa = PBXGroup;
 			children = (
+				FD3BCD6B18CC5995001170D6 /* Vendor */,
 				FD3A30E818CB642F002B6990 /* pm25-Prefix.pch */,
 				FD3A30E618CB642F002B6990 /* main.m */,
 				FD3A310B18CB6486002B6990 /* Models */,
@@ -176,6 +186,10 @@
 		FD3A310A18CB6481002B6990 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FD3BCD6818CC57B2001170D6 /* AppMenuButton.h */,
+				FD3BCD6918CC57B2001170D6 /* AppMenuButton.m */,
+				FD3BCD6F18CC6891001170D6 /* ForegroundPanel.h */,
+				FD3BCD7018CC6891001170D6 /* ForegroundPanel.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -201,6 +215,15 @@
 			);
 			name = Resources;
 			path = pm25;
+			sourceTree = "<group>";
+		};
+		FD3BCD6B18CC5995001170D6 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				FD3BCD6C18CC59AC001170D6 /* UIImage+ImageEffects.h */,
+				FD3BCD6D18CC59AC001170D6 /* UIImage+ImageEffects.m */,
+			);
+			name = Vendor;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -300,13 +323,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD3A30EB18CB642F002B6990 /* AppDelegate.m in Sources */,
+				FD3BCD6A18CC57B2001170D6 /* AppMenuButton.m in Sources */,
 				FD6C925B18CB6CFC005D28A3 /* CurrentLocationViewController.m in Sources */,
 				FD6C926418CB7149005D28A3 /* PhotoGrabber.m in Sources */,
 				FD6C925E18CB6D06005D28A3 /* MapViewController.m in Sources */,
 				FD6C926118CB6D0F005D28A3 /* SettingsViewController.m in Sources */,
+				FD3BCD6E18CC59AC001170D6 /* UIImage+ImageEffects.m in Sources */,
 				FD6C926718CBCEC8005D28A3 /* AppMenuItem.m in Sources */,
 				FD6C925618CB6CAF005D28A3 /* AppContainerViewController.m in Sources */,
 				FD3A30E718CB642F002B6990 /* main.m in Sources */,
+				FD3BCD7118CC6891001170D6 /* ForegroundPanel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
