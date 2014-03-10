@@ -7,7 +7,7 @@
         <!--App Container View Controller-->
         <scene sceneID="DFj-Kq-yTA">
             <objects>
-                <viewController id="iRN-XM-vN3" customClass="AppContainerViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AppContainerViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="iRN-XM-vN3" customClass="AppContainerViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="bjK-ZF-Qqv"/>
                         <viewControllerLayoutGuide type="bottom" id="fwS-6f-udT"/>
@@ -30,7 +30,7 @@
         <!--Map View Controller-->
         <scene sceneID="Ksu-xP-e34">
             <objects>
-                <viewController storyboardIdentifier="MapViewController" id="BwZ-Bd-RVW" customClass="MapViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MapViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BwZ-Bd-RVW" customClass="MapViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Wmx-B3-3jf"/>
                         <viewControllerLayoutGuide type="bottom" id="mT1-yi-mhx"/>
@@ -66,7 +66,7 @@
         <!--Settings View Controller-->
         <scene sceneID="0ba-fv-QXB">
             <objects>
-                <viewController storyboardIdentifier="SettingsViewController" id="WBU-Y3-dsu" customClass="SettingsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SettingsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="WBU-Y3-dsu" customClass="SettingsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="vLd-D7-TXe"/>
                         <viewControllerLayoutGuide type="bottom" id="cXG-bh-QY7"/>
@@ -161,7 +161,7 @@
         <!--Current Location View Controller-->
         <scene sceneID="8B2-pl-KpB">
             <objects>
-                <viewController storyboardIdentifier="CurrentLocationViewController" id="F6V-ir-sAL" customClass="CurrentLocationViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CurrentLocationViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="F6V-ir-sAL" customClass="CurrentLocationViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="eIu-VM-kmC"/>
                         <viewControllerLayoutGuide type="bottom" id="crP-Sz-L5i"/>
@@ -232,7 +232,7 @@
                                     <constraint firstItem="H2u-bX-hKK" firstAttribute="leading" secondItem="TGE-Mc-H0v" secondAttribute="leading" constant="20" symbolic="YES" id="z42-tO-KSf"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LdS-Ta-zJc" userLabel="Recent Movement Panel" customClass="ForegroundPanel">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LdS-Ta-zJc" userLabel="Recent Movement Panel" customClass="ForegroundPanel">
                                 <rect key="frame" x="4" y="234" width="312" height="330"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -243,7 +243,7 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oQc-ah-rON">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oQc-ah-rON">
                                         <rect key="frame" x="20" y="312" width="272" height="14"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
@@ -261,7 +261,7 @@
                                     <constraint firstAttribute="trailing" secondItem="HqS-gl-5RK" secondAttribute="trailing" constant="20" symbolic="YES" id="rLd-aX-chD"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dup-Rw-9vs" userLabel="Particle Info Panel" customClass="ForegroundPanel">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dup-Rw-9vs" userLabel="Particle Info Panel" customClass="ForegroundPanel">
                                 <rect key="frame" x="4" y="226" width="312" height="0.0"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -276,6 +276,7 @@
                             <constraint firstItem="LdS-Ta-zJc" firstAttribute="top" secondItem="Dup-Rw-9vs" secondAttribute="bottom" constant="8" symbolic="YES" id="bux-mu-bad"/>
                             <constraint firstItem="LdS-Ta-zJc" firstAttribute="leading" secondItem="zs3-Xa-9mI" secondAttribute="leading" constant="4" id="hy1-NW-YfE"/>
                             <constraint firstItem="Dup-Rw-9vs" firstAttribute="top" secondItem="TGE-Mc-H0v" secondAttribute="bottom" constant="8" symbolic="YES" id="k6g-ex-Jc9"/>
+                            <constraint firstItem="LdS-Ta-zJc" firstAttribute="top" secondItem="zs3-Xa-9mI" secondAttribute="top" constant="234" id="mom-Qz-0Gl"/>
                             <constraint firstItem="crP-Sz-L5i" firstAttribute="top" secondItem="LdS-Ta-zJc" secondAttribute="bottom" constant="4" id="wYm-PA-I4r"/>
                             <constraint firstItem="TGE-Mc-H0v" firstAttribute="top" secondItem="eIu-VM-kmC" secondAttribute="bottom" constant="50" id="zSq-kQ-zxI"/>
                         </constraints>

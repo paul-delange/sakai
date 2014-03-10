@@ -15,6 +15,14 @@
 NSString * const kCurrentLocationChangedNotification = @"CurrentLocationChanged";
 NSString * const kCurrentLocationUserInfoKey = @"CurrentLocationKey";
 
+/*
+typedef NS_ENUM(NSUInteger, kTableViewSectionType) {
+    kTableViewSectionTypeCurrentInfo = 0,
+    kTableViewSectionTypeParticleDetails,
+    kTableViewSectionTypeRecentHistory,
+    kTableViewSectionTypeCount
+}; */
+
 @interface CurrentLocationViewController () <CLLocationManagerDelegate> {
     CLLocationManager*      _locationManager;
 }
@@ -34,7 +42,7 @@ NSString * const kCurrentLocationUserInfoKey = @"CurrentLocationKey";
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder: aDecoder];
     if( self ) {
-    
+        
         CLLocationManager* manager = [CLLocationManager new];
         manager.delegate = self;
         manager.distanceFilter = kCLDistanceFilterNone;
@@ -73,37 +81,74 @@ NSString * const kCurrentLocationUserInfoKey = @"CurrentLocationKey";
         [_locationManager startUpdatingLocation];
     }
 }
+
+- (void) viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear: animated];
     
-    - (void) viewWillDisappear:(BOOL)animated {
-        [super viewWillDisappear: animated];
-        
-        if( [CLLocationManager significantLocationChangeMonitoringAvailable] ) {
-            [_locationManager stopMonitoringSignificantLocationChanges];
+    if( [CLLocationManager significantLocationChangeMonitoringAvailable] ) {
+        [_locationManager stopMonitoringSignificantLocationChanges];
+    }
+    else {
+        [_locationManager stopUpdatingLocation];
+    }
+}
+
+/*
+#pragma mark - UITableViewDataSource
+- (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
+    return kTableViewSectionTypeCount;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 1;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell* cell;
+    
+    switch (indexPath.section) {
+        case kTableViewSectionTypeCurrentInfo:
+        {
+            cell = [tableView dequeueReusableCellWithIdentifier: @"CurrentInfoCellIdentifier"];
+            break;
         }
-        else {
-            [_locationManager stopUpdatingLocation];
+        case kTableViewSectionTypeParticleDetails:
+        {
+            cell = [tableView dequeueReusableCellWithIdentifier: @"ParticleDetailsCellIdentifier"];
+            break;
         }
+        case kTableViewSectionTypeRecentHistory:
+        {
+            cell = [tableView dequeueReusableCellWithIdentifier: @"RecentHistoryCellIdentifier"];
+            break;
+        }
+        default:
+            break;
     }
     
+    return cell;
+} */
+
 #pragma mark - CLLocationManagerDelegate
-    - (void)locationManager:(CLLocationManager *)manager
-        didUpdateToLocation:(CLLocation *)newLocation
-               fromLocation:(CLLocation *)oldLocation {
-        
-        
-        NSDictionary* userInfo = @{ kCurrentLocationUserInfoKey : newLocation };
-        [[NSNotificationCenter defaultCenter] postNotificationName: kCurrentLocationChangedNotification
-                                                            object: manager
-                                                          userInfo: userInfo];
-    }
+- (void)locationManager:(CLLocationManager *)manager
+    didUpdateToLocation:(CLLocation *)newLocation
+           fromLocation:(CLLocation *)oldLocation {
     
-    - (void)locationManager:(CLLocationManager *)manager
-           didFailWithError:(NSError *)error {
-        
-    }
+    //TODO: Get PM2.5 data from server
     
-    - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
-        
-    }
+    NSDictionary* userInfo = @{ kCurrentLocationUserInfoKey : newLocation };
+    [[NSNotificationCenter defaultCenter] postNotificationName: kCurrentLocationChangedNotification
+                                                        object: manager
+                                                      userInfo: userInfo];
+}
+
+- (void)locationManager:(CLLocationManager *)manager
+       didFailWithError:(NSError *)error {
     
+}
+
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
+    
+}
+
 @end

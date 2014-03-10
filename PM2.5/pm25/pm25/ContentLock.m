@@ -14,7 +14,8 @@
 
 static const void* kCompletionHandlerAssocationKey = "PurchaseCompletionHandler";
 
-NSString * const kContentUnlockProductIdentifier = @"sexpert_unlock";
+NSString * const kContentUnlockProductIdentifier = UNLOCK_IN_APP_PURCHASE_IDENTIFIER;
+NSString * const kContentUnlockedNotification = @"ContentUnlockedNotification";
 
 @import StoreKit;
 
@@ -114,6 +115,9 @@ NSString * const kContentUnlockProductIdentifier = @"sexpert_unlock";
                     
                     if( handler )
                         handler(nil);
+                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName: kContentUnlockedNotification
+                                                                        object: transaction];
                 }
                 else {
                     NSError* error = [NSError errorWithDomain: @"In-App"

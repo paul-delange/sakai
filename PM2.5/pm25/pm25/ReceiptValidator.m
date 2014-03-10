@@ -206,7 +206,7 @@ bool isValidReceipt(NSURL* receiptURL) {
                     NSString *string = [[NSString alloc] initWithBytes:str_p
                                                                 length:(NSUInteger)str_length
                                                               encoding:NSUTF8StringEncoding];
-                    if( ![string isEqualToString: @"com.bentley.sexperts"] )
+                    if( ![string isEqualToString: APPLICATION_BUNDLE_IDENTIFIER] )
                         verifyReturnValue = false;
                 }
                 else {

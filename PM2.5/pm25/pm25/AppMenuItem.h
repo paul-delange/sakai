@@ -8,12 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-@interface AppMenuItem : NSObject
+@interface AppMenuItem : NSObject <NSCoding>
 
-    - (instancetype) initWithViewController: (UIViewController*) controller image: (UIImage*) image andTitle: (NSString*) title;
-    
-    @property (readonly, weak) UIViewController* controller;
-    @property (readonly, strong) UIImage* image;
-    @property (readonly, copy) NSString* title;
-    
+- (instancetype) initWithViewController: (UIViewController*) controller image: (NSString*) imageName andTitle: (NSString*) title;
+
+@property (readonly, weak) UIViewController* controller;
+@property (readonly, strong) UIImage* image;
+@property (readonly, copy) NSString* title;
+
 @end

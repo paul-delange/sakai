@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 extern NSString * const kContentUnlockProductIdentifier;
+extern NSString * const kContentUnlockedNotification;
 
 typedef void (^kContentLockRemovedHandler)(NSError* error);
 

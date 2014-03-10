@@ -9,6 +9,10 @@
 #import "SettingsViewController.h"
 #import "ContentLock.h"
 
+#define     kAlertViewInvalidPMValueTag     982
+#define     kAlertViewPurchaseRequiredTag   983
+
+
 static bool isValidPMValue(NSInteger newAlertLevel) {
     return newAlertLevel > 10 && newAlertLevel < 100;
 }
@@ -22,14 +26,27 @@ static bool isValidPMValue(NSInteger newAlertLevel) {
 #pragma mark - Actions
 - (IBAction)pushNotificationValueChanged:(UISwitch*)sender {
     if( sender.on ) {
-        
+#if IN_APP_PURCHASE_ENABLED
         if( [ContentLock tryLock] ) {
             UIRemoteNotificationType types = UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound;
             [[UIApplication sharedApplication] registerForRemoteNotificationTypes: types];
         }
         else {
-            sender.on = NO;
+            NSString* title = NSDONTCOPYLocalizedString(@"Feature Locked", @"");
+            NSString* msg = NSDONTCOPYLocalizedString(@"To enable Push Notifications you must purchase the extra features. Would you like to do that now?", @"");
+            UIAlertView* alert = [[UIAlertView alloc] initWithTitle: title
+                                                            message: msg
+                                                           delegate: self
+                                                  cancelButtonTitle: NSLocalizedString(@"Cancel", @"")
+                                                  otherButtonTitles: NSDONTCOPYLocalizedString(@"Buy", @""), nil];
+            alert.tag = kAlertViewPurchaseRequiredTag;
+            [alert show];
+            return;
         }
+#else 
+        UIRemoteNotificationType types = UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound;
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes: types];
+#endif
     }
     else {
         [[UIApplication sharedApplication] unregisterForRemoteNotifications];
@@ -55,6 +72,7 @@ static bool isValidPMValue(NSInteger newAlertLevel) {
                                                        delegate: self
                                               cancelButtonTitle: NSLocalizedString(@"Cancel", @"")
                                               otherButtonTitles: NSLocalizedString(@"Confirm", @""), nil];
+        alert.tag = kAlertViewInvalidPMValueTag;
         [alert show];
     }
 }
@@ -116,15 +134,45 @@ static bool isValidPMValue(NSInteger newAlertLevel) {
 
 #pragma mark - UIAlertViewDelegate 
 - (void) alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if( alertView.cancelButtonIndex != buttonIndex ) {
-        NSInteger newAlertLevel = [self.alertLevelField.text integerValue];
-        
-        self.alertLevelField.textColor = [UIColor darkTextColor];
-        [[NSUserDefaults standardUserDefaults] setInteger: newAlertLevel forKey: kUserDefaultsAlertLevelKey];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        
-        [self.alertLevelField resignFirstResponder];
+    switch (alertView.tag) {
+        case kAlertViewInvalidPMValueTag:
+        {
+            if( alertView.cancelButtonIndex != buttonIndex ) {
+                NSInteger newAlertLevel = [self.alertLevelField.text integerValue];
+                
+                self.alertLevelField.textColor = [UIColor darkTextColor];
+                [[NSUserDefaults standardUserDefaults] setInteger: newAlertLevel forKey: kUserDefaultsAlertLevelKey];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                
+                [self.alertLevelField resignFirstResponder];
+            }
+            break;
+        }
+#if IN_APP_PURCHASE_ENABLED
+        case kAlertViewPurchaseRequiredTag:
+        {
+            if( alertView.cancelButtonIndex == buttonIndex ) {
+                self.pushNotificationSwitch.on = NO;
+            }
+            else {
+                [ContentLock unlockWithCompletion: ^(NSError *error) {
+                    if( error ) {
+                        self.pushNotificationSwitch.on = NO;
+                    }
+                    else {
+                        NSParameterAssert([ContentLock tryLock]);
+                        
+                        [self pushNotificationValueChanged: self.pushNotificationSwitch];
+                    }
+                }];
+            }
+            break;
+        }
+#endif
+        default:
+            break;
     }
+    
 }
 
 @end

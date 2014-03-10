@@ -35,10 +35,7 @@
 		FD3E037918CCD7030033845A /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3E037818CCD7030033845A /* CoreTelephony.framework */; };
 		FD3E037B18CCD7090033845A /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3E037A18CCD7090033845A /* StoreKit.framework */; };
 		FD3E037D18CCD7110033845A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3E037C18CCD7110033845A /* SystemConfiguration.framework */; };
-		FD3E038018CCDCBB0033845A /* ContentLock.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3E037F18CCDCBB0033845A /* ContentLock.m */; };
-		FD3E038318CCDCDD0033845A /* ReceiptValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3E038218CCDCDD0033845A /* ReceiptValidator.m */; };
-		FD3E038618CCDD3B0033845A /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3E038418CCDD3B0033845A /* libcrypto.a */; };
-		FD3E038718CCDD3B0033845A /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3E038518CCDD3B0033845A /* libssl.a */; };
+		FD3E038D18CDBD180033845A /* VersionComparator.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3E038C18CDBD180033845A /* VersionComparator.m */; };
 		FD6C925618CB6CAF005D28A3 /* AppContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C925518CB6CAF005D28A3 /* AppContainerViewController.m */; };
 		FD6C925818CB6CD3005D28A3 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD6C925718CB6CD3005D28A3 /* Interface.storyboard */; };
 		FD6C925B18CB6CFC005D28A3 /* CurrentLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C925A18CB6CFC005D28A3 /* CurrentLocationViewController.m */; };
@@ -112,6 +109,10 @@
 		FD3E038218CCDCDD0033845A /* ReceiptValidator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptValidator.m; sourceTree = "<group>"; };
 		FD3E038418CCDD3B0033845A /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = OpenSSL/libcrypto.a; sourceTree = SOURCE_ROOT; };
 		FD3E038518CCDD3B0033845A /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = OpenSSL/libssl.a; sourceTree = SOURCE_ROOT; };
+		FD3E038818CD94060033845A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FD3E038918CD94110033845A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		FD3E038B18CDBD180033845A /* VersionComparator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionComparator.h; sourceTree = "<group>"; };
+		FD3E038C18CDBD180033845A /* VersionComparator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersionComparator.m; sourceTree = "<group>"; };
 		FD6C925418CB6CAF005D28A3 /* AppContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppContainerViewController.h; sourceTree = "<group>"; };
 		FD6C925518CB6CAF005D28A3 /* AppContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppContainerViewController.m; sourceTree = "<group>"; };
 		FD6C925718CB6CD3005D28A3 /* Interface.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Interface.storyboard; sourceTree = "<group>"; };
@@ -134,7 +135,6 @@
 			files = (
 				FD3E037D18CCD7110033845A /* SystemConfiguration.framework in Frameworks */,
 				FD3E037B18CCD7090033845A /* StoreKit.framework in Frameworks */,
-				FD3E038718CCDD3B0033845A /* libssl.a in Frameworks */,
 				FD3E037918CCD7030033845A /* CoreTelephony.framework in Frameworks */,
 				FD3E037718CCD6FD0033845A /* MessageUI.framework in Frameworks */,
 				FD3E037518CCD6F40033845A /* AudioToolbox.framework in Frameworks */,
@@ -143,7 +143,6 @@
 				FD3BCD7318CC7A9D001170D6 /* MapKit.framework in Frameworks */,
 				FD3A30DD18CB642F002B6990 /* CoreGraphics.framework in Frameworks */,
 				FD3A30DF18CB642F002B6990 /* UIKit.framework in Frameworks */,
-				FD3E038618CCDD3B0033845A /* libcrypto.a in Frameworks */,
 				FD3A30DB18CB642F002B6990 /* Foundation.framework in Frameworks */,
 				FD3E036C18CCD4E80033845A /* libGoogleAdMobAds.a in Frameworks */,
 			);
@@ -265,10 +264,7 @@
 		FD3A310B18CB6486002B6990 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				FD3E038118CCDCDD0033845A /* ReceiptValidator.h */,
-				FD3E038218CCDCDD0033845A /* ReceiptValidator.m */,
-				FD3E037E18CCDCBB0033845A /* ContentLock.h */,
-				FD3E037F18CCDCBB0033845A /* ContentLock.m */,
+				FD3E038A18CD9D590033845A /* InApp Purchase */,
 				FD3E035F18CC88360033845A /* CoreDataStack.h */,
 				FD3E036018CC88360033845A /* CoreDataStack.m */,
 				FD3E035A18CC87B70033845A /* Reading.h */,
@@ -297,6 +293,8 @@
 		FD3BCD6B18CC5995001170D6 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				FD3E038B18CDBD180033845A /* VersionComparator.h */,
+				FD3E038C18CDBD180033845A /* VersionComparator.m */,
 				FD3E038418CCDD3B0033845A /* libcrypto.a */,
 				FD3E038518CCDD3B0033845A /* libssl.a */,
 				FD3E036D18CCD4EE0033845A /* Admob */,
@@ -322,6 +320,17 @@
 				FD3E036B18CCD4E80033845A /* libGoogleAdMobAds.a */,
 			);
 			name = Admob;
+			sourceTree = "<group>";
+		};
+		FD3E038A18CD9D590033845A /* InApp Purchase */ = {
+			isa = PBXGroup;
+			children = (
+				FD3E038118CCDCDD0033845A /* ReceiptValidator.h */,
+				FD3E038218CCDCDD0033845A /* ReceiptValidator.m */,
+				FD3E037E18CCDCBB0033845A /* ContentLock.h */,
+				FD3E037F18CCDCBB0033845A /* ContentLock.m */,
+			);
+			name = "InApp Purchase";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -383,6 +392,8 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				ja,
+				"zh-Hans",
 			);
 			mainGroup = FD3A30CE18CB642F002B6990;
 			productRefGroup = FD3A30D818CB642F002B6990 /* Products */;
@@ -437,7 +448,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FD3E038318CCDCDD0033845A /* ReceiptValidator.m in Sources */,
 				FD3E035C18CC87B70033845A /* Reading.m in Sources */,
 				FD3A30EB18CB642F002B6990 /* AppDelegate.m in Sources */,
 				FD3BCD6A18CC57B2001170D6 /* AppMenuButton.m in Sources */,
@@ -450,7 +460,7 @@
 				FD3BCD6E18CC59AC001170D6 /* UIImage+ImageEffects.m in Sources */,
 				FD6C926718CBCEC8005D28A3 /* AppMenuItem.m in Sources */,
 				FD6C925618CB6CAF005D28A3 /* AppContainerViewController.m in Sources */,
-				FD3E038018CCDCBB0033845A /* ContentLock.m in Sources */,
+				FD3E038D18CDBD180033845A /* VersionComparator.m in Sources */,
 				FD3A30E718CB642F002B6990 /* main.m in Sources */,
 				FD3E035E18CC87BC0033845A /* _Reading.m in Sources */,
 				FD3BCD7118CC6891001170D6 /* ForegroundPanel.m in Sources */,
@@ -480,6 +490,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				FD3A30E418CB642F002B6990 /* en */,
+				FD3E038818CD94060033845A /* ja */,
+				FD3E038918CD94110033845A /* zh-Hans */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";

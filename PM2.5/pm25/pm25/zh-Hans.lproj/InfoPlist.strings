@@ -1,0 +1,4 @@
+/* Localized versions of Info.plist keys */
+
+"CFBundleDisplayName" = "PM2.5";
+"CFBundleName" = "PM2.5";

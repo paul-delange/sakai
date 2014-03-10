@@ -18,6 +18,8 @@
 #import "GADBannerView.h"
 #import "GADRequest.h"
 
+#define kStateResorationCurrentIndexKey     @"CurrentSelectedIndexKey"
+
 @interface AppContainerViewController () <UIGestureRecognizerDelegate, GADBannerViewDelegate> {
     NSUInteger      _currentViewControllerIndex;
     NSArray*        _menuItemViews;
@@ -51,6 +53,53 @@
     return [self.menuItems valueForKeyPath: @"@unionOfObjects.controller"];
 }
 
+- (void) addMenuButtonWithImage: (UIImage*) image {
+    UIImage* menuImage = image;
+    UIButton* menuButton = [UIButton buttonWithType: UIButtonTypeCustom];
+    menuButton.frame = CGRectMake(CGRectGetWidth(self.view.bounds)-menuImage.size.width, 0, menuImage.size.width, menuImage.size.height);
+    [menuButton setImage: menuImage forState: UIControlStateNormal];
+    menuButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [menuButton addTarget: self action: @selector(menuPushed:) forControlEvents: UIControlEventTouchUpInside];
+    
+    [self.view addSubview: menuButton];
+    self.menuButton = menuButton;
+    
+    id topGuide = self.topLayoutGuide;
+    
+    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"H:[menuButton]-|"
+                                                                       options: 0
+                                                                       metrics: nil
+                                                                         views: NSDictionaryOfVariableBindings(menuButton)]];
+    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"V:|[topGuide]-[menuButton]"
+                                                                       options: 0
+                                                                       metrics: nil
+                                                                         views: NSDictionaryOfVariableBindings(topGuide, menuButton)]];
+}
+
+- (void) addBannerView {
+    GADBannerView* banner = [[GADBannerView alloc] initWithAdSize: kGADAdSizeBanner];
+    banner.delegate = self;
+    banner.adUnitID = ADMOB_SLOT_IDENTIFIER;
+    banner.rootViewController = self;
+    banner.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview: banner];
+    self.bannerView = banner;
+    
+    UIView* view = self.contentView;
+    
+    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"H:|[banner]|"
+                                                                       options: 0
+                                                                       metrics: nil
+                                                                         views: NSDictionaryOfVariableBindings(banner)]];
+    NSString* visualFormat = [NSString stringWithFormat: @"V:[view][banner(==%f)]", kGADAdSizeBanner.size.height];
+    
+    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: visualFormat
+                                                                       options: 0
+                                                                       metrics: nil
+                                                                         views: NSDictionaryOfVariableBindings(view, banner)]];
+    
+}
+
 - (void) setMenuItems:(NSArray *)menuItems {
     
     for(UIViewController* childController in self.viewControllers) {
@@ -65,32 +114,12 @@
     for(UIViewController* childController in self.viewControllers) {
         [self addChildViewController: childController];
     }
-    
-    _currentViewControllerIndex = 0;
-    
-    if( [self isViewLoaded] ) {
-        UIViewController* firstController =  [self.viewControllers count] > _currentViewControllerIndex ? self.viewControllers[_currentViewControllerIndex] : nil;
-        UIView* view = firstController.view;
-        view.translatesAutoresizingMaskIntoConstraints = NO;
-        
-        [self.view addSubview: view];
-        
-        [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"H:|[view]|"
-                                                                           options: 0
-                                                                           metrics: nil
-                                                                             views: NSDictionaryOfVariableBindings(view)]];
-        [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"V:|[view]|"
-                                                                           options: 0
-                                                                           metrics: nil
-                                                                             views: NSDictionaryOfVariableBindings(view)]];
-    }
 }
 
 - (void) displayView: (UIView*) view {
     view.backgroundColor = [UIColor clearColor];
     view.frame = self.contentView.bounds;
     view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    [self.contentView insertSubview: view belowSubview: self.menuButton];
 }
 
 #pragma mark - Actions
@@ -105,8 +134,6 @@
     for(AppMenuButton* itemView in _menuItemViews) {
         
         BOOL isSelectedItem = itemView == sender;
-        
-        //NSLog(@"Hold: %d, selected %d", shouldHoldSelection, isSelectedItem);
         
         [UIView animateWithDuration: 0.3
                               delay: 0
@@ -145,7 +172,7 @@
         UIViewController* newController =  newItem.controller;
         UIView* view = newController.view;
         [self displayView: view];
-        view.alpha = 0.f;
+        //view.alpha = 0.f;
         [self.menuButton setImage: newItem.image forState: UIControlStateNormal];
         
         [UIView transitionWithView: self.view
@@ -153,7 +180,8 @@
                            options: UIViewAnimationOptionCurveEaseInOut
                         animations: ^{
                             
-                            view.alpha = 1.f;
+                            [self.contentView insertSubview: view belowSubview: self.menuButton];
+                            //view.alpha = 1.f;
                             [oldItem.controller.view removeFromSuperview];
                             
                         } completion: NULL];
@@ -189,7 +217,7 @@
     tapGesture.delegate = self;
     
     [imageView addGestureRecognizer: tapGesture];
-
+    
     [UIView transitionWithView: self.view
                       duration: 0.3
                        options: UIViewAnimationOptionCurveEaseIn
@@ -251,6 +279,10 @@
                 }];
 }
 
+- (void) contentUnlocked: (NSNotification*) notification {
+    [self.bannerView loadRequest: nil];
+}
+
 #pragma mark - NSObject
 + (void) initialize {
     UIImage* img = [UIImage imageNamed: @"default-background"];
@@ -264,15 +296,19 @@
                                                  selector: @selector(locationChanged:)
                                                      name: kCurrentLocationChangedNotification
                                                    object: nil];
+#if IN_APP_PURCHASE_ENABLED
+        [[NSNotificationCenter defaultCenter] addObserver: self
+                                                 selector: @selector(contentUnlocked:)
+                                                     name: kContentUnlockedNotification
+                                                   object: nil];
+#endif
         
     }
     return self;
 }
 
 - (void) dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver: self
-                                                    name: kCurrentLocationChangedNotification
-                                                  object: nil];
+    [[NSNotificationCenter defaultCenter] removeObserver: self];
 }
 
 #pragma mark - UIViewController;
@@ -290,25 +326,6 @@
     [self.view addSubview: imageView];
     self.imageView = imageView;
     
-    GADBannerView* banner = [[GADBannerView alloc] initWithAdSize: kGADAdSizeBanner];
-    banner.delegate = self;
-    banner.adUnitID = @"ca-app-pub-1332160865070772/2668997243";
-    banner.rootViewController = self;
-    banner.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview: banner];
-    self.bannerView = banner;
-    
-    AppMenuItem* firstItem = [self.menuItems count] > _currentViewControllerIndex ? self.menuItems[_currentViewControllerIndex] : nil;
-    NSParameterAssert(firstItem);
-    
-    UIImage* menuImage = firstItem.image;
-    UIButton* menuButton = [UIButton buttonWithType: UIButtonTypeCustom];
-    menuButton.frame = CGRectMake(CGRectGetWidth(self.view.bounds)-menuImage.size.width, 0, menuImage.size.width, menuImage.size.height);
-    [menuButton setImage: menuImage forState: UIControlStateNormal];
-    menuButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [menuButton addTarget: self action: @selector(menuPushed:) forControlEvents: UIControlEventTouchUpInside];
-    
-    UIViewController* firstController =  firstItem.controller;
     UIView* view = [[UIView alloc] initWithFrame: self.view.bounds];// firstController.view;
     view.translatesAutoresizingMaskIntoConstraints = NO;
     view.backgroundColor = [UIColor clearColor];
@@ -316,10 +333,6 @@
     [self.view addSubview: view];
     self.contentView = view;
     
-    [self.view addSubview: menuButton];
-    self.menuButton = menuButton;
-    
-    id topGuide = self.topLayoutGuide;
     
     [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"H:|[view]|"
                                                                        options: 0
@@ -329,14 +342,6 @@
                                                                        options: 0
                                                                        metrics: nil
                                                                          views: NSDictionaryOfVariableBindings(view)]];
-    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"H:[menuButton]-|"
-                                                                       options: 0
-                                                                       metrics: nil
-                                                                         views: NSDictionaryOfVariableBindings(menuButton)]];
-    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"V:|[topGuide]-[menuButton]"
-                                                                       options: 0
-                                                                       metrics: nil
-                                                                         views: NSDictionaryOfVariableBindings(topGuide, menuButton)]];
     
     _bottomLayoutConstraint = [NSLayoutConstraint constraintWithItem: view
                                                            attribute: NSLayoutAttributeBottom
@@ -346,30 +351,36 @@
                                                           multiplier: 1.0
                                                             constant: 0.0];
     [self.view addConstraint: _bottomLayoutConstraint];
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear: animated];
     
-    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"H:|[banner]|"
-                                                                       options: 0
-                                                                       metrics: nil
-                                                                         views: NSDictionaryOfVariableBindings(banner)]];
-    NSString* visualFormat = [NSString stringWithFormat: @"V:[view][banner(==%f)]", kGADAdSizeBanner.size.height];
-    
-    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: visualFormat
-                                                                       options: 0
-                                                                       metrics: nil
-                                                                         views: NSDictionaryOfVariableBindings(view, banner)]];
-    
-    [self displayView: firstController.view];
+    if( !self.menuButton ) {
+        AppMenuItem* firstItem = self.menuItems[_currentViewControllerIndex];
+        NSParameterAssert(firstItem);
+        
+        UIViewController* firstController =  firstItem.controller;
+        [self addMenuButtonWithImage: firstItem.image];
+        [self addBannerView];
+        [self displayView: firstController.view];
+        [self.contentView insertSubview: firstController.view belowSubview: self.menuButton];
+    }
 }
 
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear: animated];
     
+#if IN_APP_PURCHASE_ENABLED
     if( ![ContentLock tryLock] ) {
+#endif
         GADRequest* request = [GADRequest request];
         request.testDevices = @[ GAD_SIMULATOR_ID ];
-    
+        
         [self.bannerView loadRequest: request];
+#if IN_APP_PURCHASE_ENABLED
     }
+#endif
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
@@ -378,10 +389,27 @@
     [self.bannerView loadRequest: nil];
 }
 
+- (void) encodeRestorableStateWithCoder:(NSCoder *)coder {
+    NSLog(@"Save: %@", NSStringFromClass([self class]));
+    [coder encodeInteger: _currentViewControllerIndex forKey: kStateResorationCurrentIndexKey];
+    
+    [super encodeRestorableStateWithCoder: coder];
+}
+
+- (void) decodeRestorableStateWithCoder:(NSCoder *)coder {
+    NSLog(@"Restore: %@", NSStringFromClass([self class]));
+    
+    [super decodeRestorableStateWithCoder: coder];
+    
+    if( [coder containsValueForKey: kStateResorationCurrentIndexKey] ) {
+        _currentViewControllerIndex = [coder decodeIntegerForKey: kStateResorationCurrentIndexKey];
+    }
+}
+
 #pragma mark - UIGestureRecognizerDelegate
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
     CGPoint location = [gestureRecognizer locationInView: self.view];
-   
+    
     for(UIView* view in _menuItemViews) {
         if( CGRectContainsPoint(view.frame, location) )
             return NO;
