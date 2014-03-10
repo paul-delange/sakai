@@ -24,12 +24,16 @@ extern NSString * const kCurrentLocationUserInfoKey;
 
 //START SAKAI
 
+/*
+ アプリ内購入で広告をオフにしたいでしたら、ここを設定してください。
+ */
 #define IN_APP_PURCHASE_ENABLED             0
-
 #define APPLICATION_BUNDLE_IDENTIFIER       @"jp.co.chesterford.pm25"
-
 #define UNLOCK_IN_APP_PURCHASE_IDENTIFIER   @"unlock_extras"
 
+/*
+ apps.admob.comから新しいアプリを追加して、そのアプリのバナースーロットをここに入れてください。
+ */
 #define ADMOB_SLOT_IDENTIFIER               @"ca-app-pub-1332160865070772/2668997243"
 
 //END SAKAI
