@@ -76,10 +76,12 @@
                                                                               if( image ) {
                                                                                   NSString* newImagePath = [[self photoDirectoryURL] stringByAppendingPathComponent: photoPath.lastPathComponent];
                                                                                   
+                                                                                  NSString* oldImagePath = [[self photoDirectoryURL] stringByAppendingPathComponent: currentImageName];
+                                                                                  
                                                                                   [data writeToFile: newImagePath atomically: YES];
-                                                                                  [[NSFileManager defaultManager] removeItemAtPath: currentImageName
+                                                                                  [[NSFileManager defaultManager] removeItemAtPath: oldImagePath
                                                                                                                              error: nil];
-                                                                                  [[NSUserDefaults standardUserDefaults] setObject: photoPath.lastPathComponent forKey: kUserDefaultsCurrentBackgroundPhotoURL];
+                                                                                  [[NSUserDefaults standardUserDefaults] setObject: newImagePath.lastPathComponent forKey: kUserDefaultsCurrentBackgroundPhotoURL];
                                                                                   [[NSUserDefaults standardUserDefaults] synchronize];
                                                                                   
                                                                                   if( completion ) {

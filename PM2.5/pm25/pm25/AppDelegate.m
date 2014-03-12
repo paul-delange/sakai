@@ -18,6 +18,8 @@
 #pragma mark - UIApplicationDelegate
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval: 60 * 60];
+    
     AppContainerViewController* container = (AppContainerViewController*)self.window.rootViewController;
     
     UIViewController* vc1 = [container.storyboard instantiateViewControllerWithIdentifier: @"CurrentLocationViewController"];
@@ -46,6 +48,10 @@
     return YES;
 }
 
+- (void) applicationWillEnterForeground:(UIApplication *)application {
+    application.applicationIconBadgeNumber = 0;
+}
+
 - (void) application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     //TODO: Send to server
 }
@@ -62,6 +68,46 @@
     NSString *restorationBundleVersion = [coder decodeObjectForKey:UIApplicationStateRestorationBundleVersionKey];
     NSString* applicationBundleVersion = [[NSBundle mainBundle] infoDictionary][(id)kCFBundleVersionKey];
     return [VersionComparator isVersion: restorationBundleVersion greaterThanOrEqualToVersion: applicationBundleVersion];
+}
+
+- (void) application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    NSDictionary* lastUpdate = [[NSUserDefaults standardUserDefaults] objectForKey: kUserDefaultsLastUpdateKey];
+    CGFloat lat = [lastUpdate[@"lat"] floatValue];
+    CGFloat lon = [lastUpdate[@"lon"] floatValue];
+    
+    if( lat != 0 & lon != 0) {
+        
+        NSString* dataPath = [NSString stringWithFormat: @"http://api.airtrack.info/data/position?lat=%f&lon=%f", lat, lon];
+        NSURL* dataURL = [NSURL URLWithString: dataPath];
+        NSURLRequest* request = [NSURLRequest requestWithURL: dataURL];
+        [NSURLConnection sendAsynchronousRequest: request
+                                           queue: [NSOperationQueue currentQueue]
+                               completionHandler: ^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+                                   if( connectionError ) {
+                                        completionHandler(UIBackgroundFetchResultFailed);
+                                   }
+                                   else {
+                                       id object = [NSJSONSerialization JSONObjectWithData: data options: 0 error: nil];
+                                       if( [object objectForKey: @"pm25"] ) {  //Hope we are ok!
+                                           [[NSUserDefaults standardUserDefaults] setObject: object forKey: kUserDefaultsLastUpdateKey];
+                                           [[NSUserDefaults standardUserDefaults] setObject: [NSDate date] forKey: kUserDefaultsLastLocationUpdateTimeKey];
+                                           [[NSUserDefaults standardUserDefaults] synchronize];
+                                           
+                                           NSUInteger value = [object[@"pm25"] integerValue];
+                                           
+                                           application.applicationIconBadgeNumber = value;
+                                           
+                                           completionHandler(UIBackgroundFetchResultNewData);
+                                       }
+                                       else {
+                                           completionHandler(UIBackgroundFetchResultFailed);
+                                       }
+                                   }
+                               }];
+    }
+    else {
+        completionHandler(UIBackgroundFetchResultNoData);
+    }
 }
 
 @end

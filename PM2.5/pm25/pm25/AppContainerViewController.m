@@ -285,8 +285,10 @@
 
 #pragma mark - NSObject
 + (void) initialize {
-    UIImage* img = [UIImage imageNamed: @"default-background"];
-    [PhotoGrabber setPhoto: img];
+    if( ![PhotoGrabber getPhotoForLocation: nil withCompletionHandler: nil]) {
+        UIImage* img = [UIImage imageNamed: @"default-background"];
+        [PhotoGrabber setPhoto: img];
+    }
 }
 
 - (id) initWithCoder:(NSCoder *)aDecoder {

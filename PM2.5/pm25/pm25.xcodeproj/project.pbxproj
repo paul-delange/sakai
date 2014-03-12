@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FD1C810218D08A0100674787 /* ParticleCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1C810118D08A0100674787 /* ParticleCollectionViewCell.m */; };
+		FD1C810518D09CC900674787 /* HistoryGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1C810418D09CC900674787 /* HistoryGraphView.m */; };
 		FD3A30DB18CB642F002B6990 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3A30DA18CB642F002B6990 /* Foundation.framework */; };
 		FD3A30DD18CB642F002B6990 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3A30DC18CB642F002B6990 /* CoreGraphics.framework */; };
 		FD3A30DF18CB642F002B6990 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3A30DE18CB642F002B6990 /* UIKit.framework */; };
@@ -56,6 +58,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FD1C810018D08A0100674787 /* ParticleCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleCollectionViewCell.h; sourceTree = "<group>"; };
+		FD1C810118D08A0100674787 /* ParticleCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticleCollectionViewCell.m; sourceTree = "<group>"; };
+		FD1C810318D09CC900674787 /* HistoryGraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryGraphView.h; sourceTree = "<group>"; };
+		FD1C810418D09CC900674787 /* HistoryGraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryGraphView.m; sourceTree = "<group>"; };
 		FD3A30D718CB642F002B6990 /* pm25.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pm25.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD3A30DA18CB642F002B6990 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FD3A30DC18CB642F002B6990 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -257,6 +263,10 @@
 				FD3BCD6918CC57B2001170D6 /* AppMenuButton.m */,
 				FD3BCD6F18CC6891001170D6 /* ForegroundPanel.h */,
 				FD3BCD7018CC6891001170D6 /* ForegroundPanel.m */,
+				FD1C810018D08A0100674787 /* ParticleCollectionViewCell.h */,
+				FD1C810118D08A0100674787 /* ParticleCollectionViewCell.m */,
+				FD1C810318D09CC900674787 /* HistoryGraphView.h */,
+				FD1C810418D09CC900674787 /* HistoryGraphView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -381,6 +391,13 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = Chesterford;
 				TargetAttributes = {
+					FD3A30D618CB642F002B6990 = {
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
+					};
 					FD3A30F118CB642F002B6990 = {
 						TestTargetID = FD3A30D618CB642F002B6990;
 					};
@@ -451,6 +468,7 @@
 				FD3E035C18CC87B70033845A /* Reading.m in Sources */,
 				FD3A30EB18CB642F002B6990 /* AppDelegate.m in Sources */,
 				FD3BCD6A18CC57B2001170D6 /* AppMenuButton.m in Sources */,
+				FD1C810218D08A0100674787 /* ParticleCollectionViewCell.m in Sources */,
 				FD3BCD7618CC865A001170D6 /* Cache.xcdatamodeld in Sources */,
 				FD6C925B18CB6CFC005D28A3 /* CurrentLocationViewController.m in Sources */,
 				FD3E036118CC88360033845A /* CoreDataStack.m in Sources */,
@@ -461,6 +479,7 @@
 				FD6C926718CBCEC8005D28A3 /* AppMenuItem.m in Sources */,
 				FD6C925618CB6CAF005D28A3 /* AppContainerViewController.m in Sources */,
 				FD3E038D18CDBD180033845A /* VersionComparator.m in Sources */,
+				FD1C810518D09CC900674787 /* HistoryGraphView.m in Sources */,
 				FD3A30E718CB642F002B6990 /* main.m in Sources */,
 				FD3E035E18CC87BC0033845A /* _Reading.m in Sources */,
 				FD3BCD7118CC6891001170D6 /* ForegroundPanel.m in Sources */,
