@@ -182,7 +182,8 @@
                             
                             [self.contentView insertSubview: view belowSubview: self.menuButton];
                             //view.alpha = 1.f;
-                            [oldItem.controller.view removeFromSuperview];
+                            if( view != oldItem.controller.view )
+                                [oldItem.controller.view removeFromSuperview];
                             
                         } completion: NULL];
     }
