@@ -101,7 +101,7 @@
         return nil;
     }
     else {
-        PMAnnotationView* view = (PMAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier: @"PMAnnotation"];
+        PMAnnotationView* view = nil;//(PMAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier: @"PMAnnotation"];
         if( !view ) {
             view = [[PMAnnotationView alloc] initWithAnnotation: annotation reuseIdentifier: @"PMAnnotation"];
         }

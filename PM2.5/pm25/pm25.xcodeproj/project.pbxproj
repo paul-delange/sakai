@@ -42,7 +42,6 @@
 		FD6C925B18CB6CFC005D28A3 /* CurrentLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C925A18CB6CFC005D28A3 /* CurrentLocationViewController.m */; };
 		FD6C925E18CB6D06005D28A3 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C925D18CB6D06005D28A3 /* MapViewController.m */; };
 		FD6C926118CB6D0F005D28A3 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C926018CB6D0F005D28A3 /* SettingsViewController.m */; };
-		FD6C926418CB7149005D28A3 /* PhotoGrabber.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C926318CB7149005D28A3 /* PhotoGrabber.m */; };
 		FD6C926718CBCEC8005D28A3 /* AppMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C926618CBCEC8005D28A3 /* AppMenuItem.m */; };
 /* End PBXBuildFile section */
 
@@ -455,7 +454,6 @@
 				FD04DA4718D1AE29007399E4 /* PMAnnotationView.m in Sources */,
 				FD1C810218D08A0100674787 /* ParticleCollectionViewCell.m in Sources */,
 				FD6C925B18CB6CFC005D28A3 /* CurrentLocationViewController.m in Sources */,
-				FD6C926418CB7149005D28A3 /* PhotoGrabber.m in Sources */,
 				FD6C925E18CB6D06005D28A3 /* MapViewController.m in Sources */,
 				FD6C926118CB6D0F005D28A3 /* SettingsViewController.m in Sources */,
 				FD3BCD6E18CC59AC001170D6 /* UIImage+ImageEffects.m in Sources */,

@@ -29,35 +29,34 @@
     CGContextSetStrokeColorWithColor(ctx, [UIColor whiteColor].CGColor);
     
     if( self.borderMask & kParticleBorderMaskTop ) {
-        CGContextMoveToPoint(ctx, 0, 0);
-        CGContextAddLineToPoint(ctx, CGRectGetWidth(rect), 0.0);
+        CGContextMoveToPoint(ctx, 0, 1);
+        CGContextAddLineToPoint(ctx, CGRectGetWidth(rect), 1.0);
     }
     
     if( self.borderMask & kParticleBorderMaskRight ) {
-        CGContextMoveToPoint(ctx, CGRectGetWidth(rect), 0);
-        CGContextAddLineToPoint(ctx, CGRectGetWidth(rect), CGRectGetHeight(rect));
+        CGContextMoveToPoint(ctx, CGRectGetWidth(rect)-1, 1);
+        CGContextAddLineToPoint(ctx, CGRectGetWidth(rect)-1, CGRectGetHeight(rect)-1);
     }
     
     if( self.borderMask & kParticleBorderMaskBottom ) {
-        CGContextMoveToPoint(ctx, 0, CGRectGetHeight(rect));
-        CGContextAddLineToPoint(ctx, CGRectGetWidth(rect), CGRectGetHeight(rect));
+        CGContextMoveToPoint(ctx, 1, CGRectGetHeight(rect)-1);
+        CGContextAddLineToPoint(ctx, CGRectGetWidth(rect)-1, CGRectGetHeight(rect)-1);
     }
     
     if( self.borderMask & kParticleBorderMaskLeft ) {
-        CGContextMoveToPoint(ctx, 0, 0);
-        CGContextAddLineToPoint(ctx, 0, CGRectGetHeight(rect));
+        CGContextMoveToPoint(ctx, 1, 1);
+        CGContextAddLineToPoint(ctx, 1, CGRectGetHeight(rect)-1);
     }
     
     CGFloat dashes[] = { 3., 1. };
-    CGContextSetLineWidth(ctx, 2);
-    CGContextSetLineDash(ctx, 0, dashes, 2);
+    
+    
     
     CGContextMoveToPoint(ctx, 0, CGRectGetMidY(rect));
     CGContextAddLineToPoint(ctx, CGRectGetWidth(rect), CGRectGetMidY(rect));
-    
+
     CGContextSetLineWidth(ctx, 1);
     CGContextSetLineDash(ctx, 0, dashes, 2);
-
     CGContextStrokePath(ctx);
 }
 

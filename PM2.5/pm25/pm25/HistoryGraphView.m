@@ -29,6 +29,11 @@
     self = [super initWithCoder: aDecoder];
     if( self ) {
         //_pointWidth = 10.;
+        self.clipsToBounds = NO;
+        self.layer.shadowColor = [UIColor blackColor].CGColor;
+        self.layer.shadowOpacity = 0.8;
+        self.layer.shadowRadius = 5.;
+        self.layer.shadowOffset = CGSizeMake(0, 2);
     }
     return self;
 }
@@ -43,6 +48,8 @@
 - (void) drawRect:(CGRect)rect {
     [super drawRect: rect];
     
+    //NSLog(@"Rect: %@", NSStringFromCGRect(rect));
+    
     NSUInteger numberOfPoints = [self.points count];
     
     if( numberOfPoints > 1 ) {
@@ -54,12 +61,11 @@
         
         stride = MIN(stride, 35.);
         
-        CGFloat offset = (CGRectGetWidth(rect) - numberOfPoints * stride)/2. + spacing;
+        CGFloat offset = (CGRectGetWidth(rect) - numberOfPoints * stride)/2. + spacing/2.;
         CGFloat maxBarHeight = CGRectGetHeight(rect) * 0.65;
         CGFloat notchHeight = 5.;
-        CGFloat labelHeight = (CGRectGetHeight(rect) - maxBarHeight - notchHeight)/2.;
-        
-        CGFloat lineCenterY = maxBarHeight + notchHeight + labelHeight;
+       
+        CGFloat lineCenterY = maxBarHeight + notchHeight;
         
         CGContextSetStrokeColorWithColor(ctx, [UIColor whiteColor].CGColor);
         
@@ -83,23 +89,34 @@
                                           };
         
         
-        CGFloat maxValue = [[self.points valueForKeyPath:@"@max.value"] floatValue];
+        __block CGFloat maxValue = 0.;
+        
+        [self.points enumerateObjectsUsingBlock: ^(id obj, NSUInteger idx, BOOL *stop) {
+            NSDictionary* point = (NSDictionary*)obj;
+            CGFloat value = [point[@"value"] floatValue];
+            if( value > maxValue )
+                maxValue = value;
+        }];
         
         for(NSUInteger i=0;i<numberOfPoints;i++) {
             NSDictionary* point = self.points[i];
             NSString* value = point[@"value"];
             
-            CGFloat percent = 1 - [value integerValue] / maxValue;
+            CGSize labelSize = [value sizeWithAttributes: labelAttributes];
+            
+            CGFloat percent = [value integerValue] / maxValue;
+            
+            NSLog(@"%f, %@", percent, value);
             
             CGRect fillRect = CGRectMake(centers[i]-(stride-spacing)/2.,
-                                         percent * maxBarHeight + labelHeight,
+                                         (1-percent) * maxBarHeight + labelSize.height,
                                          (stride-spacing),
-                                         maxBarHeight * (1-percent));
+                                         maxBarHeight * percent - labelSize.height);
+            
+            //NSLog(@"Bar: %f%% * %f = %f", percent * 100, maxBarHeight, CGRectGetHeight(fillRect));
             
             CGContextSetFillColorWithColor(ctx, [UIColor yellowColor].CGColor);
             CGContextFillRect(ctx, fillRect);
-            
-            CGSize labelSize = [value sizeWithAttributes: labelAttributes];
             
             CGRect valueRect = fillRect;
             valueRect.origin.y -= labelSize.height;
@@ -123,9 +140,9 @@
             CGSize labelSize = [fullDateString sizeWithAttributes: labelAttributes];
             
             CGRect labelRect = CGRectMake(centers[i]-(stride-1)/2.,
-                                          CGRectGetHeight(rect)-labelHeight,
+                                          CGRectGetHeight(rect)-labelSize.height,
                                           stride-1,
-                                          labelHeight);
+                                          labelSize.height);
             NSParameterAssert(labelSize.width <= labelRect.size.width);
             
             labelRect.origin.x += (labelRect.size.width-labelSize.width)/2.f;
