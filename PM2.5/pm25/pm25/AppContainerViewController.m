@@ -60,7 +60,10 @@
     [menuButton setImage: menuImage forState: UIControlStateNormal];
     menuButton.translatesAutoresizingMaskIntoConstraints = NO;
     [menuButton addTarget: self action: @selector(menuPushed:) forControlEvents: UIControlEventTouchUpInside];
-    
+    menuButton.layer.shadowColor = [UIColor blackColor].CGColor;
+    menuButton.layer.shadowOpacity = 1.;
+    menuButton.layer.shadowOffset = CGSizeZero;
+    menuButton.layer.shadowRadius = 5.;
     [self.view addSubview: menuButton];
     self.menuButton = menuButton;
     

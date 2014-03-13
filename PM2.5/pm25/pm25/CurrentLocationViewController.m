@@ -92,6 +92,11 @@ typedef NS_ENUM(NSUInteger, kParticleType) {
 - (void)viewDidLoad {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    CGSize scrollSize = self.view.bounds.size;
+    scrollSize.height *= 2.;
+    
+    self.scrollView.contentSize = scrollSize;
+    
     NSDictionary* lastUpdate = [[NSUserDefaults standardUserDefaults] objectForKey: kUserDefaultsLastUpdateKey];
     [self setLocationDictionary: lastUpdate];
     
@@ -133,6 +138,7 @@ typedef NS_ENUM(NSUInteger, kParticleType) {
 - (void)locationManager:(CLLocationManager *)manager
     didUpdateToLocation:(CLLocation *)newLocation
            fromLocation:(CLLocation *)oldLocation {
+    NSLog(@"Location update");
     
     //TODO: Get PM2.5 data from server
     [_dataTask cancel];
