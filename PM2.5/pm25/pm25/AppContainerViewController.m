@@ -209,13 +209,13 @@
     
     CGSize imageSize = self.view.bounds.size;
     UIGraphicsBeginImageContextWithOptions(imageSize, NO, 0.0);
-    [self.view drawViewHierarchyInRect: self.contentView.bounds afterScreenUpdates: NO];
+    [self.contentView drawViewHierarchyInRect: self.contentView.bounds afterScreenUpdates: NO];
     UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
-    screenshot = [screenshot applyBlurWithRadius: 5
+    screenshot = [screenshot applyBlurWithRadius: 1.5
                                        tintColor: [UIColor colorWithWhite: 1.0 alpha: 0.3]
-                           saturationDeltaFactor: 1.8
+                           saturationDeltaFactor: 1
                                        maskImage: nil];
     
     UIImageView* imageView = [[UIImageView alloc] initWithImage: screenshot];
@@ -343,8 +343,8 @@
     CAGradientLayer* layer = [CAGradientLayer layer];
     layer.colors = @[(id)topColor.CGColor, (id)bottomColor.CGColor];
     layer.frame = self.view.bounds;
-    layer.endPoint = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetHeight(self.view.bounds));
-    layer.startPoint = CGPointMake(CGRectGetMidX(self.view.bounds), 0);
+    layer.endPoint = CGPointMake(0.5, 1);
+    layer.startPoint = CGPointMake(0.5, 0);
     [self.view.layer insertSublayer: layer atIndex: 0];
     
     UIView* view = [[UIView alloc] initWithFrame: self.view.bounds];// firstController.view;

@@ -211,14 +211,14 @@ typedef NS_ENUM(NSUInteger, kParticleType) {
     
     self.scrollView.contentSize = scrollSize;
     
-    NSLog(@"Size: %@", NSStringFromCGSize(self.scrollView.contentSize));
+    //NSLog(@"Size: %@", NSStringFromCGSize(self.scrollView.contentSize));
 }
 
 #pragma mark - CLLocationManagerDelegate
 - (void)locationManager:(CLLocationManager *)manager
     didUpdateToLocation:(CLLocation *)newLocation
            fromLocation:(CLLocation *)oldLocation {
-    NSLog(@"Location: %@", manager.location);
+    //NSLog(@"Location: %@", manager.location);
     
     [self fetchInformationForLocation: newLocation];
     

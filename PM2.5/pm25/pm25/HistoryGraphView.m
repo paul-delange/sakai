@@ -106,7 +106,7 @@
             
             CGFloat percent = [value integerValue] / maxValue;
             
-            NSLog(@"%f, %@", percent, value);
+            //NSLog(@"%f, %@", percent, value);
             
             CGRect fillRect = CGRectMake(centers[i]-(stride-spacing)/2.,
                                          (1-percent) * maxBarHeight + labelSize.height,

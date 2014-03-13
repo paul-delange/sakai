@@ -12,26 +12,7 @@
 
 @implementation PMAnnotationView
 
-- (id) initWithAnnotation:(id<MKAnnotation>)annotation reuseIdentifier:(NSString *)reuseIdentifier {
-    self = [super initWithAnnotation: annotation reuseIdentifier: reuseIdentifier];
-    
-    if( self ) {
-        CGRect frame = self.frame;
-        frame.size.width = 30;
-        frame.size.height = 30;
-        self.frame = frame;
-        
-        self.opaque = NO;
-        
-        self.layer.shadowColor = [[UIColor blackColor] CGColor];
-        self.layer.shadowOpacity = 1.;
-        self.layer.shadowRadius = 5.;
-        self.layer.shadowOffset = CGSizeMake(0, 1);
-    }
-    
-    return self;
-}
-
+#pragma mark - UIView
 - (void) drawRect:(CGRect)rect {
     [super drawRect: rect];
     
@@ -63,6 +44,33 @@
     CGSize titleSize = [ann.title sizeWithAttributes: titleAttributes];
     [ann.title drawAtPoint: CGPointMake((CGRectGetWidth(rect)-titleSize.width)/2., (CGRectGetHeight(rect)-titleSize.height)/2.)
             withAttributes: titleAttributes];
+}
+
+#pragma mark - MKAnnotationView
+- (id) initWithAnnotation:(id<MKAnnotation>)annotation reuseIdentifier:(NSString *)reuseIdentifier {
+    self = [super initWithAnnotation: annotation reuseIdentifier: reuseIdentifier];
+    
+    if( self ) {
+        CGRect frame = self.frame;
+        frame.size.width = 30;
+        frame.size.height = 30;
+        self.frame = frame;
+        
+        self.opaque = NO;
+        
+        self.layer.shadowColor = [[UIColor blackColor] CGColor];
+        self.layer.shadowOpacity = 1.;
+        self.layer.shadowRadius = 5.;
+        self.layer.shadowOffset = CGSizeMake(0, 1);
+    }
+    
+    return self;
+}
+
+- (void) prepareForReuse {
+    [super prepareForReuse];
+    
+    [self setNeedsDisplay];
 }
 
 @end
