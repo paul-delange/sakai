@@ -17,5 +17,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *pmLabel;
 @property (weak, nonatomic) IBOutlet UILabel *lastUpdatedLabel;
 @property (weak, nonatomic) IBOutlet UILabel *recentRecordingsLabel;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @end
