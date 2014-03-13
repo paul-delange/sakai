@@ -8,6 +8,7 @@
 
 #import "MapViewController.h"
 #import "PMAnnotationView.h"
+#import "PMAnnotation.h"
 
 #import "MKMapView+ZoomLevel.h"
 
@@ -67,8 +68,9 @@
             NSString* title = value;
             
             if( [title length] && [title integerValue] > 0) {
-                MKPointAnnotation* ann = [MKPointAnnotation new];
+                PMAnnotation* ann = [PMAnnotation new];
                 ann.title = value;
+                ann.pmValue = [value integerValue];
                 ann.coordinate = CLLocationCoordinate2DMake(lat, lon);
                 [annotations addObject: ann];
             }

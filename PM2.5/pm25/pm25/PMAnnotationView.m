@@ -8,6 +8,8 @@
 
 #import "PMAnnotationView.h"
 
+#import "PMAnnotation.h"
+
 @implementation PMAnnotationView
 
 - (id) initWithAnnotation:(id<MKAnnotation>)annotation reuseIdentifier:(NSString *)reuseIdentifier {
@@ -33,9 +35,21 @@
 - (void) drawRect:(CGRect)rect {
     [super drawRect: rect];
     
+    PMAnnotation* ann = self.annotation;
+    
     UIBezierPath* borderPath = [UIBezierPath bezierPathWithRoundedRect: rect cornerRadius: 5.];
     CGContextRef ctx = UIGraphicsGetCurrentContext();
-    UIColor* backgroundColor = [UIColor colorWithWhite: 0.75 alpha: 0.75];
+    UIColor* backgroundColor;
+    
+    if( ann.pmValue > 70 ) {
+        backgroundColor = [UIColor colorWithRed: 220/255. green: 80/255. blue: 80/255. alpha: 0.75];
+    }
+    else if( ann.pmValue > 35 ) {
+        backgroundColor = [UIColor colorWithRed: 211/255. green: 220/255. blue: 56/255. alpha: 0.75];
+    }
+    else {
+        backgroundColor = [UIColor colorWithWhite: 0.75 alpha: 0.75];
+    }
     
     CGContextSetFillColorWithColor(ctx, [backgroundColor CGColor]);
     CGContextAddPath(ctx, [borderPath CGPath]);
@@ -46,7 +60,6 @@
                                       NSFontAttributeName : [UIFont preferredFontForTextStyle: UIFontTextStyleBody]
                                       };
     
-    MKPointAnnotation* ann = self.annotation;
     CGSize titleSize = [ann.title sizeWithAttributes: titleAttributes];
     [ann.title drawAtPoint: CGPointMake((CGRectGetWidth(rect)-titleSize.width)/2., (CGRectGetHeight(rect)-titleSize.height)/2.)
             withAttributes: titleAttributes];

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		FD04DA4718D1AE29007399E4 /* PMAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD04DA4618D1AE29007399E4 /* PMAnnotationView.m */; };
 		FD04DA4D18D1B7DD007399E4 /* MKMapView+ZoomLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = FD04DA4C18D1B7DD007399E4 /* MKMapView+ZoomLevel.m */; };
+		FD04DA5018D1C859007399E4 /* PMAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = FD04DA4F18D1C859007399E4 /* PMAnnotation.m */; };
 		FD1C810218D08A0100674787 /* ParticleCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1C810118D08A0100674787 /* ParticleCollectionViewCell.m */; };
 		FD1C810518D09CC900674787 /* HistoryGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1C810418D09CC900674787 /* HistoryGraphView.m */; };
 		FD1C810818D0B31F00674787 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FD1C810618D0B31F00674787 /* Localizable.strings */; };
@@ -60,6 +61,8 @@
 		FD04DA4618D1AE29007399E4 /* PMAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMAnnotationView.m; sourceTree = "<group>"; };
 		FD04DA4B18D1B7DD007399E4 /* MKMapView+ZoomLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+ZoomLevel.h"; sourceTree = "<group>"; };
 		FD04DA4C18D1B7DD007399E4 /* MKMapView+ZoomLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKMapView+ZoomLevel.m"; sourceTree = "<group>"; };
+		FD04DA4E18D1C859007399E4 /* PMAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMAnnotation.h; sourceTree = "<group>"; };
+		FD04DA4F18D1C859007399E4 /* PMAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMAnnotation.m; sourceTree = "<group>"; };
 		FD1C810018D08A0100674787 /* ParticleCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleCollectionViewCell.h; sourceTree = "<group>"; };
 		FD1C810118D08A0100674787 /* ParticleCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticleCollectionViewCell.m; sourceTree = "<group>"; };
 		FD1C810318D09CC900674787 /* HistoryGraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryGraphView.h; sourceTree = "<group>"; };
@@ -278,6 +281,8 @@
 				FD6C926318CB7149005D28A3 /* PhotoGrabber.m */,
 				FD6C926518CBCEC8005D28A3 /* AppMenuItem.h */,
 				FD6C926618CBCEC8005D28A3 /* AppMenuItem.m */,
+				FD04DA4E18D1C859007399E4 /* PMAnnotation.h */,
+				FD04DA4F18D1C859007399E4 /* PMAnnotation.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -444,6 +449,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD04DA5018D1C859007399E4 /* PMAnnotation.m in Sources */,
 				FD3A30EB18CB642F002B6990 /* AppDelegate.m in Sources */,
 				FD3BCD6A18CC57B2001170D6 /* AppMenuButton.m in Sources */,
 				FD04DA4718D1AE29007399E4 /* PMAnnotationView.m in Sources */,
