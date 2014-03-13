@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FD04DA4718D1AE29007399E4 /* PMAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD04DA4618D1AE29007399E4 /* PMAnnotationView.m */; };
+		FD04DA4D18D1B7DD007399E4 /* MKMapView+ZoomLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = FD04DA4C18D1B7DD007399E4 /* MKMapView+ZoomLevel.m */; };
 		FD1C810218D08A0100674787 /* ParticleCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1C810118D08A0100674787 /* ParticleCollectionViewCell.m */; };
 		FD1C810518D09CC900674787 /* HistoryGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1C810418D09CC900674787 /* HistoryGraphView.m */; };
 		FD1C810818D0B31F00674787 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FD1C810618D0B31F00674787 /* Localizable.strings */; };
@@ -54,6 +56,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FD04DA4518D1AE29007399E4 /* PMAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMAnnotationView.h; sourceTree = "<group>"; };
+		FD04DA4618D1AE29007399E4 /* PMAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMAnnotationView.m; sourceTree = "<group>"; };
+		FD04DA4B18D1B7DD007399E4 /* MKMapView+ZoomLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+ZoomLevel.h"; sourceTree = "<group>"; };
+		FD04DA4C18D1B7DD007399E4 /* MKMapView+ZoomLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKMapView+ZoomLevel.m"; sourceTree = "<group>"; };
 		FD1C810018D08A0100674787 /* ParticleCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleCollectionViewCell.h; sourceTree = "<group>"; };
 		FD1C810118D08A0100674787 /* ParticleCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticleCollectionViewCell.m; sourceTree = "<group>"; };
 		FD1C810318D09CC900674787 /* HistoryGraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryGraphView.h; sourceTree = "<group>"; };
@@ -256,6 +262,8 @@
 				FD1C810118D08A0100674787 /* ParticleCollectionViewCell.m */,
 				FD1C810318D09CC900674787 /* HistoryGraphView.h */,
 				FD1C810418D09CC900674787 /* HistoryGraphView.m */,
+				FD04DA4518D1AE29007399E4 /* PMAnnotationView.h */,
+				FD04DA4618D1AE29007399E4 /* PMAnnotationView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -290,6 +298,8 @@
 		FD3BCD6B18CC5995001170D6 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				FD04DA4B18D1B7DD007399E4 /* MKMapView+ZoomLevel.h */,
+				FD04DA4C18D1B7DD007399E4 /* MKMapView+ZoomLevel.m */,
 				FD3E038B18CDBD180033845A /* VersionComparator.h */,
 				FD3E038C18CDBD180033845A /* VersionComparator.m */,
 				FD3E038418CCDD3B0033845A /* libcrypto.a */,
@@ -373,7 +383,7 @@
 		FD3A30CF18CB642F002B6990 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Chesterford;
 				TargetAttributes = {
 					FD3A30D618CB642F002B6990 = {
@@ -436,12 +446,14 @@
 			files = (
 				FD3A30EB18CB642F002B6990 /* AppDelegate.m in Sources */,
 				FD3BCD6A18CC57B2001170D6 /* AppMenuButton.m in Sources */,
+				FD04DA4718D1AE29007399E4 /* PMAnnotationView.m in Sources */,
 				FD1C810218D08A0100674787 /* ParticleCollectionViewCell.m in Sources */,
 				FD6C925B18CB6CFC005D28A3 /* CurrentLocationViewController.m in Sources */,
 				FD6C926418CB7149005D28A3 /* PhotoGrabber.m in Sources */,
 				FD6C925E18CB6D06005D28A3 /* MapViewController.m in Sources */,
 				FD6C926118CB6D0F005D28A3 /* SettingsViewController.m in Sources */,
 				FD3BCD6E18CC59AC001170D6 /* UIImage+ImageEffects.m in Sources */,
+				FD04DA4D18D1B7DD007399E4 /* MKMapView+ZoomLevel.m in Sources */,
 				FD6C926718CBCEC8005D28A3 /* AppMenuItem.m in Sources */,
 				FD6C925618CB6CAF005D28A3 /* AppContainerViewController.m in Sources */,
 				FD3E038D18CDBD180033845A /* VersionComparator.m in Sources */,
@@ -493,7 +505,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -532,7 +543,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -614,7 +624,6 @@
 		FD3A310718CB642F002B6990 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/pm25.app/pm25";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -637,7 +646,6 @@
 		FD3A310818CB642F002B6990 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/pm25.app/pm25";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",

@@ -55,11 +55,11 @@
         stride = MIN(stride, 35.);
         
         CGFloat offset = (CGRectGetWidth(rect) - numberOfPoints * stride)/2. + spacing;
-        CGFloat maxBarHeight = CGRectGetHeight(rect) * 0.75;
+        CGFloat maxBarHeight = CGRectGetHeight(rect) * 0.65;
         CGFloat notchHeight = 5.;
-        CGFloat labelHeight = CGRectGetHeight(rect) - maxBarHeight - notchHeight;
+        CGFloat labelHeight = (CGRectGetHeight(rect) - maxBarHeight - notchHeight)/2.;
         
-        CGFloat lineCenterY = maxBarHeight + notchHeight;
+        CGFloat lineCenterY = maxBarHeight + notchHeight + labelHeight;
         
         CGContextSetStrokeColorWithColor(ctx, [UIColor whiteColor].CGColor);
         
@@ -69,38 +69,47 @@
             
             CGContextMoveToPoint(ctx, centers[i], lineCenterY-notchHeight/2.);
             CGContextAddLineToPoint(ctx, centers[i], lineCenterY+notchHeight/2.);
-    
+            
         }
         
         CGContextMoveToPoint(ctx, centers[0], lineCenterY);
         CGContextAddLineToPoint(ctx, centers[numberOfPoints-1], lineCenterY);
         
         CGContextStrokePath(ctx);
-    
         
-        CGContextSetFillColorWithColor(ctx, [UIColor yellowColor].CGColor);
+        NSDictionary* labelAttributes = @{
+                                          NSFontAttributeName : [UIFont systemFontOfSize: 9],
+                                          NSForegroundColorAttributeName : [UIColor whiteColor]
+                                          };
+        
         
         CGFloat maxValue = [[self.points valueForKeyPath:@"@max.value"] floatValue];
         
         for(NSUInteger i=0;i<numberOfPoints;i++) {
             NSDictionary* point = self.points[i];
-            NSUInteger value = [point[@"value"] integerValue];
+            NSString* value = point[@"value"];
             
-            CGFloat percent = 1 - value / maxValue;
+            CGFloat percent = 1 - [value integerValue] / maxValue;
             
             CGRect fillRect = CGRectMake(centers[i]-(stride-spacing)/2.,
-                                         percent * maxBarHeight,
+                                         percent * maxBarHeight + labelHeight,
                                          (stride-spacing),
                                          maxBarHeight * (1-percent));
             
+            CGContextSetFillColorWithColor(ctx, [UIColor yellowColor].CGColor);
             CGContextFillRect(ctx, fillRect);
+            
+            CGSize labelSize = [value sizeWithAttributes: labelAttributes];
+            
+            CGRect valueRect = fillRect;
+            valueRect.origin.y -= labelSize.height;
+            valueRect.size.height = labelSize.height;
+            valueRect.origin.x += (valueRect.size.width-labelSize.width)/2.f;
+            valueRect.size.width = labelSize.width;
+            
+            [value drawInRect: valueRect withAttributes: labelAttributes];
         }
-        
-        NSDictionary* labelAttributes = @{
-                                          NSFontAttributeName : [UIFont preferredFontForTextStyle: UIFontTextStyleCaption2],
-                                          NSForegroundColorAttributeName : [UIColor whiteColor]
-                                          };
-        
+
         for(NSUInteger i=0;i<numberOfPoints;i++) {
             NSDictionary* point = self.points[i];
             
@@ -111,12 +120,19 @@
             NSRange endTime = [fullDateString rangeOfString: @":" options: NSBackwardsSearch];
             fullDateString = [fullDateString substringToIndex: endTime.location];
             
+            CGSize labelSize = [fullDateString sizeWithAttributes: labelAttributes];
+            
             CGRect labelRect = CGRectMake(centers[i]-(stride-1)/2.,
-                                     CGRectGetHeight(rect)-labelHeight,
-                                     stride-1,
-                                     labelHeight);
+                                          CGRectGetHeight(rect)-labelHeight,
+                                          stride-1,
+                                          labelHeight);
+            NSParameterAssert(labelSize.width <= labelRect.size.width);
+            
+            labelRect.origin.x += (labelRect.size.width-labelSize.width)/2.f;
+            labelRect.size.width = labelSize.width;
             
             [fullDateString drawInRect: labelRect withAttributes: labelAttributes];
+            
         }
     }
 }
