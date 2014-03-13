@@ -67,10 +67,10 @@
             NSString* title = value;
             
             if( [title length] && [title integerValue] > 0) {
-            MKPointAnnotation* ann = [MKPointAnnotation new];
-            ann.title = value;
-            ann.coordinate = CLLocationCoordinate2DMake(lat, lon);
-            [annotations addObject: ann];
+                MKPointAnnotation* ann = [MKPointAnnotation new];
+                ann.title = value;
+                ann.coordinate = CLLocationCoordinate2DMake(lat, lon);
+                [annotations addObject: ann];
             }
         }
     }
@@ -86,20 +86,26 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    
+    self.mapView.showsUserLocation = YES;
+    self.mapView.userTrackingMode = MKUserTrackingModeFollow;
+    
     [self.mapView setCenterCoordinate: self.mapView.centerCoordinate zoomLevel: 8 animated: NO];
 }
 
 #pragma mark - MKMapViewDelegate
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
-    PMAnnotationView* view = (PMAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier: @"PMAnnotation"];
-    if( view ) {
-        //view.annotation = annotation;
+    if( [annotation isKindOfClass: [MKUserLocation class]] ) {
+        return nil;
     }
     else {
-        view = [[PMAnnotationView alloc] initWithAnnotation: annotation reuseIdentifier: @"PMAnnotation"];
+        PMAnnotationView* view = (PMAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier: @"PMAnnotation"];
+        if( !view ) {
+            view = [[PMAnnotationView alloc] initWithAnnotation: annotation reuseIdentifier: @"PMAnnotation"];
+        }
+        
+        return view;
     }
-    
-    return view;
 }
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {

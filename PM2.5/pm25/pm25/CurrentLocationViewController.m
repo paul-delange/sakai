@@ -32,6 +32,7 @@ typedef NS_ENUM(NSUInteger, kParticleType) {
 
 @property (weak, nonatomic) IBOutlet UICollectionView *particleCollectionView;
 @property (weak, nonatomic) IBOutlet HistoryGraphView *graphView;
+@property (weak, nonatomic) IBOutlet UILabel *explanationLabel;
 @property (weak) IBOutlet UIRefreshControl* refreshControl;
 
 @end
@@ -85,8 +86,18 @@ typedef NS_ENUM(NSUInteger, kParticleType) {
         NSString* format = NSLocalizedString(@"Distance away: %0.2fkm", @"");
         self.distanceAwayLabel.text = [NSString stringWithFormat:format, [locationInfo[@"distance"] floatValue]];
         self.graphView.points = locationInfo[@"history"];
+        
+        id value = locationInfo[@"pm25"];
+        
+        if( [value integerValue] > 35 ) {
+            self.pmValueLabel.textColor = [UIColor redColor];
+        }
+        else {
+            self.pmValueLabel.textColor = [UIColor whiteColor];
+        }
     }
     else {
+        self.pmValueLabel.textColor = [UIColor whiteColor];
         self.graphView.points = nil;
         self.areaLabel.text = NSLocalizedString(@"Unknown area", @"");
         self.locationNameLabel.text = NSLocalizedString(@"Unknown location", @"");
@@ -145,8 +156,14 @@ typedef NS_ENUM(NSUInteger, kParticleType) {
     NSDictionary* lastUpdate = [[NSUserDefaults standardUserDefaults] objectForKey: kUserDefaultsLastUpdateKey];
     [self setLocationDictionary: lastUpdate];
     
-    self.pmLabel.text = NSLocalizedString(@"PM2.5:", @"");
+    NSDictionary* pmLabelAttributes = @{
+                                        NSForegroundColorAttributeName :  [UIColor whiteColor],
+                                        NSUnderlineStyleAttributeName : @YES
+                                        };
+    
+    self.pmLabel.attributedText = [[NSAttributedString alloc] initWithString: NSLocalizedString(@"PM2.5", @"") attributes: pmLabelAttributes];
     self.recentRecordingsLabel.text = NSLocalizedString(@"PM2.5 Movement", @"");
+    self.explanationLabel.text = NSLocalizedString(@"Normal: Less than 35uG/m2 per day", @"");
     
     UIRefreshControl* refreshControl = [UIRefreshControl new];
     refreshControl.tintColor = [UIColor whiteColor];
