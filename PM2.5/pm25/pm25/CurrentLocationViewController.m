@@ -158,12 +158,12 @@ typedef NS_ENUM(NSUInteger, kParticleType) {
     
     NSDictionary* pmLabelAttributes = @{
                                         NSForegroundColorAttributeName :  [UIColor whiteColor],
-                                        NSUnderlineStyleAttributeName : @YES
+                                        //NSUnderlineStyleAttributeName : @YES
                                         };
     
     self.pmLabel.attributedText = [[NSAttributedString alloc] initWithString: NSLocalizedString(@"PM2.5", @"") attributes: pmLabelAttributes];
     self.recentRecordingsLabel.text = NSLocalizedString(@"PM2.5 Movement", @"");
-    self.explanationLabel.text = NSLocalizedString(@"Normal: Less than 35uG/m2 per day", @"");
+    self.explanationLabel.text = NSLocalizedString(@"Normal: Less than 35uG/m3 per day", @"");
     
     UIRefreshControl* refreshControl = [UIRefreshControl new];
     refreshControl.tintColor = [UIColor whiteColor];

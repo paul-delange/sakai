@@ -55,7 +55,7 @@
     CGContextMoveToPoint(ctx, 0, CGRectGetMidY(rect));
     CGContextAddLineToPoint(ctx, CGRectGetWidth(rect), CGRectGetMidY(rect));
 
-    CGContextSetLineWidth(ctx, 1);
+    CGContextSetLineWidth(ctx, 0.5);
     CGContextSetLineDash(ctx, 0, dashes, 2);
     CGContextStrokePath(ctx);
 }

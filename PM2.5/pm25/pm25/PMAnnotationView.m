@@ -29,7 +29,7 @@
         backgroundColor = [UIColor colorWithRed: 211/255. green: 220/255. blue: 56/255. alpha: 0.75];
     }
     else {
-        backgroundColor = [UIColor colorWithWhite: 0.75 alpha: 0.75];
+        backgroundColor = [UIColor colorWithWhite: 1 alpha: 0.75];
     }
     
     CGContextSetFillColorWithColor(ctx, [backgroundColor CGColor]);
