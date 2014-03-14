@@ -34,7 +34,7 @@
                                                             andTitle: NSLocalizedString(@"Global readings", @"")];
     AppMenuItem* item3 = [[AppMenuItem alloc] initWithViewController: vc3
                                                                image: @"settings-icon"
-                                                            andTitle: NSLocalizedString(@"Settings", @"")];
+                                                            andTitle: NSLocalizedString(@"Credits", @"")];
     
     container.menuItems = @[item1, item2, item3];
     
