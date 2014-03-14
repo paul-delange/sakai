@@ -593,6 +593,8 @@
 					"$(inherited)",
 					/Users/pauldelange/Documents/sakai/PM2.5/pm25/Admob,
 					/Users/pauldelange/Documents/sakai/PM2.5/pm25/OpenSSL,
+					/Users/toshi/work/iphone/sakai/PM2.5/pm25/OpenSSL,
+					/Users/toshi/work/iphone/sakai/PM2.5/pm25/Admob,
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -618,6 +620,8 @@
 					"$(inherited)",
 					/Users/pauldelange/Documents/sakai/PM2.5/pm25/Admob,
 					/Users/pauldelange/Documents/sakai/PM2.5/pm25/OpenSSL,
+					/Users/toshi/work/iphone/sakai/PM2.5/pm25/OpenSSL,
+					/Users/toshi/work/iphone/sakai/PM2.5/pm25/Admob,
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
