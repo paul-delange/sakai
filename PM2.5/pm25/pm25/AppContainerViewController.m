@@ -337,8 +337,8 @@
     self.imageView = imageView;
     */
     
-    UIColor* topColor = [UIColor colorWithRed: 138/255. green: 178/255. blue: 1. alpha: 1.];
-    UIColor* bottomColor = [UIColor colorWithRed: 55/255. green: 110/255. blue: 197/255. alpha: 1.];
+    UIColor* topColor = [UIColor colorWithRed: 0/255. green: 124/255. blue: 211/255. alpha: 1.];
+    UIColor* bottomColor = [UIColor colorWithRed: 0/255. green: 124/255. blue: 211/255. alpha: 1.];
     
     CAGradientLayer* layer = [CAGradientLayer layer];
     layer.colors = @[(id)topColor.CGColor, (id)bottomColor.CGColor];

@@ -29,11 +29,12 @@
     self = [super initWithCoder: aDecoder];
     if( self ) {
         //_pointWidth = 10.;
-        self.clipsToBounds = NO;
-        self.layer.shadowColor = [UIColor blackColor].CGColor;
-        self.layer.shadowOpacity = 0.8;
-        self.layer.shadowRadius = 5.;
-        self.layer.shadowOffset = CGSizeMake(0, 2);
+        // 影なしに設定
+        //self.clipsToBounds = NO;
+        //self.layer.shadowColor = [UIColor blackColor].CGColor;
+        //self.layer.shadowOpacity = 0.8;
+        //self.layer.shadowRadius = 5.;
+        //self.layer.shadowOffset = CGSizeMake(0, 2);
     }
     return self;
 }
