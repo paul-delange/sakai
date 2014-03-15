@@ -335,7 +335,7 @@
     imageView.contentMode = UIViewContentModeScaleAspectFill;
     [self.view addSubview: imageView];
     self.imageView = imageView;
-    */
+    
     
     UIColor* topColor = [UIColor colorWithRed: 0/255. green: 124/255. blue: 211/255. alpha: 1.];
     UIColor* bottomColor = [UIColor colorWithRed: 0/255. green: 124/255. blue: 211/255. alpha: 1.];
@@ -346,7 +346,9 @@
     layer.endPoint = CGPointMake(0.5, 1);
     layer.startPoint = CGPointMake(0.5, 0);
     [self.view.layer insertSublayer: layer atIndex: 0];
+    */
     
+    self.view.backgroundColor = [UIColor colorWithRed: 0/255. green: 124/255. blue: 211/255. alpha: 1.];
     UIView* view = [[UIView alloc] initWithFrame: self.view.bounds];// firstController.view;
     view.translatesAutoresizingMaskIntoConstraints = NO;
     view.backgroundColor = [UIColor clearColor];

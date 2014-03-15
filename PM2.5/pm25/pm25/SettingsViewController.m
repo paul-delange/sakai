@@ -19,10 +19,28 @@ static bool isValidPMValue(NSInteger newAlertLevel) {
 
 @interface SettingsViewController () <UIAlertViewDelegate>
 
+@property (weak, nonatomic) IBOutlet UIImageView *logoImage;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *versionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *commentLabel;
+@property (weak, nonatomic) IBOutlet UILabel *thanksLabel;
+
 @end
 
 @implementation SettingsViewController
 
+#pragma mark - UIViewController
+- (void) viewDidLoad {
+    [super viewDidLoad];
+    
+    self.titleLabel.text = @"見えるPM2.5";
+    self.versionLabel.text = [[[NSBundle mainBundle] infoDictionary] objectForKey: (id)kCFBundleVersionKey];
+    self.commentLabel.text = NSLocalizedString(@"Depending on the current update status, values displayed on the map and actual values may be different (Values displayed on the map can be old). All values are estimates and should not be taken as official values.\n\nThis app uses data from Soramame-kun. Copyright is reserved.", @"");
+    self.thanksLabel.text = NSLocalizedString(@"Special Thanks to...\n   Developer Paul de Lange\n   Designer Azun", @"");
+    
+}
+
+/*
 #pragma mark - Actions
 - (IBAction)pushNotificationValueChanged:(UISwitch*)sender {
     if( sender.on ) {
@@ -173,6 +191,6 @@ static bool isValidPMValue(NSInteger newAlertLevel) {
             break;
     }
     
-}
+} */
 
 @end
