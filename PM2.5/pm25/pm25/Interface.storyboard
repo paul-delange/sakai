@@ -171,16 +171,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Bw-Ff-dDd">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Bw-Ff-dDd">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NA4-AT-W8u">
-                                        <rect key="frame" x="0.0" y="0.0" width="130" height="514"/>
+                                    <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NA4-AT-W8u">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TGE-Mc-H0v" userLabel="Current Value Panel" customClass="ForegroundPanel">
-                                                <rect key="frame" x="4" y="50" width="122" height="112"/>
+                                                <rect key="frame" x="4" y="50" width="312" height="166"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H2u-bX-hKK">
@@ -369,27 +369,11 @@
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="NA4-AT-W8u" secondAttribute="bottom" id="AxU-1O-0I8"/>
-                                    <constraint firstItem="NA4-AT-W8u" firstAttribute="top" secondItem="7Bw-Ff-dDd" secondAttribute="top" id="MI0-4j-Qjs"/>
-                                    <constraint firstItem="NA4-AT-W8u" firstAttribute="leading" secondItem="7Bw-Ff-dDd" secondAttribute="leading" id="OoZ-WP-weB"/>
-                                    <constraint firstAttribute="trailing" secondItem="NA4-AT-W8u" secondAttribute="trailing" id="rh0-J9-05o"/>
-                                </constraints>
                                 <connections>
                                     <outlet property="delegate" destination="F6V-ir-sAL" id="8Qj-nW-gvQ"/>
                                 </connections>
                             </scrollView>
                         </subviews>
-                        <constraints>
-                            <constraint firstItem="7Bw-Ff-dDd" firstAttribute="leading" secondItem="zs3-Xa-9mI" secondAttribute="leading" id="2yQ-3E-e72"/>
-                            <constraint firstItem="crP-Sz-L5i" firstAttribute="top" secondItem="7Bw-Ff-dDd" secondAttribute="bottom" id="D5W-bf-DQ2"/>
-                            <constraint firstAttribute="trailing" secondItem="7Bw-Ff-dDd" secondAttribute="trailing" id="MZb-St-XsQ"/>
-                            <constraint firstItem="7Bw-Ff-dDd" firstAttribute="top" secondItem="zs3-Xa-9mI" secondAttribute="top" id="QYi-aq-owE"/>
-                            <constraint firstItem="7Bw-Ff-dDd" firstAttribute="leading" secondItem="zs3-Xa-9mI" secondAttribute="leading" id="Wyh-Og-Jex"/>
-                            <constraint firstAttribute="trailing" secondItem="7Bw-Ff-dDd" secondAttribute="trailing" id="cXx-pu-Unv"/>
-                            <constraint firstItem="7Bw-Ff-dDd" firstAttribute="top" secondItem="zs3-Xa-9mI" secondAttribute="top" id="nV8-ch-rDj"/>
-                            <constraint firstAttribute="bottom" secondItem="7Bw-Ff-dDd" secondAttribute="bottom" id="tEl-vo-iIX"/>
-                        </constraints>
                     </view>
                     <connections>
                         <outlet property="areaLabel" destination="H2u-bX-hKK" id="yZq-Yk-nb9"/>
