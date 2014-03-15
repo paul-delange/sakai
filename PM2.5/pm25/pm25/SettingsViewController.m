@@ -12,10 +12,10 @@
 #define     kAlertViewInvalidPMValueTag     982
 #define     kAlertViewPurchaseRequiredTag   983
 
-
+/*
 static bool isValidPMValue(NSInteger newAlertLevel) {
     return newAlertLevel > 10 && newAlertLevel < 100;
-}
+} */
 
 @interface SettingsViewController () <UIAlertViewDelegate>
 

@@ -591,10 +591,8 @@
 				INFOPLIST_FILE = "pm25/pm25-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/pauldelange/Documents/sakai/PM2.5/pm25/Admob,
-					/Users/pauldelange/Documents/sakai/PM2.5/pm25/OpenSSL,
-					/Users/toshi/work/iphone/sakai/PM2.5/pm25/OpenSSL,
-					/Users/toshi/work/iphone/sakai/PM2.5/pm25/Admob,
+					Admob,
+					OpenSSL,
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -618,10 +616,8 @@
 				INFOPLIST_FILE = "pm25/pm25-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/pauldelange/Documents/sakai/PM2.5/pm25/Admob,
-					/Users/pauldelange/Documents/sakai/PM2.5/pm25/OpenSSL,
-					/Users/toshi/work/iphone/sakai/PM2.5/pm25/OpenSSL,
-					/Users/toshi/work/iphone/sakai/PM2.5/pm25/Admob,
+					Admob,
+					OpenSSL,
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
