@@ -11,7 +11,7 @@
 #import "AppMenuButton.h"
 
 #import "AppMenuItem.h"
-#import "PhotoGrabber.h"
+//#import "PhotoGrabber.h"
 #import "UIImage+ImageEffects.h"
 #import "ContentLock.h"
 
@@ -67,16 +67,19 @@
     [self.view addSubview: menuButton];
     self.menuButton = menuButton;
     
-    id topGuide = self.topLayoutGuide;
+    id contentView = self.contentView;
     
     [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"H:[menuButton]-|"
                                                                        options: 0
                                                                        metrics: nil
                                                                          views: NSDictionaryOfVariableBindings(menuButton)]];
-    [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"V:|[topGuide]-[menuButton]"
-                                                                       options: 0
-                                                                       metrics: nil
-                                                                         views: NSDictionaryOfVariableBindings(topGuide, menuButton)]];
+    [self.view addConstraint: [NSLayoutConstraint constraintWithItem: menuButton
+                                                           attribute: NSLayoutAttributeBottom
+                                                           relatedBy: NSLayoutRelationEqual
+                                                              toItem: contentView
+                                                           attribute: NSLayoutAttributeBottom
+                                                          multiplier: 1.0
+                                                            constant: -8.]];
 }
 
 - (void) addBannerView {
@@ -143,7 +146,7 @@
                             options: UIViewAnimationOptionCurveEaseInOut
                          animations: ^{
                              CGRect frame = itemView.frame;
-                             frame.origin.y = [self.topLayoutGuide length];
+                             frame.origin.y = CGRectGetMaxY(self.contentView.bounds) - CGRectGetHeight(frame);
                              itemView.frame = frame;
                              itemView.alpha = isSelectedItem && shouldHoldSelection ? 0.7 : 0.;
                          } completion: ^(BOOL finished) {
@@ -183,7 +186,7 @@
                            options: UIViewAnimationOptionCurveEaseInOut
                         animations: ^{
                             
-                            [self.contentView insertSubview: view belowSubview: self.menuButton];
+                            [self.contentView insertSubview: view belowSubview: _menuDismissView];
                             //view.alpha = 1.f;
                             if( view != oldItem.controller.view )
                                 [oldItem.controller.view removeFromSuperview];
@@ -206,13 +209,13 @@
     
     CGSize imageSize = self.view.bounds.size;
     UIGraphicsBeginImageContextWithOptions(imageSize, NO, 0.0);
-    [self.view drawViewHierarchyInRect: self.view.bounds afterScreenUpdates: NO];
+    [self.contentView drawViewHierarchyInRect: self.contentView.bounds afterScreenUpdates: NO];
     UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
-    screenshot = [screenshot applyBlurWithRadius: 5
+    screenshot = [screenshot applyBlurWithRadius: 1.5
                                        tintColor: [UIColor colorWithWhite: 1.0 alpha: 0.3]
-                           saturationDeltaFactor: 1.8
+                           saturationDeltaFactor: 1
                                        maskImage: nil];
     
     UIImageView* imageView = [[UIImageView alloc] initWithImage: screenshot];
@@ -226,7 +229,7 @@
                       duration: 0.3
                        options: UIViewAnimationOptionCurveEaseIn
                     animations: ^{
-                        [self.view addSubview: imageView];
+                        [self.contentView insertSubview: imageView aboveSubview: self.menuButton];
                     } completion:^(BOOL finished) {
                         
                     }];
@@ -240,12 +243,13 @@
     NSMutableArray* views = [NSMutableArray new];
     
     for(AppMenuItem* item in remainingItems) {
-        CGRect frame = CGRectMake(0, [self.topLayoutGuide length], CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.menuButton.bounds) + 16.);
+        CGFloat h = CGRectGetHeight(self.menuButton.bounds) + 16.;
+        CGRect frame = CGRectMake(0, CGRectGetHeight(self.contentView.bounds)-h, CGRectGetWidth(self.view.bounds), h);
         AppMenuButton* itemView = [AppMenuButton menuButtonWithItem: item andFrame: frame];
         [itemView addTarget: self action: @selector(menuItemPushed:) forControlEvents: UIControlEventTouchUpInside];
-        itemView.hasSeparator = item != remainingItems.lastObject;
+        itemView.hasSeparator = item != [remainingItems objectAtIndex: 0];
         
-        [self.view addSubview: itemView];
+        [self.contentView insertSubview: itemView aboveSubview: self.menuButton];
         
         [UIView animateWithDuration: 0.9
                               delay: 0.0
@@ -254,7 +258,7 @@
                             options: UIViewAnimationOptionCurveEaseOut
                          animations: ^{
                              CGRect frame = itemView.frame;
-                             frame.origin.y += [views count] * CGRectGetHeight(itemView.bounds);;
+                             frame.origin.y -= [views count] * CGRectGetHeight(itemView.bounds);;
                              itemView.frame = frame;
                          } completion: NULL];
         
@@ -268,7 +272,7 @@
 
 #pragma mark - Notifications
 - (void) locationChanged: (NSNotification*) notif {
-    CLLocation* location = notif.userInfo[kCurrentLocationUserInfoKey];
+    /*CLLocation* location = notif.userInfo[kCurrentLocationUserInfoKey];
     
     [PhotoGrabber getPhotoForLocation: location
                 withCompletionHandler: ^(UIImage* image, NSError *error) {
@@ -280,7 +284,7 @@
                     transition.type = kCATransitionFade;
                     
                     [self.imageView.layer addAnimation:transition forKey:nil];
-                }];
+                }];*/
 }
 
 - (void) contentUnlocked: (NSNotification*) notification {
@@ -289,10 +293,10 @@
 
 #pragma mark - NSObject
 + (void) initialize {
-    if( ![PhotoGrabber getPhotoForLocation: nil withCompletionHandler: nil]) {
+    /*if( ![PhotoGrabber getPhotoForLocation: nil withCompletionHandler: nil]) {
         UIImage* img = [UIImage imageNamed: @"default-background"];
         [PhotoGrabber setPhoto: img];
-    }
+    }*/
 }
 
 - (id) initWithCoder:(NSCoder *)aDecoder {
@@ -322,7 +326,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    /*
     UIImage* currentImage = [PhotoGrabber getPhotoForLocation: nil
                                         withCompletionHandler: nil];
     UIImageView* imageView = [[UIImageView alloc] initWithImage: currentImage];
@@ -331,6 +335,17 @@
     imageView.contentMode = UIViewContentModeScaleAspectFill;
     [self.view addSubview: imageView];
     self.imageView = imageView;
+    */
+    
+    UIColor* topColor = [UIColor colorWithRed: 0/255. green: 124/255. blue: 211/255. alpha: 1.];
+    UIColor* bottomColor = [UIColor colorWithRed: 0/255. green: 124/255. blue: 211/255. alpha: 1.];
+    
+    CAGradientLayer* layer = [CAGradientLayer layer];
+    layer.colors = @[(id)topColor.CGColor, (id)bottomColor.CGColor];
+    layer.frame = self.view.bounds;
+    layer.endPoint = CGPointMake(0.5, 1);
+    layer.startPoint = CGPointMake(0.5, 0);
+    [self.view.layer insertSublayer: layer atIndex: 0];
     
     UIView* view = [[UIView alloc] initWithFrame: self.view.bounds];// firstController.view;
     view.translatesAutoresizingMaskIntoConstraints = NO;
@@ -362,8 +377,10 @@
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear: animated];
     
+    AppMenuItem* firstItem = self.menuItems[_currentViewControllerIndex];
+    
     if( !self.menuButton ) {
-        AppMenuItem* firstItem = self.menuItems[_currentViewControllerIndex];
+        
         NSParameterAssert(firstItem);
         
         UIViewController* firstController =  firstItem.controller;
@@ -372,6 +389,45 @@
         [self displayView: firstController.view];
         [self.contentView insertSubview: firstController.view belowSubview: self.menuButton];
     }
+    
+    
+    //Animate the current menu item
+    CGFloat h = CGRectGetHeight(self.menuButton.bounds) + 16.;
+    CGRect frame = CGRectMake(0, CGRectGetHeight(self.contentView.bounds)-h, CGRectGetWidth(self.view.bounds), h);
+    AppMenuButton* itemView = [AppMenuButton menuButtonWithItem: firstItem andFrame: frame];
+    itemView.hasSeparator = YES;
+    itemView.translatesAutoresizingMaskIntoConstraints =  NO;
+    [self.contentView insertSubview: itemView aboveSubview: self.menuButton];
+    
+    [self.contentView addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"H:|[itemView]|"
+                                                                              options: 0
+                                                                              metrics: nil
+                                                                                views: NSDictionaryOfVariableBindings(itemView)]];
+    [self.contentView addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"V:[itemView(==h)]|"
+                                                                              options: 0
+                                                                              metrics: @{ @"h" : @(h) }
+                                                                                views: NSDictionaryOfVariableBindings(itemView)]];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1. * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [UIView transitionWithView: self.contentView
+                          duration: 0.3
+                           options: UIViewAnimationOptionCurveEaseIn
+                        animations: ^{
+                            itemView.alpha = 0.f;
+                        } completion: ^(BOOL finished){
+                            [itemView removeFromSuperview];
+                            
+                            CABasicAnimation *theAnimation;
+                            
+                            theAnimation=[CABasicAnimation animationWithKeyPath:@"opacity"];
+                            theAnimation.duration=0.3;
+                            theAnimation.repeatCount=3;
+                            theAnimation.autoreverses=YES;
+                            theAnimation.fromValue=[NSNumber numberWithFloat:1.0];
+                            theAnimation.toValue=[NSNumber numberWithFloat:0.0];
+                            [self.menuButton.layer addAnimation:theAnimation forKey:@"animateOpacity"];
+                        }];
+    });
 }
 
 - (void) viewDidAppear:(BOOL)animated {

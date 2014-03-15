@@ -25,17 +25,56 @@ typedef NS_ENUM(NSUInteger, kParticleType) {
     kParticleTypeCount
 };
 
-@interface CurrentLocationViewController () <CLLocationManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout> {
+@interface CurrentLocationViewController () <CLLocationManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate> {
     CLLocationManager*      _locationManager;
     NSURLSessionDataTask*   _dataTask;
 }
 
 @property (weak, nonatomic) IBOutlet UICollectionView *particleCollectionView;
 @property (weak, nonatomic) IBOutlet HistoryGraphView *graphView;
+@property (weak, nonatomic) IBOutlet UILabel *explanationLabel;
+@property (weak) IBOutlet UIRefreshControl* refreshControl;
 
 @end
 
 @implementation CurrentLocationViewController
+
+- (void) fetchInformationForLocation: (CLLocation*) location {
+    
+    [_dataTask cancel];
+    
+    NSString* dataPath = [NSString stringWithFormat: @"http://api.airtrack.info/data/position?lat=%f&lon=%f", location.coordinate.latitude, location.coordinate.longitude];
+    NSURL* dataURL = [NSURL URLWithString: dataPath];
+    _dataTask = [[NSURLSession sharedSession] dataTaskWithURL: dataURL
+                                            completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error) {
+                                                //NSLog(@"End: %@", [NSDate date]);
+                                                
+                                                if( error ) {
+                                                    NSLog(@"Error: %@", error);
+                                                    dispatch_async(dispatch_get_main_queue(), ^{
+                                                        [self setLocationDictionary: nil];
+                                                    });
+                                                }
+                                                else {
+#if DEBUG
+                                                    NSLog(@"Response: %@", [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding]);
+#endif
+                                                    id object = [NSJSONSerialization JSONObjectWithData: data options: 0 error: nil];
+                                                    if( [object objectForKey: @"area"] ) {  //Hope we are ok!
+                                                        [[NSUserDefaults standardUserDefaults] setObject: object forKey: kUserDefaultsLastUpdateKey];
+                                                        [[NSUserDefaults standardUserDefaults] setObject: [NSDate date] forKey: kUserDefaultsLastLocationUpdateTimeKey];
+                                                        [[NSUserDefaults standardUserDefaults] synchronize];
+                                                    }
+                                                    
+                                                    dispatch_async(dispatch_get_main_queue(), ^{
+                                                        [self setLocationDictionary: object];
+                                                    });
+                                                }
+                                                
+                                                [self.refreshControl endRefreshing];
+                                            }];
+    [_dataTask resume];
+}
 
 - (void) setLocationDictionary: (NSDictionary*) locationInfo {
     NSParameterAssert([NSThread isMainThread]);
@@ -44,11 +83,21 @@ typedef NS_ENUM(NSUInteger, kParticleType) {
         self.areaLabel.text = locationInfo[@"area"];
         self.locationNameLabel.text = locationInfo[@"position_name"];
         self.pmValueLabel.text = locationInfo[@"pm25"];
-        NSString* format = NSLocalizedString(@"Distance away: %0.2fm", @"");
+        NSString* format = NSLocalizedString(@"Distance away: %0.2fkm", @"");
         self.distanceAwayLabel.text = [NSString stringWithFormat:format, [locationInfo[@"distance"] floatValue]];
         self.graphView.points = locationInfo[@"history"];
+        
+        id value = locationInfo[@"pm25"];
+        
+        if( [value integerValue] > 35 ) {
+            self.pmValueLabel.textColor = [UIColor redColor];
+        }
+        else {
+            self.pmValueLabel.textColor = [UIColor whiteColor];
+        }
     }
     else {
+        self.pmValueLabel.textColor = [UIColor whiteColor];
         self.graphView.points = nil;
         self.areaLabel.text = NSLocalizedString(@"Unknown area", @"");
         self.locationNameLabel.text = NSLocalizedString(@"Unknown location", @"");
@@ -65,6 +114,17 @@ typedef NS_ENUM(NSUInteger, kParticleType) {
     self.lastUpdatedLabel.text = [NSString stringWithFormat: format, [NSDateFormatter localizedStringFromDate: updateDate
                                                                                                     dateStyle: NSDateFormatterMediumStyle
                                                                                                     timeStyle: NSDateFormatterShortStyle]];
+}
+
+#pragma mark - Actions
+- (IBAction) refreshPushed:(UIRefreshControl*)sender {
+    CLLocation* lastKnownLocation = _locationManager.location;      //nil on simulator
+    if( lastKnownLocation ) {
+        [self fetchInformationForLocation: lastKnownLocation];
+    }
+    else {
+        [sender endRefreshing];
+    }
 }
 
 #pragma mark - NSObject
@@ -92,16 +152,29 @@ typedef NS_ENUM(NSUInteger, kParticleType) {
 - (void)viewDidLoad {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    CGSize scrollSize = self.view.bounds.size;
-    scrollSize.height *= 2.;
-    
-    self.scrollView.contentSize = scrollSize;
     
     NSDictionary* lastUpdate = [[NSUserDefaults standardUserDefaults] objectForKey: kUserDefaultsLastUpdateKey];
     [self setLocationDictionary: lastUpdate];
     
-    self.pmLabel.text = NSLocalizedString(@"PM2.5:", @"");
+    NSDictionary* pmLabelAttributes = @{
+                                        NSForegroundColorAttributeName :  [UIColor whiteColor],
+                                        //NSUnderlineStyleAttributeName : @YES
+                                        };
+    
+    self.pmLabel.attributedText = [[NSAttributedString alloc] initWithString: NSLocalizedString(@"PM2.5", @"") attributes: pmLabelAttributes];
     self.recentRecordingsLabel.text = NSLocalizedString(@"PM2.5 Movement", @"");
+    self.explanationLabel.text = NSLocalizedString(@"Normal: Less than 35uG/m3 per day", @"");
+    
+    UIRefreshControl* refreshControl = [UIRefreshControl new];
+    refreshControl.tintColor = [UIColor whiteColor];
+    refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString: NSLocalizedString(@"Refreshing...", @"")
+                                                                     attributes: @{
+                                                                                   NSForegroundColorAttributeName : [UIColor whiteColor]
+                                                                                   }];
+    
+    [refreshControl addTarget: self action: @selector(refreshPushed:) forControlEvents: UIControlEventValueChanged];
+    [self.scrollView addSubview: refreshControl];
+    self.refreshControl = refreshControl;
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -132,47 +205,22 @@ typedef NS_ENUM(NSUInteger, kParticleType) {
     [self.particleCollectionView performBatchUpdates: ^{
         [self.particleCollectionView reloadData];
     } completion: NULL];
+    
+    CGSize scrollSize = self.view.bounds.size;
+    scrollSize.height += 44.;
+    
+    self.scrollView.contentSize = scrollSize;
+    
+    //NSLog(@"Size: %@", NSStringFromCGSize(self.scrollView.contentSize));
 }
 
 #pragma mark - CLLocationManagerDelegate
 - (void)locationManager:(CLLocationManager *)manager
     didUpdateToLocation:(CLLocation *)newLocation
            fromLocation:(CLLocation *)oldLocation {
-    NSLog(@"Location update");
+    //NSLog(@"Location: %@", manager.location);
     
-    //TODO: Get PM2.5 data from server
-    [_dataTask cancel];
-    
-    NSString* dataPath = [NSString stringWithFormat: @"http://api.airtrack.info/data/position?lat=%f&lon=%f", newLocation.coordinate.latitude, newLocation.coordinate.longitude];
-    NSURL* dataURL = [NSURL URLWithString: dataPath];
-    _dataTask = [[NSURLSession sharedSession] dataTaskWithURL: dataURL
-                                            completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error) {
-                                                //NSLog(@"End: %@", [NSDate date]);
-                                                
-                                                if( error ) {
-                                                    NSLog(@"Error: %@", error);
-                                                    dispatch_async(dispatch_get_main_queue(), ^{
-                                                        [self setLocationDictionary: nil];
-                                                    });
-                                                }
-                                                else {
-#if DEBUG
-                                                    NSLog(@"Response: %@", [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding]);
-#endif
-                                                    id object = [NSJSONSerialization JSONObjectWithData: data options: 0 error: nil];
-                                                    if( [object objectForKey: @"area"] ) {  //Hope we are ok!
-                                                        [[NSUserDefaults standardUserDefaults] setObject: object forKey: kUserDefaultsLastUpdateKey];
-                                                        [[NSUserDefaults standardUserDefaults] setObject: [NSDate date] forKey: kUserDefaultsLastLocationUpdateTimeKey];
-                                                        [[NSUserDefaults standardUserDefaults] synchronize];
-                                                    }
-                                                    
-                                                    dispatch_async(dispatch_get_main_queue(), ^{
-                                                        [self setLocationDictionary: object];
-                                                    });
-                                                }
-                                            }];
-    [_dataTask resume];
-    //NSLog(@"Start: %@", [NSDate date]);
+    [self fetchInformationForLocation: newLocation];
     
     NSDictionary* userInfo = @{ kCurrentLocationUserInfoKey : newLocation };
     [[NSNotificationCenter defaultCenter] postNotificationName: kCurrentLocationChangedNotification
@@ -239,7 +287,7 @@ typedef NS_ENUM(NSUInteger, kParticleType) {
 
 #pragma mark - UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(CGRectGetWidth(collectionView.bounds)/3., CGRectGetHeight(collectionView.bounds)/2.);
+    return CGSizeMake(CGRectGetWidth(collectionView.bounds)/3., (CGRectGetHeight(collectionView.bounds)-10.)/2.);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
@@ -252,6 +300,14 @@ typedef NS_ENUM(NSUInteger, kParticleType) {
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
     return 0.;
+}
+
+#pragma mark - UIScrollViewDelegate
+- (void) scrollViewDidScroll:(UIScrollView *)scrollView {
+    CGFloat minoffset = MIN(0, scrollView.contentOffset.y);
+    scrollView.contentOffset = CGPointMake(0, minoffset);
+    
+    //NSLog(@"Offset: %f", minoffset);
 }
 
 @end

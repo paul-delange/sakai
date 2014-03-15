@@ -7,8 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FD04DA4718D1AE29007399E4 /* PMAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD04DA4618D1AE29007399E4 /* PMAnnotationView.m */; };
+		FD04DA4D18D1B7DD007399E4 /* MKMapView+ZoomLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = FD04DA4C18D1B7DD007399E4 /* MKMapView+ZoomLevel.m */; };
+		FD04DA5018D1C859007399E4 /* PMAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = FD04DA4F18D1C859007399E4 /* PMAnnotation.m */; };
 		FD1C810218D08A0100674787 /* ParticleCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1C810118D08A0100674787 /* ParticleCollectionViewCell.m */; };
 		FD1C810518D09CC900674787 /* HistoryGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1C810418D09CC900674787 /* HistoryGraphView.m */; };
+		FD1C810818D0B31F00674787 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FD1C810618D0B31F00674787 /* Localizable.strings */; };
 		FD3A30DB18CB642F002B6990 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3A30DA18CB642F002B6990 /* Foundation.framework */; };
 		FD3A30DD18CB642F002B6990 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3A30DC18CB642F002B6990 /* CoreGraphics.framework */; };
 		FD3A30DF18CB642F002B6990 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3A30DE18CB642F002B6990 /* UIKit.framework */; };
@@ -19,16 +23,11 @@
 		FD3A30F418CB642F002B6990 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3A30F318CB642F002B6990 /* XCTest.framework */; };
 		FD3A30F518CB642F002B6990 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3A30DA18CB642F002B6990 /* Foundation.framework */; };
 		FD3A30F618CB642F002B6990 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3A30DE18CB642F002B6990 /* UIKit.framework */; };
-		FD3A30FE18CB642F002B6990 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FD3A30FC18CB642F002B6990 /* InfoPlist.strings */; };
 		FD3A310018CB642F002B6990 /* pm25Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3A30FF18CB642F002B6990 /* pm25Tests.m */; };
 		FD3BCD6A18CC57B2001170D6 /* AppMenuButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3BCD6918CC57B2001170D6 /* AppMenuButton.m */; };
 		FD3BCD6E18CC59AC001170D6 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3BCD6D18CC59AC001170D6 /* UIImage+ImageEffects.m */; };
 		FD3BCD7118CC6891001170D6 /* ForegroundPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3BCD7018CC6891001170D6 /* ForegroundPanel.m */; };
 		FD3BCD7318CC7A9D001170D6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3BCD7218CC7A9D001170D6 /* MapKit.framework */; };
-		FD3BCD7618CC865A001170D6 /* Cache.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FD3BCD7418CC865A001170D6 /* Cache.xcdatamodeld */; };
-		FD3E035C18CC87B70033845A /* Reading.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3E035B18CC87B70033845A /* Reading.m */; };
-		FD3E035E18CC87BC0033845A /* _Reading.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3E035D18CC87BC0033845A /* _Reading.m */; };
-		FD3E036118CC88360033845A /* CoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3E036018CC88360033845A /* CoreDataStack.m */; };
 		FD3E036C18CCD4E80033845A /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3E036B18CCD4E80033845A /* libGoogleAdMobAds.a */; };
 		FD3E036F18CCD6C90033845A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3E036E18CCD6C90033845A /* AVFoundation.framework */; };
 		FD3E037318CCD6DF0033845A /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3E037218CCD6DF0033845A /* AdSupport.framework */; };
@@ -43,7 +42,6 @@
 		FD6C925B18CB6CFC005D28A3 /* CurrentLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C925A18CB6CFC005D28A3 /* CurrentLocationViewController.m */; };
 		FD6C925E18CB6D06005D28A3 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C925D18CB6D06005D28A3 /* MapViewController.m */; };
 		FD6C926118CB6D0F005D28A3 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C926018CB6D0F005D28A3 /* SettingsViewController.m */; };
-		FD6C926418CB7149005D28A3 /* PhotoGrabber.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C926318CB7149005D28A3 /* PhotoGrabber.m */; };
 		FD6C926718CBCEC8005D28A3 /* AppMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C926618CBCEC8005D28A3 /* AppMenuItem.m */; };
 /* End PBXBuildFile section */
 
@@ -58,16 +56,22 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FD04DA4518D1AE29007399E4 /* PMAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMAnnotationView.h; sourceTree = "<group>"; };
+		FD04DA4618D1AE29007399E4 /* PMAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMAnnotationView.m; sourceTree = "<group>"; };
+		FD04DA4B18D1B7DD007399E4 /* MKMapView+ZoomLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+ZoomLevel.h"; sourceTree = "<group>"; };
+		FD04DA4C18D1B7DD007399E4 /* MKMapView+ZoomLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKMapView+ZoomLevel.m"; sourceTree = "<group>"; };
+		FD04DA4E18D1C859007399E4 /* PMAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMAnnotation.h; sourceTree = "<group>"; };
+		FD04DA4F18D1C859007399E4 /* PMAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMAnnotation.m; sourceTree = "<group>"; };
 		FD1C810018D08A0100674787 /* ParticleCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleCollectionViewCell.h; sourceTree = "<group>"; };
 		FD1C810118D08A0100674787 /* ParticleCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticleCollectionViewCell.m; sourceTree = "<group>"; };
 		FD1C810318D09CC900674787 /* HistoryGraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryGraphView.h; sourceTree = "<group>"; };
 		FD1C810418D09CC900674787 /* HistoryGraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryGraphView.m; sourceTree = "<group>"; };
+		FD1C810718D0B31F00674787 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		FD3A30D718CB642F002B6990 /* pm25.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pm25.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD3A30DA18CB642F002B6990 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FD3A30DC18CB642F002B6990 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		FD3A30DE18CB642F002B6990 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		FD3A30E218CB642F002B6990 /* pm25-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "pm25-Info.plist"; sourceTree = "<group>"; };
-		FD3A30E418CB642F002B6990 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FD3A30E618CB642F002B6990 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		FD3A30E818CB642F002B6990 /* pm25-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "pm25-Prefix.pch"; sourceTree = "<group>"; };
 		FD3A30E918CB642F002B6990 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -76,7 +80,6 @@
 		FD3A30F218CB642F002B6990 /* pm25Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = pm25Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD3A30F318CB642F002B6990 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		FD3A30FB18CB642F002B6990 /* pm25Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "pm25Tests-Info.plist"; sourceTree = "<group>"; };
-		FD3A30FD18CB642F002B6990 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FD3A30FF18CB642F002B6990 /* pm25Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = pm25Tests.m; sourceTree = "<group>"; };
 		FD3BCD6818CC57B2001170D6 /* AppMenuButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppMenuButton.h; sourceTree = "<group>"; };
 		FD3BCD6918CC57B2001170D6 /* AppMenuButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppMenuButton.m; sourceTree = "<group>"; };
@@ -85,10 +88,6 @@
 		FD3BCD6F18CC6891001170D6 /* ForegroundPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForegroundPanel.h; sourceTree = "<group>"; };
 		FD3BCD7018CC6891001170D6 /* ForegroundPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForegroundPanel.m; sourceTree = "<group>"; };
 		FD3BCD7218CC7A9D001170D6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		FD3BCD7518CC865A001170D6 /* Cache.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Cache.xcdatamodel; sourceTree = "<group>"; };
-		FD3E035A18CC87B70033845A /* Reading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reading.h; sourceTree = "<group>"; };
-		FD3E035B18CC87B70033845A /* Reading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reading.m; sourceTree = "<group>"; };
-		FD3E035D18CC87BC0033845A /* _Reading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Reading.m; sourceTree = "<group>"; };
 		FD3E035F18CC88360033845A /* CoreDataStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataStack.h; sourceTree = "<group>"; };
 		FD3E036018CC88360033845A /* CoreDataStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataStack.m; sourceTree = "<group>"; };
 		FD3E036218CCD4E80033845A /* GADAdMobExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADAdMobExtras.h; path = Admob/GADAdMobExtras.h; sourceTree = SOURCE_ROOT; };
@@ -116,7 +115,6 @@
 		FD3E038418CCDD3B0033845A /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = OpenSSL/libcrypto.a; sourceTree = SOURCE_ROOT; };
 		FD3E038518CCDD3B0033845A /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = OpenSSL/libssl.a; sourceTree = SOURCE_ROOT; };
 		FD3E038818CD94060033845A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		FD3E038918CD94110033845A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		FD3E038B18CDBD180033845A /* VersionComparator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionComparator.h; sourceTree = "<group>"; };
 		FD3E038C18CDBD180033845A /* VersionComparator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersionComparator.m; sourceTree = "<group>"; };
 		FD6C925418CB6CAF005D28A3 /* AppContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppContainerViewController.h; sourceTree = "<group>"; };
@@ -234,7 +232,6 @@
 			isa = PBXGroup;
 			children = (
 				FD3A30FB18CB642F002B6990 /* pm25Tests-Info.plist */,
-				FD3A30FC18CB642F002B6990 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -267,6 +264,8 @@
 				FD1C810118D08A0100674787 /* ParticleCollectionViewCell.m */,
 				FD1C810318D09CC900674787 /* HistoryGraphView.h */,
 				FD1C810418D09CC900674787 /* HistoryGraphView.m */,
+				FD04DA4518D1AE29007399E4 /* PMAnnotationView.h */,
+				FD04DA4618D1AE29007399E4 /* PMAnnotationView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -277,12 +276,12 @@
 				FD3E038A18CD9D590033845A /* InApp Purchase */,
 				FD3E035F18CC88360033845A /* CoreDataStack.h */,
 				FD3E036018CC88360033845A /* CoreDataStack.m */,
-				FD3E035A18CC87B70033845A /* Reading.h */,
-				FD3E035B18CC87B70033845A /* Reading.m */,
 				FD6C926218CB7149005D28A3 /* PhotoGrabber.h */,
 				FD6C926318CB7149005D28A3 /* PhotoGrabber.m */,
 				FD6C926518CBCEC8005D28A3 /* AppMenuItem.h */,
 				FD6C926618CBCEC8005D28A3 /* AppMenuItem.m */,
+				FD04DA4E18D1C859007399E4 /* PMAnnotation.h */,
+				FD04DA4F18D1C859007399E4 /* PMAnnotation.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -290,11 +289,11 @@
 		FD3A310C18CB64D1002B6990 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FD1C810618D0B31F00674787 /* Localizable.strings */,
 				FD3A30E218CB642F002B6990 /* pm25-Info.plist */,
 				FD3A30E318CB642F002B6990 /* InfoPlist.strings */,
 				FD3A30EC18CB642F002B6990 /* Images.xcassets */,
 				FD6C925718CB6CD3005D28A3 /* Interface.storyboard */,
-				FD3BCD7418CC865A001170D6 /* Cache.xcdatamodeld */,
 			);
 			name = Resources;
 			path = pm25;
@@ -303,12 +302,13 @@
 		FD3BCD6B18CC5995001170D6 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				FD04DA4B18D1B7DD007399E4 /* MKMapView+ZoomLevel.h */,
+				FD04DA4C18D1B7DD007399E4 /* MKMapView+ZoomLevel.m */,
 				FD3E038B18CDBD180033845A /* VersionComparator.h */,
 				FD3E038C18CDBD180033845A /* VersionComparator.m */,
 				FD3E038418CCDD3B0033845A /* libcrypto.a */,
 				FD3E038518CCDD3B0033845A /* libssl.a */,
 				FD3E036D18CCD4EE0033845A /* Admob */,
-				FD3E035D18CC87BC0033845A /* _Reading.m */,
 				FD3BCD6C18CC59AC001170D6 /* UIImage+ImageEffects.h */,
 				FD3BCD6D18CC59AC001170D6 /* UIImage+ImageEffects.m */,
 			);
@@ -350,7 +350,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FD3A310318CB642F002B6990 /* Build configuration list for PBXNativeTarget "pm25" */;
 			buildPhases = (
-				FD3BCD7718CC86A9001170D6 /* ShellScript */,
 				FD3A30D318CB642F002B6990 /* Sources */,
 				FD3A30D418CB642F002B6990 /* Frameworks */,
 				FD3A30D518CB642F002B6990 /* Resources */,
@@ -388,7 +387,7 @@
 		FD3A30CF18CB642F002B6990 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Chesterford;
 				TargetAttributes = {
 					FD3A30D618CB642F002B6990 = {
@@ -429,6 +428,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD3A30E518CB642F002B6990 /* InfoPlist.strings in Resources */,
+				FD1C810818D0B31F00674787 /* Localizable.strings in Resources */,
 				FD6C925818CB6CD3005D28A3 /* Interface.storyboard in Resources */,
 				FD3A30ED18CB642F002B6990 /* Images.xcassets in Resources */,
 			);
@@ -438,50 +438,31 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FD3A30FE18CB642F002B6990 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		FD3BCD7718CC86A9001170D6 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "mogenerator -m \"pm25/Cache.xcdatamodeld/Cache.xcdatamodel/\" --template-var arc=true --output-dir \"pm25\"";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		FD3A30D318CB642F002B6990 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FD3E035C18CC87B70033845A /* Reading.m in Sources */,
+				FD04DA5018D1C859007399E4 /* PMAnnotation.m in Sources */,
 				FD3A30EB18CB642F002B6990 /* AppDelegate.m in Sources */,
 				FD3BCD6A18CC57B2001170D6 /* AppMenuButton.m in Sources */,
+				FD04DA4718D1AE29007399E4 /* PMAnnotationView.m in Sources */,
 				FD1C810218D08A0100674787 /* ParticleCollectionViewCell.m in Sources */,
-				FD3BCD7618CC865A001170D6 /* Cache.xcdatamodeld in Sources */,
 				FD6C925B18CB6CFC005D28A3 /* CurrentLocationViewController.m in Sources */,
-				FD3E036118CC88360033845A /* CoreDataStack.m in Sources */,
-				FD6C926418CB7149005D28A3 /* PhotoGrabber.m in Sources */,
 				FD6C925E18CB6D06005D28A3 /* MapViewController.m in Sources */,
 				FD6C926118CB6D0F005D28A3 /* SettingsViewController.m in Sources */,
 				FD3BCD6E18CC59AC001170D6 /* UIImage+ImageEffects.m in Sources */,
+				FD04DA4D18D1B7DD007399E4 /* MKMapView+ZoomLevel.m in Sources */,
 				FD6C926718CBCEC8005D28A3 /* AppMenuItem.m in Sources */,
 				FD6C925618CB6CAF005D28A3 /* AppContainerViewController.m in Sources */,
 				FD3E038D18CDBD180033845A /* VersionComparator.m in Sources */,
 				FD1C810518D09CC900674787 /* HistoryGraphView.m in Sources */,
 				FD3A30E718CB642F002B6990 /* main.m in Sources */,
-				FD3E035E18CC87BC0033845A /* _Reading.m in Sources */,
 				FD3BCD7118CC6891001170D6 /* ForegroundPanel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -505,20 +486,18 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		FD1C810618D0B31F00674787 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FD1C810718D0B31F00674787 /* ja */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		FD3A30E318CB642F002B6990 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				FD3A30E418CB642F002B6990 /* en */,
 				FD3E038818CD94060033845A /* ja */,
-				FD3E038918CD94110033845A /* zh-Hans */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		FD3A30FC18CB642F002B6990 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FD3A30FD18CB642F002B6990 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -530,7 +509,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -569,7 +547,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -616,6 +593,8 @@
 					"$(inherited)",
 					/Users/pauldelange/Documents/sakai/PM2.5/pm25/Admob,
 					/Users/pauldelange/Documents/sakai/PM2.5/pm25/OpenSSL,
+					/Users/toshi/work/iphone/sakai/PM2.5/pm25/OpenSSL,
+					/Users/toshi/work/iphone/sakai/PM2.5/pm25/Admob,
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -641,6 +620,8 @@
 					"$(inherited)",
 					/Users/pauldelange/Documents/sakai/PM2.5/pm25/Admob,
 					/Users/pauldelange/Documents/sakai/PM2.5/pm25/OpenSSL,
+					/Users/toshi/work/iphone/sakai/PM2.5/pm25/OpenSSL,
+					/Users/toshi/work/iphone/sakai/PM2.5/pm25/Admob,
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -651,7 +632,6 @@
 		FD3A310718CB642F002B6990 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/pm25.app/pm25";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -674,7 +654,6 @@
 		FD3A310818CB642F002B6990 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/pm25.app/pm25";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -721,19 +700,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		FD3BCD7418CC865A001170D6 /* Cache.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				FD3BCD7518CC865A001170D6 /* Cache.xcdatamodel */,
-			);
-			currentVersion = FD3BCD7518CC865A001170D6 /* Cache.xcdatamodel */;
-			path = Cache.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = FD3A30CF18CB642F002B6990 /* Project object */;
 }
