@@ -202,15 +202,15 @@
                                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" misplaced="YES" text="PM2.5" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xVk-nm-Lcn">
-                                                        <rect key="frame" x="208" y="22" width="98" height="36"/>
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="PM2.5" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xVk-nm-Lcn">
+                                                        <rect key="frame" x="208" y="17" width="98" height="36"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="28"/>
+                                                        <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="28"/>
                                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="999" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="54" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lTT-Yj-9rt">
-                                                        <rect key="frame" x="203" y="49" width="109" height="91"/>
+                                                        <rect key="frame" x="203" y="48" width="109" height="91"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="60"/>
                                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -223,22 +223,22 @@
                                                     <constraint firstAttribute="bottom" secondItem="t56-iD-YIW" secondAttribute="bottom" id="10D-Uj-Xtr"/>
                                                     <constraint firstItem="lTT-Yj-9rt" firstAttribute="leading" secondItem="7Zk-Ow-y8k" secondAttribute="trailing" constant="40" id="12X-ag-qKH"/>
                                                     <constraint firstItem="lTT-Yj-9rt" firstAttribute="top" secondItem="TGE-Mc-H0v" secondAttribute="top" constant="49" id="1FF-8j-dUJ"/>
-                                                    <constraint firstItem="xVk-nm-Lcn" firstAttribute="leading" secondItem="LQj-8E-3Vy" secondAttribute="trailing" constant="3" id="3OH-I3-hgh"/>
+                                                    <constraint firstAttribute="trailing" secondItem="xVk-nm-Lcn" secondAttribute="trailing" constant="6" id="1Hv-Fl-uWj"/>
+                                                    <constraint firstItem="xVk-nm-Lcn" firstAttribute="centerX" secondItem="lTT-Yj-9rt" secondAttribute="centerX" id="43v-a0-bYl"/>
                                                     <constraint firstItem="7Zk-Ow-y8k" firstAttribute="top" secondItem="TGE-Mc-H0v" secondAttribute="top" constant="133" id="Cxl-Qu-DD5"/>
                                                     <constraint firstItem="t56-iD-YIW" firstAttribute="leading" secondItem="7Zk-Ow-y8k" secondAttribute="leading" id="E0r-Jw-hJk"/>
                                                     <constraint firstItem="LQj-8E-3Vy" firstAttribute="leading" secondItem="H2u-bX-hKK" secondAttribute="leading" id="EVo-03-EzW"/>
+                                                    <constraint firstItem="xVk-nm-Lcn" firstAttribute="top" secondItem="TGE-Mc-H0v" secondAttribute="top" constant="17" id="HrA-NW-hCt"/>
                                                     <constraint firstItem="H2u-bX-hKK" firstAttribute="top" secondItem="TGE-Mc-H0v" secondAttribute="top" constant="32" id="Oms-X2-Dvi"/>
                                                     <constraint firstItem="lTT-Yj-9rt" firstAttribute="baseline" secondItem="LQj-8E-3Vy" secondAttribute="baseline" id="PUu-gR-r6i"/>
-                                                    <constraint firstItem="lTT-Yj-9rt" firstAttribute="centerX" secondItem="xVk-nm-Lcn" secondAttribute="centerX" id="UOl-HZ-jUs"/>
                                                     <constraint firstItem="t56-iD-YIW" firstAttribute="top" secondItem="7Zk-Ow-y8k" secondAttribute="bottom" constant="3" id="Uh9-tO-CMa"/>
                                                     <constraint firstItem="t56-iD-YIW" firstAttribute="top" secondItem="TGE-Mc-H0v" secondAttribute="top" constant="151" id="XdD-Th-UnQ"/>
-                                                    <constraint firstItem="t56-iD-YIW" firstAttribute="top" secondItem="xVk-nm-Lcn" secondAttribute="bottom" constant="90" id="a2L-Xx-Eg9"/>
                                                     <constraint firstItem="H2u-bX-hKK" firstAttribute="leading" secondItem="TGE-Mc-H0v" secondAttribute="leading" constant="7" id="eBa-Ei-7hf"/>
                                                     <constraint firstItem="7Zk-Ow-y8k" firstAttribute="top" secondItem="LQj-8E-3Vy" secondAttribute="bottom" id="i2z-ec-N1I"/>
                                                     <constraint firstAttribute="trailing" secondItem="lTT-Yj-9rt" secondAttribute="trailing" id="jPI-Dg-Nic"/>
+                                                    <constraint firstItem="t56-iD-YIW" firstAttribute="top" secondItem="xVk-nm-Lcn" secondAttribute="bottom" constant="98" id="kTa-Go-dPT"/>
                                                     <constraint firstAttribute="trailing" secondItem="t56-iD-YIW" secondAttribute="trailing" constant="33" id="kgV-N6-S0L"/>
                                                     <constraint firstItem="7Zk-Ow-y8k" firstAttribute="leading" secondItem="LQj-8E-3Vy" secondAttribute="leading" id="nPh-A2-b9d"/>
-                                                    <constraint firstItem="xVk-nm-Lcn" firstAttribute="top" secondItem="TGE-Mc-H0v" secondAttribute="top" constant="25" id="v7v-ub-ZQR"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dup-Rw-9vs" userLabel="Particle Info Panel">
@@ -316,7 +316,7 @@
                                                 <rect key="frame" x="4" y="358" width="312" height="161"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <subviews>
-                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HqS-gl-5RK">
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HqS-gl-5RK">
                                                         <rect key="frame" x="20" y="4" width="272" height="15"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
@@ -342,15 +342,16 @@
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstItem="HqS-gl-5RK" firstAttribute="leading" secondItem="LdS-Ta-zJc" secondAttribute="leading" constant="20" symbolic="YES" id="6XO-Hp-MeT"/>
+                                                    <constraint firstItem="mlm-bt-qc3" firstAttribute="top" secondItem="HqS-gl-5RK" secondAttribute="bottom" constant="8" symbolic="YES" id="95r-pR-Lld"/>
+                                                    <constraint firstItem="oQc-ah-rON" firstAttribute="top" secondItem="mlm-bt-qc3" secondAttribute="bottom" constant="8" symbolic="YES" id="Gtc-FZ-vag"/>
                                                     <constraint firstAttribute="trailing" secondItem="oQc-ah-rON" secondAttribute="trailing" constant="40" id="NwP-Av-cya"/>
-                                                    <constraint firstItem="mlm-bt-qc3" firstAttribute="leading" secondItem="LdS-Ta-zJc" secondAttribute="leading" constant="20" symbolic="YES" id="Vpo-hj-D5B"/>
-                                                    <constraint firstAttribute="trailing" secondItem="mlm-bt-qc3" secondAttribute="trailing" constant="20" symbolic="YES" id="a6E-wK-iFF"/>
+                                                    <constraint firstItem="mlm-bt-qc3" firstAttribute="top" secondItem="LdS-Ta-zJc" secondAttribute="top" constant="27" id="Uba-4e-NgX"/>
+                                                    <constraint firstItem="mlm-bt-qc3" firstAttribute="leading" secondItem="HqS-gl-5RK" secondAttribute="leading" id="Y9H-aZ-Bn5"/>
                                                     <constraint firstAttribute="bottom" secondItem="oQc-ah-rON" secondAttribute="bottom" constant="-2" id="evA-uV-6PB"/>
                                                     <constraint firstItem="oQc-ah-rON" firstAttribute="leading" secondItem="LdS-Ta-zJc" secondAttribute="leading" id="iQr-r6-rLT"/>
                                                     <constraint firstItem="HqS-gl-5RK" firstAttribute="top" secondItem="LdS-Ta-zJc" secondAttribute="top" constant="4" id="lLp-lm-WNz"/>
-                                                    <constraint firstItem="mlm-bt-qc3" firstAttribute="top" secondItem="HqS-gl-5RK" secondAttribute="bottom" constant="8" symbolic="YES" id="qAI-nE-L96"/>
                                                     <constraint firstAttribute="trailing" secondItem="HqS-gl-5RK" secondAttribute="trailing" constant="20" symbolic="YES" id="rLd-aX-chD"/>
-                                                    <constraint firstItem="oQc-ah-rON" firstAttribute="top" secondItem="mlm-bt-qc3" secondAttribute="bottom" constant="8" symbolic="YES" id="xmU-yH-Ye6"/>
+                                                    <constraint firstItem="mlm-bt-qc3" firstAttribute="trailing" secondItem="HqS-gl-5RK" secondAttribute="trailing" id="xKt-pW-Oh8"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
