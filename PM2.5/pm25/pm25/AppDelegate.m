@@ -49,7 +49,8 @@
 }
 
 - (void) applicationWillEnterForeground:(UIApplication *)application {
-    application.applicationIconBadgeNumber = 0;
+    //酒井さん、ここをオンにするとアプリのバッジは最初機かします
+    //application.applicationIconBadgeNumber = 0;
 }
 
 - (void) application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {

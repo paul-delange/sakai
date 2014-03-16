@@ -56,42 +56,37 @@
     if( numberOfPoints > 1 ) {
         CGContextRef ctx = UIGraphicsGetCurrentContext();
         
-        CGFloat centers[numberOfPoints];
+        //1. Fit all bars in the rect
         CGFloat stride = CGRectGetWidth(rect) / numberOfPoints;
-        CGFloat spacing = 20.;
+        stride = MIN(stride, 35.);  //Limit maximum bar width
         
-        stride = MIN(stride, 35.);
+        //2. Set how much of the graph to be space
+        CGFloat spacing = 0.7 * stride;
         
-        CGFloat offset = (CGRectGetWidth(rect) - numberOfPoints * stride)/2. + spacing/2.;
+        //3. Calculate where to start drawing bars
+        CGFloat offset = (CGRectGetWidth(rect) - numberOfPoints * stride)/2. + stride/2.f;
+        
+        //4. Calculate max height of bars
         CGFloat maxBarHeight = CGRectGetHeight(rect) * 0.65;
+        
+        //5. Small marks on scale line height
         CGFloat notchHeight = 5.;
        
-        CGFloat lineCenterY = maxBarHeight + notchHeight;
-        
-        CGContextSetStrokeColorWithColor(ctx, [UIColor whiteColor].CGColor);
-        
-        for(NSUInteger i=0;i<numberOfPoints;i++) {
-            //NSDictionary* point = self.points[i];
-            centers[i] = i * stride + offset;
-            
-            CGContextMoveToPoint(ctx, centers[i], lineCenterY-notchHeight/2.);
-            CGContextAddLineToPoint(ctx, centers[i], lineCenterY+notchHeight/2.);
-            
-        }
-        
-        CGContextMoveToPoint(ctx, centers[0], lineCenterY);
-        CGContextAddLineToPoint(ctx, centers[numberOfPoints-1], lineCenterY);
-        
-        CGContextStrokePath(ctx);
-        
+        //6. Prepare font
+        UIFont* font = [UIFont systemFontOfSize: 9];
         NSDictionary* labelAttributes = @{
-                                          NSFontAttributeName : [UIFont systemFontOfSize: 9],
+                                          NSFontAttributeName : font,
                                           NSForegroundColorAttributeName : [UIColor whiteColor]
                                           };
         
+        NSAssert(CGRectGetHeight(rect) > maxBarHeight + notchHeight + font.pointSize * 2,
+                 @"Rect %@ is too small to draw a graph in", NSStringFromCGRect(rect));
         
-        __block CGFloat maxValue = 0.;
+        //7. Calculate scale line
+        CGFloat lineCenterY = CGRectGetHeight(rect) - font.pointSize - notchHeight/2.;
         
+        //8. Find maximum pm2.5 value to put into the maxBarHeight
+        __block CGFloat maxValue = 0.; //Normally this: [[self.points valueForKeyPath: @"@max.value"] floatValue];
         [self.points enumerateObjectsUsingBlock: ^(id obj, NSUInteger idx, BOOL *stop) {
             NSDictionary* point = (NSDictionary*)obj;
             CGFloat value = [point[@"value"] floatValue];
@@ -99,15 +94,83 @@
                 maxValue = value;
         }];
         
+        //9. Draw each bar from the bottom up
         for(NSUInteger i=0;i<numberOfPoints;i++) {
             NSDictionary* point = self.points[i];
             NSString* value = point[@"value"];
-            
+            NSString* fullDateString = point[@"time"];
+
             CGSize labelSize = [value sizeWithAttributes: labelAttributes];
+            CGFloat center = i * stride + offset;
             
-            CGFloat percent = [value integerValue] / maxValue;
+            //10. Draw time label
             
-            //NSLog(@"%f, %@", percent, value);
+            //Hack: going to chop out the time part
+            NSRange startTime = [fullDateString rangeOfString: @"\u2019" options: NSBackwardsSearch];
+            fullDateString = [fullDateString substringFromIndex: startTime.location + startTime.length];
+            NSRange endTime = [fullDateString rangeOfString: @":" options: NSBackwardsSearch];
+            fullDateString = [fullDateString substringToIndex: endTime.location];
+            
+            NSDictionary* timeLabelAttributes = labelAttributes;
+            CGSize timeLabelSize = [fullDateString sizeWithAttributes: labelAttributes];
+            
+            while (timeLabelSize.width > stride) {
+                UIFont* timeLabelFont = [font fontWithSize: font.pointSize-1];
+                NSMutableDictionary* timeLabelAttributes = [labelAttributes mutableCopy];
+                [timeLabelAttributes setObject: timeLabelFont forKey: NSFontAttributeName];
+                timeLabelSize = [fullDateString sizeWithAttributes: timeLabelAttributes];
+            }
+            
+            CGRect timeLabelRect = CGRectMake(center-timeLabelSize.width/2.,
+                                              CGRectGetHeight(rect)-labelSize.height,
+                                              timeLabelSize.width,
+                                              labelSize.height);
+            
+            CGContextSetStrokeColorWithColor(ctx, [UIColor whiteColor].CGColor);
+            [fullDateString drawInRect: timeLabelRect withAttributes: timeLabelAttributes];
+            
+            //11. Draw notch
+            
+            CGContextMoveToPoint(ctx, center, lineCenterY-notchHeight/2.);
+            CGContextAddLineToPoint(ctx, center, lineCenterY+notchHeight/2.);
+            CGContextStrokePath(ctx);
+            
+            //12. Draw bar
+            
+            CGFloat percentOfMax = [value integerValue] / maxValue;
+            CGFloat barHeight = maxBarHeight * percentOfMax;
+            CGRect barRect = CGRectMake(center - (stride-spacing)/2.,
+                                        lineCenterY - notchHeight/2.f - barHeight,
+                                        (stride-spacing),
+                                        barHeight);
+            
+           // NSLog(@"%@, %f, %f, %@", value, percentOfMax, barHeight, NSStringFromCGRect(barRect));
+            
+            CGContextSetFillColorWithColor(ctx, [UIColor yellowColor].CGColor);
+            CGContextFillRect(ctx, barRect);
+            
+            //13. Draw value label
+            NSDictionary* valueLabelAttributes = labelAttributes;
+            CGSize valueLabelSize = [value sizeWithAttributes: valueLabelAttributes];
+            while (valueLabelSize.width > stride) {
+                UIFont* valueLabelFont = [font fontWithSize: font.pointSize-1];
+                NSMutableDictionary* valueLabelAttributes = [labelAttributes mutableCopy];
+                [valueLabelAttributes setObject: valueLabelFont forKey: NSFontAttributeName];
+                valueLabelSize = [fullDateString sizeWithAttributes: valueLabelAttributes];
+            }
+            
+            CGRect valueLabelRect = CGRectMake(center-valueLabelSize.width/2.,
+                                               CGRectGetMinY(barRect) - valueLabelSize.height,
+                                               valueLabelSize.width,
+                                               valueLabelSize.height);
+            CGContextSetStrokeColorWithColor(ctx, [UIColor whiteColor].CGColor);
+            [value drawInRect: valueLabelRect withAttributes: timeLabelAttributes];
+            
+            /*
+            CGContextSetStrokeColorWithColor(ctx, [UIColor whiteColor].CGColor);
+            CGContextMoveToPoint(ctx, centers[i], lineCenterY-notchHeight/2.);
+            CGContextAddLineToPoint(ctx, centers[i], lineCenterY+notchHeight/2.);
+             CGContextStrokePath(ctx);
             
             CGRect fillRect = CGRectMake(centers[i]-(stride-spacing)/2.,
                                          (1-percent) * maxBarHeight + labelSize.height,
@@ -126,8 +189,30 @@
             valueRect.size.width = labelSize.width;
             
             [value drawInRect: valueRect withAttributes: labelAttributes];
+            
+            //Hack: going to chop out the time part
+            
+            NSRange startTime = [fullDateString rangeOfString: @"\u2019" options: NSBackwardsSearch];
+            fullDateString = [fullDateString substringFromIndex: startTime.location + startTime.length];
+            NSRange endTime = [fullDateString rangeOfString: @":" options: NSBackwardsSearch];
+            fullDateString = [fullDateString substringToIndex: endTime.location];
+            
+            CGSize labelSize = [fullDateString sizeWithAttributes: labelAttributes];
+            
+            CGRect labelRect = CGRectMake(centers[i]-(stride-1)/2.,
+                                          CGRectGetHeight(rect)-labelSize.height,
+                                          stride-1,
+                                          labelSize.height);
+            NSParameterAssert(labelSize.width <= labelRect.size.width);
+            
+            labelRect.origin.x += (labelRect.size.width-labelSize.width)/2.f;
+            labelRect.size.width = labelSize.width;
+            
+            [fullDateString drawInRect: labelRect withAttributes: labelAttributes];
+             */
         }
 
+        /*
         for(NSUInteger i=0;i<numberOfPoints;i++) {
             NSDictionary* point = self.points[i];
             
@@ -152,6 +237,15 @@
             [fullDateString drawInRect: labelRect withAttributes: labelAttributes];
             
         }
+        
+         */
+        /*
+        CGContextSetStrokeColorWithColor(ctx, [UIColor whiteColor].CGColor);
+        
+        CGContextMoveToPoint(ctx, centers[0], lineCenterY);
+        CGContextAddLineToPoint(ctx, centers[numberOfPoints-1], lineCenterY);
+        
+        CGContextStrokePath(ctx);*/
     }
 }
 
