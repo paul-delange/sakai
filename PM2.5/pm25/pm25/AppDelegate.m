@@ -18,7 +18,7 @@
 #pragma mark - UIApplicationDelegate
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval: 60 * 60];
+    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];// 60 * 60];
     
     AppContainerViewController* container = (AppContainerViewController*)self.window.rootViewController;
     

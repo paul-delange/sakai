@@ -99,6 +99,10 @@ typedef NS_ENUM(NSUInteger, kParticleType) {
         else {
             self.pmValueLabel.textColor = [UIColor whiteColor];
         }
+        
+        UIApplication *application = [UIApplication sharedApplication];
+        application.applicationIconBadgeNumber = [value integerValue];
+        
     }
     else {
         self.pmValueLabel.textColor = [UIColor whiteColor];
