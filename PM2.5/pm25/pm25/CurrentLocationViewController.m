@@ -28,6 +28,8 @@ typedef NS_ENUM(NSUInteger, kParticleType) {
 @interface CurrentLocationViewController () <CLLocationManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate> {
     CLLocationManager*      _locationManager;
     NSURLSessionDataTask*   _dataTask;
+    
+    dispatch_source_t       _refreshTimer;
 }
 
 @property (weak, nonatomic) IBOutlet UICollectionView *particleCollectionView;
@@ -78,6 +80,8 @@ typedef NS_ENUM(NSUInteger, kParticleType) {
 
 - (void) setLocationDictionary: (NSDictionary*) locationInfo {
     NSParameterAssert([NSThread isMainThread]);
+    
+    NSLog(@"Update");
     
     if( [locationInfo isKindOfClass: [NSDictionary class]] ) {
         self.areaLabel.text = locationInfo[@"area"];
@@ -134,6 +138,13 @@ typedef NS_ENUM(NSUInteger, kParticleType) {
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+- (void) dealloc {
+    if( _refreshTimer ) {
+        dispatch_source_cancel(_refreshTimer);
+        _refreshTimer = nil;
+    }
+}
+
 #pragma mark - UIViewController
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder: aDecoder];
@@ -144,6 +155,15 @@ typedef NS_ENUM(NSUInteger, kParticleType) {
         manager.distanceFilter = kCLDistanceFilterNone;
         manager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
         _locationManager = manager;
+        
+        _refreshTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
+        dispatch_source_set_event_handler(_refreshTimer, ^{
+            [self refreshPushed: self.refreshControl];
+        });
+        
+        //Every 10mins
+        dispatch_source_set_timer(_refreshTimer, dispatch_time(DISPATCH_TIME_NOW, 0), 60 * 10 * NSEC_PER_SEC, 0);
+        dispatch_resume(_refreshTimer);
     }
     
     return self;
