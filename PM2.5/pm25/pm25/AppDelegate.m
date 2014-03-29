@@ -37,6 +37,7 @@
                                                             andTitle: NSLocalizedString(@"Version", @"")];
     
     container.menuItems = @[item1, item2, item3];
+    container.menuIcon = [UIImage imageNamed: @"settings-icon"];
     
     if( [[NSUserDefaults standardUserDefaults] boolForKey: kUserDefaultsPushNotificationsEnabledKey] ) {
         [application registerForRemoteNotificationTypes: UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound];

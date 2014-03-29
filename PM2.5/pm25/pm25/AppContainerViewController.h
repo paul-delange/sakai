@@ -9,6 +9,7 @@
 @interface AppContainerViewController : UIViewController
 
 @property (copy, nonatomic) IBOutletCollection(UIViewController) NSArray* menuItems;
+@property (strong, nonatomic) UIImage* menuIcon;
 
 @property (copy, readonly) NSArray* viewControllers;
 

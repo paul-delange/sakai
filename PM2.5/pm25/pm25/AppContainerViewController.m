@@ -54,7 +54,7 @@
 }
 
 - (void) addMenuButtonWithImage: (UIImage*) image {
-    UIImage* menuImage = image;
+    UIImage* menuImage = self.menuIcon;
     UIButton* menuButton = [UIButton buttonWithType: UIButtonTypeCustom];
     menuButton.frame = CGRectMake(CGRectGetWidth(self.view.bounds)-menuImage.size.width, 0, menuImage.size.width, menuImage.size.height);
     [menuButton setImage: menuImage forState: UIControlStateNormal];
@@ -64,8 +64,11 @@
     menuButton.layer.shadowOpacity = 1.;
     menuButton.layer.shadowOffset = CGSizeZero;
     menuButton.layer.shadowRadius = 5.;
+    //[menuButton setImage: self.menuIcon forState: UIControlStateNormal];
+    
     [self.view addSubview: menuButton];
     self.menuButton = menuButton;
+    
     
     id contentView = self.contentView;
     
@@ -128,6 +131,12 @@
     view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
 }
 
+- (void) setMenuIcon:(UIImage *)menuIcon {
+    _menuIcon = menuIcon;
+    if( [self isViewLoaded])
+        [self.menuButton setImage: menuIcon forState: UIControlStateNormal];
+}
+
 #pragma mark - Actions
 - (IBAction) menuItemPushed:(id)sender {
     AppMenuItem* oldItem = self.menuItems[_currentViewControllerIndex];
@@ -159,13 +168,18 @@
                                                      options: UIViewAnimationOptionCurveEaseIn
                                                   animations: ^{
                                                       itemView.alpha = 0.;
+                                                      
                                                   } completion:^(BOOL finished) {
                                                       [itemView removeFromSuperview];
+                                                      self.menuButton.alpha = 1.f;
                                                   }];
                              }
                              else {
                                  [itemView removeFromSuperview];
                              }
+                             
+                             if( !shouldHoldSelection )
+                                 self.menuButton.alpha = 1.;
                          }];
     }
     
@@ -179,7 +193,7 @@
         UIView* view = newController.view;
         [self displayView: view];
         //view.alpha = 0.f;
-        [self.menuButton setImage: newItem.image forState: UIControlStateNormal];
+        //[self.menuButton setImage: newItem.image forState: UIControlStateNormal];
         
         [UIView transitionWithView: self.view
                           duration: 0.3
@@ -191,16 +205,25 @@
                             if( view != oldItem.controller.view )
                                 [oldItem.controller.view removeFromSuperview];
                             
-                        } completion: NULL];
+                        } completion: ^(BOOL finished) {
+                        }];
     }
     
     [UIView transitionWithView: self.view
                       duration: 0.3
                        options: UIViewAnimationOptionCurveEaseInOut
                     animations: ^{
-                        self.menuButton.alpha = 1.f;
+                        
                         [_menuDismissView removeFromSuperview];
-                    } completion: NULL];
+                    } completion: ^(BOOL finished) {
+                        /*[UIView animateWithDuration: 0.3
+                         delay: 0.6 options: UIViewAnimationOptionCurveLinear
+                                         animations: ^{
+                                             self.menuButton.alpha = 1.;
+                                         } completion: ^(BOOL finished) {
+                                             
+                                         }];*/
+                    }];
     
     _menuItemViews = nil;
 }
@@ -386,13 +409,13 @@
         NSParameterAssert(firstItem);
         
         UIViewController* firstController =  firstItem.controller;
-        [self addMenuButtonWithImage: firstItem.image];
+        [self addMenuButtonWithImage: nil];
         [self addBannerView];
         [self displayView: firstController.view];
         [self.contentView insertSubview: firstController.view belowSubview: self.menuButton];
     }
     
-    
+    /*
     //Animate the current menu item
     CGFloat h = CGRectGetHeight(self.menuButton.bounds) + 16.;
     CGRect frame = CGRectMake(0, CGRectGetHeight(self.contentView.bounds)-h, CGRectGetWidth(self.view.bounds), h);
@@ -429,7 +452,7 @@
                             theAnimation.toValue=[NSNumber numberWithFloat:0.0];
                             [self.menuButton.layer addAnimation:theAnimation forKey:@"animateOpacity"];
                         }];
-    });
+    }); */
 }
 
 - (void) viewDidAppear:(BOOL)animated {
