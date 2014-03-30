@@ -13,6 +13,9 @@
 		FD1C810218D08A0100674787 /* ParticleCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1C810118D08A0100674787 /* ParticleCollectionViewCell.m */; };
 		FD1C810518D09CC900674787 /* HistoryGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1C810418D09CC900674787 /* HistoryGraphView.m */; };
 		FD1C810818D0B31F00674787 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FD1C810618D0B31F00674787 /* Localizable.strings */; };
+		FD2C66A618E7626A00F3CB3C /* RankingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD2C66A518E7626A00F3CB3C /* RankingViewController.m */; };
+		FD2C66A918E763C000F3CB3C /* RankingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD2C66A818E763C000F3CB3C /* RankingTableViewCell.m */; };
+		FD2C66AC18E7FF3F00F3CB3C /* PMRankingLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = FD2C66AB18E7FF3F00F3CB3C /* PMRankingLabel.m */; };
 		FD3A30DB18CB642F002B6990 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3A30DA18CB642F002B6990 /* Foundation.framework */; };
 		FD3A30DD18CB642F002B6990 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3A30DC18CB642F002B6990 /* CoreGraphics.framework */; };
 		FD3A30DF18CB642F002B6990 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3A30DE18CB642F002B6990 /* UIKit.framework */; };
@@ -67,6 +70,12 @@
 		FD1C810318D09CC900674787 /* HistoryGraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryGraphView.h; sourceTree = "<group>"; };
 		FD1C810418D09CC900674787 /* HistoryGraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryGraphView.m; sourceTree = "<group>"; };
 		FD1C810718D0B31F00674787 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		FD2C66A418E7626A00F3CB3C /* RankingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RankingViewController.h; sourceTree = "<group>"; };
+		FD2C66A518E7626A00F3CB3C /* RankingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RankingViewController.m; sourceTree = "<group>"; };
+		FD2C66A718E763C000F3CB3C /* RankingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RankingTableViewCell.h; sourceTree = "<group>"; };
+		FD2C66A818E763C000F3CB3C /* RankingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RankingTableViewCell.m; sourceTree = "<group>"; };
+		FD2C66AA18E7FF3F00F3CB3C /* PMRankingLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMRankingLabel.h; sourceTree = "<group>"; };
+		FD2C66AB18E7FF3F00F3CB3C /* PMRankingLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMRankingLabel.m; sourceTree = "<group>"; };
 		FD3A30D718CB642F002B6990 /* pm25.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pm25.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD3A30DA18CB642F002B6990 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FD3A30DC18CB642F002B6990 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -249,6 +258,8 @@
 				FD6C925D18CB6D06005D28A3 /* MapViewController.m */,
 				FD6C925F18CB6D0F005D28A3 /* SettingsViewController.h */,
 				FD6C926018CB6D0F005D28A3 /* SettingsViewController.m */,
+				FD2C66A418E7626A00F3CB3C /* RankingViewController.h */,
+				FD2C66A518E7626A00F3CB3C /* RankingViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -266,6 +277,10 @@
 				FD1C810418D09CC900674787 /* HistoryGraphView.m */,
 				FD04DA4518D1AE29007399E4 /* PMAnnotationView.h */,
 				FD04DA4618D1AE29007399E4 /* PMAnnotationView.m */,
+				FD2C66A718E763C000F3CB3C /* RankingTableViewCell.h */,
+				FD2C66A818E763C000F3CB3C /* RankingTableViewCell.m */,
+				FD2C66AA18E7FF3F00F3CB3C /* PMRankingLabel.h */,
+				FD2C66AB18E7FF3F00F3CB3C /* PMRankingLabel.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -454,6 +469,7 @@
 				FD04DA4718D1AE29007399E4 /* PMAnnotationView.m in Sources */,
 				FD1C810218D08A0100674787 /* ParticleCollectionViewCell.m in Sources */,
 				FD6C925B18CB6CFC005D28A3 /* CurrentLocationViewController.m in Sources */,
+				FD2C66A918E763C000F3CB3C /* RankingTableViewCell.m in Sources */,
 				FD6C925E18CB6D06005D28A3 /* MapViewController.m in Sources */,
 				FD6C926118CB6D0F005D28A3 /* SettingsViewController.m in Sources */,
 				FD3BCD6E18CC59AC001170D6 /* UIImage+ImageEffects.m in Sources */,
@@ -464,6 +480,8 @@
 				FD1C810518D09CC900674787 /* HistoryGraphView.m in Sources */,
 				FD3A30E718CB642F002B6990 /* main.m in Sources */,
 				FD3BCD7118CC6891001170D6 /* ForegroundPanel.m in Sources */,
+				FD2C66AC18E7FF3F00F3CB3C /* PMRankingLabel.m in Sources */,
+				FD2C66A618E7626A00F3CB3C /* RankingViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

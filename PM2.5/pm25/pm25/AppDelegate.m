@@ -24,7 +24,8 @@
     
     UIViewController* vc1 = [container.storyboard instantiateViewControllerWithIdentifier: @"CurrentLocationViewController"];
     UIViewController* vc2 = [container.storyboard instantiateViewControllerWithIdentifier: @"MapViewController"];
-    UIViewController* vc3 = [container.storyboard instantiateViewControllerWithIdentifier: @"SettingsViewController"];
+    UIViewController* vc4 = [container.storyboard instantiateViewControllerWithIdentifier: @"SettingsViewController"];
+    UIViewController* vc3 = [container.storyboard instantiateViewControllerWithIdentifier: @"RankingViewController"];
     
     AppMenuItem* item1 = [[AppMenuItem alloc] initWithViewController: vc1
                                                                image: @"current-icon"
@@ -32,11 +33,14 @@
     AppMenuItem* item2 = [[AppMenuItem alloc] initWithViewController: vc2
                                                                image: @"maps-icon"
                                                             andTitle: NSLocalizedString(@"Global readings", @"")];
-    AppMenuItem* item3 = [[AppMenuItem alloc] initWithViewController: vc3
+    AppMenuItem* item4 = [[AppMenuItem alloc] initWithViewController: vc4
                                                                image: @"settings-icon"
                                                             andTitle: NSLocalizedString(@"Version", @"")];
+    AppMenuItem* item3 = [[AppMenuItem alloc] initWithViewController: vc3
+                                                               image: @"ranking-icon"
+                                                            andTitle: NSLocalizedString(@"Ranking", @"")];
     
-    container.menuItems = @[item1, item2, item3];
+    container.menuItems = @[item1, item2, item3, item4];
     container.menuIcon = [UIImage imageNamed: @"settings-icon"];
     
     if( [[NSUserDefaults standardUserDefaults] boolForKey: kUserDefaultsPushNotificationsEnabledKey] ) {
