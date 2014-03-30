@@ -112,21 +112,21 @@ NSString* const NSUserDefaultsLastUpdatedRankingDateKey =  @"ranking.last.update
     cell.locationLabel.text = ranking[@"name"];
     cell.prefectureLabel.text = ranking[@"pref"];
     
-    NSInteger rank = [ranking[@"rank"] integerValue];
-    switch (rank) {
-        case 1:
-            cell.rankingLabel.textColor = [UIColor colorWithRed: 216/255. green: 159/255. blue: 18/255. alpha: 1.];
-            break;
-        case 2:
-            cell.rankingLabel.textColor = [UIColor colorWithRed: 194/255. green: 194/255. blue: 194/255. alpha: 1.];
-            break;
-        case 3:
-            cell.rankingLabel.textColor = [UIColor colorWithRed: 180/255. green: 92/255. blue: 22/255. alpha: 1.];
-            break;
-        default:
-            cell.rankingLabel.textColor = [UIColor whiteColor];
-            break;
-    }
+//    NSInteger rank = [ranking[@"rank"] integerValue];
+//    switch (rank) {
+//        case 1:
+//            cell.rankingLabel.textColor = [UIColor colorWithRed: 216/255. green: 159/255. blue: 18/255. alpha: 1.];
+//            break;
+//        case 2:
+//            cell.rankingLabel.textColor = [UIColor colorWithRed: 194/255. green: 194/255. blue: 194/255. alpha: 1.];
+//            break;
+//        case 3:
+//            cell.rankingLabel.textColor = [UIColor colorWithRed: 180/255. green: 92/255. blue: 22/255. alpha: 1.];
+//            break;
+//        default:
+//            cell.rankingLabel.textColor = [UIColor whiteColor];
+//            break;
+//    }
     
     return cell;
 }
