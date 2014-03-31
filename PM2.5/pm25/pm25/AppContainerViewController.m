@@ -53,6 +53,10 @@
     return [self.menuItems valueForKeyPath: @"@unionOfObjects.controller"];
 }
 
+- (UIViewController*) topViewController {
+    return [self.viewControllers objectAtIndex: _currentViewControllerIndex];
+}
+
 - (void) addMenuButtonWithImage: (UIImage*) image {
     UIImage* menuImage = self.menuIcon;
     UIButton* menuButton = [UIButton buttonWithType: UIButtonTypeCustom];
@@ -135,6 +139,32 @@
     _menuIcon = menuIcon;
     if( [self isViewLoaded])
         [self.menuButton setImage: menuIcon forState: UIControlStateNormal];
+}
+
+- (void) setSelectedViewControllerIndex: (NSInteger) index animated: (BOOL) animated {
+    if( index == _currentViewControllerIndex )
+        return;
+    
+    UIViewController* oldController = [self.viewControllers objectAtIndex: _currentViewControllerIndex];
+    
+    _currentViewControllerIndex = index;
+    
+    UIViewController* newController = [self.viewControllers objectAtIndex: index];
+    UIView* view = newController.view;
+    [self displayView: view];
+    
+    [UIView transitionWithView: self.view
+                      duration: 0.3 * animated
+                       options: UIViewAnimationOptionCurveEaseInOut
+                    animations: ^{
+                        
+                        [self.contentView addSubview: view];
+                        
+                        [oldController.view removeFromSuperview];
+                        
+                    } completion: ^(BOOL finished) {
+                    }];
+
 }
 
 #pragma mark - Actions

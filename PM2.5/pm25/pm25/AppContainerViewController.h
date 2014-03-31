@@ -12,6 +12,9 @@
 @property (strong, nonatomic) UIImage* menuIcon;
 
 @property (copy, readonly) NSArray* viewControllers;
+@property (strong, readonly) UIViewController* topViewController;
+
+- (void) setSelectedViewControllerIndex: (NSInteger) index animated: (BOOL) animated;
 
 @end
 

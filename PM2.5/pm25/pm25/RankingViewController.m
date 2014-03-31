@@ -7,13 +7,17 @@
 //
 
 #import "RankingViewController.h"
+#import "AppContainerViewController.h"
+#import "MapViewController.h"
 
 #import "RankingTableViewCell.h"
+
+@import MapKit;
 
 NSString* const NSUserDefaultsLastUpdatedRankingKey =  @"ranking.last.update.data";
 NSString* const NSUserDefaultsLastUpdatedRankingDateKey =  @"ranking.last.update.date";
 
-@interface RankingViewController () <UITableViewDataSource> {
+@interface RankingViewController () <UITableViewDataSource, UITableViewDelegate> {
     NSURLSessionDataTask*   _dataTask;
 }
 
@@ -144,5 +148,27 @@ NSString* const NSUserDefaultsLastUpdatedRankingDateKey =  @"ranking.last.update
         return NSLocalizedString(@"Refreshing...", @"");
     }
 }*/
+
+#pragma mark - UITableViewDelegate
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSDictionary* ranking = self.data[indexPath.item];
+    NSString* lat_str = ranking[@"lat"];
+    NSString* lon_str = ranking[@"lon"];
+    
+    CLLocationDegrees lat = [lat_str doubleValue];
+    CLLocationDegrees lon = [lon_str doubleValue];
+    CLLocationCoordinate2D coord = CLLocationCoordinate2DMake(lat, lon);
+    
+    AppContainerViewController* container = (AppContainerViewController*)self.parentViewController;
+    [container setSelectedViewControllerIndex: 1 animated: YES];
+    
+    MapViewController* mapVC = (MapViewController*)container.topViewController;
+    NSParameterAssert([mapVC isViewLoaded]);
+    
+    [mapVC.mapView setCenterCoordinate: coord animated: YES];
+    
+    [tableView deselectRowAtIndexPath: indexPath animated: YES];
+}
 
 @end

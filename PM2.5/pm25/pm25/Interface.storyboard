@@ -22,8 +22,8 @@
                     <connections>
                         <segue destination="F6V-ir-sAL" kind="modal" identifier="CurrentSegue" id="8Iw-VZ-0Xy"/>
                         <segue destination="BwZ-Bd-RVW" kind="modal" identifier="MapSegue" id="FoS-OA-9LF"/>
-                        <segue destination="nI1-y4-7S5" kind="modal" id="zFA-dM-mim"/>
-                        <segue destination="WBU-Y3-dsu" kind="modal" id="Y0V-1P-Y5d"/>
+                        <segue destination="nI1-y4-7S5" kind="modal" identifier="RankingSegue" id="zFA-dM-mim"/>
+                        <segue destination="WBU-Y3-dsu" kind="modal" identifier="VersionSegue" id="Y0V-1P-Y5d"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9oO-QN-yLz" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -49,16 +49,29 @@
                                     <outlet property="delegate" destination="BwZ-Bd-RVW" id="LoE-Nn-StA"/>
                                 </connections>
                             </mapView>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hlz-Am-Lje">
+                                <rect key="frame" x="266" y="28" width="34" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="map-center-icon">
+                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="centerPushed:" destination="BwZ-Bd-RVW" eventType="touchUpInside" id="9eb-h7-exQ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="ahj-Da-gLm" firstAttribute="leading" secondItem="9I3-Kd-OZC" secondAttribute="leading" id="OAG-Gn-PeR"/>
                             <constraint firstAttribute="trailing" secondItem="ahj-Da-gLm" secondAttribute="trailing" id="uDq-1W-Nb1"/>
                             <constraint firstItem="ahj-Da-gLm" firstAttribute="top" secondItem="9I3-Kd-OZC" secondAttribute="top" id="usP-vT-Rui"/>
+                            <constraint firstItem="Hlz-Am-Lje" firstAttribute="top" secondItem="Wmx-B3-3jf" secondAttribute="bottom" constant="20" symbolic="YES" id="vsy-fw-qBs"/>
                             <constraint firstItem="mT1-yi-mhx" firstAttribute="top" secondItem="ahj-Da-gLm" secondAttribute="bottom" id="wMR-vQ-CM8"/>
+                            <constraint firstAttribute="trailing" secondItem="Hlz-Am-Lje" secondAttribute="trailing" constant="20" symbolic="YES" id="zQp-X9-btH"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="centerButton" destination="Hlz-Am-Lje" id="V3D-LI-o1X"/>
                         <outlet property="mapView" destination="ahj-Da-gLm" id="bfp-RS-ZdU"/>
                     </connections>
                 </viewController>
@@ -150,12 +163,12 @@
         <scene sceneID="RbG-Xu-zjL">
             <objects>
                 <tableViewController storyboardIdentifier="RankingViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="nI1-y4-7S5" customClass="RankingViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="90" sectionHeaderHeight="22" sectionFooterHeight="22" id="6Cn-bE-fkx">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="90" sectionHeaderHeight="22" sectionFooterHeight="22" id="6Cn-bE-fkx">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="RankingCellIdentifer" id="FEc-WN-30G" customClass="RankingTableViewCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="RankingCellIdentifer" id="FEc-WN-30G" customClass="RankingTableViewCell">
                                 <rect key="frame" x="0.0" y="22" width="320" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FEc-WN-30G" id="EWu-rx-sqq">
@@ -173,16 +186,16 @@
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" misplaced="YES" text="東京駅前" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="9" preferredMaxLayoutWidth="183" translatesAutoresizingMaskIntoConstraints="NO" id="VNW-D2-hsI">
-                                            <rect key="frame" x="60" y="20" width="183" height="31"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="東京駅前" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="9" preferredMaxLayoutWidth="183" translatesAutoresizingMaskIntoConstraints="NO" id="VNW-D2-hsI">
+                                            <rect key="frame" x="60" y="20" width="183" height="34"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="東京都" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" preferredMaxLayoutWidth="183" translatesAutoresizingMaskIntoConstraints="NO" id="Lf5-Mt-B1N">
-                                            <rect key="frame" x="60" y="51" width="183" height="18"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="東京都" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" preferredMaxLayoutWidth="183" translatesAutoresizingMaskIntoConstraints="NO" id="Lf5-Mt-B1N">
+                                            <rect key="frame" x="60" y="54" width="183" height="15"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -256,11 +269,11 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NA4-AT-W8u">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="567"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TGE-Mc-H0v" userLabel="Current Value Panel">
-                                                <rect key="frame" x="4" y="20" width="312" height="168"/>
+                                                <rect key="frame" x="4" y="20" width="312" height="167"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="中央区" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H2u-bX-hKK">
@@ -271,35 +284,35 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="永代通り新川" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="150" translatesAutoresizingMaskIntoConstraints="NO" id="LQj-8E-3Vy">
-                                                        <rect key="frame" x="20" y="38" width="150" height="90"/>
+                                                        <rect key="frame" x="20" y="38" width="150" height="89"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="現在地から、XXXkm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Zk-Ow-y8k">
-                                                        <rect key="frame" x="20" y="132" width="111" height="14"/>
+                                                        <rect key="frame" x="20" y="131" width="111" height="14"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
                                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="現在地から、XXXkm" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="272" translatesAutoresizingMaskIntoConstraints="NO" id="t56-iD-YIW">
-                                                        <rect key="frame" x="20" y="150" width="272" height="14"/>
+                                                        <rect key="frame" x="20" y="149" width="272" height="14"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
                                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="PM2.5" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xVk-nm-Lcn">
-                                                        <rect key="frame" x="178" y="42" width="161" height="29"/>
+                                                        <rect key="frame" x="178" y="41" width="161" height="29"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="25"/>
                                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="40" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lTT-Yj-9rt">
-                                                        <rect key="frame" x="225" y="71" width="67" height="71"/>
+                                                        <rect key="frame" x="225" y="70" width="67" height="71"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="60"/>
                                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -326,7 +339,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dup-Rw-9vs" userLabel="Particle Info Panel">
-                                                <rect key="frame" x="4" y="196" width="312" height="167"/>
+                                                <rect key="frame" x="4" y="195" width="312" height="167"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <subviews>
                                                     <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="l2F-UB-0XI">
@@ -397,7 +410,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LdS-Ta-zJc" userLabel="Recent Movement Panel">
-                                                <rect key="frame" x="4" y="371" width="312" height="167"/>
+                                                <rect key="frame" x="4" y="370" width="312" height="167"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <subviews>
                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HqS-gl-5RK">
@@ -498,6 +511,7 @@
     </scenes>
     <resources>
         <image name="Icon-72" width="72" height="72"/>
+        <image name="map-center-icon" width="34" height="34"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

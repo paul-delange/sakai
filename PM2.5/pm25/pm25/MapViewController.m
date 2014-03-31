@@ -19,6 +19,7 @@
 }
 
 @property (copy, nonatomic) NSArray* data;
+@property (weak, nonatomic) IBOutlet UIButton *centerButton;
 
 @end
 
@@ -82,11 +83,21 @@
     _data = data;
 }
 
+#pragma mark - Actions
+- (IBAction)centerPushed:(id)sender {
+    [self.mapView setCenterCoordinate: self.mapView.userLocation.coordinate animated: YES];
+}
+
 #pragma mark - UIViewController
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    self.centerButton.layer.shadowColor = [[UIColor blackColor] CGColor];
+    self.centerButton.layer.shadowOffset = CGSizeZero;
+    self.centerButton.layer.shadowOpacity = 0.5;
+    self.centerButton.layer.shadowRadius = 3.;
     
     self.mapView.showsUserLocation = YES;
     self.mapView.userTrackingMode = MKUserTrackingModeFollow;
@@ -118,6 +129,11 @@
     MKMapRect mapRect = mapView.visibleMapRect;
     
     [self fetchPointsForRegion: mapRect];
+}
+
+- (void) mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
+    
+    self.centerButton.hidden =  userLocation == nil ? YES : NO;
 }
 
 @end
