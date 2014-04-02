@@ -208,7 +208,7 @@
                                  [itemView removeFromSuperview];
                              }
                              
-                             if( !shouldHoldSelection )
+                             if( !shouldHoldSelection || [sender isKindOfClass: [UITapGestureRecognizer class]] )
                                  self.menuButton.alpha = 1.;
                          }];
     }
