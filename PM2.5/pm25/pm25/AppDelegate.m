@@ -15,6 +15,12 @@
 
 @implementation AppDelegate
 
+#pragma mark - NSObject
++ (void) initialize {
+    [[NSUserDefaults standardUserDefaults] registerDefaults: @{ NSUserDefaultsEnableBadgeKey :  @YES}];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 #pragma mark - UIApplicationDelegate
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -101,7 +107,12 @@
                                            
                                            NSUInteger value = [object[@"pm25"] integerValue];
                                            
-                                           application.applicationIconBadgeNumber = value;
+                                           if( [[NSUserDefaults standardUserDefaults] boolForKey: NSUserDefaultsEnableBadgeKey] ) {
+                                               application.applicationIconBadgeNumber = value;
+                                           }
+                                           else {
+                                               application.applicationIconBadgeNumber = 0;
+                                           }
                                            
                                            completionHandler(UIBackgroundFetchResultNewData);
                                        }

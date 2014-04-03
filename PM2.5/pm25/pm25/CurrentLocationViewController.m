@@ -101,7 +101,13 @@ typedef NS_ENUM(NSUInteger, kParticleType) {
         }
         
         UIApplication *application = [UIApplication sharedApplication];
-        application.applicationIconBadgeNumber = [value integerValue];
+        
+        if( [[NSUserDefaults standardUserDefaults] boolForKey: NSUserDefaultsEnableBadgeKey] ) {
+            application.applicationIconBadgeNumber = [value integerValue];
+        }
+        else {
+            application.applicationIconBadgeNumber = 0;
+        }
         
     }
     else {

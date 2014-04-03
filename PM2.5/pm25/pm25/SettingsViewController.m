@@ -12,6 +12,7 @@
 #define     kAlertViewInvalidPMValueTag     982
 #define     kAlertViewPurchaseRequiredTag   983
 
+NSString * const NSUserDefaultsEnableBadgeKey   = @"BadgeEnabled";
 /*
 static bool isValidPMValue(NSInteger newAlertLevel) {
     return newAlertLevel > 10 && newAlertLevel < 100;
@@ -24,14 +25,35 @@ static bool isValidPMValue(NSInteger newAlertLevel) {
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *commentLabel;
 @property (weak, nonatomic) IBOutlet UILabel *thanksLabel;
+@property (weak, nonatomic) IBOutlet UILabel *badgeLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *badgeSwitch;
 
 @end
 
 @implementation SettingsViewController
 
+#pragma mark - Actions
+- (IBAction)badgeSwitchToggled:(UISwitch*)sender {
+    
+    if( sender.on ) {
+        id object = [[NSUserDefaults standardUserDefaults] objectForKey: kUserDefaultsLastUpdateKey];
+        NSUInteger value = [object[@"pm25"] integerValue];
+        [[UIApplication sharedApplication] setApplicationIconBadgeNumber: value];
+    }
+    else {
+        [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 0];
+    }
+    
+    [[NSUserDefaults standardUserDefaults] setBool: sender.on forKey: NSUserDefaultsEnableBadgeKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 #pragma mark - UIViewController
 - (void) viewDidLoad {
     [super viewDidLoad];
+    
+    self.badgeLabel.text = NSLocalizedString(@"Automatically update app icon with current pm2.5 readings?", @"");
+    self.badgeSwitch.on = [[NSUserDefaults standardUserDefaults] boolForKey: NSUserDefaultsEnableBadgeKey];
     
     self.titleLabel.text = @"見えるPM2.5";
     self.versionLabel.text = [[[NSBundle mainBundle] infoDictionary] objectForKey: (id)kCFBundleVersionKey];
