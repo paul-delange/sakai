@@ -11,6 +11,8 @@
 NSString * const ResultNodeName = @"ResultNode";
 
 @interface ResultNode () {
+    SKShapeNode*            _selectNode;
+    
     CGPoint                 _touchOffset;
     __weak UITouch*         _touch;
 }
@@ -80,6 +82,16 @@ NSString * const ResultNodeName = @"ResultNode";
             _touch = touch;
             _touchOffset = CGPointMake(location.x-self.position.x, location.y-self.position.y);
             
+            SKShapeNode* shape = [SKShapeNode node];
+            shape.glowWidth = 10.;
+            shape.path = [[UIBezierPath bezierPathWithOvalInRect: CGRectMake(-15, -15, 30, 30)] CGPath];
+            shape.fillColor = [SKColor whiteColor];
+            shape.strokeColor = [SKColor whiteColor];
+            shape.zPosition = -1;
+            
+            [self insertChild: shape atIndex: 0];
+            _selectNode = shape;
+            
             break;
             
         }
@@ -87,7 +99,10 @@ NSString * const ResultNodeName = @"ResultNode";
 }
 
 - (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    _touch = nil;
+    if( [touches containsObject: _touch] ) {
+        _touch = nil;
+        [_selectNode removeFromParent];
+    }
 }
 
 - (void) touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {

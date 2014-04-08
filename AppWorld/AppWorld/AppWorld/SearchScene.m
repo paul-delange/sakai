@@ -143,44 +143,25 @@
         for(SKNode* node in nodes) {
             if( [node respondsToSelector: @selector(touchesBegan:withEvent:)])
                 [node touchesBegan: touches withEvent: event];
-        }
-    }
-}
-
--(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-    for (UITouch *touch in touches) {
-        CGPoint location = [touch locationInNode:self];
-        
-        NSArray* nodes = [self.scene nodesAtPoint: location];
-        for(SKNode* node in nodes) {
-            if( [node respondsToSelector: @selector(touchesMoved:withEvent:)])
-                [node touchesMoved: touches withEvent: event];
+            
+            break;
         }
     }
 }
 
 -(void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
-    for (UITouch *touch in touches) {
-        CGPoint location = [touch locationInNode:self];
-        
-        NSArray* nodes = [self.scene nodesAtPoint: location];
-        for(SKNode* node in nodes) {
+    [self enumerateChildNodesWithName: ResultNodeName usingBlock: ^(SKNode *node, BOOL *stop) {
             if( [node respondsToSelector: @selector(touchesCancelled:withEvent:)])
                 [node touchesCancelled: touches withEvent: event];
-        }
-    }
+        }];
 }
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    for (UITouch *touch in touches) {
-        CGPoint location = [touch locationInNode:self];
-        
-        NSArray* nodes = [self.scene nodesAtPoint: location];
-        for(SKNode* node in nodes) {
+   
+        [self enumerateChildNodesWithName: ResultNodeName usingBlock: ^(SKNode *node, BOOL *stop) {
             if( [node respondsToSelector: @selector(touchesEnded:withEvent:)])
                 [node touchesEnded: touches withEvent: event];
-        }
-    }
+        }];
 }
 
 @end
