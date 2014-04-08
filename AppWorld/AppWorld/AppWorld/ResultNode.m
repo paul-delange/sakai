@@ -8,11 +8,28 @@
 
 #import "ResultNode.h"
 
+NSString * const ResultNodeName = @"ResultNode";
+
+@interface ResultNode () {
+    CGPoint                 _touchOffset;
+    __weak UITouch*         _touch;
+}
+
+@end
+
 @implementation ResultNode
+
+-(void)dragForDuration:(NSTimeInterval) frameDuration {
+    if( _touch ) {
+        CGPoint location = [_touch locationInNode: self.scene];
+        self.position = CGPointMake(location.x - _touchOffset.x, location.y - _touchOffset.y);
+    }
+}
 
 - (instancetype) initWithImage: (UIImage*) image {
     self = [super init];
     if( self ) {
+        self.name = ResultNodeName;
         
         SKShapeNode* maskNode = [SKShapeNode new];
         maskNode.path = [[UIBezierPath bezierPathWithOvalInRect: CGRectMake(-7.5, -7.5, 15, 15)] CGPath];
@@ -23,33 +40,58 @@
         SKCropNode* cropNode = [SKCropNode new];
         cropNode.maskNode = maskNode;
         
-        
         SKTexture* texture = [SKTexture textureWithImage: image];
         SKSpriteNode* sprite = [SKSpriteNode spriteNodeWithTexture: texture];
         sprite.size = CGSizeMake(30, 30);
         sprite.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+        sprite.userInteractionEnabled = NO;
         
         [cropNode addChild: sprite];
         
         [self addChild: cropNode];
         
         SKPhysicsBody* body = [SKPhysicsBody bodyWithCircleOfRadius: 15.];
+ 
         self.physicsBody = body;
-        /*
-        SKAction* oneScale = [SKAction scaleTo: 2. duration: 1.0];
-        SKAction* reverseScale = [SKAction scaleTo: 1. duration: 1.];
         
-        SKAction* pulse = [SKAction sequence: @[oneScale, reverseScale]];
-        SKAction* repeat = [SKAction repeatActionForever: pulse];
-        [self runAction: repeat];
-*/
         _repulsive = NO;
     }
+    
     return self;
 }
 
 - (CGRect) calculateAccumulatedFrame {
-    return CGRectMake(0, 0, 30, 30);
+    CGRect frame = [super calculateAccumulatedFrame];
+    return frame;
+}
+
+#pragma mark - UIResponder
+- (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    if( _touch )
+        return;
+    
+    for(UITouch* touch in touches) {
+        
+        
+        CGPoint location = [touch locationInNode: self.scene];
+        NSArray* nodes = [self.scene nodesAtPoint: location];
+        
+        if( [nodes containsObject: self]  ) {
+            _touch = touch;
+            _touchOffset = CGPointMake(location.x-self.position.x, location.y-self.position.y);
+            
+            break;
+            
+        }
+    }
+}
+
+- (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    _touch = nil;
+}
+
+- (void) touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self touchesEnded: touches withEvent: event];
 }
 
 @end

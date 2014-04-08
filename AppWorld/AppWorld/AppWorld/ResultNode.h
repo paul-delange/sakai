@@ -8,9 +8,13 @@
 
 #import <SpriteKit/SpriteKit.h>
 
+extern NSString * const ResultNodeName;
+
 @interface ResultNode : SKNode
 
 - (instancetype) initWithImage: (UIImage*) image;
+
+-(void)dragForDuration:(NSTimeInterval) frameDuration;
 
 @property (assign) BOOL repulsive;
 

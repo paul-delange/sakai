@@ -8,6 +8,8 @@
 
 #import "UserNode.h"
 
+NSString * const UserNodeName = @"UserNode";
+
 @implementation UserNode
 
 - (instancetype) initWithSize:(CGSize)size {
@@ -15,6 +17,7 @@
     
     self = [super init];
     if( self ) {
+        self.name = UserNodeName;
         
         UIImage* image = [UIImage imageNamed: @"player357.tga"];
         SKTexture* texture = [SKTexture textureWithImage: image];

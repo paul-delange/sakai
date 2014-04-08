@@ -13,7 +13,9 @@
 
 #import "SearchResult.h"
 
-@interface SearchScene ()
+@interface SearchScene () {
+    CFTimeInterval      _lastUpdateTime;
+}
 
 @property (copy) NSSet* userNodes;
 //@property (weak) UserNode* userNode;
@@ -60,6 +62,7 @@
         self.backgroundColor = [SKColor blackColor];
         
         UserNode* userNode1 = [[UserNode alloc] initWithSize: CGSizeMake(50, 50)];
+        
         userNode1.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
         [self addChild: userNode1];
         
@@ -82,8 +85,7 @@
 
 -(void)update:(CFTimeInterval)currentTime {
     
-    NSPredicate* resultPredicate =[NSPredicate predicateWithFormat: @"SELF isKindOfClass: %@", [ResultNode class]];
-    NSArray* resultNodes = [self.children filteredArrayUsingPredicate: resultPredicate];
+    CFTimeInterval interval = _lastUpdateTime - currentTime;
     
     //Remove old ones
     NSMutableSet* visibleBodies = [NSMutableSet new];
@@ -91,11 +93,14 @@
         [visibleBodies addObject: body];
     }];
     
-    for(ResultNode* node in resultNodes ) {
+    [self enumerateChildNodesWithName: ResultNodeName usingBlock: ^(SKNode *n, BOOL *stop) {
+        ResultNode* node = (ResultNode*)n;
+        
         if( ![visibleBodies containsObject: node.physicsBody] && node.repulsive ) {
             [node removeFromParent];
         }
         else {
+        
             CGPoint location = node.position;
             NSUInteger i = 1;
             for(UserNode* userNode in self.userNodes) {
@@ -122,7 +127,11 @@
             
             i++;
         }
-    }
+        
+        [node dragForDuration: interval];
+    }];
+    
+    _lastUpdateTime = currentTime;
 }
 
 #pragma mark - UIResponder
@@ -130,10 +139,11 @@
     for (UITouch *touch in touches) {
         CGPoint location = [touch locationInNode:self];
         
-        NSArray* nodes = [self nodesAtPoint: location];
-        NSLog(@"Touched %d nodes", [nodes count]);
-        
-        //[self addResultNodeAtPosition: location];
+        NSArray* nodes = [self.scene nodesAtPoint: location];
+        for(SKNode* node in nodes) {
+            if( [node respondsToSelector: @selector(touchesBegan:withEvent:)])
+                [node touchesBegan: touches withEvent: event];
+        }
     }
 }
 
@@ -141,7 +151,35 @@
     for (UITouch *touch in touches) {
         CGPoint location = [touch locationInNode:self];
         
-        //[self addResultNodeAtPosition: location];
+        NSArray* nodes = [self.scene nodesAtPoint: location];
+        for(SKNode* node in nodes) {
+            if( [node respondsToSelector: @selector(touchesMoved:withEvent:)])
+                [node touchesMoved: touches withEvent: event];
+        }
+    }
+}
+
+-(void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+    for (UITouch *touch in touches) {
+        CGPoint location = [touch locationInNode:self];
+        
+        NSArray* nodes = [self.scene nodesAtPoint: location];
+        for(SKNode* node in nodes) {
+            if( [node respondsToSelector: @selector(touchesCancelled:withEvent:)])
+                [node touchesCancelled: touches withEvent: event];
+        }
+    }
+}
+
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    for (UITouch *touch in touches) {
+        CGPoint location = [touch locationInNode:self];
+        
+        NSArray* nodes = [self.scene nodesAtPoint: location];
+        for(SKNode* node in nodes) {
+            if( [node respondsToSelector: @selector(touchesEnded:withEvent:)])
+                [node touchesEnded: touches withEvent: event];
+        }
     }
 }
 

@@ -28,7 +28,9 @@
 
 - (void) searchForTerm: (NSString*) term {
     
-    NSString* searchPath = [NSString stringWithFormat: @"https://itunes.apple.com/search?media=software&term=%@&limit=200", term];
+    // http://www.apple.com/itunes/affiliates/resources/documentation/itunes-store-web-service-search-api.html
+    
+    NSString* searchPath = [NSString stringWithFormat: @"https://itunes.apple.com/search?media=software&term=%@&limit=50", term];
     NSURL* searchURL = [NSURL URLWithString: searchPath];
     NSURLRequest* request = [NSURLRequest requestWithURL: searchURL];
     [NSURLConnection sendAsynchronousRequest: request

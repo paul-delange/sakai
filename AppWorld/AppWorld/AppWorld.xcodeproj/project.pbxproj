@@ -197,6 +197,7 @@
 		FDA6FED718F2CED100C72C5D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				FDA6FF4B18F42D5D00C72C5D /* Categories */,
 				FDA6FF4718F3F62E00C72C5D /* SpriteKit */,
 				FDA6FF4818F3FAC900C72C5D /* SearchResult.h */,
 				FDA6FF4918F3FAC900C72C5D /* SearchResult.m */,
@@ -222,6 +223,13 @@
 				FDA6FEEB18F2DF2400C72C5D /* ResultNode.m */,
 			);
 			name = SpriteKit;
+			sourceTree = "<group>";
+		};
+		FDA6FF4B18F42D5D00C72C5D /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Categories;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

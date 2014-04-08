@@ -8,6 +8,8 @@
 
 #import <SpriteKit/SpriteKit.h>
 
+extern NSString * const UserNodeName;
+
 @interface UserNode : SKNode
 
 - (instancetype) initWithSize: (CGSize) size;
