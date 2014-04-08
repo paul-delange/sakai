@@ -32,28 +32,39 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-+ (UIImage*) getPhotoForLocation: (CLLocation*) location withCompletionHandler: (kPhotoGrabberCompleted) completion {
++ (UIImage*) getPhotoForTag: (NSString*) tag withCompletionHandler: (kPhotoGrabberCompleted) completion {
     
     NSString* currentImageName = [[NSUserDefaults standardUserDefaults] stringForKey: kUserDefaultsCurrentBackgroundPhotoURL];
     
     //NSString* imagePath = [[self photoDirectoryURL] stringByAppendingPathComponent: PHOTO_FILE_NAME];
     
-    if( location ) {
-        CLLocationCoordinate2D coordinate = location.coordinate;
+    if( tag ) {
         
         //Update the image
-        NSString* listPathFormat = @"https://api.flickr.com/services/rest/?api_key=%@&method=flickr.photos.search&format=json&nojsoncallback=1&lat=%f&lon=%f&extras=o_dims&accuracy=16&safe_search=1&content_type=1&media=photos";
-        NSString* listPath = [NSString stringWithFormat: listPathFormat, API_KEY, coordinate.latitude, coordinate.longitude];
+        NSString* listPathFormat = @"https://api.flickr.com/services/rest/?api_key=%@&method=flickr.photos.search&format=json&nojsoncallback=1&extras=o_dims&accuracy=16&safe_search=1&content_type=1&media=photos&tags=%@&sort=interestingness-desc";
+        NSString* listPath = [NSString stringWithFormat: listPathFormat, API_KEY, tag];
         NSURL* listURL = [NSURL URLWithString: listPath];
         NSURLRequest* listRequest = [NSURLRequest requestWithURL: listURL];
         [NSURLConnection sendAsynchronousRequest: listRequest
                                            queue: [NSOperationQueue mainQueue]
                                completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-                                   id listObject = [NSJSONSerialization JSONObjectWithData: data options: 0 error: nil];
+                                   
+                                   BOOL isDownloadingPhoto = NO;
+                                   
+                                   
+                                   id listObject = [NSJSONSerialization JSONObjectWithData: data options: NSJSONReadingMutableContainers error: nil];
                                    NSString* status = listObject[@"stat"];
                                    if( [status isEqualToString: @"ok"] ) {
                                        NSDictionary* rootObject = listObject[@"photos"];
-                                       NSArray* photos = rootObject[@"photo"];
+                                       NSMutableArray* photos = rootObject[@"photo"];
+                                       
+                                       NSUInteger count = [photos count];
+                                       for (NSUInteger i = 0; i < count; ++i) {
+                                           // Select a random element between i and end of array to swap with.
+                                           NSInteger nElements = count - i;
+                                           NSInteger n = arc4random_uniform(nElements) + i;
+                                           [photos exchangeObjectAtIndex:i withObjectAtIndex:n];
+                                       }
                                        
                                        CGFloat minWidth = CGRectGetWidth([UIScreen mainScreen].bounds);
                                        CGFloat minHeight = CGRectGetHeight([UIScreen mainScreen].bounds);
@@ -67,6 +78,8 @@
                                                NSString* photoPath = [NSString stringWithFormat: photoPathFormat, photo[@"farm"], photo[@"server"], photo[@"id"], photo[@"secret"]];
                                                
                                                if( ![photoPath.lastPathComponent isEqualToString: currentImageName] ) {
+                                                   isDownloadingPhoto = YES;
+                                                   
                                                    NSURL* photoURL = [NSURL URLWithString: photoPath];
                                                    NSURLRequest* photoRequest = [NSURLRequest requestWithURL: photoURL];
                                                    [NSURLConnection sendAsynchronousRequest: photoRequest
@@ -89,14 +102,19 @@
                                                                                   }
                                                                               }
                                                                           }];
+                                                   
+                                                  
                                                }
-                                               
-                                               break;
+                                                break;
                                                
                                            }
                                        }
                                    }
                                    
+                                   if( !isDownloadingPhoto && completion) {
+                                       NSString* imagePath = [[self photoDirectoryURL] stringByAppendingPathComponent: currentImageName];
+                                       completion([UIImage imageWithContentsOfFile: imagePath], nil);
+                                   }
                                }];
     }
     

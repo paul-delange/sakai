@@ -8,42 +8,57 @@
 
 #import "DisplayViewController.h"
 
+#import "PhotoGrabber.h"
+
 @interface DisplayViewController ()
+
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIRefreshControl* refreshControl;
 
 @end
 
 @implementation DisplayViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+- (IBAction) refreshPushed: (UIRefreshControl*)sender {
+    UIImage* cached = [PhotoGrabber getPhotoForTag: @"japan" withCompletionHandler: ^(UIImage *image, NSError *error) {
+        self.imageView.image = image;
+        
+        CATransition *transition = [CATransition animation];
+        transition.duration = 1.0f;
+        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        transition.type = kCATransitionFade;
+        
+        [self.imageView.layer addAnimation:transition forKey:nil];
+        
+        [sender endRefreshing];
+    }];
+    
+    self.imageView.image = cached;
 }
 
+- (IBAction) unwind:(UIStoryboardSegue*)sender {
+    
+}
+
+#pragma mark - UIViewController
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    UIRefreshControl* refreshControl = [UIRefreshControl new];
+    refreshControl.tintColor = [UIColor whiteColor];
+    [refreshControl addTarget: self action: @selector(refreshPushed:) forControlEvents: UIControlEventValueChanged];
+    [self.scrollView addSubview: refreshControl];
+    self.refreshControl = refreshControl;
+
+    [self refreshPushed: nil];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void) viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    self.scrollView.contentSize = self.view.bounds.size;
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
