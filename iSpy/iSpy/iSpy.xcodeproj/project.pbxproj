@@ -1,0 +1,485 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FDA6FEFE18F3DDEA00C72C5D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDA6FEFD18F3DDEA00C72C5D /* Foundation.framework */; };
+		FDA6FF0018F3DDEA00C72C5D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDA6FEFF18F3DDEA00C72C5D /* CoreGraphics.framework */; };
+		FDA6FF0218F3DDEA00C72C5D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDA6FF0118F3DDEA00C72C5D /* UIKit.framework */; };
+		FDA6FF0818F3DDEA00C72C5D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FDA6FF0618F3DDEA00C72C5D /* InfoPlist.strings */; };
+		FDA6FF0A18F3DDEA00C72C5D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA6FF0918F3DDEA00C72C5D /* main.m */; };
+		FDA6FF0E18F3DDEA00C72C5D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA6FF0D18F3DDEA00C72C5D /* AppDelegate.m */; };
+		FDA6FF1118F3DDEA00C72C5D /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDA6FF0F18F3DDEA00C72C5D /* Main_iPhone.storyboard */; };
+		FDA6FF1418F3DDEA00C72C5D /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDA6FF1218F3DDEA00C72C5D /* Main_iPad.storyboard */; };
+		FDA6FF1718F3DDEA00C72C5D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA6FF1618F3DDEA00C72C5D /* ViewController.m */; };
+		FDA6FF1918F3DDEA00C72C5D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FDA6FF1818F3DDEA00C72C5D /* Images.xcassets */; };
+		FDA6FF2018F3DDEA00C72C5D /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDA6FF1F18F3DDEA00C72C5D /* XCTest.framework */; };
+		FDA6FF2118F3DDEA00C72C5D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDA6FEFD18F3DDEA00C72C5D /* Foundation.framework */; };
+		FDA6FF2218F3DDEA00C72C5D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDA6FF0118F3DDEA00C72C5D /* UIKit.framework */; };
+		FDA6FF2A18F3DDEA00C72C5D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FDA6FF2818F3DDEA00C72C5D /* InfoPlist.strings */; };
+		FDA6FF2C18F3DDEA00C72C5D /* iSpyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA6FF2B18F3DDEA00C72C5D /* iSpyTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		FDA6FF2318F3DDEA00C72C5D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FDA6FEF218F3DDEA00C72C5D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FDA6FEF918F3DDEA00C72C5D;
+			remoteInfo = iSpy;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		FDA6FEFA18F3DDEA00C72C5D /* iSpy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iSpy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FDA6FEFD18F3DDEA00C72C5D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		FDA6FEFF18F3DDEA00C72C5D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		FDA6FF0118F3DDEA00C72C5D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		FDA6FF0518F3DDEA00C72C5D /* iSpy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iSpy-Info.plist"; sourceTree = "<group>"; };
+		FDA6FF0718F3DDEA00C72C5D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FDA6FF0918F3DDEA00C72C5D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		FDA6FF0B18F3DDEA00C72C5D /* iSpy-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iSpy-Prefix.pch"; sourceTree = "<group>"; };
+		FDA6FF0C18F3DDEA00C72C5D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		FDA6FF0D18F3DDEA00C72C5D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		FDA6FF1018F3DDEA00C72C5D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
+		FDA6FF1318F3DDEA00C72C5D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
+		FDA6FF1518F3DDEA00C72C5D /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		FDA6FF1618F3DDEA00C72C5D /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		FDA6FF1818F3DDEA00C72C5D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		FDA6FF1E18F3DDEA00C72C5D /* iSpyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iSpyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FDA6FF1F18F3DDEA00C72C5D /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		FDA6FF2718F3DDEA00C72C5D /* iSpyTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iSpyTests-Info.plist"; sourceTree = "<group>"; };
+		FDA6FF2918F3DDEA00C72C5D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FDA6FF2B18F3DDEA00C72C5D /* iSpyTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iSpyTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FDA6FEF718F3DDEA00C72C5D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FDA6FF0018F3DDEA00C72C5D /* CoreGraphics.framework in Frameworks */,
+				FDA6FF0218F3DDEA00C72C5D /* UIKit.framework in Frameworks */,
+				FDA6FEFE18F3DDEA00C72C5D /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FDA6FF1B18F3DDEA00C72C5D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FDA6FF2018F3DDEA00C72C5D /* XCTest.framework in Frameworks */,
+				FDA6FF2218F3DDEA00C72C5D /* UIKit.framework in Frameworks */,
+				FDA6FF2118F3DDEA00C72C5D /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FDA6FEF118F3DDEA00C72C5D = {
+			isa = PBXGroup;
+			children = (
+				FDA6FF0318F3DDEA00C72C5D /* iSpy */,
+				FDA6FF2518F3DDEA00C72C5D /* iSpyTests */,
+				FDA6FEFC18F3DDEA00C72C5D /* Frameworks */,
+				FDA6FEFB18F3DDEA00C72C5D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FDA6FEFB18F3DDEA00C72C5D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FDA6FEFA18F3DDEA00C72C5D /* iSpy.app */,
+				FDA6FF1E18F3DDEA00C72C5D /* iSpyTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FDA6FEFC18F3DDEA00C72C5D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FDA6FEFD18F3DDEA00C72C5D /* Foundation.framework */,
+				FDA6FEFF18F3DDEA00C72C5D /* CoreGraphics.framework */,
+				FDA6FF0118F3DDEA00C72C5D /* UIKit.framework */,
+				FDA6FF1F18F3DDEA00C72C5D /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FDA6FF0318F3DDEA00C72C5D /* iSpy */ = {
+			isa = PBXGroup;
+			children = (
+				FDA6FF0C18F3DDEA00C72C5D /* AppDelegate.h */,
+				FDA6FF0D18F3DDEA00C72C5D /* AppDelegate.m */,
+				FDA6FF0F18F3DDEA00C72C5D /* Main_iPhone.storyboard */,
+				FDA6FF1218F3DDEA00C72C5D /* Main_iPad.storyboard */,
+				FDA6FF1518F3DDEA00C72C5D /* ViewController.h */,
+				FDA6FF1618F3DDEA00C72C5D /* ViewController.m */,
+				FDA6FF1818F3DDEA00C72C5D /* Images.xcassets */,
+				FDA6FF0418F3DDEA00C72C5D /* Supporting Files */,
+			);
+			path = iSpy;
+			sourceTree = "<group>";
+		};
+		FDA6FF0418F3DDEA00C72C5D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				FDA6FF0518F3DDEA00C72C5D /* iSpy-Info.plist */,
+				FDA6FF0618F3DDEA00C72C5D /* InfoPlist.strings */,
+				FDA6FF0918F3DDEA00C72C5D /* main.m */,
+				FDA6FF0B18F3DDEA00C72C5D /* iSpy-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		FDA6FF2518F3DDEA00C72C5D /* iSpyTests */ = {
+			isa = PBXGroup;
+			children = (
+				FDA6FF2B18F3DDEA00C72C5D /* iSpyTests.m */,
+				FDA6FF2618F3DDEA00C72C5D /* Supporting Files */,
+			);
+			path = iSpyTests;
+			sourceTree = "<group>";
+		};
+		FDA6FF2618F3DDEA00C72C5D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				FDA6FF2718F3DDEA00C72C5D /* iSpyTests-Info.plist */,
+				FDA6FF2818F3DDEA00C72C5D /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FDA6FEF918F3DDEA00C72C5D /* iSpy */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FDA6FF2F18F3DDEA00C72C5D /* Build configuration list for PBXNativeTarget "iSpy" */;
+			buildPhases = (
+				FDA6FEF618F3DDEA00C72C5D /* Sources */,
+				FDA6FEF718F3DDEA00C72C5D /* Frameworks */,
+				FDA6FEF818F3DDEA00C72C5D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = iSpy;
+			productName = iSpy;
+			productReference = FDA6FEFA18F3DDEA00C72C5D /* iSpy.app */;
+			productType = "com.apple.product-type.application";
+		};
+		FDA6FF1D18F3DDEA00C72C5D /* iSpyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FDA6FF3218F3DDEA00C72C5D /* Build configuration list for PBXNativeTarget "iSpyTests" */;
+			buildPhases = (
+				FDA6FF1A18F3DDEA00C72C5D /* Sources */,
+				FDA6FF1B18F3DDEA00C72C5D /* Frameworks */,
+				FDA6FF1C18F3DDEA00C72C5D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FDA6FF2418F3DDEA00C72C5D /* PBXTargetDependency */,
+			);
+			name = iSpyTests;
+			productName = iSpyTests;
+			productReference = FDA6FF1E18F3DDEA00C72C5D /* iSpyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FDA6FEF218F3DDEA00C72C5D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = Chesterford;
+				TargetAttributes = {
+					FDA6FF1D18F3DDEA00C72C5D = {
+						TestTargetID = FDA6FEF918F3DDEA00C72C5D;
+					};
+				};
+			};
+			buildConfigurationList = FDA6FEF518F3DDEA00C72C5D /* Build configuration list for PBXProject "iSpy" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FDA6FEF118F3DDEA00C72C5D;
+			productRefGroup = FDA6FEFB18F3DDEA00C72C5D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FDA6FEF918F3DDEA00C72C5D /* iSpy */,
+				FDA6FF1D18F3DDEA00C72C5D /* iSpyTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FDA6FEF818F3DDEA00C72C5D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FDA6FF1418F3DDEA00C72C5D /* Main_iPad.storyboard in Resources */,
+				FDA6FF1918F3DDEA00C72C5D /* Images.xcassets in Resources */,
+				FDA6FF1118F3DDEA00C72C5D /* Main_iPhone.storyboard in Resources */,
+				FDA6FF0818F3DDEA00C72C5D /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FDA6FF1C18F3DDEA00C72C5D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FDA6FF2A18F3DDEA00C72C5D /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FDA6FEF618F3DDEA00C72C5D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FDA6FF1718F3DDEA00C72C5D /* ViewController.m in Sources */,
+				FDA6FF0E18F3DDEA00C72C5D /* AppDelegate.m in Sources */,
+				FDA6FF0A18F3DDEA00C72C5D /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FDA6FF1A18F3DDEA00C72C5D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FDA6FF2C18F3DDEA00C72C5D /* iSpyTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		FDA6FF2418F3DDEA00C72C5D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FDA6FEF918F3DDEA00C72C5D /* iSpy */;
+			targetProxy = FDA6FF2318F3DDEA00C72C5D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		FDA6FF0618F3DDEA00C72C5D /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FDA6FF0718F3DDEA00C72C5D /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		FDA6FF0F18F3DDEA00C72C5D /* Main_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FDA6FF1018F3DDEA00C72C5D /* Base */,
+			);
+			name = Main_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		FDA6FF1218F3DDEA00C72C5D /* Main_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FDA6FF1318F3DDEA00C72C5D /* Base */,
+			);
+			name = Main_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+		FDA6FF2818F3DDEA00C72C5D /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FDA6FF2918F3DDEA00C72C5D /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FDA6FF2D18F3DDEA00C72C5D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FDA6FF2E18F3DDEA00C72C5D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FDA6FF3018F3DDEA00C72C5D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iSpy/iSpy-Prefix.pch";
+				INFOPLIST_FILE = "iSpy/iSpy-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		FDA6FF3118F3DDEA00C72C5D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iSpy/iSpy-Prefix.pch";
+				INFOPLIST_FILE = "iSpy/iSpy-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		FDA6FF3318F3DDEA00C72C5D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/iSpy.app/iSpy";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iSpy/iSpy-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "iSpyTests/iSpyTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		FDA6FF3418F3DDEA00C72C5D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/iSpy.app/iSpy";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iSpy/iSpy-Prefix.pch";
+				INFOPLIST_FILE = "iSpyTests/iSpyTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FDA6FEF518F3DDEA00C72C5D /* Build configuration list for PBXProject "iSpy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FDA6FF2D18F3DDEA00C72C5D /* Debug */,
+				FDA6FF2E18F3DDEA00C72C5D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FDA6FF2F18F3DDEA00C72C5D /* Build configuration list for PBXNativeTarget "iSpy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FDA6FF3018F3DDEA00C72C5D /* Debug */,
+				FDA6FF3118F3DDEA00C72C5D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		FDA6FF3218F3DDEA00C72C5D /* Build configuration list for PBXNativeTarget "iSpyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FDA6FF3318F3DDEA00C72C5D /* Debug */,
+				FDA6FF3418F3DDEA00C72C5D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FDA6FEF218F3DDEA00C72C5D /* Project object */;
+}

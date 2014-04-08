@@ -1,0 +1,357 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FDA6FEFE18F3DDEA00C72C5D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDA6FEFD18F3DDEA00C72C5D /* Foundation.framework */; };
+		FDA6FF0018F3DDEA00C72C5D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDA6FEFF18F3DDEA00C72C5D /* CoreGraphics.framework */; };
+		FDA6FF0218F3DDEA00C72C5D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDA6FF0118F3DDEA00C72C5D /* UIKit.framework */; };
+		FDA6FF0818F3DDEA00C72C5D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FDA6FF0618F3DDEA00C72C5D /* InfoPlist.strings */; };
+		FDA6FF0A18F3DDEA00C72C5D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA6FF0918F3DDEA00C72C5D /* main.m */; };
+		FDA6FF0E18F3DDEA00C72C5D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA6FF0D18F3DDEA00C72C5D /* AppDelegate.m */; };
+		FDA6FF1918F3DDEA00C72C5D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FDA6FF1818F3DDEA00C72C5D /* Images.xcassets */; };
+		FDA6FF3A18F3DE5A00C72C5D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDA6FF3918F3DE5A00C72C5D /* Main.storyboard */; };
+		FDA6FF3D18F3DE8900C72C5D /* PhotoGrabber.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA6FF3C18F3DE8900C72C5D /* PhotoGrabber.m */; };
+		FDA6FF4018F3DF4200C72C5D /* DisplayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA6FF3F18F3DF4200C72C5D /* DisplayViewController.m */; };
+		FDA6FF4318F3DF5D00C72C5D /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA6FF4218F3DF5D00C72C5D /* CameraViewController.m */; };
+		FDA6FF4618F3E91A00C72C5D /* ParametersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA6FF4518F3E91A00C72C5D /* ParametersViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		FDA6FEFA18F3DDEA00C72C5D /* iSpy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iSpy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FDA6FEFD18F3DDEA00C72C5D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		FDA6FEFF18F3DDEA00C72C5D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		FDA6FF0118F3DDEA00C72C5D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		FDA6FF0518F3DDEA00C72C5D /* iSpy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "iSpy-Info.plist"; path = "iSpy/iSpy-Info.plist"; sourceTree = "<group>"; };
+		FDA6FF0718F3DDEA00C72C5D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FDA6FF0918F3DDEA00C72C5D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		FDA6FF0B18F3DDEA00C72C5D /* iSpy-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iSpy-Prefix.pch"; sourceTree = "<group>"; };
+		FDA6FF0C18F3DDEA00C72C5D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		FDA6FF0D18F3DDEA00C72C5D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		FDA6FF1818F3DDEA00C72C5D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = iSpy/Images.xcassets; sourceTree = "<group>"; };
+		FDA6FF1F18F3DDEA00C72C5D /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		FDA6FF3918F3DE5A00C72C5D /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = iSpy/Main.storyboard; sourceTree = "<group>"; };
+		FDA6FF3B18F3DE8900C72C5D /* PhotoGrabber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoGrabber.h; sourceTree = "<group>"; };
+		FDA6FF3C18F3DE8900C72C5D /* PhotoGrabber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoGrabber.m; sourceTree = "<group>"; };
+		FDA6FF3E18F3DF4200C72C5D /* DisplayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayViewController.h; sourceTree = "<group>"; };
+		FDA6FF3F18F3DF4200C72C5D /* DisplayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayViewController.m; sourceTree = "<group>"; };
+		FDA6FF4118F3DF5D00C72C5D /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
+		FDA6FF4218F3DF5D00C72C5D /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
+		FDA6FF4418F3E91A00C72C5D /* ParametersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParametersViewController.h; sourceTree = "<group>"; };
+		FDA6FF4518F3E91A00C72C5D /* ParametersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParametersViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FDA6FEF718F3DDEA00C72C5D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FDA6FF0018F3DDEA00C72C5D /* CoreGraphics.framework in Frameworks */,
+				FDA6FF0218F3DDEA00C72C5D /* UIKit.framework in Frameworks */,
+				FDA6FEFE18F3DDEA00C72C5D /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FDA6FEF118F3DDEA00C72C5D = {
+			isa = PBXGroup;
+			children = (
+				FDA6FF0318F3DDEA00C72C5D /* Code */,
+				FDA6FF3818F3DE2600C72C5D /* Resources */,
+				FDA6FEFC18F3DDEA00C72C5D /* Frameworks */,
+				FDA6FEFB18F3DDEA00C72C5D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FDA6FEFB18F3DDEA00C72C5D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FDA6FEFA18F3DDEA00C72C5D /* iSpy.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FDA6FEFC18F3DDEA00C72C5D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FDA6FEFD18F3DDEA00C72C5D /* Foundation.framework */,
+				FDA6FEFF18F3DDEA00C72C5D /* CoreGraphics.framework */,
+				FDA6FF0118F3DDEA00C72C5D /* UIKit.framework */,
+				FDA6FF1F18F3DDEA00C72C5D /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FDA6FF0318F3DDEA00C72C5D /* Code */ = {
+			isa = PBXGroup;
+			children = (
+				FDA6FF0B18F3DDEA00C72C5D /* iSpy-Prefix.pch */,
+				FDA6FF0918F3DDEA00C72C5D /* main.m */,
+				FDA6FF3718F3DE0B00C72C5D /* Models */,
+				FDA6FF3618F3DE0900C72C5D /* Views */,
+				FDA6FF3518F3DE0800C72C5D /* Controllers */,
+			);
+			name = Code;
+			path = iSpy;
+			sourceTree = "<group>";
+		};
+		FDA6FF3518F3DE0800C72C5D /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				FDA6FF0C18F3DDEA00C72C5D /* AppDelegate.h */,
+				FDA6FF0D18F3DDEA00C72C5D /* AppDelegate.m */,
+				FDA6FF3E18F3DF4200C72C5D /* DisplayViewController.h */,
+				FDA6FF3F18F3DF4200C72C5D /* DisplayViewController.m */,
+				FDA6FF4118F3DF5D00C72C5D /* CameraViewController.h */,
+				FDA6FF4218F3DF5D00C72C5D /* CameraViewController.m */,
+				FDA6FF4418F3E91A00C72C5D /* ParametersViewController.h */,
+				FDA6FF4518F3E91A00C72C5D /* ParametersViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		FDA6FF3618F3DE0900C72C5D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		FDA6FF3718F3DE0B00C72C5D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FDA6FF3B18F3DE8900C72C5D /* PhotoGrabber.h */,
+				FDA6FF3C18F3DE8900C72C5D /* PhotoGrabber.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		FDA6FF3818F3DE2600C72C5D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FDA6FF1818F3DDEA00C72C5D /* Images.xcassets */,
+				FDA6FF0518F3DDEA00C72C5D /* iSpy-Info.plist */,
+				FDA6FF0618F3DDEA00C72C5D /* InfoPlist.strings */,
+				FDA6FF3918F3DE5A00C72C5D /* Main.storyboard */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FDA6FEF918F3DDEA00C72C5D /* iSpy */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FDA6FF2F18F3DDEA00C72C5D /* Build configuration list for PBXNativeTarget "iSpy" */;
+			buildPhases = (
+				FDA6FEF618F3DDEA00C72C5D /* Sources */,
+				FDA6FEF718F3DDEA00C72C5D /* Frameworks */,
+				FDA6FEF818F3DDEA00C72C5D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = iSpy;
+			productName = iSpy;
+			productReference = FDA6FEFA18F3DDEA00C72C5D /* iSpy.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FDA6FEF218F3DDEA00C72C5D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = Chesterford;
+			};
+			buildConfigurationList = FDA6FEF518F3DDEA00C72C5D /* Build configuration list for PBXProject "iSpy" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FDA6FEF118F3DDEA00C72C5D;
+			productRefGroup = FDA6FEFB18F3DDEA00C72C5D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FDA6FEF918F3DDEA00C72C5D /* iSpy */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FDA6FEF818F3DDEA00C72C5D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FDA6FF3A18F3DE5A00C72C5D /* Main.storyboard in Resources */,
+				FDA6FF1918F3DDEA00C72C5D /* Images.xcassets in Resources */,
+				FDA6FF0818F3DDEA00C72C5D /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FDA6FEF618F3DDEA00C72C5D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FDA6FF4318F3DF5D00C72C5D /* CameraViewController.m in Sources */,
+				FDA6FF0E18F3DDEA00C72C5D /* AppDelegate.m in Sources */,
+				FDA6FF4618F3E91A00C72C5D /* ParametersViewController.m in Sources */,
+				FDA6FF0A18F3DDEA00C72C5D /* main.m in Sources */,
+				FDA6FF3D18F3DE8900C72C5D /* PhotoGrabber.m in Sources */,
+				FDA6FF4018F3DF4200C72C5D /* DisplayViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		FDA6FF0618F3DDEA00C72C5D /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FDA6FF0718F3DDEA00C72C5D /* en */,
+			);
+			name = InfoPlist.strings;
+			path = iSpy;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FDA6FF2D18F3DDEA00C72C5D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FDA6FF2E18F3DDEA00C72C5D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FDA6FF3018F3DDEA00C72C5D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iSpy/iSpy-Prefix.pch";
+				INFOPLIST_FILE = "iSpy/iSpy-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		FDA6FF3118F3DDEA00C72C5D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iSpy/iSpy-Prefix.pch";
+				INFOPLIST_FILE = "iSpy/iSpy-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FDA6FEF518F3DDEA00C72C5D /* Build configuration list for PBXProject "iSpy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FDA6FF2D18F3DDEA00C72C5D /* Debug */,
+				FDA6FF2E18F3DDEA00C72C5D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FDA6FF2F18F3DDEA00C72C5D /* Build configuration list for PBXNativeTarget "iSpy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FDA6FF3018F3DDEA00C72C5D /* Debug */,
+				FDA6FF3118F3DDEA00C72C5D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FDA6FEF218F3DDEA00C72C5D /* Project object */;
+}
