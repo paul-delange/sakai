@@ -26,11 +26,11 @@
         body.dynamic = NO;
         self.physicsBody = body;
         
-        SKAction *oneRevolution = [SKAction rotateByAngle:-M_PI*2 duration: 5.0];
+        SKAction *oneRevolution = [SKAction rotateByAngle:-M_PI*2 duration: 15.0];
         SKAction *repeat = [SKAction repeatActionForever:oneRevolution];
-        //[self runAction:repeat];
+        [self runAction:repeat];
         
-        SKAction* oneScale = [SKAction scaleTo: 1.25 duration: 1.0];
+        SKAction* oneScale = [SKAction scaleTo: 2 duration: 1.0];
         SKAction* reverseScale = [SKAction scaleTo: 1. duration: 1.];
         
         SKAction* pulse = [SKAction sequence: @[oneScale, reverseScale]];

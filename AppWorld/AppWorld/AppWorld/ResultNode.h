@@ -10,8 +10,8 @@
 
 @interface ResultNode : SKNode
 
-@property (assign) BOOL repulsive;
+- (instancetype) initWithImage: (UIImage*) image;
 
-@property (assign) CGPoint touchOffset;
+@property (assign) BOOL repulsive;
 
 @end

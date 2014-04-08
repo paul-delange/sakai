@@ -27,6 +27,7 @@
 		FDA6FEEC18F2DF2400C72C5D /* ResultNode.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA6FEEB18F2DF2400C72C5D /* ResultNode.m */; };
 		FDA6FEEE18F3D95900C72C5D /* player357.tga in Resources */ = {isa = PBXBuildFile; fileRef = FDA6FEED18F3D95900C72C5D /* player357.tga */; };
 		FDA6FEF018F3DAD900C72C5D /* target_inter.tga in Resources */ = {isa = PBXBuildFile; fileRef = FDA6FEEF18F3DAD900C72C5D /* target_inter.tga */; };
+		FDA6FF4A18F3FAC900C72C5D /* SearchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA6FF4918F3FAC900C72C5D /* SearchResult.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,8 @@
 		FDA6FEEB18F2DF2400C72C5D /* ResultNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultNode.m; sourceTree = "<group>"; };
 		FDA6FEED18F3D95900C72C5D /* player357.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = player357.tga; sourceTree = "<group>"; };
 		FDA6FEEF18F3DAD900C72C5D /* target_inter.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = target_inter.tga; sourceTree = "<group>"; };
+		FDA6FF4818F3FAC900C72C5D /* SearchResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResult.h; sourceTree = "<group>"; };
+		FDA6FF4918F3FAC900C72C5D /* SearchResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResult.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,12 +197,9 @@
 		FDA6FED718F2CED100C72C5D /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				FDA6FEE418F2D4BC00C72C5D /* SearchScene.h */,
-				FDA6FEE518F2D4BC00C72C5D /* SearchScene.m */,
-				FDA6FEE718F2D56D00C72C5D /* UserNode.h */,
-				FDA6FEE818F2D56D00C72C5D /* UserNode.m */,
-				FDA6FEEA18F2DF2400C72C5D /* ResultNode.h */,
-				FDA6FEEB18F2DF2400C72C5D /* ResultNode.m */,
+				FDA6FF4718F3F62E00C72C5D /* SpriteKit */,
+				FDA6FF4818F3FAC900C72C5D /* SearchResult.h */,
+				FDA6FF4918F3FAC900C72C5D /* SearchResult.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -209,6 +209,19 @@
 			children = (
 			);
 			name = Containers;
+			sourceTree = "<group>";
+		};
+		FDA6FF4718F3F62E00C72C5D /* SpriteKit */ = {
+			isa = PBXGroup;
+			children = (
+				FDA6FEE418F2D4BC00C72C5D /* SearchScene.h */,
+				FDA6FEE518F2D4BC00C72C5D /* SearchScene.m */,
+				FDA6FEE718F2D56D00C72C5D /* UserNode.h */,
+				FDA6FEE818F2D56D00C72C5D /* UserNode.m */,
+				FDA6FEEA18F2DF2400C72C5D /* ResultNode.h */,
+				FDA6FEEB18F2DF2400C72C5D /* ResultNode.m */,
+			);
+			name = SpriteKit;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -310,6 +323,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDA6FF4A18F3FAC900C72C5D /* SearchResult.m in Sources */,
 				FDA6FEE618F2D4BC00C72C5D /* SearchScene.m in Sources */,
 				FDA6FEA818F2CE9000C72C5D /* AppDelegate.m in Sources */,
 				FDA6FEEC18F2DF2400C72C5D /* ResultNode.m in Sources */,

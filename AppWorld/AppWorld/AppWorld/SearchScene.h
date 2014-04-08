@@ -8,8 +8,10 @@
 
 #import <SpriteKit/SpriteKit.h>
 
+@class SearchResult;
+
 @interface SearchScene : SKScene
 
-- (void) addResultNodeAtPosition: (CGPoint) location;
+- (void) addResult: (SearchResult*) result AtPosition: (CGPoint) location;
 
 @end
