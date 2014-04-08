@@ -25,6 +25,8 @@
 		FDA6FEE618F2D4BC00C72C5D /* SearchScene.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA6FEE518F2D4BC00C72C5D /* SearchScene.m */; };
 		FDA6FEE918F2D56D00C72C5D /* UserNode.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA6FEE818F2D56D00C72C5D /* UserNode.m */; };
 		FDA6FEEC18F2DF2400C72C5D /* ResultNode.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA6FEEB18F2DF2400C72C5D /* ResultNode.m */; };
+		FDA6FEEE18F3D95900C72C5D /* player357.tga in Resources */ = {isa = PBXBuildFile; fileRef = FDA6FEED18F3D95900C72C5D /* player357.tga */; };
+		FDA6FEF018F3DAD900C72C5D /* target_inter.tga in Resources */ = {isa = PBXBuildFile; fileRef = FDA6FEEF18F3DAD900C72C5D /* target_inter.tga */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +66,8 @@
 		FDA6FEE818F2D56D00C72C5D /* UserNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserNode.m; sourceTree = "<group>"; };
 		FDA6FEEA18F2DF2400C72C5D /* ResultNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultNode.h; sourceTree = "<group>"; };
 		FDA6FEEB18F2DF2400C72C5D /* ResultNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultNode.m; sourceTree = "<group>"; };
+		FDA6FEED18F3D95900C72C5D /* player357.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = player357.tga; sourceTree = "<group>"; };
+		FDA6FEEF18F3DAD900C72C5D /* target_inter.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = target_inter.tga; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +161,8 @@
 		FDA6FED418F2CEC000C72C5D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FDA6FEEF18F3DAD900C72C5D /* target_inter.tga */,
+				FDA6FEED18F3D95900C72C5D /* player357.tga */,
 				FDA6FE9F18F2CE9000C72C5D /* AppWorld-Info.plist */,
 				FDA6FEA018F2CE9000C72C5D /* InfoPlist.strings */,
 				FDA6FEB718F2CE9000C72C5D /* Images.xcassets */,
@@ -284,6 +290,8 @@
 				FDA6FED918F2CF1300C72C5D /* Main.storyboard in Resources */,
 				FDA6FEB818F2CE9000C72C5D /* Images.xcassets in Resources */,
 				FDA6FEA218F2CE9000C72C5D /* InfoPlist.strings in Resources */,
+				FDA6FEF018F3DAD900C72C5D /* target_inter.tga in Resources */,
+				FDA6FEEE18F3D95900C72C5D /* player357.tga in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -508,6 +516,7 @@
 				FDA6FED018F2CE9000C72C5D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FDA6FED118F2CE9000C72C5D /* Build configuration list for PBXNativeTarget "AppWorldTests" */ = {
 			isa = XCConfigurationList;
@@ -516,6 +525,7 @@
 				FDA6FED318F2CE9000C72C5D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -13,7 +13,8 @@
 
 @interface SearchScene ()
 
-@property (weak) UserNode* userNode;
+@property (copy) NSSet* userNodes;
+//@property (weak) UserNode* userNode;
 
 @end
 
@@ -25,14 +26,14 @@
     
     [self addChild: node];
     
-    CGPoint center = self.userNode.position;
+    CGPoint center = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
     
     CGFloat x = location.x - center.x;
     CGFloat y = location.y - center.y;
     
     CGFloat length = sqrtf( x*x + y*y );
     
-    length /= 2.;
+    //length /= 2.;
     
     [node.physicsBody applyImpulse: CGVectorMake(-y/length, x/length)];
 }
@@ -43,10 +44,19 @@
     if( self) {
         self.backgroundColor = [SKColor blackColor];
         
-        UserNode* userNode = [[UserNode alloc] initWithSize: CGSizeMake(50, 50)];
-        userNode.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
-        [self addChild: userNode];
-        self.userNode = userNode;
+        UserNode* userNode1 = [[UserNode alloc] initWithSize: CGSizeMake(50, 50)];
+        userNode1.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+        [self addChild: userNode1];
+        
+        UserNode* userNode2 = [[UserNode alloc] initWithSize: CGSizeMake(50, 50)];
+        userNode2.position = CGPointMake(10, 300);
+        [self addChild: userNode2];
+        
+        UserNode* userNode3 = [[UserNode alloc] initWithSize: CGSizeMake(50, 50)];
+        userNode3.position = CGPointMake(300, 400);
+        [self addChild: userNode3];
+        
+        self.userNodes = [NSSet setWithObjects: userNode1, userNode2, userNode3, nil];
         
         self.physicsWorld.gravity = CGVectorMake(0, 0);
     }
@@ -59,13 +69,18 @@
         CGPoint location = [touch locationInNode:self];
 
         SKNode* touched = [self nodeAtPoint: location];
+        if( touched != self.scene )
+            NSLog(@"Touched: %@", touched);
         
-        if( [touched isKindOfClass: [SKSpriteNode class]] ) {
-            [touched.parent touchesBegan: touches withEvent: event];
-        }
-        else {
-            [self addResultNodeAtPosition: location];
-        }
+        [self addResultNodeAtPosition: location];
+    }
+}
+
+-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+    for (UITouch *touch in touches) {
+        CGPoint location = [touch locationInNode:self];
+        
+        [self addResultNodeAtPosition: location];
     }
 }
 
@@ -86,23 +101,32 @@
         }
         else {
             CGPoint location = node.position;
-            CGPoint center = self.userNode.position;
+            NSUInteger i = 1;
+            for(UserNode* userNode in self.userNodes) {
+            CGPoint center = userNode.position;
             
             CGFloat x = location.x - center.x;
             CGFloat y = location.y - center.y;
             
             CGFloat length = sqrtf( x*x + y*y );
             
-            if( length <= 55 ) {
-                node.repulsive = YES;
-            }
+                if( length <= 55 ) {
+                    node.repulsive = YES;
+                }
+                
+            length /= 2 + (1./i);
+                
+
             
             if( node.repulsive ) {
-                length *= 5;
+                length *= 10;
                 [node.physicsBody applyForce: CGVectorMake(x/length, y/length)];
             }
             else
                 [node.physicsBody applyForce: CGVectorMake(-x/length, -y/length)];
+            }
+            
+            i++;
         }
     }
 }

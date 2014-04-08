@@ -13,7 +13,7 @@
 - (instancetype) init {
     self = [super init];
     if( self ) {
-        UIImage* image = [UIImage imageNamed: @"app"];
+        UIImage* image = [UIImage imageNamed: @"target_inter.tga"];
         SKTexture* texture = [SKTexture textureWithImage: image];
         SKSpriteNode* sprite = [SKSpriteNode spriteNodeWithTexture: texture];
         sprite.size = CGSizeMake(30, 30);
@@ -27,6 +27,10 @@
         _repulsive = NO;
     }
     return self;
+}
+
+- (CGRect) calculateAccumulatedFrame {
+    return CGRectMake(0, 0, 30, 30);
 }
 
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
