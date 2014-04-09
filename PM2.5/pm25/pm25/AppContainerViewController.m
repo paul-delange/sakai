@@ -25,6 +25,8 @@
     NSArray*        _menuItemViews;
     __weak UIView*  _menuDismissView;
     NSLayoutConstraint*     _bottomLayoutConstraint;
+    
+    UIImage*        _screenshot;
 }
 
 @property (weak) UIButton* menuButton;
@@ -217,9 +219,12 @@
         NSUInteger viewIndex = [_menuItemViews indexOfObject: sender];
         AppMenuItem* newItem = remainingItems[viewIndex];
         
-        _currentViewControllerIndex = [self.menuItems indexOfObject: newItem];
         
         UIViewController* newController =  newItem.controller;
+        
+        if( newController ) {
+            _currentViewControllerIndex = [self.menuItems indexOfObject: newItem];
+
         UIView* view = newController.view;
         [self displayView: view];
         //view.alpha = 0.f;
@@ -237,6 +242,22 @@
                             
                         } completion: ^(BOOL finished) {
                         }];
+        }
+        else {
+            //HACK: Share
+            
+            NSURL* url = [NSURL URLWithString: @"https://itunes.apple.com/us/app/jianerupm2.5/id843790825"];
+            
+            NSArray* items = @[url, _screenshot];
+            
+            UIActivityViewController* activityVC = [[UIActivityViewController alloc] initWithActivityItems: items
+                                                                                     applicationActivities: nil];
+            activityVC.completionHandler = ^(NSString* activityType, BOOL completed) {
+                [self dismissViewControllerAnimated: YES completion: NULL];
+            };
+            
+            [self presentViewController: activityVC animated: YES completion: NULL];
+        }
     }
     
     [UIView transitionWithView: self.view
@@ -256,6 +277,7 @@
                     }];
     
     _menuItemViews = nil;
+    _screenshot = nil;
 }
 
 - (IBAction) menuPushed:(id)sender {
@@ -265,6 +287,8 @@
     [self.contentView drawViewHierarchyInRect: self.contentView.bounds afterScreenUpdates: NO];
     UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
+    
+    _screenshot = screenshot;
     
     screenshot = [screenshot applyBlurWithRadius: 1.5
                                        tintColor: [UIColor colorWithWhite: 1.0 alpha: 0.3]
@@ -296,6 +320,13 @@
     NSMutableArray* views = [NSMutableArray new];
     
     for(AppMenuItem* item in remainingItems) {
+        
+        if( !item.controller ) {
+            //Don't show share on settings
+            if( _currentViewControllerIndex == 3 )
+                continue;
+        }
+        
         CGFloat h = CGRectGetHeight(self.menuButton.bounds) + 16.;
         CGRect frame = CGRectMake(0, CGRectGetHeight(self.contentView.bounds)-h, CGRectGetWidth(self.view.bounds), h);
         AppMenuButton* itemView = [AppMenuButton menuButtonWithItem: item andFrame: frame];
@@ -408,6 +439,7 @@
     
     [self.view addSubview: view];
     self.contentView = view;
+    self.contentView.backgroundColor = self.view.backgroundColor;
     
     
     [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"H:|[view]|"

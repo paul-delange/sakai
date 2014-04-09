@@ -46,7 +46,11 @@
                                                                image: @"ranking-icon"
                                                             andTitle: NSLocalizedString(@"Ranking", @"")];
     
-    container.menuItems = @[item1, item2, item3, item4];
+    AppMenuItem* item5 = [[AppMenuItem alloc] initWithViewController: nil
+                                                               image: @"share-icon"
+                                                            andTitle: NSLocalizedString(@"Share", @"")];
+    
+    container.menuItems = @[item1, item2, item3, item4, item5];
     container.menuIcon = [UIImage imageNamed: @"settings-icon"];
     
     if( [[NSUserDefaults standardUserDefaults] boolForKey: kUserDefaultsPushNotificationsEnabledKey] ) {
