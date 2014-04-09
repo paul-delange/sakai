@@ -1,18 +1,14 @@
 //
 //  main.m
-//  pm25
+//  iSpy
 //
-//  Created by Paul de Lange on 9/03/2014.
+//  Created by Paul de Lange on 8/04/2014.
 //  Copyright (c) 2014 Chesterford. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
 #import "AppDelegate.h"
-
-NSString * const kAppName() {
-    return [[[NSBundle mainBundle] infoDictionary] objectForKey: (id)kCFBundleNameKey];
-}
 
 int main(int argc, char * argv[])
 {

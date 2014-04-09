@@ -43,5 +43,6 @@ extern NSString * const kCurrentLocationUserInfoKey;
 //END SAKAI
 
 extern NSString * const NSUserDefaultsEnableBadgeKey;
+extern NSString * const kAppName();
 
 #endif
