@@ -10,6 +10,10 @@
 
 #import "AppDelegate.h"
 
+NSString * const kAppName() {
+    return [[[NSBundle mainBundle] infoDictionary] objectForKey: (id)kCFBundleNameKey];
+}
+
 int main(int argc, char * argv[])
 {
     @autoreleasepool {
