@@ -8,16 +8,45 @@
 
 #import "CameraViewController.h"
 
+
+/*
+ There are two ways to do this:
+ 
+ 1. CoreImage 
+    Seems to be slow and not very accurate 
+    iOS5.0+
+ 
+ 2. AVFoundation
+    Runs on the GPU and seems to be much faster
+    iOS6.0+
+ 
+ 
+ @see http://stackoverflow.com/questions/13475387/proper-usage-of-cidetectortracking
+ */
+
+#define USE_CORE_IMAGE  0   //1 = use core image, 0 = use avfoundation
+
+
 @import AVFoundation;
 
-@interface CameraViewController () <AVCaptureVideoDataOutputSampleBufferDelegate> {
+@interface CameraViewController () <
+#if USE_CORE_IMAGE
+AVCaptureVideoDataOutputSampleBufferDelegate
+#else
+AVCaptureMetadataOutputObjectsDelegate
+#endif
+> {
     AVCaptureDevice*                        _frontCamera;
     AVCaptureSession*                       _captureSession;
     
+#if USE_CORE_IMAGE
     CIDetector*                             _faceDetector;
     
     AVCaptureVideoDataOutput*               _videoDataOutput;
     dispatch_queue_t                        _videoProcessingQueue;
+#else
+    AVCaptureMetadataOutput*                _metatdataOutput;
+#endif
     
     __weak AVCaptureVideoPreviewLayer*      _previewLayer;
 }
@@ -41,6 +70,7 @@
     [_captureSession addInput: defaultInput];
 }
 
+#if USE_CORE_IMAGE
 + (CGRect)videoPreviewBoxForGravity:(NSString *)gravity
                           frameSize:(CGSize)frameSize
                        apertureSize:(CGSize)apertureSize
@@ -209,6 +239,7 @@
     
 	[CATransaction commit];
 }
+#endif
 
 #pragma mark - UIViewController
 -(void) viewDidLoad {
@@ -231,6 +262,7 @@
     
     [self setCaptureDevice: _frontCamera];
     
+#if USE_CORE_IMAGE
     _videoDataOutput = [AVCaptureVideoDataOutput new];
     NSDictionary* videoSettings = @{(id)kCVPixelBufferPixelFormatTypeKey : @(kCMPixelFormat_32BGRA)};
     
@@ -249,6 +281,15 @@
     _faceDetector = [CIDetector detectorOfType: CIDetectorTypeFace
                                        context: nil
                                        options: detectorOptions];
+#else
+    _metatdataOutput = [AVCaptureMetadataOutput new];
+    NSAssert([_captureSession canAddOutput: _metatdataOutput], @"Can not add %@ to capture session", _metatdataOutput);
+    
+    [_metatdataOutput setMetadataObjectsDelegate: self queue: dispatch_get_main_queue()];
+    [_captureSession addOutput: _metatdataOutput];
+    NSAssert([_metatdataOutput.availableMetadataObjectTypes containsObject: AVMetadataObjectTypeFace], @"No face detection found");
+    _metatdataOutput.metadataObjectTypes = @[AVMetadataObjectTypeFace];
+#endif
     
 }
 
@@ -269,6 +310,7 @@
     _previewLayer.frame = self.view.bounds;
 }
 
+#if USE_CORE_IMAGE
 #pragma mark - AVCaptureVideoDataOutputSampleBufferDelegate
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection
 {
@@ -302,5 +344,70 @@
         [self drawFaces:features forVideoBox:cleanAperture orientation:curDeviceOrientation connection: connection];
     });
 }
+#else 
+#pragma mark - AVCaptureMetadataOutputObjectsDelegate
+- (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection {
+    [CATransaction begin];
+	[CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
+    
+    NSArray *sublayers = [NSArray arrayWithArray:[_previewLayer sublayers]];
+	NSInteger sublayersCount = [sublayers count], currentSublayer = 0;
+    
+	// hide all the face layers
+	for ( CALayer *layer in sublayers ) {
+		if ( [[layer name] isEqualToString:@"FaceLayer"] )
+			[layer setHidden:YES];
+	}
+    
+	if ( metadataObjects.count == 0 ) {
+		[CATransaction commit];
+		return; // early bail.
+	}
+    
+    for ( AVMetadataObject *object in metadataObjects ) {
+        if ( [[object type] isEqual:AVMetadataObjectTypeFace] ) {
+            AVMetadataFaceObject* face = (AVMetadataFaceObject*)object;
+            AVMetadataFaceObject * adjusted = (AVMetadataFaceObject*)[_previewLayer transformedMetadataObjectForMetadataObject:face];
+            
+            CGRect faceRectangle = [adjusted bounds];
+            
+            if( [adjusted hasRollAngle] ) {
+                NSLog(@"Roll: %f", adjusted.rollAngle);
+            }
+            
+            if( [adjusted hasYawAngle] ) {
+                NSLog(@"Yaw: %f", adjusted.yawAngle);
+            }
+            
+            // Do interesting things with this face
+            CALayer *featureLayer = nil;
+            
+            // re-use an existing layer if possible
+            while ( !featureLayer && (currentSublayer < sublayersCount) ) {
+                CALayer *currentLayer = [sublayers objectAtIndex:currentSublayer++];
+                if ( [[currentLayer name] isEqualToString:@"FaceLayer"] ) {
+                    featureLayer = currentLayer;
+                    [currentLayer setHidden:NO];
+                }
+            }
+            
+            // create a new one if necessary
+            if ( !featureLayer ) {
+                featureLayer = [[CALayer alloc]init];
+                featureLayer.borderColor = [UIColor redColor].CGColor;
+                featureLayer.borderWidth = 2.;
+                //featureLayer.contents = (id)[UIImage imageNamed:@"border"].CGImage;
+                [featureLayer setName:@"FaceLayer"];
+                [_previewLayer addSublayer:featureLayer];
+                featureLayer = nil;
+            }
+            
+            [featureLayer setFrame:faceRectangle];
+        }
+    }
+    
+    [CATransaction commit];
+}
+#endif
 
 @end
