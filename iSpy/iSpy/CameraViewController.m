@@ -13,13 +13,25 @@
  There are two ways to do this:
  
  1. CoreImage 
-    Seems to be slow and not very accurate 
+    - Runs on the CPU and is slow
+    + Can get eye position
+    + Can get mouth position
+    - Need to manually calculate angle (hasAngle always NO = bug?)
+    - Need to manually track faces across frames
+ 
     iOS5.0+
  
  2. AVFoundation
-    Runs on the GPU and seems to be much faster
+    + Runs on the GPU and seems to be much faster
+    + Easier API for developer
+    + Automatically tracks faces across multiple frames
+    - Can not give eye position
+    - Can not get mouth position
+ 
     iOS6.0+
  
+ 
+ Both methods give the face rectangle
  
  @see http://stackoverflow.com/questions/13475387/proper-usage-of-cidetectortracking
  */
