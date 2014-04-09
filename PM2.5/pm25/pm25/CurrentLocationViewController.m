@@ -141,27 +141,6 @@ typedef NS_ENUM(NSUInteger, kParticleType) {
     }
 }
 
-- (IBAction) sharePushed: (id)sender {
-    
-    UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, NO, 0);
-    
-    [self.view drawViewHierarchyInRect:self.view.bounds afterScreenUpdates:YES];
-    
-    UIImage *copied = UIGraphicsGetImageFromCurrentImageContext();
-    
-    UIGraphicsEndImageContext();
-    
-    NSURL* link = [NSURL URLWithString: @"https://itunes.apple.com/us/app/jianerupm2.5/id843790825"];
-    
-    NSArray* items = @[copied, link];
-    UIActivityViewController* vc = [[UIActivityViewController alloc] initWithActivityItems: items applicationActivities: nil];
-    vc.completionHandler = ^(NSString* activityType, BOOL compeleted) {
-        [self dismissViewControllerAnimated: YES completion: NULL];
-    };
-    
-    [self presentViewController: vc animated: YES completion: NULL];
-}
-
 #pragma mark - NSObject
 + (void) initialize {
     NSDictionary* defaults = @{ kUserDefaultsLastLocationUpdateTimeKey : [NSDate date] };
@@ -204,7 +183,6 @@ typedef NS_ENUM(NSUInteger, kParticleType) {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    
     NSDictionary* lastUpdate = [[NSUserDefaults standardUserDefaults] objectForKey: kUserDefaultsLastUpdateKey];
     [self setLocationDictionary: lastUpdate];
     
@@ -238,8 +216,6 @@ typedef NS_ENUM(NSUInteger, kParticleType) {
     else {
         [_locationManager startUpdatingLocation];
     }
-    
-    self.view.backgroundColor = [UIColor colorWithRed: 0/255. green: 124/255. blue: 211/255. alpha: 1.];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
