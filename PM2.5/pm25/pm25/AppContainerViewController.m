@@ -15,16 +15,15 @@
 #import "UIImage+ImageEffects.h"
 #import "ContentLock.h"
 
-#import "GADBannerView.h"
-#import "GADRequest.h"
+#import <imobileAds/IMobileAdView.h>
 
 #define kStateResorationCurrentIndexKey     @"CurrentSelectedIndexKey"
 
-@interface AppContainerViewController () <UIGestureRecognizerDelegate, GADBannerViewDelegate> {
+@interface AppContainerViewController () <UIGestureRecognizerDelegate> {
     NSUInteger      _currentViewControllerIndex;
     NSArray*        _menuItemViews;
     __weak UIView*  _menuDismissView;
-    NSLayoutConstraint*     _bottomLayoutConstraint;
+    //NSLayoutConstraint*     _bottomLayoutConstraint;
     
     UIImage*        _screenshot;
 }
@@ -32,7 +31,7 @@
 @property (weak) UIButton* menuButton;
 @property (weak) UIImageView* imageView;
 @property (weak) UIView* contentView;
-@property (weak) GADBannerView* bannerView;
+@property (weak) IMobileAdView* bannerView;
 
 @end
 
@@ -92,11 +91,27 @@
 }
 
 - (void) addBannerView {
-    GADBannerView* banner = [[GADBannerView alloc] initWithAdSize: kGADAdSizeBanner];
+    /*GADBannerView* banner = [[GADBannerView alloc] initWithAdSize: kGADAdSizeBanner];
     banner.delegate = self;
     banner.adUnitID = ADMOB_SLOT_IDENTIFIER;
     banner.rootViewController = self;
     banner.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview: banner];
+    self.bannerView = banner;
+    */
+    
+    IMobileAdView* banner = [[IMobileAdView alloc] initWithFrame: kIMAdViewBannerFrame
+                                                     publisherId: 28488
+                                                         mediaId: 96825
+                                                          spotId: 212208
+                             
+#if DEBUG
+                                                        testMode: YES];
+#else
+                                                        testMode: NO];
+#endif
+    banner.translatesAutoresizingMaskIntoConstraints = NO;
+    
     [self.view addSubview: banner];
     self.bannerView = banner;
     
@@ -106,7 +121,7 @@
                                                                        options: 0
                                                                        metrics: nil
                                                                          views: NSDictionaryOfVariableBindings(banner)]];
-    NSString* visualFormat = [NSString stringWithFormat: @"V:[view][banner(==%f)]", kGADAdSizeBanner.size.height];
+    NSString* visualFormat = [NSString stringWithFormat: @"V:[view][banner(==%f)]|", kIMAdViewBannerFrame.size.height];
     
     [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: visualFormat
                                                                        options: 0
@@ -372,7 +387,7 @@
 }
 
 - (void) contentUnlocked: (NSNotification*) notification {
-    [self.bannerView loadRequest: nil];
+    //[self.bannerView loadRequest: nil];
 }
 
 #pragma mark - NSObject
@@ -450,7 +465,7 @@
                                                                        options: 0
                                                                        metrics: nil
                                                                          views: NSDictionaryOfVariableBindings(view)]];
-    
+    /*
     _bottomLayoutConstraint = [NSLayoutConstraint constraintWithItem: view
                                                            attribute: NSLayoutAttributeBottom
                                                            relatedBy: NSLayoutRelationEqual
@@ -458,7 +473,7 @@
                                                            attribute: NSLayoutAttributeBottom
                                                           multiplier: 1.0
                                                             constant: 0.0];
-    [self.view addConstraint: _bottomLayoutConstraint];
+    [self.view addConstraint: _bottomLayoutConstraint];*/
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -517,6 +532,7 @@
     }); */
 }
 
+/*
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear: animated];
     
@@ -536,7 +552,7 @@
     [super viewWillDisappear: animated];
     
     [self.bannerView loadRequest: nil];
-}
+} */
 
 - (void) encodeRestorableStateWithCoder:(NSCoder *)coder {
     NSLog(@"Save: %@", NSStringFromClass([self class]));
@@ -567,6 +583,7 @@
     return YES;
 }
 
+/*
 #pragma mark - GADBannerViewDelegate
 - (void)adViewDidReceiveAd:(GADBannerView *)view {
     _bottomLayoutConstraint.constant = -kGADAdSizeBanner.size.height;
@@ -584,6 +601,6 @@
                      animations: ^{
                          [self.view layoutIfNeeded];
                      }];
-}
+} */
 
 @end
