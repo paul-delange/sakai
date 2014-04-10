@@ -56,11 +56,23 @@
                     <view key="view" contentMode="scaleToFill" id="ZLG-TB-Q35">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="g4B-DX-BtF">
+                                <rect key="frame" x="651" y="79" width="105" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <color key="textColor" red="0.97647058819999999" green="0.14327373560000001" blue="0.045476188889999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Camera" id="YjX-x5-aIf"/>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="TFx-Ps-dXC"/>
+                    <connections>
+                        <outlet property="counterLabel" destination="g4B-DX-BtF" id="QXe-IP-qcY"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Eav-54-GIz" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="gCP-Mj-MrG" userLabel="Exit" sceneMemberID="exit"/>

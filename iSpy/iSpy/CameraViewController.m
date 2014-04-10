@@ -34,6 +34,8 @@
  Both methods give the face rectangle
  
  @see http://stackoverflow.com/questions/13475387/proper-usage-of-cidetectortracking
+ 
+ @see https://github.com/unified-diff/opencv-in-your-face
  */
 
 #define USE_CORE_IMAGE  0   //1 = use core image, 0 = use avfoundation
@@ -62,6 +64,8 @@ AVCaptureMetadataOutputObjectsDelegate
     
     __weak AVCaptureVideoPreviewLayer*      _previewLayer;
 }
+
+@property (weak, nonatomic) IBOutlet UILabel* counterLabel;
 
 @end
 
@@ -376,6 +380,13 @@ AVCaptureMetadataOutputObjectsDelegate
 		return; // early bail.
 	}
     
+    static NSMutableIndexSet* countedFaces = nil;
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        countedFaces = [NSMutableIndexSet new];
+    });
+    
     for ( AVMetadataObject *object in metadataObjects ) {
         if ( [[object type] isEqual:AVMetadataObjectTypeFace] ) {
             AVMetadataFaceObject* face = (AVMetadataFaceObject*)object;
@@ -383,12 +394,37 @@ AVCaptureMetadataOutputObjectsDelegate
             
             CGRect faceRectangle = [adjusted bounds];
             
+            /*
             if( [adjusted hasRollAngle] ) {
                 NSLog(@"Roll: %f", adjusted.rollAngle);
             }
             
             if( [adjusted hasYawAngle] ) {
                 NSLog(@"Yaw: %f", adjusted.yawAngle);
+            }*/
+            
+            NSParameterAssert([adjusted hasRollAngle]);
+            NSParameterAssert([adjusted hasYawAngle]);
+            
+            if( fabs(adjusted.rollAngle) < 30 && fabs(adjusted.yawAngle) < 30 ) {
+                NSInteger faceID = adjusted.faceID;
+                
+                if( ![countedFaces containsIndex: faceID] ) {
+                    NSLog(@"Counting face %d", faceID);
+                    
+                    NSParameterAssert([NSThread isMainThread]);
+                    
+                    static NSUInteger count = 0;
+                    
+                    count++;
+                    
+                    self.counterLabel.text = [@(count) stringValue];
+                    
+                    [countedFaces addIndex: faceID];
+                }
+                else {
+                    NSLog(@"Already counted face %d", faceID);
+                }
             }
             
             // Do interesting things with this face
@@ -402,6 +438,8 @@ AVCaptureMetadataOutputObjectsDelegate
                     [currentLayer setHidden:NO];
                 }
             }
+    
+            
             
             // create a new one if necessary
             if ( !featureLayer ) {
