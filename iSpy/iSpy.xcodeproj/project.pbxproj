@@ -17,8 +17,18 @@
 		FDA6FF3A18F3DE5A00C72C5D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDA6FF3918F3DE5A00C72C5D /* Main.storyboard */; };
 		FDA6FF3D18F3DE8900C72C5D /* PhotoGrabber.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA6FF3C18F3DE8900C72C5D /* PhotoGrabber.m */; };
 		FDA6FF4018F3DF4200C72C5D /* DisplayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA6FF3F18F3DF4200C72C5D /* DisplayViewController.m */; };
-		FDA6FF4318F3DF5D00C72C5D /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA6FF4218F3DF5D00C72C5D /* CameraViewController.m */; };
 		FDA6FF4618F3E91A00C72C5D /* ParametersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA6FF4518F3E91A00C72C5D /* ParametersViewController.m */; };
+		FDA6FF5C18F6ABBA00C72C5D /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDA6FF5B18F6ABBA00C72C5D /* opencv2.framework */; };
+		FDA6FF5E18F6ABD700C72C5D /* CameraViewController_opencv.mm in Sources */ = {isa = PBXBuildFile; fileRef = FDA6FF5D18F6ABD700C72C5D /* CameraViewController_opencv.mm */; };
+		FDA6FF6018F6ACBB00C72C5D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDA6FF5F18F6ACBB00C72C5D /* AVFoundation.framework */; };
+		FDA6FF6218F6ACC800C72C5D /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDA6FF6118F6ACC800C72C5D /* Accelerate.framework */; };
+		FDA6FF6418F6ACCE00C72C5D /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDA6FF6318F6ACCE00C72C5D /* AssetsLibrary.framework */; };
+		FDA6FF6618F6ACD600C72C5D /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDA6FF6518F6ACD600C72C5D /* CoreImage.framework */; };
+		FDA6FF6818F6ACDC00C72C5D /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDA6FF6718F6ACDC00C72C5D /* CoreMedia.framework */; };
+		FDA6FF6A18F6ACE200C72C5D /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDA6FF6918F6ACE200C72C5D /* CoreVideo.framework */; };
+		FDA6FF6C18F6ACE900C72C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDA6FF6B18F6ACE900C72C5D /* QuartzCore.framework */; };
+		FDA6FF6E18F6ADDE00C72C5D /* haarcascade_frontalface_alt2.xml in Resources */ = {isa = PBXBuildFile; fileRef = FDA6FF6D18F6ADDE00C72C5D /* haarcascade_frontalface_alt2.xml */; };
+		FDA6FF7018F6C01D00C72C5D /* haarcascade_eye.xml in Resources */ = {isa = PBXBuildFile; fileRef = FDA6FF6F18F6C01D00C72C5D /* haarcascade_eye.xml */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +53,17 @@
 		FDA6FF4218F3DF5D00C72C5D /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
 		FDA6FF4418F3E91A00C72C5D /* ParametersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParametersViewController.h; sourceTree = "<group>"; };
 		FDA6FF4518F3E91A00C72C5D /* ParametersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParametersViewController.m; sourceTree = "<group>"; };
+		FDA6FF5B18F6ABBA00C72C5D /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
+		FDA6FF5D18F6ABD700C72C5D /* CameraViewController_opencv.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CameraViewController_opencv.mm; sourceTree = "<group>"; };
+		FDA6FF5F18F6ACBB00C72C5D /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		FDA6FF6118F6ACC800C72C5D /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		FDA6FF6318F6ACCE00C72C5D /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		FDA6FF6518F6ACD600C72C5D /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		FDA6FF6718F6ACDC00C72C5D /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		FDA6FF6918F6ACE200C72C5D /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		FDA6FF6B18F6ACE900C72C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		FDA6FF6D18F6ADDE00C72C5D /* haarcascade_frontalface_alt2.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = haarcascade_frontalface_alt2.xml; sourceTree = "<group>"; };
+		FDA6FF6F18F6C01D00C72C5D /* haarcascade_eye.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = haarcascade_eye.xml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,8 +71,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDA6FF6C18F6ACE900C72C5D /* QuartzCore.framework in Frameworks */,
+				FDA6FF6A18F6ACE200C72C5D /* CoreVideo.framework in Frameworks */,
+				FDA6FF6818F6ACDC00C72C5D /* CoreMedia.framework in Frameworks */,
+				FDA6FF6618F6ACD600C72C5D /* CoreImage.framework in Frameworks */,
+				FDA6FF6418F6ACCE00C72C5D /* AssetsLibrary.framework in Frameworks */,
+				FDA6FF6218F6ACC800C72C5D /* Accelerate.framework in Frameworks */,
+				FDA6FF6018F6ACBB00C72C5D /* AVFoundation.framework in Frameworks */,
 				FDA6FF0018F3DDEA00C72C5D /* CoreGraphics.framework in Frameworks */,
 				FDA6FF0218F3DDEA00C72C5D /* UIKit.framework in Frameworks */,
+				FDA6FF5C18F6ABBA00C72C5D /* opencv2.framework in Frameworks */,
 				FDA6FEFE18F3DDEA00C72C5D /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -80,6 +109,14 @@
 		FDA6FEFC18F3DDEA00C72C5D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FDA6FF6B18F6ACE900C72C5D /* QuartzCore.framework */,
+				FDA6FF6918F6ACE200C72C5D /* CoreVideo.framework */,
+				FDA6FF6718F6ACDC00C72C5D /* CoreMedia.framework */,
+				FDA6FF6518F6ACD600C72C5D /* CoreImage.framework */,
+				FDA6FF6318F6ACCE00C72C5D /* AssetsLibrary.framework */,
+				FDA6FF6118F6ACC800C72C5D /* Accelerate.framework */,
+				FDA6FF5F18F6ACBB00C72C5D /* AVFoundation.framework */,
+				FDA6FF5B18F6ABBA00C72C5D /* opencv2.framework */,
 				FDA6FEFD18F3DDEA00C72C5D /* Foundation.framework */,
 				FDA6FEFF18F3DDEA00C72C5D /* CoreGraphics.framework */,
 				FDA6FF0118F3DDEA00C72C5D /* UIKit.framework */,
@@ -110,6 +147,7 @@
 				FDA6FF3F18F3DF4200C72C5D /* DisplayViewController.m */,
 				FDA6FF4118F3DF5D00C72C5D /* CameraViewController.h */,
 				FDA6FF4218F3DF5D00C72C5D /* CameraViewController.m */,
+				FDA6FF5D18F6ABD700C72C5D /* CameraViewController_opencv.mm */,
 				FDA6FF4418F3E91A00C72C5D /* ParametersViewController.h */,
 				FDA6FF4518F3E91A00C72C5D /* ParametersViewController.m */,
 			);
@@ -135,6 +173,8 @@
 		FDA6FF3818F3DE2600C72C5D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FDA6FF6F18F6C01D00C72C5D /* haarcascade_eye.xml */,
+				FDA6FF6D18F6ADDE00C72C5D /* haarcascade_frontalface_alt2.xml */,
 				FDA6FF1818F3DDEA00C72C5D /* Images.xcassets */,
 				FDA6FF0518F3DDEA00C72C5D /* iSpy-Info.plist */,
 				FDA6FF0618F3DDEA00C72C5D /* InfoPlist.strings */,
@@ -202,6 +242,8 @@
 			files = (
 				FDA6FF3A18F3DE5A00C72C5D /* Main.storyboard in Resources */,
 				FDA6FF1918F3DDEA00C72C5D /* Images.xcassets in Resources */,
+				FDA6FF6E18F6ADDE00C72C5D /* haarcascade_frontalface_alt2.xml in Resources */,
+				FDA6FF7018F6C01D00C72C5D /* haarcascade_eye.xml in Resources */,
 				FDA6FF0818F3DDEA00C72C5D /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -213,12 +255,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FDA6FF4318F3DF5D00C72C5D /* CameraViewController.m in Sources */,
 				FDA6FF0E18F3DDEA00C72C5D /* AppDelegate.m in Sources */,
 				FDA6FF4618F3E91A00C72C5D /* ParametersViewController.m in Sources */,
 				FDA6FF0A18F3DDEA00C72C5D /* main.m in Sources */,
 				FDA6FF3D18F3DE8900C72C5D /* PhotoGrabber.m in Sources */,
 				FDA6FF4018F3DF4200C72C5D /* DisplayViewController.m in Sources */,
+				FDA6FF5E18F6ABD700C72C5D /* CameraViewController_opencv.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -315,6 +357,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iSpy/iSpy-Prefix.pch";
 				INFOPLIST_FILE = "iSpy/iSpy-Info.plist";
@@ -330,6 +376,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iSpy/iSpy-Prefix.pch";
 				INFOPLIST_FILE = "iSpy/iSpy-Info.plist";

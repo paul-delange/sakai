@@ -38,7 +38,7 @@
  @see https://github.com/unified-diff/opencv-in-your-face
  */
 
-#define USE_CORE_IMAGE  0   //1 = use core image, 0 = use avfoundation
+#define USE_CORE_IMAGE  1   //1 = use core image, 0 = use avfoundation
 
 
 @import AVFoundation;
@@ -136,6 +136,13 @@ AVCaptureMetadataOutputObjectsDelegate
       orientation:(UIDeviceOrientation)orientation
        connection: (AVCaptureConnection*) connection
 {
+    
+    static NSMutableIndexSet* countedFaces = nil;
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        countedFaces = [NSMutableIndexSet new];
+    });
     
 	NSArray *sublayers = [NSArray arrayWithArray:[_previewLayer sublayers]];
 	NSInteger sublayersCount = [sublayers count], currentSublayer = 0;
@@ -251,6 +258,28 @@ AVCaptureMetadataOutputObjectsDelegate
 				break; // leave the layer in its last known orientation
 		}
 		currentFeature++;
+        
+        if( [ff hasTrackingID] ) {
+            int faceID = ff.trackingID;
+            
+            if( ![countedFaces containsIndex: faceID] ) {
+                NSLog(@"Counting face %d", faceID);
+                
+                NSParameterAssert([NSThread isMainThread]);
+                
+                static NSUInteger count = 0;
+                
+                count++;
+                
+                self.counterLabel.text = [@(count) stringValue];
+                
+                [countedFaces addIndex: faceID];
+            }
+            else {
+                NSLog(@"Face %d tracked for %d frames", faceID, ff.trackingFrameCount);
+            }
+        }
+
 	}
     
 	[CATransaction commit];
@@ -293,7 +322,10 @@ AVCaptureMetadataOutputObjectsDelegate
     
     [_captureSession addOutput: _videoDataOutput];
     
-    NSDictionary* detectorOptions = @{ CIDetectorAccuracy : CIDetectorAccuracyLow };
+    NSDictionary* detectorOptions = @{
+                                      CIDetectorAccuracy : CIDetectorAccuracyLow,
+                                       CIDetectorTracking : @YES
+                                       };
     _faceDetector = [CIDetector detectorOfType: CIDetectorTypeFace
                                        context: nil
                                        options: detectorOptions];
@@ -345,7 +377,7 @@ AVCaptureMetadataOutputObjectsDelegate
      If present, the detection will be done based on that orientation but the coordinates in the returned features will still be based on those of the image. */
     
     int exifOrientation = 6; //   6  =  0th row is on the right, and 0th column is the top. Portrait mode.
-    NSDictionary *imageOptions = @{CIDetectorImageOrientation : @(exifOrientation)};
+    NSDictionary *imageOptions = @{CIDetectorImageOrientation : @(exifOrientation) , CIDetectorEyeBlink : @YES };
     NSArray *features = [_faceDetector featuresInImage:ciImage options:imageOptions];
 	
     // get the clean aperture
