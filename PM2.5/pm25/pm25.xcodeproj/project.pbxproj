@@ -45,12 +45,12 @@
 		FD6C925E18CB6D06005D28A3 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C925D18CB6D06005D28A3 /* MapViewController.m */; };
 		FD6C926118CB6D0F005D28A3 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C926018CB6D0F005D28A3 /* SettingsViewController.m */; };
 		FD6C926718CBCEC8005D28A3 /* AppMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6C926618CBCEC8005D28A3 /* AppMenuItem.m */; };
-		FDA6FF7418F6D77700C72C5D /* ASIHTTPRequest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDA6FF7118F6D77700C72C5D /* ASIHTTPRequest.framework */; };
-		FDA6FF7518F6D77700C72C5D /* imobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDA6FF7218F6D77700C72C5D /* imobileAds.framework */; };
-		FDA6FF7618F6D77700C72C5D /* JSONKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDA6FF7318F6D77700C72C5D /* JSONKit.framework */; };
 		FDA6FF7818F6D89300C72C5D /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDA6FF7718F6D89300C72C5D /* CFNetwork.framework */; };
 		FDA6FF7A18F6D89800C72C5D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FDA6FF7918F6D89800C72C5D /* libz.dylib */; };
 		FDA6FF7C18F6D89E00C72C5D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDA6FF7B18F6D89E00C72C5D /* MobileCoreServices.framework */; };
+		FDA6FF8018F6DE6B00C72C5D /* ASIHTTPRequest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDA6FF7D18F6DE6B00C72C5D /* ASIHTTPRequest.framework */; };
+		FDA6FF8118F6DE6B00C72C5D /* imobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDA6FF7E18F6DE6B00C72C5D /* imobileAds.framework */; };
+		FDA6FF8218F6DE6B00C72C5D /* JSONKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDA6FF7F18F6DE6B00C72C5D /* JSONKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -134,12 +134,12 @@
 		FD6C926318CB7149005D28A3 /* PhotoGrabber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoGrabber.m; sourceTree = "<group>"; };
 		FD6C926518CBCEC8005D28A3 /* AppMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppMenuItem.h; sourceTree = "<group>"; };
 		FD6C926618CBCEC8005D28A3 /* AppMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppMenuItem.m; sourceTree = "<group>"; };
-		FDA6FF7118F6D77700C72C5D /* ASIHTTPRequest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ASIHTTPRequest.framework; path = "../../i-mobile/ASIHTTPRequest.framework"; sourceTree = "<group>"; };
-		FDA6FF7218F6D77700C72C5D /* imobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = imobileAds.framework; path = "../../i-mobile/imobileAds.framework"; sourceTree = "<group>"; };
-		FDA6FF7318F6D77700C72C5D /* JSONKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSONKit.framework; path = "../../i-mobile/JSONKit.framework"; sourceTree = "<group>"; };
 		FDA6FF7718F6D89300C72C5D /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		FDA6FF7918F6D89800C72C5D /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		FDA6FF7B18F6D89E00C72C5D /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		FDA6FF7D18F6DE6B00C72C5D /* ASIHTTPRequest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ASIHTTPRequest.framework; path = "i-mobile/ASIHTTPRequest.framework"; sourceTree = "<group>"; };
+		FDA6FF7E18F6DE6B00C72C5D /* imobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = imobileAds.framework; path = "i-mobile/imobileAds.framework"; sourceTree = "<group>"; };
+		FDA6FF7F18F6DE6B00C72C5D /* JSONKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSONKit.framework; path = "i-mobile/JSONKit.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,12 +147,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDA6FF8018F6DE6B00C72C5D /* ASIHTTPRequest.framework in Frameworks */,
+				FDA6FF8118F6DE6B00C72C5D /* imobileAds.framework in Frameworks */,
+				FDA6FF8218F6DE6B00C72C5D /* JSONKit.framework in Frameworks */,
 				FDA6FF7C18F6D89E00C72C5D /* MobileCoreServices.framework in Frameworks */,
 				FDA6FF7A18F6D89800C72C5D /* libz.dylib in Frameworks */,
 				FDA6FF7818F6D89300C72C5D /* CFNetwork.framework in Frameworks */,
-				FDA6FF7418F6D77700C72C5D /* ASIHTTPRequest.framework in Frameworks */,
-				FDA6FF7518F6D77700C72C5D /* imobileAds.framework in Frameworks */,
-				FDA6FF7618F6D77700C72C5D /* JSONKit.framework in Frameworks */,
 				FD3E037D18CCD7110033845A /* SystemConfiguration.framework in Frameworks */,
 				FD3E037B18CCD7090033845A /* StoreKit.framework in Frameworks */,
 				FD3E037918CCD7030033845A /* CoreTelephony.framework in Frameworks */,
@@ -203,12 +203,12 @@
 		FD3A30D918CB642F002B6990 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FDA6FF7D18F6DE6B00C72C5D /* ASIHTTPRequest.framework */,
+				FDA6FF7E18F6DE6B00C72C5D /* imobileAds.framework */,
+				FDA6FF7F18F6DE6B00C72C5D /* JSONKit.framework */,
 				FDA6FF7B18F6D89E00C72C5D /* MobileCoreServices.framework */,
 				FDA6FF7918F6D89800C72C5D /* libz.dylib */,
 				FDA6FF7718F6D89300C72C5D /* CFNetwork.framework */,
-				FDA6FF7118F6D77700C72C5D /* ASIHTTPRequest.framework */,
-				FDA6FF7218F6D77700C72C5D /* imobileAds.framework */,
-				FDA6FF7318F6D77700C72C5D /* JSONKit.framework */,
 				FD3E037C18CCD7110033845A /* SystemConfiguration.framework */,
 				FD3E037A18CCD7090033845A /* StoreKit.framework */,
 				FD3E037818CCD7030033845A /* CoreTelephony.framework */,
@@ -597,6 +597,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/pauldelange/Documents/Freelance/sakai/i-mobile",
+					"$(PROJECT_DIR)/i-mobile",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "pm25/pm25-Prefix.pch";
@@ -627,6 +628,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/pauldelange/Documents/Freelance/sakai/i-mobile",
+					"$(PROJECT_DIR)/i-mobile",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "pm25/pm25-Prefix.pch";
