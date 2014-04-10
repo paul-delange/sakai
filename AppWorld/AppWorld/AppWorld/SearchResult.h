@@ -10,6 +10,7 @@
 
 @interface SearchResult : NSObject
 
+@property (strong) UIImage* thumb;
 @property (copy) NSString* thumbnailPath;
 @property (assign) float averageRating;
 

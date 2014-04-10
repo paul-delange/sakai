@@ -28,6 +28,7 @@
 		FDA6FEEE18F3D95900C72C5D /* player357.tga in Resources */ = {isa = PBXBuildFile; fileRef = FDA6FEED18F3D95900C72C5D /* player357.tga */; };
 		FDA6FEF018F3DAD900C72C5D /* target_inter.tga in Resources */ = {isa = PBXBuildFile; fileRef = FDA6FEEF18F3DAD900C72C5D /* target_inter.tga */; };
 		FDA6FF4A18F3FAC900C72C5D /* SearchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA6FF4918F3FAC900C72C5D /* SearchResult.m */; };
+		FDA6FF5A18F69C0200C72C5D /* WorldViewController+Animations.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA6FF5918F69C0200C72C5D /* WorldViewController+Animations.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,8 @@
 		FDA6FEEF18F3DAD900C72C5D /* target_inter.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = target_inter.tga; sourceTree = "<group>"; };
 		FDA6FF4818F3FAC900C72C5D /* SearchResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResult.h; sourceTree = "<group>"; };
 		FDA6FF4918F3FAC900C72C5D /* SearchResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResult.m; sourceTree = "<group>"; };
+		FDA6FF5818F69C0200C72C5D /* WorldViewController+Animations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WorldViewController+Animations.h"; sourceTree = "<group>"; };
+		FDA6FF5918F69C0200C72C5D /* WorldViewController+Animations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WorldViewController+Animations.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,6 +186,8 @@
 				FDA6FEA718F2CE9000C72C5D /* AppDelegate.m */,
 				FDA6FEDE18F2D1EF00C72C5D /* WorldViewController.h */,
 				FDA6FEDF18F2D1EF00C72C5D /* WorldViewController.m */,
+				FDA6FF5818F69C0200C72C5D /* WorldViewController+Animations.h */,
+				FDA6FF5918F69C0200C72C5D /* WorldViewController+Animations.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -331,6 +336,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDA6FF5A18F69C0200C72C5D /* WorldViewController+Animations.m in Sources */,
 				FDA6FF4A18F3FAC900C72C5D /* SearchResult.m in Sources */,
 				FDA6FEE618F2D4BC00C72C5D /* SearchScene.m in Sources */,
 				FDA6FEA818F2CE9000C72C5D /* AppDelegate.m in Sources */,

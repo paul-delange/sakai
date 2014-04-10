@@ -8,7 +8,6 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-@class SearchResult;
 @class SearchScene;
 
 @protocol  SearchSceneDelegate <NSObject>
@@ -22,7 +21,7 @@
 @protocol SearchSceneDataSource <NSObject>
 @required
 - (NSUInteger) numberOfObjectsInSearchScene: (SearchScene*) scene;
-- (SKNode*) searchScene: (SearchScene*) scene nodeForObjectAtIndexPath: (NSIndexPath*) indexPath;
+- (SKNode*) searchScene: (SearchScene*) scene nodeForObjectAtIndex: (NSUInteger) index;
 
 @end
 
@@ -31,6 +30,17 @@
 @property (weak) id<SearchSceneDelegate> delegate;
 @property (weak) id<SearchSceneDataSource> dataSource;
 
-- (void) addResult: (SearchResult*) result AtPosition: (CGPoint) location;
+//- (void) addResult: (SearchResult*) result AtPosition: (CGPoint) location;
+
+#pragma mark - Inserting, Deleting, and Moving Objects
+- (void) beginUpdates;
+- (void) endUpdates;
+- (void) insertObjectAtIndex: (NSUInteger) index;
+- (void) deleteObjectAtIndex: (NSUInteger) index;
+- (void) moveObjectAtIndex: (NSUInteger) fromIndex toIndex: (NSUInteger) toIndex;
+
+#pragma mark - Reloading the Search Scene
+- (void) reloadData;
+
 
 @end

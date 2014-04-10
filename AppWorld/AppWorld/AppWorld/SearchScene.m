@@ -11,11 +11,7 @@
 #import "UserNode.h"
 #import "ResultNode.h"
 
-#import "SearchResult.h"
-
-@interface SearchScene () <UIGestureRecognizerDelegate> {
-    CFTimeInterval      _lastUpdateTime;
-}
+@interface SearchScene () <UIGestureRecognizerDelegate>
 
 @property (copy) NSArray* userNodes;
 
@@ -26,35 +22,99 @@
 
 @implementation SearchScene
 
-- (void) addResult: (SearchResult*) result AtPosition: (CGPoint) location {
+#pragma mark - Inserting, Deleting, and Moving Objects
+- (void) beginUpdates {
     
-    NSString* artworkPath = result.thumbnailPath;
-    NSURL* artworkURL = [NSURL URLWithString: artworkPath];
-    NSURLRequest* request = [NSURLRequest requestWithURL: artworkURL];
-    [NSURLConnection sendAsynchronousRequest: request
-                                       queue: [NSOperationQueue currentQueue]
-                           completionHandler: ^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-                               UIImage* image = [UIImage imageWithData: data];
-                               if( image ) {
-                                   ResultNode* node = [[ResultNode alloc] initWithImage: image];
-                                   node.position = location;
-                                   node.xScale = (result.averageRating / 5) * 2;
-                                   node.yScale = node.xScale;
-                                   
-                                   [self addChild: node];
-                                   
-                                   CGPoint center = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
-                                   
-                                   CGFloat x = location.x - center.x;
-                                   CGFloat y = location.y - center.y;
-                                   
-                                   CGFloat length = sqrtf( x*x + y*y );
-                                   
-                                   length /= 5.;
-                                   
-                                   [node.physicsBody applyImpulse: CGVectorMake(-y/length, x/length)];
-                               }
-                           }];
+}
+
+- (void) endUpdates {
+    
+}
+
+- (void) insertObjectAtIndex: (NSUInteger) index {
+    SKNode* node = [self.dataSource searchScene: self nodeForObjectAtIndex: index];
+    node.userData[@"index"] = @(index);
+    [self addChild: node];
+    
+    CGFloat centerNoGoZoneSize = 200;
+    
+    CGFloat verticalSpawnRange = CGRectGetHeight(self.frame)/2. - centerNoGoZoneSize/2.;
+    CGFloat verticalSpawnOffset = 0;
+    
+    BOOL spawnAboveCenter = arc4random_uniform(2);
+    
+    if( spawnAboveCenter ) {
+        verticalSpawnOffset = CGRectGetHeight(self.frame)/2. + centerNoGoZoneSize/2.;
+    }
+    
+    CGFloat horizontalSpawnRange = CGRectGetWidth(self.frame)/2. - centerNoGoZoneSize/2.;
+    CGFloat horizontalSpawnOffset = 0;
+    
+    BOOL spawnToRight = arc4random_uniform(2);
+    
+    if( spawnToRight ) {
+        horizontalSpawnOffset = CGRectGetWidth(self.frame)/2. + centerNoGoZoneSize/2.;
+    }
+    
+    CGPoint location = CGPointMake(arc4random_uniform(horizontalSpawnRange) + horizontalSpawnOffset,
+                                   arc4random_uniform(verticalSpawnRange) + verticalSpawnOffset);
+    node.position = location;
+    
+    CGPoint center = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+    CGFloat x = location.x - center.x;
+    CGFloat y = location.y - center.y;
+    
+    CGFloat length = sqrtf( x*x + y*y );
+    
+    length /= 5.;
+    
+    [node.physicsBody applyImpulse: CGVectorMake(-y/length, x/length)];
+    
+    SKAction* scale = [SKAction scaleTo: 1.0 duration: 1.0];
+    SKAction* fade = [SKAction fadeInWithDuration: 1.0];
+    SKAction* group = [SKAction group: @[scale, fade]];
+    
+    node.alpha = 0.;
+    node.xScale = node.yScale = 0.;
+    [node runAction: group];
+}
+
+- (void) deleteObjectAtIndex: (NSUInteger) index {
+    [self enumerateChildNodesWithName: ResultNodeName usingBlock: ^(SKNode *node, BOOL *stop) {
+        NSNumber* num = node.userData[@"index"];
+        if( [num integerValue] == index ) {
+            [node removeFromParent];
+            *stop = YES;
+        }
+    }];
+}
+
+- (void) moveObjectAtIndex: (NSUInteger) fromIndex toIndex: (NSUInteger) toIndex {
+    [self enumerateChildNodesWithName: ResultNodeName usingBlock: ^(SKNode *node, BOOL *stop) {
+        NSNumber* num = node.userData[@"index"];
+        if( [num integerValue] == fromIndex ) {
+            node.userData[@"index"] = @(toIndex);
+            *stop = YES;
+        }
+    }];
+}
+
+#pragma mark - Reloading the Search Scene
+- (void) reloadData {
+    [self beginUpdates];
+    
+    //Clear nodes
+    [self enumerateChildNodesWithName: ResultNodeName usingBlock: ^(SKNode *node, BOOL *stop) {
+        [node removeFromParent];
+    }];
+    
+    size_t num_objs = [self.dataSource numberOfObjectsInSearchScene: self];
+
+    for(size_t i=0;i<num_objs;i++) {
+        [self insertObjectAtIndex: i];
+    }
+    
+    [self endUpdates];
 }
 
 #pragma mark - Actions
@@ -128,8 +188,6 @@
 
 -(void)update:(CFTimeInterval)currentTime {
     
-    CFTimeInterval interval = _lastUpdateTime - currentTime;
-    
     //Remove old ones
     NSMutableSet* visibleBodies = [NSMutableSet new];
     [self.physicsWorld enumerateBodiesInRect: self.frame usingBlock: ^(SKPhysicsBody *body, BOOL *stop) {
@@ -171,10 +229,8 @@
             i++;
         }
         
-        [node dragForDuration: interval];
+        [node dragForDuration: 0];
     }];
-    
-    _lastUpdateTime = currentTime;
 }
 
 - (void)didMoveToView:(SKView *)view {
