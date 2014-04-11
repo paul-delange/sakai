@@ -18,39 +18,39 @@
 #import <AVFoundation/AVFoundation.h>
 
 /* Doesn't crop correctly... give up for now :(
-static CVPixelBufferRef CVPixelBufferCopyWithClipToRect(CIContext* context, CMSampleBufferRef sampleBuffer, CGRect clippingRect) {
-    CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
-    
-    NSDictionary* attachments = (__bridge_transfer NSDictionary *)CMCopyDictionaryOfAttachments(kCFAllocatorDefault,
-                                                                                                sampleBuffer,
-                                                                                                kCMAttachmentMode_ShouldPropagate);
-    
-    CIImage *ciImage = [[CIImage alloc] initWithCVPixelBuffer: imageBuffer options:attachments];
-    NSLog(@"Crop %@ to %@", NSStringFromCGRect(ciImage.extent), NSStringFromCGRect(clippingRect));
-    
-    CIImage* cropped = [ciImage imageByCroppingToRect: clippingRect];
-    
-    size_t width = CGRectGetWidth(cropped.extent);
-    size_t height = CGRectGetHeight(cropped.extent);
-    
-    NSDictionary* attrs = @{
-                            (id)kCVPixelBufferIOSurfacePropertiesKey : @{}
-                            //, (id)kCVPixelBufferPixelFormatTypeKey : @(kCMPixelFormat_8IndexedGray_WhiteIsZero)
-                            , (id)kCVPixelBufferOpenGLESCompatibilityKey : @YES
-                            };
-    
-    CVPixelBufferRef pixelBuffer;
-    CVPixelBufferCreate(NULL,
-                        width,
-                        height,
-                        kCVPixelFormatType_32BGRA,
-                        (__bridge CFDictionaryRef)attrs,
-                        &pixelBuffer);
-    
-    [context render: cropped toCVPixelBuffer: pixelBuffer];
-    
-    return pixelBuffer;
-} */
+ static CVPixelBufferRef CVPixelBufferCopyWithClipToRect(CIContext* context, CMSampleBufferRef sampleBuffer, CGRect clippingRect) {
+ CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+ 
+ NSDictionary* attachments = (__bridge_transfer NSDictionary *)CMCopyDictionaryOfAttachments(kCFAllocatorDefault,
+ sampleBuffer,
+ kCMAttachmentMode_ShouldPropagate);
+ 
+ CIImage *ciImage = [[CIImage alloc] initWithCVPixelBuffer: imageBuffer options:attachments];
+ NSLog(@"Crop %@ to %@", NSStringFromCGRect(ciImage.extent), NSStringFromCGRect(clippingRect));
+ 
+ CIImage* cropped = [ciImage imageByCroppingToRect: clippingRect];
+ 
+ size_t width = CGRectGetWidth(cropped.extent);
+ size_t height = CGRectGetHeight(cropped.extent);
+ 
+ NSDictionary* attrs = @{
+ (id)kCVPixelBufferIOSurfacePropertiesKey : @{}
+ //, (id)kCVPixelBufferPixelFormatTypeKey : @(kCMPixelFormat_8IndexedGray_WhiteIsZero)
+ , (id)kCVPixelBufferOpenGLESCompatibilityKey : @YES
+ };
+ 
+ CVPixelBufferRef pixelBuffer;
+ CVPixelBufferCreate(NULL,
+ width,
+ height,
+ kCVPixelFormatType_32BGRA,
+ (__bridge CFDictionaryRef)attrs,
+ &pixelBuffer);
+ 
+ [context render: cropped toCVPixelBuffer: pixelBuffer];
+ 
+ return pixelBuffer;
+ } */
 
 static inline cv::Rect CVRectFromCGRect(CGRect rect) {
     return cv::Rect(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
@@ -84,7 +84,7 @@ static CGImageRef CGImageCreateFromOpenCVMatrix(cv::Mat cvMat) {
     
     
     // Getting UIImage from CGImage
-
+    
     CGDataProviderRelease(provider);
     CGColorSpaceRelease(colorSpace);
     
@@ -92,66 +92,66 @@ static CGImageRef CGImageCreateFromOpenCVMatrix(cv::Mat cvMat) {
 }
 
 /*
-static cv::Mat CMSampleBufferCopyOpenCVMatrix(CMSampleBufferRef sampleBuffer, CGRect regionOfInterest) {
-    cv::Rect roi = cv::Rect(regionOfInterest.origin.x, regionOfInterest.origin.y, regionOfInterest.size.width, regionOfInterest.size.height);
-    
-    CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
-    
-    CVPixelBufferLockBaseAddress(imageBuffer, 0);
-    
-    size_t lumaPlane = 0;
-    uint8_t* baseAddress = (uint8_t*)CVPixelBufferGetBaseAddressOfPlane(imageBuffer, lumaPlane);
-    //size_t bytesPerRow = CVPixelBufferGetBytesPerRowOfPlane(imageBuffer, lumaPlane);
-    size_t width = CVPixelBufferGetWidthOfPlane(imageBuffer, lumaPlane);
-    size_t height = CVPixelBufferGetHeightOfPlane(imageBuffer, lumaPlane);
-    
-    cv::Mat gray(cv::Size(width, height), CV_8UC1, baseAddress, cv::Mat::AUTO_STEP);
-    
-    CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
-    
-    return gray(roi).clone();
-}
-
-static CGImageRef CMSampleBufferCopyCGImageRef(CIContext* gpuContext, CMSampleBufferRef sampleBuffer, CGRect regionOfInterest) {
-    if( CGSizeEqualToSize(regionOfInterest.size, CGSizeZero) )
-        return nil;
-    
-    CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
-    
-    CVPixelBufferLockBaseAddress(imageBuffer, 0);
-    
-    size_t lumaPlane = 0;
-    uint8_t* baseAddress = (uint8_t*)CVPixelBufferGetBaseAddressOfPlane(imageBuffer, lumaPlane);
-    size_t bytesPerRow = CVPixelBufferGetBytesPerRowOfPlane(imageBuffer, lumaPlane);
-    size_t width = CVPixelBufferGetWidthOfPlane(imageBuffer, lumaPlane);
-    size_t height = CVPixelBufferGetHeightOfPlane(imageBuffer, lumaPlane);
-    
-    cv::Mat gray(cv::Size(width, height), CV_8UC1, baseAddress, cv::Mat::AUTO_STEP);
-    
-    {   //Return an image
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceGray();
-    CGBitmapInfo bitmapInfo = kCGBitmapAlphaInfoMask & kCGImageAlphaNone;
-    
-    CGContextRef ctx = CGBitmapContextCreate(baseAddress,
-                                             width,
-                                             height,
-                                             8,
-                                             bytesPerRow,
-                                             colorSpace,
-                                             bitmapInfo);
-    
-    CGImageRef cgImage = CGBitmapContextCreateImage(ctx);
-    CGContextRelease(ctx);
-    
-    CGColorSpaceRelease(colorSpace);
-    CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
-    
-    CGImageRef cropped = CGImageCreateWithImageInRect(cgImage, regionOfInterest);
-    CGImageRelease(cgImage);
-    
-    return cropped;
-    }
-}*/
+ static cv::Mat CMSampleBufferCopyOpenCVMatrix(CMSampleBufferRef sampleBuffer, CGRect regionOfInterest) {
+ cv::Rect roi = cv::Rect(regionOfInterest.origin.x, regionOfInterest.origin.y, regionOfInterest.size.width, regionOfInterest.size.height);
+ 
+ CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+ 
+ CVPixelBufferLockBaseAddress(imageBuffer, 0);
+ 
+ size_t lumaPlane = 0;
+ uint8_t* baseAddress = (uint8_t*)CVPixelBufferGetBaseAddressOfPlane(imageBuffer, lumaPlane);
+ //size_t bytesPerRow = CVPixelBufferGetBytesPerRowOfPlane(imageBuffer, lumaPlane);
+ size_t width = CVPixelBufferGetWidthOfPlane(imageBuffer, lumaPlane);
+ size_t height = CVPixelBufferGetHeightOfPlane(imageBuffer, lumaPlane);
+ 
+ cv::Mat gray(cv::Size(width, height), CV_8UC1, baseAddress, cv::Mat::AUTO_STEP);
+ 
+ CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
+ 
+ return gray(roi).clone();
+ }
+ 
+ static CGImageRef CMSampleBufferCopyCGImageRef(CIContext* gpuContext, CMSampleBufferRef sampleBuffer, CGRect regionOfInterest) {
+ if( CGSizeEqualToSize(regionOfInterest.size, CGSizeZero) )
+ return nil;
+ 
+ CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+ 
+ CVPixelBufferLockBaseAddress(imageBuffer, 0);
+ 
+ size_t lumaPlane = 0;
+ uint8_t* baseAddress = (uint8_t*)CVPixelBufferGetBaseAddressOfPlane(imageBuffer, lumaPlane);
+ size_t bytesPerRow = CVPixelBufferGetBytesPerRowOfPlane(imageBuffer, lumaPlane);
+ size_t width = CVPixelBufferGetWidthOfPlane(imageBuffer, lumaPlane);
+ size_t height = CVPixelBufferGetHeightOfPlane(imageBuffer, lumaPlane);
+ 
+ cv::Mat gray(cv::Size(width, height), CV_8UC1, baseAddress, cv::Mat::AUTO_STEP);
+ 
+ {   //Return an image
+ CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceGray();
+ CGBitmapInfo bitmapInfo = kCGBitmapAlphaInfoMask & kCGImageAlphaNone;
+ 
+ CGContextRef ctx = CGBitmapContextCreate(baseAddress,
+ width,
+ height,
+ 8,
+ bytesPerRow,
+ colorSpace,
+ bitmapInfo);
+ 
+ CGImageRef cgImage = CGBitmapContextCreateImage(ctx);
+ CGContextRelease(ctx);
+ 
+ CGColorSpaceRelease(colorSpace);
+ CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
+ 
+ CGImageRef cropped = CGImageCreateWithImageInRect(cgImage, regionOfInterest);
+ CGImageRelease(cgImage);
+ 
+ return cropped;
+ }
+ }*/
 
 static AVCaptureVideoOrientation AVVideoOrientationFromUIInterfaceOrientation(UIInterfaceOrientation orientation) {
     switch (orientation) {
@@ -171,12 +171,14 @@ static AVCaptureVideoOrientation AVVideoOrientationFromUIInterfaceOrientation(UI
     AVCaptureSession*                       _captureSession;
     
     AVCaptureMetadataOutput*                _metatdataOutput;
-    AVCaptureConnection*                    _metadataCaptureConnection;
+    
     AVCaptureVideoDataOutput*               _dataOutput;
     AVCaptureConnection*                    _dataCaptureConnection;
+    dispatch_queue_t                        _dataProcessingQueue;
+    
     
     __weak AVCaptureVideoPreviewLayer*      _previewLayer;
-
+    
     NSSet*                                  _faces;
     cv::CascadeClassifier*                  _eyeClassifier;
 }
@@ -197,30 +199,30 @@ static AVCaptureVideoOrientation AVVideoOrientationFromUIInterfaceOrientation(UI
     }
     
     /* Doesn't work???
-    AVCaptureDeviceFormat* bestFormat = device.activeFormat;
-    AVFrameRateRange* bestFrameRateRange = bestFormat.videoSupportedFrameRateRanges.lastObject;
-    
-    for(AVCaptureDeviceFormat* format in device.formats) {
-        CMVideoFormatDescriptionRef desc = format.formatDescription;
-        CMVideoDimensions dimensions = CMVideoFormatDescriptionGetDimensions(desc);
-        
-        if( dimensions.width == 640 && dimensions.height == 480 ) {
-            for(AVFrameRateRange* fr in format.videoSupportedFrameRateRanges) {
-                if( bestFrameRateRange.minFrameRate > fr.minFrameRate  ) {
-                    bestFrameRateRange = fr;
-                    bestFormat = format;
-                }
-            }
-        }
-    }
-    
-    if( [device lockForConfiguration: NULL] ) {
-        device.activeFormat = bestFormat;
-        device.activeVideoMaxFrameDuration = bestFrameRateRange.maxFrameDuration;
-        device.activeVideoMinFrameDuration = bestFrameRateRange.maxFrameDuration;
-        
-        [device unlockForConfiguration];
-    }*/
+     AVCaptureDeviceFormat* bestFormat = device.activeFormat;
+     AVFrameRateRange* bestFrameRateRange = bestFormat.videoSupportedFrameRateRanges.lastObject;
+     
+     for(AVCaptureDeviceFormat* format in device.formats) {
+     CMVideoFormatDescriptionRef desc = format.formatDescription;
+     CMVideoDimensions dimensions = CMVideoFormatDescriptionGetDimensions(desc);
+     
+     if( dimensions.width == 640 && dimensions.height == 480 ) {
+     for(AVFrameRateRange* fr in format.videoSupportedFrameRateRanges) {
+     if( bestFrameRateRange.minFrameRate > fr.minFrameRate  ) {
+     bestFrameRateRange = fr;
+     bestFormat = format;
+     }
+     }
+     }
+     }
+     
+     if( [device lockForConfiguration: NULL] ) {
+     device.activeFormat = bestFormat;
+     device.activeVideoMaxFrameDuration = bestFrameRateRange.maxFrameDuration;
+     device.activeVideoMinFrameDuration = bestFrameRateRange.maxFrameDuration;
+     
+     [device unlockForConfiguration];
+     }*/
     
     __autoreleasing NSError* error;
     AVCaptureDeviceInput* defaultInput = [AVCaptureDeviceInput deviceInputWithDevice: device error: &error];
@@ -235,6 +237,8 @@ static AVCaptureVideoOrientation AVVideoOrientationFromUIInterfaceOrientation(UI
     if( self ) {
         NSString* classiferPath = [[NSBundle mainBundle] pathForResource: @"haarcascade_eye" ofType: @"xml"];
         _eyeClassifier = new cv::CascadeClassifier([classiferPath UTF8String]);
+        
+        _dataProcessingQueue = dispatch_queue_create("Data Processing", DISPATCH_QUEUE_SERIAL);
     }
     
     return self;
@@ -248,7 +252,7 @@ static AVCaptureVideoOrientation AVVideoOrientationFromUIInterfaceOrientation(UI
 -(void) viewDidLoad {
     [super viewDidLoad];
     
-    NSString* preset = AVCaptureSessionPreset640x480;
+    NSString* preset = AVCaptureSessionPresetLow;
     _captureSession = [AVCaptureSession new];
     NSParameterAssert([_captureSession canSetSessionPreset: preset]);
     _captureSession.sessionPreset = preset;
@@ -275,8 +279,6 @@ static AVCaptureVideoOrientation AVVideoOrientationFromUIInterfaceOrientation(UI
     [_captureSession addOutput: _metatdataOutput];
     NSAssert([_metatdataOutput.availableMetadataObjectTypes containsObject: AVMetadataObjectTypeFace], @"No face detection found");
     _metatdataOutput.metadataObjectTypes = @[AVMetadataObjectTypeFace];
-    _metadataCaptureConnection = [_metatdataOutput connectionWithMediaType: AVMediaTypeVideo];
-    _metadataCaptureConnection.videoOrientation = AVVideoOrientationFromUIInterfaceOrientation([[UIApplication sharedApplication] statusBarOrientation]);
     
     _dataOutput = [AVCaptureVideoDataOutput new];
     _dataOutput.videoSettings = @{
@@ -284,7 +286,7 @@ static AVCaptureVideoOrientation AVVideoOrientationFromUIInterfaceOrientation(UI
                                   };
     _dataOutput.alwaysDiscardsLateVideoFrames = YES;
     
-    [_dataOutput setSampleBufferDelegate: self queue: dispatch_get_main_queue()];
+    [_dataOutput setSampleBufferDelegate: self queue: _dataProcessingQueue];
     NSAssert([_captureSession canAddOutput: _dataOutput], @"Can not add %@ to capture session", _dataOutput);
     [_captureSession addOutput: _dataOutput];
     _dataCaptureConnection = [_dataOutput connectionWithMediaType: AVMediaTypeVideo];
@@ -313,60 +315,84 @@ static AVCaptureVideoOrientation AVVideoOrientationFromUIInterfaceOrientation(UI
 
 - (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     _dataCaptureConnection.videoOrientation = AVVideoOrientationFromUIInterfaceOrientation(toInterfaceOrientation);
-    _metadataCaptureConnection.videoOrientation = AVVideoOrientationFromUIInterfaceOrientation(toInterfaceOrientation);
 }
 
 #pragma mark - AVCaptureVideoDataOutputSampleBufferDelegate
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
+    NSParameterAssert(![NSThread isMainThread]);
+    
     CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+    
+    //Images are coming in YUV format, the first channel is the intensity (luma)...
+    size_t lumaPlane = 0;
     
     CVPixelBufferLockBaseAddress(imageBuffer, 0);
     
-    size_t lumaPlane = 0;
     uint8_t* baseAddress = (uint8_t*)CVPixelBufferGetBaseAddressOfPlane(imageBuffer, lumaPlane);
     size_t width = CVPixelBufferGetWidthOfPlane(imageBuffer, lumaPlane);
     size_t height = CVPixelBufferGetHeightOfPlane(imageBuffer, lumaPlane);
     
+    //Take Core Video pixel buffer and convert it to a openCV image matrix
     cv::Mat gray(cv::Size(width, height), CV_8UC1, baseAddress, cv::Mat::AUTO_STEP);
     
     CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
-
-    NSParameterAssert([_faces count] < 2);
     
-    for(FaceObject* face in _faces) {
-        CGRect bounds = [captureOutput rectForMetadataOutputRectOfInterest: face.bounds];
+    //Go through all faces
+    for(FaceObject* face in [_faces copy]) {
         
-        //Probably no eyes in the bottom of the bounds!!
-        bounds.origin.y += 0.3 * bounds.size.height;
-        bounds.size.height *= 0.35;
-        
-        cv::Mat frame = gray(CVRectFromCGRect(bounds));
-    
-        if( ![face.eyes count] ) {
-            //Find me some eyes!!
-            std::vector<cv::Rect> eyes;
-            _eyeClassifier->detectMultiScale(frame,
-                                             eyes,
-                                             1.1,
-                                             2,
-                                             0|CV_HAAR_SCALE_IMAGE,
-                                             cv::Size(30, 30));
+        //If the face was looking at the camera
+        if( face.isFacingCamera ) {
             
-            for(size_t i = 0;i<eyes.size();i++) {
-                cv::Rect eye = eyes[i];
+            CGRect bounds = [captureOutput rectForMetadataOutputRectOfInterest: face.bounds];
+            
+            //Probably no eyes in the bottom of the face!!
+            bounds.size.height *= 0.5;
+            
+            //If the face is inside the capture frame
+            if( CGRectContainsRect(CGRectMake(0, 0, width, height), bounds) ) {
                 
-                eye.x += bounds.origin.x;
-                eye.y += bounds.origin.y;
+                //Cut the full image (gray) to the face rect
+                cv::Rect faceRect = CVRectFromCGRect(bounds);
+                cv::Mat frame = gray(faceRect);
                 
-                cv::rectangle(gray, eye, cv::Scalar(255, 0, 0));
+                //Equalize the image -> what does it do...?
+                equalizeHist(frame, frame);
                 
+                //Draw a square around our search area
+                cv::rectangle(gray, faceRect, cv::Scalar(0, 0, 0));
+                
+                //Find me some eyes!!
+                std::vector<cv::Rect> eyes;
+                _eyeClassifier->detectMultiScale(frame,                     //The image to search
+                                                 eyes,                      //The output vector
+                                                 1.1,                       //The scale factor to apply at each iteration
+                                                 2,                         //Minimum neighbours ???
+                                                 0|CV_HAAR_SCALE_IMAGE,     // ???
+                                                 cv::Size(10, 10));         // Minimum feature size
+                
+                for(size_t i = 0;i<eyes.size();i++) {
+                    
+                    cv::Rect eye = eyes[i];
+                    
+                    eye.x += bounds.origin.x;
+                    eye.y += bounds.origin.y;
+                    
+                    //Draw a sqare around each eye
+                    cv::rectangle(gray, eye, cv::Scalar(255, 255, 255));
+                }
             }
-
         }
     }
     
+    //Convert openCV back to an Core Graphics
     CGImageRef cgImage = CGImageCreateFromOpenCVMatrix(gray);
-    self.faceImageView.image = [UIImage imageWithCGImage: cgImage];
+    UIImage* uiImage = [UIImage imageWithCGImage: cgImage];
+    
+    //On the main thread update the preview view
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.faceImageView.image = uiImage;
+    });
+    
     CGImageRelease(cgImage);
 }
 
@@ -402,36 +428,15 @@ static AVCaptureVideoOrientation AVVideoOrientationFromUIInterfaceOrientation(UI
             FaceObject* aFaceObject;
             NSSet* trackedAndMatchingFaces = [_faces filteredSetUsingPredicate: [NSPredicate predicateWithFormat: @"foundationID = %d", face.faceID]];
             aFaceObject = trackedAndMatchingFaces.anyObject;
-        
+            
             if( !aFaceObject ) {
                 aFaceObject = [FaceObject new];
                 aFaceObject.foundationID = face.faceID;
-                
             }
             
             AVMetadataFaceObject * adjusted = (AVMetadataFaceObject*)[_previewLayer transformedMetadataObjectForMetadataObject:face];
             aFaceObject.bounds = [face bounds];
- 
-            /*
-            NSInteger faceID = adjusted.faceID;
-            
-            if( ![_countedFaceIdentifiers containsIndex: faceID] ) {
-                NSLog(@"Counting face %d", faceID);
-                
-                NSParameterAssert([NSThread isMainThread]);
-                
-                static NSUInteger count = 0;
-                
-                count++;
-                
-                self.counterLabel.text = [@(count) stringValue];
-                
-                [_countedFaceIdentifiers addIndex: faceID];
-            }
-            else {
-                NSLog(@"Already counted face %d", faceID);
-            }
-            */
+            aFaceObject.isFacingCamera = face.isFacingCamera;
             
             // Do interesting things with this face
             CALayer *featureLayer = nil;
@@ -444,8 +449,6 @@ static AVCaptureVideoOrientation AVVideoOrientationFromUIInterfaceOrientation(UI
                     [currentLayer setHidden:NO];
                 }
             }
-            
-            
             
             // create a new one if necessary
             if ( !featureLayer ) {
