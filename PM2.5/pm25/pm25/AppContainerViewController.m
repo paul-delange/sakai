@@ -110,6 +110,7 @@
 #else
                                                         testMode: NO];
 #endif
+    
     banner.translatesAutoresizingMaskIntoConstraints = NO;
     banner.backgroundColor = [UIColor blackColor];
     [self.view addSubview: banner];
