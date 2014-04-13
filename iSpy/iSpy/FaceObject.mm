@@ -67,12 +67,14 @@ static cv::Rect CVRectZero = cv::Rect(0,0,0,0);
     cv::Mat rightEyeFrame = image(rightEyeRect);
     
     //Equalize the image -> what does it do...?
-    //cv::Mat bothEyesFrame = image(cv::Rect(0, y, width*2, height));
-    //cv::equalizeHist(bothEyesFrame, bothEyesFrame);
+    cv::Mat bothEyesFrame = image(cv::Rect(0, y, width*2, height));
+    cv::equalizeHist(bothEyesFrame, bothEyesFrame);
+    
+    int matchLimit = 1000000;
     
     if( self.leftEye ) {
         EyeObject* obj = self.leftEye;
-        cv::Mat tpl = obj.capture.clone();
+        cv::Mat tpl = obj.capture;
         
         int result_rows = leftEyeRect.width - tpl.rows + 1;
         int result_cols = leftEyeRect.height - tpl.cols + 1;
@@ -89,7 +91,7 @@ static cv::Rect CVRectZero = cv::Rect(0,0,0,0);
         
         //NSLog(@"Tracked left eye: %f", minval);
         
-        if (minval <= 20)
+        if (minval <= matchLimit)
         {
             cv::Rect detectedFrame = cv::Rect(minloc.x,
                                               minloc.y,
@@ -107,7 +109,7 @@ static cv::Rect CVRectZero = cv::Rect(0,0,0,0);
         cv::Rect detectedFrame = [self detectEye: leftEyeFrame];
         
         if( detectedFrame != CVRectZero ) {
-            NSLog(@"Detected left eye");
+            //NSLog(@"Detected left eye");
             //cv::rectangle(leftEyeFrame, detectedFrame, cv::Scalar(0, 0, 0));
             
             EyeObject* eyeObject = [EyeObject new];
@@ -140,7 +142,7 @@ static cv::Rect CVRectZero = cv::Rect(0,0,0,0);
         
         //NSLog(@"Tracked right eye: %f", minval);
         
-        if (minval <= 20)
+        if (minval <= matchLimit)
         {
             cv::Rect detectedFrame = cv::Rect(minloc.x,
                                               minloc.y,

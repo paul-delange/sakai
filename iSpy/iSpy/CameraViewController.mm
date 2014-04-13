@@ -327,7 +327,7 @@ static AVCaptureVideoOrientation AVVideoOrientationFromUIInterfaceOrientation(UI
     //Take Core Video pixel buffer and convert it to a openCV image matrix
     cv::Mat gray(cv::Size((int)width, (int)height), CV_8UC1, baseAddress, cv::Mat::AUTO_STEP);
     
-    CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
+    
     
     //Go through all faces
     for(FaceObject* face in [_faces copy]) {
@@ -362,6 +362,8 @@ static AVCaptureVideoOrientation AVVideoOrientationFromUIInterfaceOrientation(UI
             }
         }
     }
+    
+    CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
     
     //Convert openCV back to an Core Graphics
     CGImageRef cgImage = CGImageCreateFromOpenCVMatrix(gray);
