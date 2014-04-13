@@ -31,6 +31,8 @@
 		FDA6FF8918F7C2CD00C72C5D /* AVMetadataFaceObject+GazeTracking.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA6FF8818F7C2CD00C72C5D /* AVMetadataFaceObject+GazeTracking.m */; };
 		FDA6FF8F18F8148D00C72C5D /* FaceObject.mm in Sources */ = {isa = PBXBuildFile; fileRef = FDA6FF8E18F8148D00C72C5D /* FaceObject.mm */; };
 		FDA6FF9218F8198700C72C5D /* EyeObject.mm in Sources */ = {isa = PBXBuildFile; fileRef = FDA6FF9118F8198700C72C5D /* EyeObject.mm */; };
+		FDA6FF9418F837D200C72C5D /* haarcascade_mcs_eyepair_big.xml in Resources */ = {isa = PBXBuildFile; fileRef = FDA6FF9318F837D200C72C5D /* haarcascade_mcs_eyepair_big.xml */; };
+		FDA6FF9618F9438600C72C5D /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDA6FF9518F9438600C72C5D /* ImageIO.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +72,8 @@
 		FDA6FF8E18F8148D00C72C5D /* FaceObject.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FaceObject.mm; sourceTree = "<group>"; };
 		FDA6FF9018F8198700C72C5D /* EyeObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EyeObject.h; sourceTree = "<group>"; };
 		FDA6FF9118F8198700C72C5D /* EyeObject.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EyeObject.mm; sourceTree = "<group>"; };
+		FDA6FF9318F837D200C72C5D /* haarcascade_mcs_eyepair_big.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = haarcascade_mcs_eyepair_big.xml; sourceTree = "<group>"; };
+		FDA6FF9518F9438600C72C5D /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDA6FF9618F9438600C72C5D /* ImageIO.framework in Frameworks */,
 				FDA6FF6C18F6ACE900C72C5D /* QuartzCore.framework in Frameworks */,
 				FDA6FF6A18F6ACE200C72C5D /* CoreVideo.framework in Frameworks */,
 				FDA6FF6818F6ACDC00C72C5D /* CoreMedia.framework in Frameworks */,
@@ -115,6 +120,7 @@
 		FDA6FEFC18F3DDEA00C72C5D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FDA6FF9518F9438600C72C5D /* ImageIO.framework */,
 				FDA6FF6B18F6ACE900C72C5D /* QuartzCore.framework */,
 				FDA6FF6918F6ACE200C72C5D /* CoreVideo.framework */,
 				FDA6FF6718F6ACDC00C72C5D /* CoreMedia.framework */,
@@ -184,6 +190,7 @@
 		FDA6FF3818F3DE2600C72C5D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FDA6FF9318F837D200C72C5D /* haarcascade_mcs_eyepair_big.xml */,
 				FDA6FF6F18F6C01D00C72C5D /* haarcascade_eye.xml */,
 				FDA6FF1818F3DDEA00C72C5D /* Images.xcassets */,
 				FDA6FF0518F3DDEA00C72C5D /* iSpy-Info.plist */,
@@ -254,6 +261,7 @@
 				FDA6FF1918F3DDEA00C72C5D /* Images.xcassets in Resources */,
 				FDA6FF7018F6C01D00C72C5D /* haarcascade_eye.xml in Resources */,
 				FDA6FF0818F3DDEA00C72C5D /* InfoPlist.strings in Resources */,
+				FDA6FF9418F837D200C72C5D /* haarcascade_mcs_eyepair_big.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -369,6 +377,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -379,6 +388,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -389,6 +399,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -399,6 +410,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

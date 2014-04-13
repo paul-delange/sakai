@@ -56,6 +56,10 @@ static inline cv::Rect CVRectFromCGRect(CGRect rect) {
     return cv::Rect(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
 }
 
+static inline NSString* NSStringFromCVRect(cv::Rect rect) {
+    return [NSString stringWithFormat: @"{{%d, %d}, {%d, %d}}", rect.x, rect.y, rect.width, rect.height];
+}
+
 static CGImageRef CGImageCreateFromOpenCVMatrix(cv::Mat cvMat) {
     NSData *data = [NSData dataWithBytes:cvMat.data length:cvMat.elemSize()*cvMat.total()];
     CGColorSpaceRef colorSpace;
@@ -180,7 +184,7 @@ static AVCaptureVideoOrientation AVVideoOrientationFromUIInterfaceOrientation(UI
     __weak AVCaptureVideoPreviewLayer*      _previewLayer;
     
     NSSet*                                  _faces;
-    cv::CascadeClassifier*                  _eyeClassifier;
+    
 }
 
 @property (weak, nonatomic) IBOutlet UILabel* counterLabel;
@@ -198,31 +202,22 @@ static AVCaptureVideoOrientation AVVideoOrientationFromUIInterfaceOrientation(UI
         [_captureSession removeInput: input];
     }
     
-    /* Doesn't work???
-     AVCaptureDeviceFormat* bestFormat = device.activeFormat;
-     AVFrameRateRange* bestFrameRateRange = bestFormat.videoSupportedFrameRateRanges.lastObject;
-     
-     for(AVCaptureDeviceFormat* format in device.formats) {
-     CMVideoFormatDescriptionRef desc = format.formatDescription;
-     CMVideoDimensions dimensions = CMVideoFormatDescriptionGetDimensions(desc);
-     
-     if( dimensions.width == 640 && dimensions.height == 480 ) {
-     for(AVFrameRateRange* fr in format.videoSupportedFrameRateRanges) {
-     if( bestFrameRateRange.minFrameRate > fr.minFrameRate  ) {
-     bestFrameRateRange = fr;
-     bestFormat = format;
-     }
-     }
-     }
-     }
-     
-     if( [device lockForConfiguration: NULL] ) {
-     device.activeFormat = bestFormat;
-     device.activeVideoMaxFrameDuration = bestFrameRateRange.maxFrameDuration;
-     device.activeVideoMinFrameDuration = bestFrameRateRange.maxFrameDuration;
-     
-     [device unlockForConfiguration];
-     }*/
+    AVCaptureDeviceFormat* bestFormat = device.activeFormat;
+    
+    for(AVCaptureDeviceFormat* format in device.formats) {
+        
+        if( format.videoFieldOfView >  bestFormat.videoFieldOfView ) {
+            bestFormat = format;
+        }
+    }
+    
+    if( [device lockForConfiguration: NULL] ) {
+        device.activeFormat = bestFormat;
+        
+        [device unlockForConfiguration];
+    }
+    
+    NSLog(@"Setting video format %@", device.activeFormat);
     
     __autoreleasing NSError* error;
     AVCaptureDeviceInput* defaultInput = [AVCaptureDeviceInput deviceInputWithDevice: device error: &error];
@@ -235,24 +230,17 @@ static AVCaptureVideoOrientation AVVideoOrientationFromUIInterfaceOrientation(UI
 - (instancetype) initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder: aDecoder];
     if( self ) {
-        NSString* classiferPath = [[NSBundle mainBundle] pathForResource: @"haarcascade_eye" ofType: @"xml"];
-        _eyeClassifier = new cv::CascadeClassifier([classiferPath UTF8String]);
-        
         _dataProcessingQueue = dispatch_queue_create("Data Processing", DISPATCH_QUEUE_SERIAL);
     }
     
     return self;
 }
 
-- (void) dealloc {
-    delete _eyeClassifier;
-}
-
 #pragma mark - UIViewController
 -(void) viewDidLoad {
     [super viewDidLoad];
     
-    NSString* preset = AVCaptureSessionPresetLow;
+    NSString* preset = AVCaptureSessionPresetHigh;
     _captureSession = [AVCaptureSession new];
     NSParameterAssert([_captureSession canSetSessionPreset: preset]);
     _captureSession.sessionPreset = preset;
@@ -273,11 +261,15 @@ static AVCaptureVideoOrientation AVVideoOrientationFromUIInterfaceOrientation(UI
     [self setCaptureDevice: _frontCamera];
     
     _metatdataOutput = [AVCaptureMetadataOutput new];
+    
+    
     NSAssert([_captureSession canAddOutput: _metatdataOutput], @"Can not add %@ to capture session", _metatdataOutput);
     
     [_metatdataOutput setMetadataObjectsDelegate: self queue: dispatch_get_main_queue()];
     [_captureSession addOutput: _metatdataOutput];
-    NSAssert([_metatdataOutput.availableMetadataObjectTypes containsObject: AVMetadataObjectTypeFace], @"No face detection found");
+    
+    NSAssert([_metatdataOutput.availableMetadataObjectTypes containsObject: AVMetadataObjectTypeFace], @"No face recognition on this device");
+    
     _metatdataOutput.metadataObjectTypes = @[AVMetadataObjectTypeFace];
     
     _dataOutput = [AVCaptureVideoDataOutput new];
@@ -333,7 +325,7 @@ static AVCaptureVideoOrientation AVVideoOrientationFromUIInterfaceOrientation(UI
     size_t height = CVPixelBufferGetHeightOfPlane(imageBuffer, lumaPlane);
     
     //Take Core Video pixel buffer and convert it to a openCV image matrix
-    cv::Mat gray(cv::Size(width, height), CV_8UC1, baseAddress, cv::Mat::AUTO_STEP);
+    cv::Mat gray(cv::Size((int)width, (int)height), CV_8UC1, baseAddress, cv::Mat::AUTO_STEP);
     
     CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
     
@@ -346,40 +338,20 @@ static AVCaptureVideoOrientation AVVideoOrientationFromUIInterfaceOrientation(UI
             CGRect bounds = [captureOutput rectForMetadataOutputRectOfInterest: face.bounds];
             
             //Probably no eyes in the bottom of the face!!
-            bounds.size.height *= 0.5;
+            //bounds.size.height *= 0.5;
             
             //If the face is inside the capture frame
             if( CGRectContainsRect(CGRectMake(0, 0, width, height), bounds) ) {
                 
-                //Cut the full image (gray) to the face rect
+                //Cut the full image (gray) to the face rect (frame)
                 cv::Rect faceRect = CVRectFromCGRect(bounds);
-                cv::Mat frame = gray(faceRect);
-                
-                //Equalize the image -> what does it do...?
-                equalizeHist(frame, frame);
                 
                 //Draw a square around our search area
-                cv::rectangle(gray, faceRect, cv::Scalar(0, 0, 0));
+                //cv::rectangle(gray, faceRect, cv::Scalar(0, 0, 0));
                 
-                //Find me some eyes!!
-                std::vector<cv::Rect> eyes;
-                _eyeClassifier->detectMultiScale(frame,                     //The image to search
-                                                 eyes,                      //The output vector
-                                                 1.1,                       //The scale factor to apply at each iteration
-                                                 2,                         //Minimum neighbours ???
-                                                 0|CV_HAAR_SCALE_IMAGE,     // ???
-                                                 cv::Size(10, 10));         // Minimum feature size
+                cv::Mat faceFrame = gray(faceRect);
+                [face eyesInImage: faceFrame];
                 
-                for(size_t i = 0;i<eyes.size();i++) {
-                    
-                    cv::Rect eye = eyes[i];
-                    
-                    eye.x += bounds.origin.x;
-                    eye.y += bounds.origin.y;
-                    
-                    //Draw a sqare around each eye
-                    cv::rectangle(gray, eye, cv::Scalar(255, 255, 255));
-                }
             }
         }
     }
@@ -387,13 +359,12 @@ static AVCaptureVideoOrientation AVVideoOrientationFromUIInterfaceOrientation(UI
     //Convert openCV back to an Core Graphics
     CGImageRef cgImage = CGImageCreateFromOpenCVMatrix(gray);
     UIImage* uiImage = [UIImage imageWithCGImage: cgImage];
+    CGImageRelease(cgImage);
     
     //On the main thread update the preview view
     dispatch_async(dispatch_get_main_queue(), ^{
         self.faceImageView.image = uiImage;
     });
-    
-    CGImageRelease(cgImage);
 }
 
 #pragma mark - AVCaptureMetadataOutputObjectsDelegate
@@ -430,13 +401,18 @@ static AVCaptureVideoOrientation AVVideoOrientationFromUIInterfaceOrientation(UI
             aFaceObject = trackedAndMatchingFaces.anyObject;
             
             if( !aFaceObject ) {
+                
+                NSInteger currentCount = [self.counterLabel.text integerValue];
+                currentCount++;
+                self.counterLabel.text = [@(currentCount) stringValue];
+                
                 aFaceObject = [FaceObject new];
                 aFaceObject.foundationID = face.faceID;
             }
             
             AVMetadataFaceObject * adjusted = (AVMetadataFaceObject*)[_previewLayer transformedMetadataObjectForMetadataObject:face];
             aFaceObject.bounds = [face bounds];
-            aFaceObject.isFacingCamera = face.isFacingCamera;
+            aFaceObject.isFacingCamera = YES;//face.isFacingCamera;
             
             // Do interesting things with this face
             CALayer *featureLayer = nil;

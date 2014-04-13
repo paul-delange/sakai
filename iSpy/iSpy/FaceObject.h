@@ -17,6 +17,6 @@
 
 @property (assign) BOOL isFacingCamera;
 
-@property (copy) NSSet* eyes;
+- (NSArray*) eyesInImage: (cv::Mat&) image;
 
 @end
