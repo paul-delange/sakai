@@ -349,9 +349,16 @@ static AVCaptureVideoOrientation AVVideoOrientationFromUIInterfaceOrientation(UI
                 //Draw a square around our search area
                 //cv::rectangle(gray, faceRect, cv::Scalar(0, 0, 0));
                 
-                cv::Mat faceFrame = gray(faceRect);
-                [face eyesInImage: faceFrame];
+                cv::Mat faceFrame = gray(faceRect).clone();
+                NSArray* eyes = [face eyesInImage: faceFrame];
                 
+                for(NSValue* value in eyes) {
+                    CGRect eyeRect = [value CGRectValue];
+                    eyeRect.origin.x += bounds.origin.x;
+                    eyeRect.origin.y += bounds.origin.y;
+                    
+                    cv::rectangle(gray, CVRectFromCGRect(eyeRect), cv::Scalar(0, 0, 0));
+                }
             }
         }
     }

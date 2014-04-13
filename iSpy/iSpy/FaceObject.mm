@@ -72,7 +72,7 @@ static cv::Rect CVRectZero = cv::Rect(0,0,0,0);
     
     if( self.leftEye ) {
         EyeObject* obj = self.leftEye;
-        cv::Mat tpl = obj.capture;
+        cv::Mat tpl = obj.capture.clone();
         
         int result_rows = leftEyeRect.width - tpl.rows + 1;
         int result_cols = leftEyeRect.height - tpl.cols + 1;
@@ -95,7 +95,8 @@ static cv::Rect CVRectZero = cv::Rect(0,0,0,0);
                                               minloc.y,
                                               tpl.rows,
                                               tpl.cols);
-            cv::rectangle(leftEyeFrame, detectedFrame, cv::Scalar(0, 0, 0));
+            leftEyeRect = detectedFrame;
+            //cv::rectangle(leftEyeFrame, detectedFrame, cv::Scalar(0, 0, 0));
         }
         else {
             self.leftEye = nil;
@@ -107,7 +108,7 @@ static cv::Rect CVRectZero = cv::Rect(0,0,0,0);
         
         if( detectedFrame != CVRectZero ) {
             NSLog(@"Detected left eye");
-            cv::rectangle(leftEyeFrame, detectedFrame, cv::Scalar(0, 0, 0));
+            //cv::rectangle(leftEyeFrame, detectedFrame, cv::Scalar(0, 0, 0));
             
             EyeObject* eyeObject = [EyeObject new];
             
@@ -115,6 +116,8 @@ static cv::Rect CVRectZero = cv::Rect(0,0,0,0);
             eyeObject.capture.copyTo(eyeObject.capture);
             
             self.leftEye = eyeObject;
+            
+            leftEyeRect = detectedFrame;
         }
     }
     
@@ -143,7 +146,8 @@ static cv::Rect CVRectZero = cv::Rect(0,0,0,0);
                                               minloc.y,
                                               tpl.rows,
                                               tpl.cols);
-            cv::rectangle(rightEyeFrame, detectedFrame, cv::Scalar(0, 0, 0));
+            rightEyeRect = detectedFrame;
+            //cv::rectangle(rightEyeFrame, detectedFrame, cv::Scalar(0, 0, 0));
         }
         else {
             self.rightEye = nil;
@@ -156,7 +160,7 @@ static cv::Rect CVRectZero = cv::Rect(0,0,0,0);
         
         if( detectedFrame != CVRectZero ) {
             NSLog(@"Detected right eye");
-            cv::rectangle(rightEyeFrame, detectedFrame, cv::Scalar(0, 0, 0));
+            //cv::rectangle(rightEyeFrame, detectedFrame, cv::Scalar(0, 0, 0));
             
 
             EyeObject* eyeObject = [EyeObject new];
@@ -165,11 +169,28 @@ static cv::Rect CVRectZero = cv::Rect(0,0,0,0);
             eyeObject.capture.copyTo(eyeObject.capture);
             
             self.rightEye = eyeObject;
+            rightEyeRect = detectedFrame;
         }
     }
 
-
-    return nil;
+    NSMutableArray* results = [NSMutableArray new];
+    if( self.leftEye ) {
+        leftEyeRect.y += y;
+        
+        CGRect rect = CGRectMake(leftEyeRect.x, leftEyeRect.y, leftEyeRect.width, leftEyeRect.height);
+        [results addObject: [NSValue valueWithCGRect: rect]];
+    }
+    
+    if( self.rightEye ) {
+        rightEyeRect.x += width;
+        rightEyeRect.y += y;
+        
+        CGRect rect = CGRectMake(rightEyeRect.x, rightEyeRect.y, rightEyeRect.width, rightEyeRect.height);
+        [results addObject: [NSValue valueWithCGRect: rect]];
+    }
+    
+    
+    return results;
 }
 
 @end
