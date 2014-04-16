@@ -313,6 +313,8 @@ static AVCaptureVideoOrientation AVVideoOrientationFromUIInterfaceOrientation(UI
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
     NSParameterAssert(![NSThread isMainThread]);
     
+    @autoreleasepool {
+    
     CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
     
     //Images are coming in YUV format, the first channel is the intensity (luma)...
@@ -373,6 +375,7 @@ static AVCaptureVideoOrientation AVVideoOrientationFromUIInterfaceOrientation(UI
     dispatch_async(dispatch_get_main_queue(), ^{
         self.faceImageView.image = uiImage;
     });
+    }
 }
 
 #pragma mark - AVCaptureMetadataOutputObjectsDelegate
@@ -380,6 +383,8 @@ static AVCaptureVideoOrientation AVVideoOrientationFromUIInterfaceOrientation(UI
     //NSParameterAssert(connection.videoPreviewLayer == _previewLayer);
     NSParameterAssert([NSThread isMainThread]);
     
+    @autoreleasepool {
+        
     [CATransaction begin];
 	[CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
     
@@ -453,6 +458,7 @@ static AVCaptureVideoOrientation AVVideoOrientationFromUIInterfaceOrientation(UI
     _faces = [facesToSave copy];
     
     [CATransaction commit];
+    }
 }
 
 @end
