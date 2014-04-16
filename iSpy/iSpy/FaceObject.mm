@@ -43,10 +43,10 @@ static cv::Rect CVRectZero = cv::Rect(0,0,0,0);
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         NSString* classiferPath = [[NSBundle mainBundle] pathForResource: @"haarcascade_righteye_2splits" ofType: @"xml"];
-        _leftEyeClassifier = new cv::CascadeClassifier([classiferPath UTF8String]);
+        _rightEyeClassifier = new cv::CascadeClassifier([classiferPath UTF8String]);
     });
     
-    return _leftEyeClassifier;
+    return _rightEyeClassifier;
 }
 
 - (cv::Rect) detectEye: (cv::Mat) image withClassifier: (cv::CascadeClassifier*) classifier {
