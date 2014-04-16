@@ -56,28 +56,26 @@ static inline cv::Rect CVRectFromCGRect(CGRect rect) {
     return cv::Rect(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
 }
 
-static inline NSString* NSStringFromCVRect(cv::Rect rect) {
-    return [NSString stringWithFormat: @"{{%d, %d}, {%d, %d}}", rect.x, rect.y, rect.width, rect.height];
-}
-
-static CGImageRef CGImageCreateFromOpenCVMatrix(cv::Mat cvMat) {
-    NSData *data = [NSData dataWithBytes:cvMat.data length:cvMat.elemSize()*cvMat.total()];
+static CGImageRef CGImageCreateFromOpenCVMatrix(cv::Mat* cvMat) {
+    
+    CFDataRef data = CFDataCreate(NULL, cvMat->data, cvMat->elemSize() * cvMat->total());
+    
     CGColorSpaceRef colorSpace;
     
-    if (cvMat.elemSize() == 1) {
+    if (cvMat->elemSize() == 1) {
         colorSpace = CGColorSpaceCreateDeviceGray();
     } else {
         colorSpace = CGColorSpaceCreateDeviceRGB();
     }
     
-    CGDataProviderRef provider = CGDataProviderCreateWithCFData((__bridge CFDataRef)data);
+    CGDataProviderRef provider = CGDataProviderCreateWithCFData(data);
     
     // Creating CGImage from cv::Mat
-    CGImageRef imageRef = CGImageCreate(cvMat.cols,                                 //width
-                                        cvMat.rows,                                 //height
+    CGImageRef imageRef = CGImageCreate(cvMat->cols,                                 //width
+                                        cvMat->rows,                                 //height
                                         8,                                          //bits per component
-                                        8 * cvMat.elemSize(),                       //bits per pixel
-                                        cvMat.step[0],                            //bytesPerRow
+                                        8 * cvMat->elemSize(),                       //bits per pixel
+                                        cvMat->step[0],                            //bytesPerRow
                                         colorSpace,                                 //colorspace
                                         kCGImageAlphaNone|kCGBitmapByteOrderDefault,// bitmap info
                                         provider,                                   //CGDataProviderRef
@@ -91,6 +89,7 @@ static CGImageRef CGImageCreateFromOpenCVMatrix(cv::Mat cvMat) {
     
     CGDataProviderRelease(provider);
     CGColorSpaceRelease(colorSpace);
+    CFRelease(data);
     
     return imageRef;
 }
@@ -202,6 +201,7 @@ static AVCaptureVideoOrientation AVVideoOrientationFromUIInterfaceOrientation(UI
         [_captureSession removeInput: input];
     }
     
+    /*
     AVCaptureDeviceFormat* bestFormat = device.activeFormat;
     
     for(AVCaptureDeviceFormat* format in device.formats) {
@@ -218,7 +218,7 @@ static AVCaptureVideoOrientation AVVideoOrientationFromUIInterfaceOrientation(UI
     }
     
     NSLog(@"Setting video format %@", device.activeFormat);
-    
+    */
     __autoreleasing NSError* error;
     AVCaptureDeviceInput* defaultInput = [AVCaptureDeviceInput deviceInputWithDevice: device error: &error];
     NSAssert(!error, @"Error creating input device: %@", error);
@@ -327,8 +327,6 @@ static AVCaptureVideoOrientation AVVideoOrientationFromUIInterfaceOrientation(UI
     //Take Core Video pixel buffer and convert it to a openCV image matrix
     cv::Mat gray(cv::Size((int)width, (int)height), CV_8UC1, baseAddress, cv::Mat::AUTO_STEP);
     
-    
-    
     //Go through all faces
     for(FaceObject* face in [_faces copy]) {
         
@@ -347,11 +345,12 @@ static AVCaptureVideoOrientation AVVideoOrientationFromUIInterfaceOrientation(UI
                 cv::Rect faceRect = CVRectFromCGRect(bounds);
                 
                 //Draw a square around our search area
-                //cv::rectangle(gray, faceRect, cv::Scalar(0, 0, 0));
+                cv::rectangle(gray, faceRect, cv::Scalar(0, 0, 0));
                 
                 cv::Mat faceFrame = gray(faceRect).clone();
-                NSArray* eyes = [face eyesInImage: faceFrame];
+                NSArray* eyes = [face eyesInImage:faceFrame];
                 
+               
                 for(NSValue* value in eyes) {
                     CGRect eyeRect = [value CGRectValue];
                     eyeRect.origin.x += bounds.origin.x;
@@ -363,12 +362,12 @@ static AVCaptureVideoOrientation AVVideoOrientationFromUIInterfaceOrientation(UI
         }
     }
     
-    CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
-    
     //Convert openCV back to an Core Graphics
-    CGImageRef cgImage = CGImageCreateFromOpenCVMatrix(gray);
+    CGImageRef cgImage = CGImageCreateFromOpenCVMatrix(&gray);
     UIImage* uiImage = [UIImage imageWithCGImage: cgImage];
     CGImageRelease(cgImage);
+    
+    CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
     
     //On the main thread update the preview view
     dispatch_async(dispatch_get_main_queue(), ^{
