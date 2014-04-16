@@ -9,7 +9,8 @@
 #import "FaceObject.h"
 #import "EyeObject.h"
 
-static cv::CascadeClassifier*   _eyeClassifier;
+static cv::CascadeClassifier*   _leftEyeClassifier;
+static cv::CascadeClassifier*   _rightEyeClassifier;
 
 static cv::Rect CVRectZero = cv::Rect(0,0,0,0);
 
@@ -21,8 +22,6 @@ static cv::Rect CVRectZero = cv::Rect(0,0,0,0);
     int _rightEyeLostFrameCount;
 }
 
-- (cv::CascadeClassifier*) classifier;
-
 @property (strong) EyeObject* leftEye;
 @property (strong) EyeObject* rightEye;
 
@@ -30,24 +29,34 @@ static cv::Rect CVRectZero = cv::Rect(0,0,0,0);
 
 @implementation FaceObject
 
-- (cv::CascadeClassifier*) classifier {
+- (cv::CascadeClassifier*) leftEyeClassifier {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSString* classiferPath = [[NSBundle mainBundle] pathForResource: @"haarcascade_eye" ofType: @"xml"];
-        _eyeClassifier = new cv::CascadeClassifier([classiferPath UTF8String]);
+        NSString* classiferPath = [[NSBundle mainBundle] pathForResource: @"haarcascade_lefteye_2splits" ofType: @"xml"];
+        _leftEyeClassifier = new cv::CascadeClassifier([classiferPath UTF8String]);
     });
     
-    return _eyeClassifier;
+    return _leftEyeClassifier;
 }
 
-- (cv::Rect) detectEye: (cv::Mat) image {
+- (cv::CascadeClassifier*) rightEyeClassifier {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSString* classiferPath = [[NSBundle mainBundle] pathForResource: @"haarcascade_righteye_2splits" ofType: @"xml"];
+        _leftEyeClassifier = new cv::CascadeClassifier([classiferPath UTF8String]);
+    });
+    
+    return _leftEyeClassifier;
+}
+
+- (cv::Rect) detectEye: (cv::Mat) image withClassifier: (cv::CascadeClassifier*) classifier {
     int flags = CV_HAAR_FIND_BIGGEST_OBJECT | CV_HAAR_SCALE_IMAGE;
     float scaleFactor = 1.2;
     
     cv::Size minimumSize = cv::Size(image.cols * 0.25, image.rows * 0.25);
     
     std::vector<cv::Rect> eyes;
-    [self classifier]->detectMultiScale(image,
+    classifier->detectMultiScale(image,
                                      eyes,
                                      scaleFactor,
                                      1,
@@ -111,7 +120,7 @@ static cv::Rect CVRectZero = cv::Rect(0,0,0,0);
         else {
             _leftEyeLostFrameCount++;
             
-            if( _leftEyeLostFrameCount > 10 )
+            if( _leftEyeLostFrameCount > 3 )
                 self.leftEye = nil;
             else
                 leftEyeRect = _lastLeftEyeRect;
@@ -119,7 +128,7 @@ static cv::Rect CVRectZero = cv::Rect(0,0,0,0);
     }
     
     if(! self.leftEye ) {
-        cv::Rect detectedFrame = [self detectEye: leftEyeFrame];
+        cv::Rect detectedFrame = [self detectEye: leftEyeFrame withClassifier: [self leftEyeClassifier]];
         
         if( detectedFrame != CVRectZero ) {
             //NSLog(@"Detected left eye");
@@ -172,7 +181,7 @@ static cv::Rect CVRectZero = cv::Rect(0,0,0,0);
             
             _rightEyeLostFrameCount++;
             
-            if( _rightEyeLostFrameCount > 10 )
+            if( _rightEyeLostFrameCount > 3 )
                 self.rightEye = nil;
             else {
                 rightEyeRect = _lastRightEyeRect;
@@ -182,7 +191,7 @@ static cv::Rect CVRectZero = cv::Rect(0,0,0,0);
     
     
     if( !self.rightEye ) {
-        cv::Rect detectedFrame = [self detectEye: rightEyeFrame];
+        cv::Rect detectedFrame = [self detectEye: rightEyeFrame withClassifier: [self rightEyeClassifier]];
         
         if( detectedFrame != CVRectZero ) {
             NSLog(@"Detected right eye");

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FD7C29CE18FECF1C00008554 /* haarcascade_lefteye_2splits.xml in Resources */ = {isa = PBXBuildFile; fileRef = FD7C29CC18FECF1C00008554 /* haarcascade_lefteye_2splits.xml */; };
+		FD7C29CF18FECF1C00008554 /* haarcascade_righteye_2splits.xml in Resources */ = {isa = PBXBuildFile; fileRef = FD7C29CD18FECF1C00008554 /* haarcascade_righteye_2splits.xml */; };
 		FDA6FEFE18F3DDEA00C72C5D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDA6FEFD18F3DDEA00C72C5D /* Foundation.framework */; };
 		FDA6FF0018F3DDEA00C72C5D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDA6FEFF18F3DDEA00C72C5D /* CoreGraphics.framework */; };
 		FDA6FF0218F3DDEA00C72C5D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDA6FF0118F3DDEA00C72C5D /* UIKit.framework */; };
@@ -31,11 +33,12 @@
 		FDA6FF8918F7C2CD00C72C5D /* AVMetadataFaceObject+GazeTracking.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA6FF8818F7C2CD00C72C5D /* AVMetadataFaceObject+GazeTracking.m */; };
 		FDA6FF8F18F8148D00C72C5D /* FaceObject.mm in Sources */ = {isa = PBXBuildFile; fileRef = FDA6FF8E18F8148D00C72C5D /* FaceObject.mm */; };
 		FDA6FF9218F8198700C72C5D /* EyeObject.mm in Sources */ = {isa = PBXBuildFile; fileRef = FDA6FF9118F8198700C72C5D /* EyeObject.mm */; };
-		FDA6FF9418F837D200C72C5D /* haarcascade_mcs_eyepair_big.xml in Resources */ = {isa = PBXBuildFile; fileRef = FDA6FF9318F837D200C72C5D /* haarcascade_mcs_eyepair_big.xml */; };
 		FDA6FF9618F9438600C72C5D /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDA6FF9518F9438600C72C5D /* ImageIO.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FD7C29CC18FECF1C00008554 /* haarcascade_lefteye_2splits.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = haarcascade_lefteye_2splits.xml; sourceTree = "<group>"; };
+		FD7C29CD18FECF1C00008554 /* haarcascade_righteye_2splits.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = haarcascade_righteye_2splits.xml; sourceTree = "<group>"; };
 		FDA6FEFA18F3DDEA00C72C5D /* iSpy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iSpy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDA6FEFD18F3DDEA00C72C5D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FDA6FEFF18F3DDEA00C72C5D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -72,7 +75,6 @@
 		FDA6FF8E18F8148D00C72C5D /* FaceObject.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FaceObject.mm; sourceTree = "<group>"; };
 		FDA6FF9018F8198700C72C5D /* EyeObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EyeObject.h; sourceTree = "<group>"; };
 		FDA6FF9118F8198700C72C5D /* EyeObject.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EyeObject.mm; sourceTree = "<group>"; };
-		FDA6FF9318F837D200C72C5D /* haarcascade_mcs_eyepair_big.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = haarcascade_mcs_eyepair_big.xml; sourceTree = "<group>"; };
 		FDA6FF9518F9438600C72C5D /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -190,7 +192,8 @@
 		FDA6FF3818F3DE2600C72C5D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				FDA6FF9318F837D200C72C5D /* haarcascade_mcs_eyepair_big.xml */,
+				FD7C29CC18FECF1C00008554 /* haarcascade_lefteye_2splits.xml */,
+				FD7C29CD18FECF1C00008554 /* haarcascade_righteye_2splits.xml */,
 				FDA6FF6F18F6C01D00C72C5D /* haarcascade_eye.xml */,
 				FDA6FF1818F3DDEA00C72C5D /* Images.xcassets */,
 				FDA6FF0518F3DDEA00C72C5D /* iSpy-Info.plist */,
@@ -259,9 +262,10 @@
 			files = (
 				FDA6FF3A18F3DE5A00C72C5D /* Main.storyboard in Resources */,
 				FDA6FF1918F3DDEA00C72C5D /* Images.xcassets in Resources */,
+				FD7C29CF18FECF1C00008554 /* haarcascade_righteye_2splits.xml in Resources */,
 				FDA6FF7018F6C01D00C72C5D /* haarcascade_eye.xml in Resources */,
 				FDA6FF0818F3DDEA00C72C5D /* InfoPlist.strings in Resources */,
-				FDA6FF9418F837D200C72C5D /* haarcascade_mcs_eyepair_big.xml in Resources */,
+				FD7C29CE18FECF1C00008554 /* haarcascade_lefteye_2splits.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
