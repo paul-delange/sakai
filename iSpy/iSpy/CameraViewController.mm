@@ -13,6 +13,8 @@
 #import "FaceObject.h"
 #import "EyeObject.h"
 
+#include "findEyeCenter.h"
+
 #import <opencv2/opencv.hpp>
 
 #import <AVFoundation/AVFoundation.h>
@@ -54,6 +56,10 @@
 
 static inline cv::Rect CVRectFromCGRect(CGRect rect) {
     return cv::Rect(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
+}
+
+static inline NSString* NSStringFromCVRect(cv::Rect rect) {
+    return [NSString stringWithFormat: @"{{%d, %d}, {%d, %d}}", rect.x, rect.y, rect.width, rect.height];
 }
 
 static CGImageRef CGImageCreateFromOpenCVMatrix(cv::Mat* cvMat) {
@@ -359,6 +365,14 @@ static AVCaptureVideoOrientation AVVideoOrientationFromUIInterfaceOrientation(UI
                     eyeRect.origin.y += bounds.origin.y;
                     
                     cv::rectangle(gray, CVRectFromCGRect(eyeRect), cv::Scalar(0, 0, 0));
+                    
+                    
+                    //Find pupil
+                    cv::Mat eyeFrame = gray(CVRectFromCGRect(eyeRect)).clone();
+                    
+                    cv::Point center = findEyeCenter(eyeFrame);
+                    
+                    cv::circle(gray, cv::Point(center.x + eyeRect.origin.x, center.y + eyeRect.origin.y), 25, cv::Scalar(0,0,0));
                 }
             }
         }

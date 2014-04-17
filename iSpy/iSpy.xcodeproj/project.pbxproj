@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FD0AEA2418FFBB410017B80F /* findEyeCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FD0AEA2218FFBB410017B80F /* findEyeCenter.cpp */; };
+		FD0AEA2818FFBB760017B80F /* helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FD0AEA2618FFBB760017B80F /* helpers.cpp */; };
 		FD7C29CE18FECF1C00008554 /* haarcascade_lefteye_2splits.xml in Resources */ = {isa = PBXBuildFile; fileRef = FD7C29CC18FECF1C00008554 /* haarcascade_lefteye_2splits.xml */; };
 		FD7C29CF18FECF1C00008554 /* haarcascade_righteye_2splits.xml in Resources */ = {isa = PBXBuildFile; fileRef = FD7C29CD18FECF1C00008554 /* haarcascade_righteye_2splits.xml */; };
 		FDA6FEFE18F3DDEA00C72C5D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDA6FEFD18F3DDEA00C72C5D /* Foundation.framework */; };
@@ -37,6 +39,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FD0AEA2218FFBB410017B80F /* findEyeCenter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = findEyeCenter.cpp; path = iSpy/findEyeCenter.cpp; sourceTree = "<group>"; };
+		FD0AEA2318FFBB410017B80F /* findEyeCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = findEyeCenter.h; path = iSpy/findEyeCenter.h; sourceTree = "<group>"; };
+		FD0AEA2518FFBB670017B80F /* constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = constants.h; path = iSpy/constants.h; sourceTree = "<group>"; };
+		FD0AEA2618FFBB760017B80F /* helpers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = helpers.cpp; path = iSpy/helpers.cpp; sourceTree = "<group>"; };
+		FD0AEA2718FFBB760017B80F /* helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = helpers.h; path = iSpy/helpers.h; sourceTree = "<group>"; };
 		FD7C29CC18FECF1C00008554 /* haarcascade_lefteye_2splits.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = haarcascade_lefteye_2splits.xml; sourceTree = "<group>"; };
 		FD7C29CD18FECF1C00008554 /* haarcascade_righteye_2splits.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = haarcascade_righteye_2splits.xml; sourceTree = "<group>"; };
 		FDA6FEFA18F3DDEA00C72C5D /* iSpy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iSpy.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -101,9 +108,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FD0AEA2918FFBD830017B80F /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				FD0AEA2A18FFBD910017B80F /* trishume/eyeLike */,
+			);
+			name = Vendor;
+			sourceTree = "<group>";
+		};
+		FD0AEA2A18FFBD910017B80F /* trishume/eyeLike */ = {
+			isa = PBXGroup;
+			children = (
+				FD0AEA2618FFBB760017B80F /* helpers.cpp */,
+				FD0AEA2718FFBB760017B80F /* helpers.h */,
+				FD0AEA2518FFBB670017B80F /* constants.h */,
+				FD0AEA2218FFBB410017B80F /* findEyeCenter.cpp */,
+				FD0AEA2318FFBB410017B80F /* findEyeCenter.h */,
+			);
+			name = trishume/eyeLike;
+			sourceTree = "<group>";
+		};
 		FDA6FEF118F3DDEA00C72C5D = {
 			isa = PBXGroup;
 			children = (
+				FD0AEA2918FFBD830017B80F /* Vendor */,
 				FDA6FF0318F3DDEA00C72C5D /* Code */,
 				FDA6FF3818F3DE2600C72C5D /* Resources */,
 				FDA6FEFC18F3DDEA00C72C5D /* Frameworks */,
@@ -277,8 +305,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				FDA6FF0E18F3DDEA00C72C5D /* AppDelegate.m in Sources */,
+				FD0AEA2818FFBB760017B80F /* helpers.cpp in Sources */,
 				FDA6FF8918F7C2CD00C72C5D /* AVMetadataFaceObject+GazeTracking.m in Sources */,
 				FDA6FF9218F8198700C72C5D /* EyeObject.mm in Sources */,
+				FD0AEA2418FFBB410017B80F /* findEyeCenter.cpp in Sources */,
 				FDA6FF4618F3E91A00C72C5D /* ParametersViewController.m in Sources */,
 				FDA6FF0A18F3DDEA00C72C5D /* main.m in Sources */,
 				FDA6FF8618F7C21300C72C5D /* CameraViewController.mm in Sources */,

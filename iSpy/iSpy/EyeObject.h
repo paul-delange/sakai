@@ -13,6 +13,7 @@
 @interface EyeObject : NSObject
 
 @property (assign) cv::Mat capture;
-//@property (assign) cv::Rect bounds;
+@property (assign) cv::Rect bounds;
+@property (assign) NSInteger lostCount;
 
 @end

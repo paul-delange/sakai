@@ -14,13 +14,7 @@ static cv::CascadeClassifier*   _rightEyeClassifier;
 
 static cv::Rect CVRectZero = cv::Rect(0,0,0,0);
 
-@interface FaceObject () {
-    cv::Rect _lastLeftEyeRect;
-    cv::Rect _lastRightEyeRect;
-    
-    int _leftEyeLostFrameCount;
-    int _rightEyeLostFrameCount;
-}
+@interface FaceObject ()
 
 @property (strong) EyeObject* leftEye;
 @property (strong) EyeObject* rightEye;
@@ -112,18 +106,18 @@ static cv::Rect CVRectZero = cv::Rect(0,0,0,0);
                                               minloc.y,
                                               tpl.rows,
                                               tpl.cols);
-            _lastLeftEyeRect = detectedFrame;
-            _leftEyeLostFrameCount = 0;
+            obj.bounds = detectedFrame;
+            obj.lostCount = 0;
             leftEyeRect = detectedFrame;
             //cv::rectangle(leftEyeFrame, detectedFrame, cv::Scalar(0, 0, 0));
         }
         else {
-            _leftEyeLostFrameCount++;
+            obj.lostCount++;
             
-            if( _leftEyeLostFrameCount > 3 )
+            if( obj.lostCount > 3 )
                 self.leftEye = nil;
             else
-                leftEyeRect = _lastLeftEyeRect;
+                leftEyeRect = obj.bounds;
         }
     }
     
@@ -141,8 +135,7 @@ static cv::Rect CVRectZero = cv::Rect(0,0,0,0);
             
             self.leftEye = eyeObject;
             
-            _lastLeftEyeRect = detectedFrame;
-            _leftEyeLostFrameCount = 0;
+            eyeObject.bounds = detectedFrame;
             leftEyeRect = detectedFrame;
         }
     }
@@ -172,19 +165,19 @@ static cv::Rect CVRectZero = cv::Rect(0,0,0,0);
                                               minloc.y,
                                               tpl.rows,
                                               tpl.cols);
-            _lastRightEyeRect = detectedFrame;
-            _rightEyeLostFrameCount = 0;
+            obj.bounds = detectedFrame;
+            obj.lostCount = 0;
             rightEyeRect = detectedFrame;
             //cv::rectangle(rightEyeFrame, detectedFrame, cv::Scalar(0, 0, 0));
         }
         else {
             
-            _rightEyeLostFrameCount++;
+            obj.lostCount++;
             
-            if( _rightEyeLostFrameCount > 3 )
+            if( obj.lostCount > 3 )
                 self.rightEye = nil;
             else {
-                rightEyeRect = _lastRightEyeRect;
+                rightEyeRect = obj.bounds;
             }
         }
     }
@@ -204,8 +197,7 @@ static cv::Rect CVRectZero = cv::Rect(0,0,0,0);
             eyeObject.capture.copyTo(eyeObject.capture);
             
             self.rightEye = eyeObject;
-            _lastRightEyeRect = detectedFrame;
-            _rightEyeLostFrameCount = 0;
+            eyeObject.bounds = detectedFrame;
         }
     }
 
