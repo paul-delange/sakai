@@ -91,8 +91,6 @@ static CGImageRef CGImageCreateFromOpenCVMatrix(cv::Mat* cvMat) {
                                         );
     
     
-    // Getting UIImage from CGImage
-    
     CGDataProviderRelease(provider);
     CGColorSpaceRelease(colorSpace);
     CFRelease(data);
@@ -189,7 +187,6 @@ static AVCaptureVideoOrientation AVVideoOrientationFromUIInterfaceOrientation(UI
     __weak AVCaptureVideoPreviewLayer*      _previewLayer;
     
     NSSet*                                  _faces;
-    
 }
 
 @property (weak, nonatomic) IBOutlet UILabel* counterLabel;
@@ -366,13 +363,16 @@ static AVCaptureVideoOrientation AVVideoOrientationFromUIInterfaceOrientation(UI
                     
                     cv::rectangle(gray, CVRectFromCGRect(eyeRect), cv::Scalar(0, 0, 0));
                     
-                    
                     //Find pupil
                     cv::Mat eyeFrame = gray(CVRectFromCGRect(eyeRect)).clone();
                     
+                    // http://thume.ca/projects/2012/11/04/simple-accurate-eye-center-tracking-in-opencv/
                     cv::Point center = findEyeCenter(eyeFrame);
                     
-                    cv::circle(gray, cv::Point(center.x + eyeRect.origin.x, center.y + eyeRect.origin.y), 25, cv::Scalar(0,0,0));
+                    int radius = eyeRect.size.height * 0.2;
+                    if( CGRectContainsPoint(CGRectInset(eyeRect, 10, 10), CGPointMake(center.x + eyeRect.origin.x, center.y+eyeRect.origin.y)))
+                        cv::circle(gray, cv::Point(center.x + eyeRect.origin.x, center.y + eyeRect.origin.y), radius, cv::Scalar(255,255,255));
+                     
                 }
             }
         }

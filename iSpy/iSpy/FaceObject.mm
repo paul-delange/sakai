@@ -114,7 +114,7 @@ static cv::Rect CVRectZero = cv::Rect(0,0,0,0);
         else {
             obj.lostCount++;
             
-            if( obj.lostCount > 3 )
+            if( obj.lostCount > 1 )
                 self.leftEye = nil;
             else
                 leftEyeRect = obj.bounds;
@@ -174,7 +174,7 @@ static cv::Rect CVRectZero = cv::Rect(0,0,0,0);
             
             obj.lostCount++;
             
-            if( obj.lostCount > 3 )
+            if( obj.lostCount > 1 )
                 self.rightEye = nil;
             else {
                 rightEyeRect = obj.bounds;

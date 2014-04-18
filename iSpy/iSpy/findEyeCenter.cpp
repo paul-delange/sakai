@@ -101,7 +101,7 @@ void testPossibleCentersFormula(int x, int y, unsigned char weight,double gx, do
   }
 }
 
-cv::Point findEyeCenter(cv::Mat eyeROIUnscaled) {
+cv::Point findEyeCenter(cv::Mat& eyeROIUnscaled) {
     cv::Mat eyeROI;
   scaleToFastSize(eyeROIUnscaled, eyeROI);
   // draw eye region
