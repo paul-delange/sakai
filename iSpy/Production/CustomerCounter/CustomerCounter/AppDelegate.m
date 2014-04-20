@@ -9,7 +9,23 @@
 #import "AppDelegate.h"
 #import "SettingsViewController.h"
 
+#import "CoreDataStack.h"
+
+@interface AppDelegate ()
+
+@property (strong, nonatomic) CoreDataStack* stack;
+
+@end
+
 @implementation AppDelegate
+
+- (CoreDataStack*) stack {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _stack = [CoreDataStack initAppDomain: @"history" userDomain: nil];
+    });
+    return _stack;
+}
 
 #pragma mark - NSObject
 + (void) initialize {
@@ -25,3 +41,10 @@
 }
 
 @end
+
+NSManagedObjectContext * NSManagedObjectContextGetMainThreadContext(void) {
+    NSCParameterAssert([NSThread isMainThread]);
+    
+    AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    return delegate.stack.mainQueueManagedObjectContext;
+}

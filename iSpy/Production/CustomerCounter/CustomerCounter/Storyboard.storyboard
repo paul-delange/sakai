@@ -147,9 +147,59 @@
                     <view key="view" contentMode="scaleToFill" id="LVB-kv-YhO">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="H8o-mW-X5g">
+                                <rect key="frame" x="0.0" y="64" width="768" height="960"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ResultTableViewCell" id="1x5-rd-84G">
+                                        <rect key="frame" x="0.0" y="86" width="768" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1x5-rd-84G" id="iAJ-TR-pEO">
+                                            <rect key="frame" x="0.0" y="0.0" width="768" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="OHx-DM-RI9" id="RBI-3a-fjB"/>
+                                    <outlet property="delegate" destination="OHx-DM-RI9" id="YNS-Ub-CbC"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="H8o-mW-X5g" firstAttribute="top" secondItem="mnK-4G-PNL" secondAttribute="bottom" id="1OX-hN-mp8"/>
+                            <constraint firstItem="H8o-mW-X5g" firstAttribute="leading" secondItem="LVB-kv-YhO" secondAttribute="leading" id="EyX-NA-Vh3"/>
+                            <constraint firstAttribute="bottom" secondItem="H8o-mW-X5g" secondAttribute="bottom" id="RwF-9I-DxV"/>
+                            <constraint firstAttribute="trailing" secondItem="H8o-mW-X5g" secondAttribute="trailing" id="na8-xK-Lrx"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="XJ0-9W-ybE"/>
+                    <navigationItem key="navigationItem" id="XJ0-9W-ybE">
+                        <nil key="title"/>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="fwX-xh-lWA">
+                            <rect key="frame" x="231" y="7" width="307" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="First"/>
+                                <segment title="Second"/>
+                            </segments>
+                            <connections>
+                                <action selector="periodChanged:" destination="OHx-DM-RI9" eventType="valueChanged" id="L2a-Sj-jsr"/>
+                            </connections>
+                        </segmentedControl>
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="5rh-5w-eGA">
+                            <connections>
+                                <action selector="resetPushed:" destination="OHx-DM-RI9" id="Lu8-9z-aze"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="resetBarButton" destination="5rh-5w-eGA" id="ODZ-fZ-ubP"/>
+                        <outlet property="segmentedControl" destination="fwX-xh-lWA" id="a7t-7R-XEs"/>
+                        <outlet property="tableView" destination="H8o-mW-X5g" id="GyM-JD-jzN"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EDv-0a-y85" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

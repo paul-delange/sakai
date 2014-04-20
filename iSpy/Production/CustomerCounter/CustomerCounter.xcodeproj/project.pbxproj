@@ -21,6 +21,17 @@
 		FD2DF0C41903A9110023EDF7 /* DemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD2DF0C31903A9110023EDF7 /* DemoViewController.m */; };
 		FD2DF0C61903AB7E0023EDF7 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD2DF0C51903AB7E0023EDF7 /* opencv2.framework */; };
 		FD2DF0C81903AB9C0023EDF7 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD2DF0C71903AB9C0023EDF7 /* Storyboard.storyboard */; };
+		FD2DF0CB1903F4610023EDF7 /* CoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = FD2DF0CA1903F4610023EDF7 /* CoreDataStack.m */; };
+		FD2DF0CE1903F6A60023EDF7 /* History.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FD2DF0CC1903F6A60023EDF7 /* History.xcdatamodeld */; };
+		FD2DF0D31903F7170023EDF7 /* _Customer.m in Sources */ = {isa = PBXBuildFile; fileRef = FD2DF0D21903F7170023EDF7 /* _Customer.m */; };
+		FD2DF0D61903F7250023EDF7 /* Customer.m in Sources */ = {isa = PBXBuildFile; fileRef = FD2DF0D51903F7250023EDF7 /* Customer.m */; };
+		FD2DF0D8190408880023EDF7 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = FD2DF0D7190408880023EDF7 /* Localizable.stringsdict */; };
+		FD2DF0DD19040A300023EDF7 /* CustomerDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = FD2DF0DC19040A300023EDF7 /* CustomerDetector.mm */; };
+		FD2DF0E219040C380023EDF7 /* FaceObject.mm in Sources */ = {isa = PBXBuildFile; fileRef = FD2DF0DF19040C380023EDF7 /* FaceObject.mm */; };
+		FD2DF0E319040C380023EDF7 /* EyeObject.mm in Sources */ = {isa = PBXBuildFile; fileRef = FD2DF0E119040C380023EDF7 /* EyeObject.mm */; };
+		FD2DF0E919040C460023EDF7 /* helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FD2DF0E419040C460023EDF7 /* helpers.cpp */; };
+		FD2DF0EA19040C460023EDF7 /* findEyeCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FD2DF0E719040C460023EDF7 /* findEyeCenter.cpp */; };
+		FD2DF0ED19040CEE0023EDF7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD2DF0EC19040CEE0023EDF7 /* AVFoundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +59,25 @@
 		FD2DF0C31903A9110023EDF7 /* DemoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoViewController.m; sourceTree = "<group>"; };
 		FD2DF0C51903AB7E0023EDF7 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		FD2DF0C71903AB9C0023EDF7 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Storyboard.storyboard; path = CustomerCounter/Storyboard.storyboard; sourceTree = "<group>"; };
+		FD2DF0C91903F4610023EDF7 /* CoreDataStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataStack.h; sourceTree = "<group>"; };
+		FD2DF0CA1903F4610023EDF7 /* CoreDataStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataStack.m; sourceTree = "<group>"; };
+		FD2DF0CD1903F6A60023EDF7 /* History.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = History.xcdatamodel; sourceTree = "<group>"; };
+		FD2DF0D21903F7170023EDF7 /* _Customer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = _Customer.m; path = CustomerCounter/_Customer.m; sourceTree = "<group>"; };
+		FD2DF0D41903F7250023EDF7 /* Customer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Customer.h; sourceTree = "<group>"; };
+		FD2DF0D51903F7250023EDF7 /* Customer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Customer.m; sourceTree = "<group>"; };
+		FD2DF0D7190408880023EDF7 /* Localizable.stringsdict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Localizable.stringsdict; sourceTree = "<group>"; };
+		FD2DF0DB19040A300023EDF7 /* CustomerDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerDetector.h; sourceTree = "<group>"; };
+		FD2DF0DC19040A300023EDF7 /* CustomerDetector.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CustomerDetector.mm; sourceTree = "<group>"; };
+		FD2DF0DE19040C380023EDF7 /* FaceObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceObject.h; sourceTree = "<group>"; };
+		FD2DF0DF19040C380023EDF7 /* FaceObject.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FaceObject.mm; sourceTree = "<group>"; };
+		FD2DF0E019040C380023EDF7 /* EyeObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EyeObject.h; sourceTree = "<group>"; };
+		FD2DF0E119040C380023EDF7 /* EyeObject.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EyeObject.mm; sourceTree = "<group>"; };
+		FD2DF0E419040C460023EDF7 /* helpers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = helpers.cpp; sourceTree = "<group>"; };
+		FD2DF0E519040C460023EDF7 /* helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = helpers.h; sourceTree = "<group>"; };
+		FD2DF0E619040C460023EDF7 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
+		FD2DF0E719040C460023EDF7 /* findEyeCenter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = findEyeCenter.cpp; sourceTree = "<group>"; };
+		FD2DF0E819040C460023EDF7 /* findEyeCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = findEyeCenter.h; sourceTree = "<group>"; };
+		FD2DF0EC19040CEE0023EDF7 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +85,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD2DF0ED19040CEE0023EDF7 /* AVFoundation.framework in Frameworks */,
 				FD2DF0841903A73E0023EDF7 /* CoreGraphics.framework in Frameworks */,
 				FD2DF0861903A73E0023EDF7 /* UIKit.framework in Frameworks */,
 				FD2DF0C61903AB7E0023EDF7 /* opencv2.framework in Frameworks */,
@@ -68,6 +99,7 @@
 		FD2DF0751903A73E0023EDF7 = {
 			isa = PBXGroup;
 			children = (
+				FD2DF0CF1903F6DC0023EDF7 /* Vendor */,
 				FD2DF0871903A73E0023EDF7 /* Code */,
 				FD2DF0B01903A75F0023EDF7 /* Resources */,
 				FD2DF0801903A73E0023EDF7 /* Frameworks */,
@@ -86,6 +118,7 @@
 		FD2DF0801903A73E0023EDF7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FD2DF0EC19040CEE0023EDF7 /* AVFoundation.framework */,
 				FD2DF0C51903AB7E0023EDF7 /* opencv2.framework */,
 				FD2DF0811903A73E0023EDF7 /* Foundation.framework */,
 				FD2DF0831903A73E0023EDF7 /* CoreGraphics.framework */,
@@ -111,10 +144,12 @@
 		FD2DF0B01903A75F0023EDF7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FD2DF0D7190408880023EDF7 /* Localizable.stringsdict */,
 				FD2DF0C71903AB9C0023EDF7 /* Storyboard.storyboard */,
 				FD2DF08A1903A73E0023EDF7 /* InfoPlist.strings */,
 				FD2DF0931903A73E0023EDF7 /* Images.xcassets */,
 				FD2DF0891903A73E0023EDF7 /* CustomerCounter-Info.plist */,
+				FD2DF0CC1903F6A60023EDF7 /* History.xcdatamodeld */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -148,8 +183,63 @@
 		FD2DF0B31903A7760023EDF7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				FD2DF0DA1904096C0023EDF7 /* Recognition */,
+				FD2DF0D9190409630023EDF7 /* Core Data */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		FD2DF0CF1903F6DC0023EDF7 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				FD2DF0EB19040C4E0023EDF7 /* trishume/eyeLike */,
+				FD2DF0D01903F6E00023EDF7 /* mogenerator */,
+			);
+			name = Vendor;
+			sourceTree = "<group>";
+		};
+		FD2DF0D01903F6E00023EDF7 /* mogenerator */ = {
+			isa = PBXGroup;
+			children = (
+				FD2DF0D21903F7170023EDF7 /* _Customer.m */,
+			);
+			name = mogenerator;
+			sourceTree = "<group>";
+		};
+		FD2DF0D9190409630023EDF7 /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				FD2DF0D41903F7250023EDF7 /* Customer.h */,
+				FD2DF0D51903F7250023EDF7 /* Customer.m */,
+				FD2DF0C91903F4610023EDF7 /* CoreDataStack.h */,
+				FD2DF0CA1903F4610023EDF7 /* CoreDataStack.m */,
+			);
+			name = "Core Data";
+			sourceTree = "<group>";
+		};
+		FD2DF0DA1904096C0023EDF7 /* Recognition */ = {
+			isa = PBXGroup;
+			children = (
+				FD2DF0DE19040C380023EDF7 /* FaceObject.h */,
+				FD2DF0DF19040C380023EDF7 /* FaceObject.mm */,
+				FD2DF0E019040C380023EDF7 /* EyeObject.h */,
+				FD2DF0E119040C380023EDF7 /* EyeObject.mm */,
+				FD2DF0DB19040A300023EDF7 /* CustomerDetector.h */,
+				FD2DF0DC19040A300023EDF7 /* CustomerDetector.mm */,
+			);
+			name = Recognition;
+			sourceTree = "<group>";
+		};
+		FD2DF0EB19040C4E0023EDF7 /* trishume/eyeLike */ = {
+			isa = PBXGroup;
+			children = (
+				FD2DF0E419040C460023EDF7 /* helpers.cpp */,
+				FD2DF0E519040C460023EDF7 /* helpers.h */,
+				FD2DF0E619040C460023EDF7 /* constants.h */,
+				FD2DF0E719040C460023EDF7 /* findEyeCenter.cpp */,
+				FD2DF0E819040C460023EDF7 /* findEyeCenter.h */,
+			);
+			name = trishume/eyeLike;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -159,6 +249,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FD2DF0AA1903A73E0023EDF7 /* Build configuration list for PBXNativeTarget "CustomerCounter" */;
 			buildPhases = (
+				FD2DF0D11903F6E90023EDF7 /* ShellScript */,
 				FD2DF07A1903A73E0023EDF7 /* Sources */,
 				FD2DF07B1903A73E0023EDF7 /* Frameworks */,
 				FD2DF07C1903A73E0023EDF7 /* Resources */,
@@ -204,6 +295,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD2DF08C1903A73E0023EDF7 /* InfoPlist.strings in Resources */,
+				FD2DF0D8190408880023EDF7 /* Localizable.stringsdict in Resources */,
 				FD2DF0941903A73E0023EDF7 /* Images.xcassets in Resources */,
 				FD2DF0C81903AB9C0023EDF7 /* Storyboard.storyboard in Resources */,
 			);
@@ -211,17 +303,42 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		FD2DF0D11903F6E90023EDF7 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "mogenerator -m \"History.xcdatamodeld/History.xcdatamodel/\" --template-var arc=true --output-dir \"CustomerCounter\"    ";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		FD2DF07A1903A73E0023EDF7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD2DF0D61903F7250023EDF7 /* Customer.m in Sources */,
+				FD2DF0E219040C380023EDF7 /* FaceObject.mm in Sources */,
+				FD2DF0E319040C380023EDF7 /* EyeObject.mm in Sources */,
 				FD2DF0921903A73E0023EDF7 /* AppDelegate.m in Sources */,
+				FD2DF0D31903F7170023EDF7 /* _Customer.m in Sources */,
 				FD2DF08E1903A73E0023EDF7 /* main.m in Sources */,
 				FD2DF0B81903A8020023EDF7 /* HomeViewController.m in Sources */,
+				FD2DF0EA19040C460023EDF7 /* findEyeCenter.cpp in Sources */,
+				FD2DF0DD19040A300023EDF7 /* CustomerDetector.mm in Sources */,
+				FD2DF0CB1903F4610023EDF7 /* CoreDataStack.m in Sources */,
+				FD2DF0CE1903F6A60023EDF7 /* History.xcdatamodeld in Sources */,
 				FD2DF0BB1903A8100023EDF7 /* SettingsViewController.m in Sources */,
 				FD2DF0C11903A8290023EDF7 /* AdvertisementViewController.m in Sources */,
 				FD2DF0C41903A9110023EDF7 /* DemoViewController.m in Sources */,
+				FD2DF0E919040C460023EDF7 /* helpers.cpp in Sources */,
 				FD2DF0BE1903A8200023EDF7 /* ResultsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -368,6 +485,19 @@
 			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		FD2DF0CC1903F6A60023EDF7 /* History.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				FD2DF0CD1903F6A60023EDF7 /* History.xcdatamodel */,
+			);
+			currentVersion = FD2DF0CD1903F6A60023EDF7 /* History.xcdatamodel */;
+			path = History.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = FD2DF0761903A73E0023EDF7 /* Project object */;
 }

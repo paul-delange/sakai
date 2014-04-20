@@ -9,6 +9,8 @@
 #import "AdvertisementViewController.h"
 #import "SettingsViewController.h"
 
+#import "CustomerDetector.h"
+
 @import AssetsLibrary;
 
 @interface AdvertisementViewController () {
@@ -16,6 +18,8 @@
     NSInteger   _currentItemIndex;
     
     dispatch_source_t   _slideshowTimer;
+    
+    CustomerDetector*   _detector;
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
@@ -109,7 +113,10 @@
     if( self ) {
         _library = [[ALAssetsLibrary alloc] init];
         _groups = [NSArray array];
+        
+        _detector = [CustomerDetector new];
     }
+    
     return self;
 }
 
@@ -182,6 +189,14 @@
         NSString* format = NSLocalizedString(@"An unknown error '%@' has occured. Please restart your device and try again.", @"");
         self.messageLabel.text = [NSString stringWithFormat: format, description];
     }];
+    
+    [_detector start];
+}
+
+- (void) viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear: animated];
+    
+    [_detector stop];
 }
 
 @end

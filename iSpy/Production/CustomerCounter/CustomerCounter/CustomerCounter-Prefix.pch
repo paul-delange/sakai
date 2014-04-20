@@ -29,7 +29,24 @@
  
  ************************************/
 
+#if DEBUG
+#define DLog(fmt, ...)          \
+NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
+#define DLogError(error)        \
+if( error ) {           \
+NSLog(@"\n\n----!!!ERROR!!!-----\n[%@:%d] in %s [Line %d]\n\n%@\n\n----!!!ERROR!!!-----\n\n", [error domain], (int)[error code], __PRETTY_FUNCTION__, (int)__LINE__, [error userInfo]);   \
+error = nil;    \
+}
+#define DLogException(exception)    \
+NSLog(@"\n\n----!!!EXCEPTION!!!-----\n%s [Line %d]\n\nName: '%@'\nReason: '%@'\n\n%@\n\n----!!!EXCEPTION!!!-----\n\n", __PRETTY_FUNCTION__, __LINE__, [exception name], [exception reason], [exception userInfo])
+#else
+//TODO: Add a tracking library
+#define DLog(...)
+#define DLogError(error)
+#define DLogException(exception)
+#endif
 
 extern NSString * kAppName(void);
+extern NSManagedObjectContext * NSManagedObjectContextGetMainThreadContext(void);
 
 #endif
