@@ -1,0 +1,35 @@
+//
+//  Prefix header
+//
+//  The contents of this file are implicitly included at the beginning of every source file.
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_3_0
+#warning "This project uses features only available in iOS SDK 3.0 and later."
+#endif
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+
+/************************************
+ 
+ Begin Edit Sakai
+ 
+ ************************************/
+
+    #define     APP_ALBUM_NAME                          @"iSpy"
+    #define     DEFAULT_SLIDESHOW_INTERVAL_SECS         5
+
+/************************************
+ 
+ End Edit Sakai
+ 
+ ************************************/
+
+
+extern NSString * kAppName(void);
+
+#endif
