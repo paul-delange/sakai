@@ -13,8 +13,6 @@
 
 @interface AppDelegate ()
 
-@property (strong, nonatomic) CoreDataStack* stack;
-
 @end
 
 @implementation AppDelegate

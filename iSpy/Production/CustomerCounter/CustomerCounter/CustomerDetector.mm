@@ -13,9 +13,15 @@
 
 #include "findEyeCenter.h"
 
+#import "Customer.h"
+#import "CoreDataStack.h"
+#import "AppDelegate.h"
+
 #import <opencv2/opencv.hpp>
 
 #import <AVFoundation/AVFoundation.h>
+
+NSString * const CustomerCounterErrorDomain = @"CustomerCounter";
 
 @interface CustomerDetector () <AVCaptureMetadataOutputObjectsDelegate> {
     dispatch_queue_t                        _dataProcessingQueue;
@@ -32,11 +38,52 @@
 @implementation CustomerDetector
 
 - (void) start {
+    NSParameterAssert(![_captureSession isRunning]);
+    
+    AVCaptureMetadataOutput* metadataOutput = [AVCaptureMetadataOutput new];
+    
+    if([_captureSession canAddOutput: metadataOutput]) {
+        [_captureSession addOutput: metadataOutput];
+    }
+    else {
+        if( [self.delegate respondsToSelector: @selector(customerDetector:encounteredError:)] ) {
+            NSError* error = [NSError errorWithDomain: CustomerCounterErrorDomain
+                                                 code: kCustomerCounterErrorCanNotAddMetadataOutput
+                                             userInfo: nil];
+            [self.delegate customerDetector: self encounteredError: error];
+        }
+        
+        return;
+    }
+    
+    if([metadataOutput.availableMetadataObjectTypes containsObject: AVMetadataObjectTypeFace]) {
+        metadataOutput.metadataObjectTypes = @[AVMetadataObjectTypeFace];
+    }
+    else {
+        if( [self.delegate respondsToSelector: @selector(customerDetector:encounteredError:)] ) {
+            NSError* error = [NSError errorWithDomain: CustomerCounterErrorDomain
+                                                 code: kCustomerCounterErrorNoFaceRecognition
+                                             userInfo: nil];
+            [self.delegate customerDetector: self encounteredError: error];
+        }
+        
+        return;
+    }
+    
+    _metatdataOutput = metadataOutput;
+    [_metatdataOutput setMetadataObjectsDelegate: self queue: _dataProcessingQueue];
+    
     [_captureSession startRunning];
 }
 
 - (void) stop {
-    [_captureSession stopRunning];
+    if( [_captureSession isRunning] ) {
+        [_captureSession stopRunning];
+    }
+    
+    [_metatdataOutput setMetadataObjectsDelegate: nil queue: nil];
+    _metatdataOutput = nil;
+    
     _faces = nil;
 }
 
@@ -49,9 +96,11 @@
         
         NSString* preset = AVCaptureSessionPresetHigh;
         _captureSession = [AVCaptureSession new];
-        NSParameterAssert([_captureSession canSetSessionPreset: preset]);
-        _captureSession.sessionPreset = preset;
-        
+        if([_captureSession canSetSessionPreset: preset]) {
+            _captureSession.sessionPreset = preset;
+        }
+
+#if TARGET_OS_IPHONE
         for(AVCaptureDevice* device in [AVCaptureDevice devicesWithMediaType: AVMediaTypeVideo]) {
             if( device.position == AVCaptureDevicePositionFront ) {
                 
@@ -64,19 +113,7 @@
                 break;
             }
         }
-
-        _metatdataOutput = [AVCaptureMetadataOutput new];
-        
-        
-        NSAssert([_captureSession canAddOutput: _metatdataOutput], @"Can not add %@ to capture session", _metatdataOutput);
-        
-        [_metatdataOutput setMetadataObjectsDelegate: self queue: dispatch_get_main_queue()];
-        [_captureSession addOutput: _metatdataOutput];
-        
-        NSAssert([_metatdataOutput.availableMetadataObjectTypes containsObject: AVMetadataObjectTypeFace], @"No face recognition on this device");
-        
-        _metatdataOutput.metadataObjectTypes = @[AVMetadataObjectTypeFace];
-
+#endif
     }
     
     return self;
@@ -84,7 +121,6 @@
 
 #pragma mark - AVCaptureMetadataOutputObjectsDelegate
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection {
-    NSParameterAssert([NSThread isMainThread]);
     
     if ( metadataObjects.count == 0 ) {
         _faces = nil;
@@ -110,6 +146,33 @@
                 
                 aFaceObject.bounds = [face bounds];
                 aFaceObject.isFacingCamera = YES;//face.isFacingCamera;
+                
+                NSParameterAssert([face hasRollAngle]);
+                NSParameterAssert([face hasYawAngle]);
+                
+                if( fabs(face.rollAngle) < 30 && fabs(face.yawAngle) < 30 ) {
+                    if( !aFaceObject.hasBeenCounted ){
+                        
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+                            CoreDataStack* stack = delegate.stack;
+                            
+                            NSManagedObjectContext* context = stack.mainQueueManagedObjectContext;
+                            Customer* customer = [Customer insertInManagedObjectContext: context];
+                            customer.timestamp = [NSDate date];
+                            
+                            NSError* error;
+                            [context threadSafeSave: &error];
+                            DLogError(error);
+                            
+                            if( [self.delegate respondsToSelector: @selector(customerDetector:detectedCustomers:)] ) {
+                                [self.delegate customerDetector: self detectedCustomers: [NSSet setWithObject: customer]];
+                            }
+                        });
+                    }
+                    
+                    aFaceObject.hasBeenCounted = YES;
+                }
                 
                 [facesToSave addObject: aFaceObject];
             }

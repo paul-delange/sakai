@@ -10,9 +10,17 @@
 
 @class CustomerDetector;
 
+extern NSString * const CustomerCounterErrorDomain;
+
+enum {
+    kCustomerCounterErrorCanNotAddMetadataOutput = 875,
+    kCustomerCounterErrorNoFaceRecognition
+};
+
 @protocol CustomerDetectorDelegate <NSObject>
 @optional
 - (void) customerDetector: (CustomerDetector*) detector detectedCustomers: (NSSet*) customers;
+- (void) customerDetector: (CustomerDetector*) detector encounteredError: (NSError*) error;
 
 @end
 

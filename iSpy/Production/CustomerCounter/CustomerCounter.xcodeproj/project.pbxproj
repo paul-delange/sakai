@@ -78,6 +78,7 @@
 		FD2DF0E719040C460023EDF7 /* findEyeCenter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = findEyeCenter.cpp; sourceTree = "<group>"; };
 		FD2DF0E819040C460023EDF7 /* findEyeCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = findEyeCenter.h; sourceTree = "<group>"; };
 		FD2DF0EC19040CEE0023EDF7 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		FD2DF0EE19040E720023EDF7 /* iSpy_004.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = iSpy_004.pdf; path = ../iSpy_004.pdf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +100,7 @@
 		FD2DF0751903A73E0023EDF7 = {
 			isa = PBXGroup;
 			children = (
+				FD2DF0EE19040E720023EDF7 /* iSpy_004.pdf */,
 				FD2DF0CF1903F6DC0023EDF7 /* Vendor */,
 				FD2DF0871903A73E0023EDF7 /* Code */,
 				FD2DF0B01903A75F0023EDF7 /* Resources */,

@@ -16,6 +16,7 @@
 @property (assign) CGRect bounds;
 
 @property (assign) BOOL isFacingCamera;
+@property (assign) BOOL hasBeenCounted;
 
 - (NSArray*) eyesInImage: (cv::Mat&) image;
 

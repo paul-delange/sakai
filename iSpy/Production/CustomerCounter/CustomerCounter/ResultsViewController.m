@@ -15,7 +15,7 @@
 
 #define kAlertViewTagConfirmReset   89
 
-#define SAMPLE_DICTIONARY_TIME_KEY      @"localized.time"
+#define SAMPLE_DICTIONARY_TIME_KEY      @"time"
 #define SAMPLE_DICTIONARY_COUNT_KEY     @"count"
 
 NSString * const NSUserDefaultsResultsDisplayPeriod = @"ResultsPeriod";
@@ -39,7 +39,36 @@ NSString * const NSUserDefaultsResultsDisplayPeriod = @"ResultsPeriod";
     NSArray* allCustomers = [context executeFetchRequest: request error: &error];
     DLogError(error);
     
-    NSLog(@"%d customers", [allCustomers count]);
+    BOOL isByHour = [[NSUserDefaults standardUserDefaults] boolForKey: NSUserDefaultsResultsDisplayPeriod] == 1;
+    NSDateFormatterStyle dateStyle = isByHour ? NSDateFormatterNoStyle : NSDateFormatterMediumStyle;
+    NSDateFormatterStyle timeStyle = isByHour ? NSDateFormatterShortStyle : NSDateFormatterNoStyle;
+    
+    NSMutableArray* mutableData = [NSMutableArray array];
+    for(Customer* customer in allCustomers) {
+        NSDate* date = customer.timestamp;
+        
+        NSString* strDate = [NSDateFormatter localizedStringFromDate: date
+                                                           dateStyle: dateStyle
+                                                           timeStyle: timeStyle];
+        
+        NSPredicate* predicate = [NSPredicate predicateWithFormat: @"%K = %@", SAMPLE_DICTIONARY_TIME_KEY, strDate];
+        NSMutableDictionary* existingSection = [[mutableData filteredArrayUsingPredicate: predicate] lastObject];
+        if( existingSection ) {
+            NSNumber* count = existingSection[SAMPLE_DICTIONARY_COUNT_KEY];
+            existingSection[SAMPLE_DICTIONARY_COUNT_KEY] = @([count integerValue] + 1);
+        }
+        else {
+            existingSection = [NSMutableDictionary dictionary];
+            existingSection[SAMPLE_DICTIONARY_TIME_KEY] = strDate;
+            existingSection[SAMPLE_DICTIONARY_COUNT_KEY] = @(1);
+            
+            [mutableData addObject: existingSection];
+        }
+    }
+    
+    _data = [mutableData copy];
+    
+    NSLog(@"Data: %@", _data);
 }
 
 #pragma mark - Actions
@@ -81,6 +110,9 @@ NSString * const NSUserDefaultsResultsDisplayPeriod = @"ResultsPeriod";
     
     NSInteger segmentToSelect = [[NSUserDefaults standardUserDefaults] integerForKey: NSUserDefaultsResultsDisplayPeriod];
     [self.segmentedControl setSelectedSegmentIndex: segmentToSelect];
+    
+    [self reconstructData];
+    [self.tableView reloadData];
 }
 
 #pragma mark - UITableViewDataSource

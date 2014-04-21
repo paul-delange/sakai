@@ -13,7 +13,7 @@
 
 @import AssetsLibrary;
 
-@interface AdvertisementViewController () {
+@interface AdvertisementViewController () <CustomerDetectorDelegate> {
     NSInteger   _itemCount;
     NSInteger   _currentItemIndex;
     
@@ -115,6 +115,7 @@
         _groups = [NSArray array];
         
         _detector = [CustomerDetector new];
+        _detector.delegate = self;
     }
     
     return self;
@@ -197,6 +198,42 @@
     [super viewDidDisappear: animated];
     
     [_detector stop];
+}
+
+#pragma mark - CustomerDetectorDelegate
+- (void) customerDetector:(CustomerDetector *)detector detectedCustomers:(NSSet *)customers {
+    NSLog(@"Detected: %@", customers);
+}
+
+- (void) customerDetector:(CustomerDetector *)detector encounteredError:(NSError *)error {
+    switch (error.code) {
+        case kCustomerCounterErrorCanNotAddMetadataOutput:
+        {
+            NSString* title = NSLocalizedString(@"Initialization Error", @"");
+            NSString* format = NSLocalizedString(@"Customers are not being counted because %@ could not connect to the device sensors. Please restart the app and try again.", @"");
+            UIAlertView* alert = [[UIAlertView alloc] initWithTitle: title
+                                                            message: [NSString stringWithFormat: format, kAppName()]
+                                                           delegate: nil
+                                                  cancelButtonTitle: NSLocalizedString(@"OK", @"")
+                                                  otherButtonTitles: nil];
+            [alert show];
+            break;
+        }
+        case kCustomerCounterErrorNoFaceRecognition:
+        {
+            NSString* title = NSLocalizedString(@"Incompatible device", @"");
+            NSString* format = NSLocalizedString(@"Customers are not being counted because %@ is not supported on this device! Please try using an iPad 2 or later device.", @"");
+            UIAlertView* alert = [[UIAlertView alloc] initWithTitle: title
+                                                            message: [NSString stringWithFormat: format, kAppName()]
+                                                           delegate: nil
+                                                  cancelButtonTitle: NSLocalizedString(@"OK", @"")
+                                                  otherButtonTitles: nil];
+            [alert show];
+            break;
+        }
+        default:
+            break;
+    }
 }
 
 @end
