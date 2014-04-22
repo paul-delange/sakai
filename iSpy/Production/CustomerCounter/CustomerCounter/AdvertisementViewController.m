@@ -56,8 +56,6 @@
 }
 
 - (IBAction) startSlideshow {
-    _currentItemIndex = 0;
-    
     NSTimeInterval interval = [[NSUserDefaults standardUserDefaults] doubleForKey: NSUserDefaultsSlideShowIntervalKey];
     dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
     dispatch_source_set_timer(timer, dispatch_time(DISPATCH_TIME_NOW, 0), interval * NSEC_PER_SEC, (1ull * NSEC_PER_SEC) / 10);

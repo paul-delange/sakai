@@ -109,7 +109,7 @@ NSString * const NSUserDefaultsResultsDisplayPeriod = @"ResultsPeriod";
         _data = [mutableData copy];
     }
     
-    NSLog(@"Data: %@", _data);
+    //NSLog(@"Data: %@", _data);
 }
 
 #pragma mark - Actions
@@ -165,7 +165,7 @@ NSString * const NSUserDefaultsResultsDisplayPeriod = @"ResultsPeriod";
     cell.textLabel.text = sampleDictionary[SAMPLE_DICTIONARY_TIME_KEY];
     
     NSString* format = NSLocalizedString(@"%d people", @"");
-    cell.detailTextLabel.text = [NSString stringWithFormat: format, sampleDictionary[SAMPLE_DICTIONARY_COUNT_KEY]];
+    cell.detailTextLabel.text = [NSString stringWithFormat: format, [sampleDictionary[SAMPLE_DICTIONARY_COUNT_KEY] integerValue]];
     
     return cell;
 }

@@ -82,7 +82,7 @@
             NSURL* writeableStoreURL = [NSURL fileURLWithPath: writeableStorePath];
             
             [psc addPersistentStoreWithType: NSSQLiteStoreType
-                              configuration: appDomain
+                              configuration: nil
                                         URL: writeableStoreURL
                                     options: readwriteOptions
                                       error: &error];
