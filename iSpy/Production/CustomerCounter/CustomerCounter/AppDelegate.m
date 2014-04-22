@@ -20,7 +20,7 @@
 - (CoreDataStack*) stack {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _stack = [CoreDataStack initAppDomain: @"history" userDomain: nil];
+        _stack = [CoreDataStack initAppDomain: @"Default" userDomain: nil];
     });
     return _stack;
 }

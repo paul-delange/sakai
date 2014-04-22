@@ -25,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *restartBarButton;
 
 @property (strong) ALAssetsLibrary* library;
 @property (copy, nonatomic) NSArray* groups;
@@ -54,7 +55,9 @@
     [self.activityIndicator stopAnimating];
 }
 
-- (void) startSlideshow {
+- (IBAction) startSlideshow {
+    _currentItemIndex = 0;
+    
     NSTimeInterval interval = [[NSUserDefaults standardUserDefaults] doubleForKey: NSUserDefaultsSlideShowIntervalKey];
     dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
     dispatch_source_set_timer(timer, dispatch_time(DISPATCH_TIME_NOW, 0), interval * NSEC_PER_SEC, (1ull * NSEC_PER_SEC) / 10);
@@ -79,6 +82,9 @@
     });
     dispatch_resume(timer);
     _slideshowTimer = timer;
+    
+    self.restartBarButton.enabled = YES;
+    [self.navigationController setNavigationBarHidden: YES animated: YES];
 }
 
 - (void) stopSlideshow {
@@ -86,6 +92,8 @@
         dispatch_source_cancel(_slideshowTimer);
         _slideshowTimer = nil;
     }
+    
+    [self.navigationController setNavigationBarHidden: NO animated: YES];
 }
 
 - (void) transitionToAsset: (ALAsset*) asset duration: (NSTimeInterval) interval options: (UIViewAnimationOptions) options {
@@ -105,6 +113,10 @@
         
         [self.imageView.layer addAnimation:transition forKey:nil];
     }
+}
+
+- (IBAction)unlockGesturePushed:(UITapGestureRecognizer*)sender {
+    [self stopSlideshow];
 }
 
 #pragma mark - NSObject
@@ -132,6 +144,8 @@
     // Do any additional setup after loading the view.
     NSString* format = NSLocalizedString(@"Search Photos app for an album named '%@'. If nothing is found please try creating this album first...", @"");
     self.messageLabel.text = [NSString stringWithFormat: format, APP_ALBUM_NAME];
+    self.restartBarButton.title = NSLocalizedString(@"Restart Slideshow", @"");
+    self.title = kAppName();
 }
 
 - (void) viewWillAppear:(BOOL)animated {

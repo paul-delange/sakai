@@ -57,9 +57,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4w3-MX-sXU">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4w3-MX-sXU">
                                 <rect key="frame" x="0.0" y="64" width="768" height="960"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <gestureRecognizers/>
                             </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="600" translatesAutoresizingMaskIntoConstraints="NO" id="unm-HB-GQu">
                                 <rect key="frame" x="84" y="502" width="600" height="21"/>
@@ -86,15 +87,31 @@
                             <constraint firstItem="yQ9-Mg-zO2" firstAttribute="top" secondItem="4w3-MX-sXU" secondAttribute="bottom" id="vH7-dU-xYV"/>
                             <constraint firstAttribute="centerX" secondItem="lxo-j6-Eck" secondAttribute="centerX" id="xrh-KC-YXb"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="W7E-YI-GbA" appends="YES" id="Gpd-Sw-HAY"/>
+                        </connections>
                     </view>
-                    <navigationItem key="navigationItem" id="CeS-aJ-t3r"/>
+                    <navigationItem key="navigationItem" id="CeS-aJ-t3r">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Item" id="xfD-8k-by5">
+                            <connections>
+                                <action selector="startSlideshow" destination="otc-Gc-Og0" id="xEa-VQ-XVB"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="activityIndicator" destination="lxo-j6-Eck" id="ktt-68-BOY"/>
                         <outlet property="imageView" destination="4w3-MX-sXU" id="9nG-FM-9C0"/>
                         <outlet property="messageLabel" destination="unm-HB-GQu" id="r7B-B4-eML"/>
+                        <outlet property="restartBarButton" destination="xfD-8k-by5" id="5Y0-cb-ATQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DKo-Nt-1JK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer numberOfTapsRequired="2" id="W7E-YI-GbA">
+                    <connections>
+                        <action selector="unlockGesturePushed:" destination="otc-Gc-Og0" id="1KC-Rg-v5z"/>
+                        <outlet property="delegate" destination="otc-Gc-Og0" id="BkU-Yg-AZm"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1205" y="-1431"/>
         </scene>
