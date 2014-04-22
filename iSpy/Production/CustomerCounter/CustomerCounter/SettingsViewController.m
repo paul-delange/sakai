@@ -25,4 +25,35 @@ NSString * NSUserDefaultsSlideShowIntervalKey = @"SlideshowInterval";
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle: @"" style: UIBarButtonItemStylePlain target: nil action: nil];
 }
 
+- (BOOL) shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
+
+    if( [identifier isEqualToString: @"PushResultsSegue"] ) {
+        NSManagedObjectContext* context = NSManagedObjectContextGetMainThreadContext();
+        NSFetchRequest* request = [NSFetchRequest fetchRequestWithEntityName: @"Customer"];
+        NSError* error;
+        NSInteger count = [context countForFetchRequest: request error: &error];
+        DLogError(error);
+        
+        if( count <= 0 ) {
+            
+            NSString* title = NSLocalizedString(@"Nobody has been counted", @"");
+            NSString* msg = NSLocalizedString(@"Please first confirm an active slideshow has been displayed and that customers have come to see the display.", @"");
+            
+            UIAlertView* alert = [[UIAlertView alloc] initWithTitle: title
+                                                            message: msg
+                                                           delegate: nil
+                                                  cancelButtonTitle: NSLocalizedString(@"OK", @"")
+                                                  otherButtonTitles: nil];
+            [alert show];
+            
+            return NO;
+        }
+        else {
+            return YES;
+        }
+    }
+    
+    return [super shouldPerformSegueWithIdentifier: identifier sender: sender];
+}
+
 @end

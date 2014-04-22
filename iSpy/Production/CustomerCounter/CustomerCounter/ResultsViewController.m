@@ -40,33 +40,74 @@ NSString * const NSUserDefaultsResultsDisplayPeriod = @"ResultsPeriod";
     DLogError(error);
     
     BOOL isByHour = [[NSUserDefaults standardUserDefaults] boolForKey: NSUserDefaultsResultsDisplayPeriod] == 1;
-    NSDateFormatterStyle dateStyle = isByHour ? NSDateFormatterNoStyle : NSDateFormatterMediumStyle;
-    NSDateFormatterStyle timeStyle = isByHour ? NSDateFormatterShortStyle : NSDateFormatterNoStyle;
     
-    NSMutableArray* mutableData = [NSMutableArray array];
-    for(Customer* customer in allCustomers) {
-        NSDate* date = customer.timestamp;
+    if( isByHour ) {
+        NSCalendar* calendar = [NSCalendar currentCalendar];
         
-        NSString* strDate = [NSDateFormatter localizedStringFromDate: date
-                                                           dateStyle: dateStyle
-                                                           timeStyle: timeStyle];
+        NSMutableArray* mutableData = [NSMutableArray array];
+        for(Customer* customer in allCustomers) {
+            NSDate* date = customer.timestamp;
         
-        NSPredicate* predicate = [NSPredicate predicateWithFormat: @"%K = %@", SAMPLE_DICTIONARY_TIME_KEY, strDate];
-        NSMutableDictionary* existingSection = [[mutableData filteredArrayUsingPredicate: predicate] lastObject];
-        if( existingSection ) {
-            NSNumber* count = existingSection[SAMPLE_DICTIONARY_COUNT_KEY];
-            existingSection[SAMPLE_DICTIONARY_COUNT_KEY] = @([count integerValue] + 1);
-        }
-        else {
-            existingSection = [NSMutableDictionary dictionary];
-            existingSection[SAMPLE_DICTIONARY_TIME_KEY] = strDate;
-            existingSection[SAMPLE_DICTIONARY_COUNT_KEY] = @(1);
+            NSDateComponents* components = [calendar components: NSHourCalendarUnit
+                                                       fromDate: date];
             
-            [mutableData addObject: existingSection];
+            NSInteger hour = [components hour];
+            NSString* strDate = [NSString stringWithFormat: @"%d:00-%d:00", hour, hour + 1];
+            
+            NSPredicate* predicate = [NSPredicate predicateWithFormat: @"%K = %@", SAMPLE_DICTIONARY_TIME_KEY, strDate];
+            NSMutableDictionary* existingSection = [[mutableData filteredArrayUsingPredicate: predicate] lastObject];
+            if( existingSection ) {
+                NSNumber* count = existingSection[SAMPLE_DICTIONARY_COUNT_KEY];
+                existingSection[SAMPLE_DICTIONARY_COUNT_KEY] = @([count integerValue] + 1);
+            }
+            else {
+                existingSection = [NSMutableDictionary dictionary];
+                existingSection[SAMPLE_DICTIONARY_TIME_KEY] = strDate;
+                existingSection[SAMPLE_DICTIONARY_COUNT_KEY] = @(1);
+                
+                [mutableData addObject: existingSection];
+            }
         }
+        
+        [mutableData sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            return [obj1[SAMPLE_DICTIONARY_TIME_KEY] caseInsensitiveCompare: obj2[SAMPLE_DICTIONARY_TIME_KEY]];
+        }];
+        
+        _data = [mutableData copy];
     }
-    
-    _data = [mutableData copy];
+    else {
+        NSDateFormatterStyle dateStyle = NSDateFormatterMediumStyle;
+        NSDateFormatterStyle timeStyle = NSDateFormatterNoStyle;
+        
+        NSMutableArray* mutableData = [NSMutableArray array];
+        for(Customer* customer in allCustomers) {
+            NSDate* date = customer.timestamp;
+            
+            NSString* strDate = [NSDateFormatter localizedStringFromDate: date
+                                                               dateStyle: dateStyle
+                                                               timeStyle: timeStyle];
+            
+            NSPredicate* predicate = [NSPredicate predicateWithFormat: @"%K = %@", SAMPLE_DICTIONARY_TIME_KEY, strDate];
+            NSMutableDictionary* existingSection = [[mutableData filteredArrayUsingPredicate: predicate] lastObject];
+            if( existingSection ) {
+                NSNumber* count = existingSection[SAMPLE_DICTIONARY_COUNT_KEY];
+                existingSection[SAMPLE_DICTIONARY_COUNT_KEY] = @([count integerValue] + 1);
+            }
+            else {
+                existingSection = [NSMutableDictionary dictionary];
+                existingSection[SAMPLE_DICTIONARY_TIME_KEY] = strDate;
+                existingSection[SAMPLE_DICTIONARY_COUNT_KEY] = @(1);
+                
+                [mutableData addObject: existingSection];
+            }
+        }
+        
+        [mutableData sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            return [obj1[SAMPLE_DICTIONARY_TIME_KEY] caseInsensitiveCompare: obj2[SAMPLE_DICTIONARY_TIME_KEY]];
+        }];
+        
+        _data = [mutableData copy];
+    }
     
     NSLog(@"Data: %@", _data);
 }
@@ -155,6 +196,8 @@ NSString * const NSUserDefaultsResultsDisplayPeriod = @"ResultsPeriod";
                 NSError* saveError;
                 [context threadSafeSave: &saveError];
                 DLogError(saveError);
+                
+                [self.navigationController popViewControllerAnimated: YES];
             }
             break;
         }

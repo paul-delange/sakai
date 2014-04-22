@@ -150,7 +150,7 @@ NSString * const CustomerCounterErrorDomain = @"CustomerCounter";
                 NSParameterAssert([face hasRollAngle]);
                 NSParameterAssert([face hasYawAngle]);
                 
-                if( fabs(face.rollAngle) < 30 && fabs(face.yawAngle) < 30 ) {
+                if( fabs(face.rollAngle) <= 45 && fabs(face.yawAngle) <= 45 ) {
                     if( !aFaceObject.hasBeenCounted ){
                         
                         dispatch_async(dispatch_get_main_queue(), ^{
