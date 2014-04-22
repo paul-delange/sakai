@@ -23,6 +23,21 @@
 
 NSString * const CustomerCounterErrorDomain = @"CustomerCounter";
 
+static inline AVCaptureVideoOrientation AVCaptureVideoOrientationFromUIDeviceOrientation(UIDeviceOrientation orientation) {
+    switch (orientation) {
+        case UIDeviceOrientationPortrait:
+            return AVCaptureVideoOrientationPortrait;
+        case UIDeviceOrientationPortraitUpsideDown:
+            return AVCaptureVideoOrientationPortraitUpsideDown;
+        case UIDeviceOrientationLandscapeLeft:
+            return AVCaptureVideoOrientationLandscapeRight;
+        case UIDeviceOrientationLandscapeRight:
+            return AVCaptureVideoOrientationLandscapeLeft;
+        default:
+            return AVCaptureVideoOrientationPortrait;
+    }
+}
+
 @interface CustomerDetector () <AVCaptureMetadataOutputObjectsDelegate> {
     dispatch_queue_t                        _dataProcessingQueue;
     
@@ -31,11 +46,21 @@ NSString * const CustomerCounterErrorDomain = @"CustomerCounter";
     AVCaptureMetadataOutput*                _metatdataOutput;
     
     NSSet*                                _faces;
+    
+    NSHashTable*                            _previewLayers;
 }
 
 @end
 
 @implementation CustomerDetector
+
+- (AVCaptureVideoPreviewLayer*) previewLayer {
+    AVCaptureVideoPreviewLayer* layer = [[AVCaptureVideoPreviewLayer alloc] initWithSession: _captureSession];
+    [layer setVideoGravity: AVLayerVideoGravityResizeAspect];
+    layer.connection.videoOrientation = AVCaptureVideoOrientationFromUIDeviceOrientation([[UIDevice currentDevice] orientation]);
+    [_previewLayers addObject: layer];
+    return layer;
+}
 
 - (void) start {
     NSParameterAssert(![_captureSession isRunning]);
@@ -87,6 +112,15 @@ NSString * const CustomerCounterErrorDomain = @"CustomerCounter";
     _faces = nil;
 }
 
+- (IBAction) deviceOrientationChanged:(NSNotification*)sender {
+    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+    
+    for(AVCaptureVideoPreviewLayer* layer in _previewLayers) {
+        AVCaptureConnection* connection = layer.connection;
+        connection.videoOrientation = AVCaptureVideoOrientationFromUIDeviceOrientation(orientation);
+    }
+}
+
 #pragma mark - NSObject
 - (instancetype) init {
     self = [super init];
@@ -114,13 +148,77 @@ NSString * const CustomerCounterErrorDomain = @"CustomerCounter";
             }
         }
 #endif
+        
+        _previewLayers = [NSHashTable weakObjectsHashTable];
+        
+        [[NSNotificationCenter defaultCenter] addObserver: self
+                                                 selector: @selector(deviceOrientationChanged:)
+                                                     name: UIDeviceOrientationDidChangeNotification
+                                                   object: nil];
     }
     
     return self;
 }
 
+- (void) dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver: self];
+}
+
 #pragma mark - AVCaptureMetadataOutputObjectsDelegate
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection {
+    
+    [CATransaction begin];
+	[CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
+    
+    for(AVCaptureVideoPreviewLayer* layer in _previewLayers) {
+        NSArray *sublayers = [NSArray arrayWithArray:[layer sublayers]];
+        NSInteger sublayersCount = [sublayers count], currentSublayer = 0;
+        
+        // hide all the face layers
+        for ( CALayer *layer in sublayers ) {
+            if ( [[layer name] isEqualToString:@"FaceLayer"] )
+                [layer setHidden:YES];
+        }
+        
+        if( metadataObjects.count == 0 ) {
+            break;
+        }
+        
+        for ( AVMetadataObject *object in metadataObjects ) {
+            if ( [[object type] isEqual:AVMetadataObjectTypeFace] ) {
+                AVMetadataFaceObject* face = (AVMetadataFaceObject*)object;
+             
+                AVMetadataFaceObject * adjusted = (AVMetadataFaceObject*)[layer transformedMetadataObjectForMetadataObject:face];
+                
+                // Do interesting things with this face
+                CALayer *featureLayer = nil;
+                
+                // re-use an existing layer if possible
+                while ( !featureLayer && (currentSublayer < sublayersCount) ) {
+                    CALayer *currentLayer = [sublayers objectAtIndex:currentSublayer++];
+                    if ( [[currentLayer name] isEqualToString:@"FaceLayer"] ) {
+                        featureLayer = currentLayer;
+                        [currentLayer setHidden:NO];
+                    }
+                }
+                
+                // create a new one if necessary
+                if ( !featureLayer ) {
+                    featureLayer = [[CALayer alloc]init];
+                    featureLayer.borderColor = [UIColor redColor].CGColor;
+                    featureLayer.borderWidth = 2.;
+                    //featureLayer.contents = (id)[UIImage imageNamed:@"border"].CGImage;
+                    [featureLayer setName:@"FaceLayer"];
+                    [layer addSublayer:featureLayer];
+                    featureLayer = nil;
+                }
+                
+                [featureLayer setFrame: [adjusted bounds]];
+            }
+        }
+    }
+    
+    [CATransaction commit];
     
     if ( metadataObjects.count == 0 ) {
         _faces = nil;

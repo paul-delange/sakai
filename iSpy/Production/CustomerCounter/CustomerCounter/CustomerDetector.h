@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <AVFoundation/AVFoundation.h>
 
 @class CustomerDetector;
 
@@ -30,5 +31,7 @@ enum {
 
 - (void) start;
 - (void) stop;
+
+- (AVCaptureVideoPreviewLayer*) previewLayer;
 
 @end

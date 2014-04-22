@@ -20,6 +20,10 @@
     dispatch_source_t   _slideshowTimer;
     
     CustomerDetector*   _detector;
+    
+#if DEBUG
+    AVCaptureVideoPreviewLayer* _previewLayer;
+#endif
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
@@ -144,6 +148,14 @@
     self.messageLabel.text = [NSString stringWithFormat: format, APP_ALBUM_NAME];
     self.restartBarButton.title = NSLocalizedString(@"Restart Slideshow", @"");
     self.title = kAppName();
+    
+#if DEBUG
+    AVCaptureVideoPreviewLayer* previewLayer = [_detector previewLayer];
+    previewLayer.borderColor = [[UIColor greenColor] CGColor];
+    previewLayer.borderWidth = 2.;
+    [self.view.layer addSublayer: previewLayer];
+    _previewLayer = previewLayer;
+#endif
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -211,6 +223,14 @@
     
     [_detector stop];
 }
+
+#if DEBUG
+- (void) viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    _previewLayer.frame = CGRectMake(20, CGRectGetHeight(self.view.frame)-120, 100, 100);
+}
+#endif
 
 #pragma mark - CustomerDetectorDelegate
 - (void) customerDetector:(CustomerDetector *)detector detectedCustomers:(NSSet *)customers {
