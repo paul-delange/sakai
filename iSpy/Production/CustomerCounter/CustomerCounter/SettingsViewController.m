@@ -14,6 +14,7 @@ typedef NS_ENUM(NSUInteger, kTableViewItemType) {
     kTableViewItemTypePassword = 0,
     kTableViewItemTypeInterval,
     kTableViewItemTypeResults,
+    kTableViewItemTypeDemo,
     kTableViewItemTypeCredits,
     kTableViewItemTypeCount
 };
@@ -107,6 +108,7 @@ static inline NSString* NSStringFromNSTimeInterval(NSTimeInterval interval)
                 break;
             case kTableViewItemTypeResults:
             case kTableViewItemTypeCredits:
+            case kTableViewItemTypeDemo:
                 cellIdentifier = @"SettingsDisclosureCellIdentifier";
                 break;
             case kTableViewItemTypePassword:
@@ -166,6 +168,14 @@ static inline NSString* NSStringFromNSTimeInterval(NSTimeInterval interval)
             cell.textLabel.text = NSLocalizedString(@"Results", @"");
             break;
         }
+        case kTableViewItemTypeDemo:
+        {
+            cell.textLabel.text = NSLocalizedString(@"Recognition Demo", @"");
+            break;
+        }
+        case kTableViewItemTypeCredits:
+            cell.textLabel.text = NSLocalizedString(@"Credits", @"");
+            break;
         default:
             break;
     }
@@ -213,7 +223,19 @@ static inline NSString* NSStringFromNSTimeInterval(NSTimeInterval interval)
                 break;
             }
             case kTableViewItemTypeCredits:
+            {
+                NSString* identifier = @"PushCreditSegue";
+                id sender = [tableView cellForRowAtIndexPath: indexPath];
+                [self performSegueWithIdentifier: identifier sender: sender];
                 break;
+            }
+            case kTableViewItemTypeDemo:
+            {
+                NSString* identifier = @"PushDemoSegue";
+                id sender = [tableView cellForRowAtIndexPath: indexPath];
+                [self performSegueWithIdentifier: identifier sender: sender];
+                break;
+            }
             default:
                 break;
         }

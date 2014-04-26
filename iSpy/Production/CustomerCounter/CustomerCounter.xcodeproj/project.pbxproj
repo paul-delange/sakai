@@ -32,6 +32,7 @@
 		FD2DF0E919040C460023EDF7 /* helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FD2DF0E419040C460023EDF7 /* helpers.cpp */; };
 		FD2DF0EA19040C460023EDF7 /* findEyeCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FD2DF0E719040C460023EDF7 /* findEyeCenter.cpp */; };
 		FD2DF0ED19040CEE0023EDF7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD2DF0EC19040CEE0023EDF7 /* AVFoundation.framework */; };
+		FD3BB68E190C1AD2008D8798 /* CreditsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3BB68D190C1AD2008D8798 /* CreditsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -79,6 +80,8 @@
 		FD2DF0E819040C460023EDF7 /* findEyeCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = findEyeCenter.h; sourceTree = "<group>"; };
 		FD2DF0EC19040CEE0023EDF7 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		FD2DF0EE19040E720023EDF7 /* iSpy_004.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = iSpy_004.pdf; path = ../iSpy_004.pdf; sourceTree = "<group>"; };
+		FD3BB68C190C1AD2008D8798 /* CreditsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreditsViewController.h; sourceTree = "<group>"; };
+		FD3BB68D190C1AD2008D8798 /* CreditsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreditsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +174,8 @@
 				FD2DF0C01903A8290023EDF7 /* AdvertisementViewController.m */,
 				FD2DF0C21903A9110023EDF7 /* DemoViewController.h */,
 				FD2DF0C31903A9110023EDF7 /* DemoViewController.m */,
+				FD3BB68C190C1AD2008D8798 /* CreditsViewController.h */,
+				FD3BB68D190C1AD2008D8798 /* CreditsViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -332,6 +337,7 @@
 				FD2DF0921903A73E0023EDF7 /* AppDelegate.m in Sources */,
 				FD2DF0D31903F7170023EDF7 /* _Customer.m in Sources */,
 				FD2DF08E1903A73E0023EDF7 /* main.m in Sources */,
+				FD3BB68E190C1AD2008D8798 /* CreditsViewController.m in Sources */,
 				FD2DF0B81903A8020023EDF7 /* HomeViewController.m in Sources */,
 				FD2DF0EA19040C460023EDF7 /* findEyeCenter.cpp in Sources */,
 				FD2DF0DD19040A300023EDF7 /* CustomerDetector.mm in Sources */,
@@ -485,6 +491,7 @@
 				FD2DF0AC1903A73E0023EDF7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

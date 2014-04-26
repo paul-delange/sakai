@@ -233,6 +233,8 @@
                     <connections>
                         <outlet property="tableView" destination="51S-ze-qky" id="Mfb-P8-GUu"/>
                         <segue destination="OHx-DM-RI9" kind="push" identifier="PushResultSegue" id="zad-hC-WxS"/>
+                        <segue destination="D6v-Zp-TXO" kind="push" identifier="PushDemoSegue" id="xaY-cb-MeQ"/>
+                        <segue destination="9WI-K9-Kn0" kind="push" identifier="PushCreditSegue" id="Ukf-db-jad"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HbK-GI-PUZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -342,6 +344,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o7X-gk-J9k" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2351" y="532"/>
+        </scene>
+        <!--Credits View Controller-->
+        <scene sceneID="Nuj-P4-ekU">
+            <objects>
+                <viewController id="9WI-K9-Kn0" customClass="CreditsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="iFm-7n-zkc"/>
+                        <viewControllerLayoutGuide type="bottom" id="ai5-lm-MaC"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="puV-JF-U8M">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="CiI-r1-jRP"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wMI-oF-cWC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2157" y="1316"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="zvj-z0-PnS">
