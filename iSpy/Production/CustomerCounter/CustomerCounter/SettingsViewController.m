@@ -15,6 +15,7 @@ typedef NS_ENUM(NSUInteger, kTableViewItemType) {
     kTableViewItemTypeInterval,
     kTableViewItemTypeResults,
     kTableViewItemTypeDemo,
+    //kTableViewItemTypePlaylist,       // -> leads to rejection : https://twitter.com/drbarnard/status/446027284747534336
     kTableViewItemTypeCredits,
     kTableViewItemTypeCount
 };
@@ -24,7 +25,7 @@ NSString * NSUserDefaultsSlideShowIntervalKey = @"SlideshowInterval";
 static inline NSString* NSStringFromNSTimeInterval(NSTimeInterval interval)
 {
     if( interval <= 0 )
-        return [NSString stringWithFormat: NSLocalizedString(@"%d seconds", @""), 0];
+        return [NSString localizedStringWithFormat: NSLocalizedString(@"%d seconds", @""), 0];
     
     NSInteger ti = (NSInteger)interval;
     NSInteger seconds = ti % 60;
@@ -32,14 +33,14 @@ static inline NSString* NSStringFromNSTimeInterval(NSTimeInterval interval)
     
     if( minutes > 0 ) {
         if( seconds > 0 ) {
-            return [NSString stringWithFormat: NSLocalizedString(@"%dm%ds", @""), minutes, seconds];
+            return [NSString localizedStringWithFormat: NSLocalizedString(@"%dm%ds", @""), minutes, seconds];
         }
         else {
-            return [NSString stringWithFormat: NSLocalizedString(@"%d minutes", @""), minutes];
+            return [NSString localizedStringWithFormat: NSLocalizedString(@"%d minutes", @""), minutes];
         }
     }
     else {
-        return [NSString stringWithFormat: NSLocalizedString(@"%d seconds", @""), seconds];
+        return [NSString localizedStringWithFormat: NSLocalizedString(@"%d seconds", @""), seconds];
     }
 }
 
@@ -109,6 +110,7 @@ static inline NSString* NSStringFromNSTimeInterval(NSTimeInterval interval)
             case kTableViewItemTypeResults:
             case kTableViewItemTypeCredits:
             case kTableViewItemTypeDemo:
+            //case kTableViewItemTypePlaylist:
                 cellIdentifier = @"SettingsDisclosureCellIdentifier";
                 break;
             case kTableViewItemTypePassword:
@@ -150,6 +152,7 @@ static inline NSString* NSStringFromNSTimeInterval(NSTimeInterval interval)
         }
     }
     
+    if( !_showingIntervalPicker ) {
     switch (item) {
         case kTableViewItemTypeInterval:
         {
@@ -165,7 +168,7 @@ static inline NSString* NSStringFromNSTimeInterval(NSTimeInterval interval)
         }
         case kTableViewItemTypeResults:
         {
-            cell.textLabel.text = NSLocalizedString(@"Results", @"");
+            cell.textLabel.text = NSLocalizedString(@"View Statistics", @"");
             break;
         }
         case kTableViewItemTypeDemo:
@@ -176,8 +179,14 @@ static inline NSString* NSStringFromNSTimeInterval(NSTimeInterval interval)
         case kTableViewItemTypeCredits:
             cell.textLabel.text = NSLocalizedString(@"Credits", @"");
             break;
+        /*case kTableViewItemTypePlaylist:
+        {
+            cell.textLabel.text = NSLocalizedString(@"Playlist", @"");
+            break;
+        } */
         default:
             break;
+    }
     }
     
     return cell;
@@ -236,6 +245,12 @@ static inline NSString* NSStringFromNSTimeInterval(NSTimeInterval interval)
                 [self performSegueWithIdentifier: identifier sender: sender];
                 break;
             }
+            /*case kTableViewItemTypePlaylist:
+            {
+                NSString *stringURL = @"photos-redirect:";
+                NSURL *url = [NSURL URLWithString:stringURL];
+                [[UIApplication sharedApplication] openURL: url];
+            }*/
             default:
                 break;
         }
@@ -272,6 +287,7 @@ static inline NSString* NSStringFromNSTimeInterval(NSTimeInterval interval)
 }
 
 - (void) pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    
     NSTimeInterval interval = 5;
     
     switch (row) {
@@ -283,8 +299,10 @@ static inline NSString* NSStringFromNSTimeInterval(NSTimeInterval interval)
             break;
         case 3:
             interval = 60;
+            break;
         case 4:
             interval = 60 * 5;
+            break;
         default:
             break;
     }
@@ -299,8 +317,11 @@ static inline NSString* NSStringFromNSTimeInterval(NSTimeInterval interval)
     _showingIntervalPicker = NO;
     [self.tableView deleteRowsAtIndexPaths: @[pickerIndexPath]
                           withRowAnimation: UITableViewRowAnimationFade];
-    
     [self.tableView endUpdates];
+    
+    [self.tableView reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: INTERVAL_PICKER_ROW-1
+                                                                 inSection: 0]]
+                          withRowAnimation: UITableViewRowAnimationFade];
 }
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {

@@ -15,13 +15,14 @@ extern NSString * const CustomerCounterErrorDomain;
 
 enum {
     kCustomerCounterErrorCanNotAddMetadataOutput = 875,
-    kCustomerCounterErrorNoFaceRecognition
+    kCustomerCounterErrorNoFaceRecognition,
 };
 
 @protocol CustomerDetectorDelegate <NSObject>
 @optional
 - (void) customerDetector: (CustomerDetector*) detector detectedCustomers: (NSSet*) customers;
 - (void) customerDetector: (CustomerDetector*) detector encounteredError: (NSError*) error;
+- (void) customerDetector: (CustomerDetector*) detector processedImage: (UIImage*) annotatedImage;
 
 @end
 

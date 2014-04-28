@@ -17,6 +17,9 @@
     AVCaptureVideoPreviewLayer* _previewLayer;
 }
 
+@property (weak, nonatomic) IBOutlet UIImageView *resultImageView;
+@property (weak, nonatomic) IBOutlet UILabel *countedLabel;
+
 @end
 
 @implementation DemoViewController
@@ -37,8 +40,19 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     AVCaptureVideoPreviewLayer* previewLayer = [_detector previewLayer];
-    [self.view.layer addSublayer: previewLayer];
+    [self.view.layer insertSublayer: previewLayer below: self.resultImageView.layer];
     _previewLayer = previewLayer;
+    
+    self.resultImageView.layer.shadowColor = [[UIColor blackColor] CGColor];
+    self.resultImageView.layer.shadowOffset = CGSizeZero;
+    self.resultImageView.layer.shadowOpacity = 1.0;
+    self.resultImageView.layer.shadowRadius = 5.;
+    
+    self.countedLabel.layer.shadowColor = [[UIColor blackColor] CGColor];
+    self.countedLabel.layer.shadowOffset = CGSizeZero;
+    self.countedLabel.layer.shadowOpacity = 1.0;
+    self.countedLabel.layer.shadowRadius = 1.;
+    self.countedLabel.text = NSLocalizedString(@"Counted", @"");
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -61,7 +75,14 @@
 
 #pragma mark - CustomerDetectorDelegate
 - (void) customerDetector:(CustomerDetector *)detector detectedCustomers:(NSSet *)customers {
-    NSLog(@"Detected: %@", customers);
+    
+    self.resultImageView.layer.shadowColor = [[UIColor greenColor] CGColor];
+    self.countedLabel.hidden = NO;
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1. * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        self.resultImageView.layer.shadowColor = [[UIColor blackColor] CGColor];
+        self.countedLabel.hidden = YES;
+    });
 }
 
 - (void) customerDetector:(CustomerDetector *)detector encounteredError:(NSError *)error {
@@ -93,6 +114,10 @@
         default:
             break;
     }
+}
+
+- (void) customerDetector:(CustomerDetector *)detector processedImage:(UIImage *)annotatedImage {
+    self.resultImageView.image = annotatedImage;
 }
 
 @end

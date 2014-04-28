@@ -25,7 +25,6 @@
 		FD2DF0CE1903F6A60023EDF7 /* History.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FD2DF0CC1903F6A60023EDF7 /* History.xcdatamodeld */; };
 		FD2DF0D31903F7170023EDF7 /* _Customer.m in Sources */ = {isa = PBXBuildFile; fileRef = FD2DF0D21903F7170023EDF7 /* _Customer.m */; };
 		FD2DF0D61903F7250023EDF7 /* Customer.m in Sources */ = {isa = PBXBuildFile; fileRef = FD2DF0D51903F7250023EDF7 /* Customer.m */; };
-		FD2DF0D8190408880023EDF7 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = FD2DF0D7190408880023EDF7 /* Localizable.stringsdict */; };
 		FD2DF0DD19040A300023EDF7 /* CustomerDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = FD2DF0DC19040A300023EDF7 /* CustomerDetector.mm */; };
 		FD2DF0E219040C380023EDF7 /* FaceObject.mm in Sources */ = {isa = PBXBuildFile; fileRef = FD2DF0DF19040C380023EDF7 /* FaceObject.mm */; };
 		FD2DF0E319040C380023EDF7 /* EyeObject.mm in Sources */ = {isa = PBXBuildFile; fileRef = FD2DF0E119040C380023EDF7 /* EyeObject.mm */; };
@@ -33,6 +32,10 @@
 		FD2DF0EA19040C460023EDF7 /* findEyeCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FD2DF0E719040C460023EDF7 /* findEyeCenter.cpp */; };
 		FD2DF0ED19040CEE0023EDF7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD2DF0EC19040CEE0023EDF7 /* AVFoundation.framework */; };
 		FD3BB68E190C1AD2008D8798 /* CreditsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3BB68D190C1AD2008D8798 /* CreditsViewController.m */; };
+		FD4C9D8C190ECE7300C70724 /* haarcascade_lefteye_2splits.xml in Resources */ = {isa = PBXBuildFile; fileRef = FD4C9D8A190ECE7300C70724 /* haarcascade_lefteye_2splits.xml */; };
+		FD4C9D8D190ECE7300C70724 /* haarcascade_righteye_2splits.xml in Resources */ = {isa = PBXBuildFile; fileRef = FD4C9D8B190ECE7300C70724 /* haarcascade_righteye_2splits.xml */; };
+		FDCAEF6A190E33F900F6A640 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FDCAEF6C190E33F900F6A640 /* Localizable.strings */; };
+		FDCAEF6D190E33FF00F6A640 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = FDCAEF6F190E33FF00F6A640 /* Localizable.stringsdict */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,7 +69,6 @@
 		FD2DF0D21903F7170023EDF7 /* _Customer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = _Customer.m; path = CustomerCounter/_Customer.m; sourceTree = "<group>"; };
 		FD2DF0D41903F7250023EDF7 /* Customer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Customer.h; sourceTree = "<group>"; };
 		FD2DF0D51903F7250023EDF7 /* Customer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Customer.m; sourceTree = "<group>"; };
-		FD2DF0D7190408880023EDF7 /* Localizable.stringsdict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Localizable.stringsdict; sourceTree = "<group>"; };
 		FD2DF0DB19040A300023EDF7 /* CustomerDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerDetector.h; sourceTree = "<group>"; };
 		FD2DF0DC19040A300023EDF7 /* CustomerDetector.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CustomerDetector.mm; sourceTree = "<group>"; };
 		FD2DF0DE19040C380023EDF7 /* FaceObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceObject.h; sourceTree = "<group>"; };
@@ -82,6 +84,12 @@
 		FD2DF0EE19040E720023EDF7 /* iSpy_004.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = iSpy_004.pdf; path = ../iSpy_004.pdf; sourceTree = "<group>"; };
 		FD3BB68C190C1AD2008D8798 /* CreditsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreditsViewController.h; sourceTree = "<group>"; };
 		FD3BB68D190C1AD2008D8798 /* CreditsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreditsViewController.m; sourceTree = "<group>"; };
+		FD4C9D8A190ECE7300C70724 /* haarcascade_lefteye_2splits.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = haarcascade_lefteye_2splits.xml; sourceTree = "<group>"; };
+		FD4C9D8B190ECE7300C70724 /* haarcascade_righteye_2splits.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = haarcascade_righteye_2splits.xml; sourceTree = "<group>"; };
+		FDCAEF69190E33F100F6A640 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FDCAEF6B190E33F900F6A640 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		FDCAEF6E190E33FF00F6A640 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		FDCAEF70190E340800F6A640 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,7 +157,10 @@
 		FD2DF0B01903A75F0023EDF7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				FD2DF0D7190408880023EDF7 /* Localizable.stringsdict */,
+				FD4C9D8A190ECE7300C70724 /* haarcascade_lefteye_2splits.xml */,
+				FD4C9D8B190ECE7300C70724 /* haarcascade_righteye_2splits.xml */,
+				FDCAEF6C190E33F900F6A640 /* Localizable.strings */,
+				FDCAEF6F190E33FF00F6A640 /* Localizable.stringsdict */,
 				FD2DF0C71903AB9C0023EDF7 /* Storyboard.storyboard */,
 				FD2DF08A1903A73E0023EDF7 /* InfoPlist.strings */,
 				FD2DF0931903A73E0023EDF7 /* Images.xcassets */,
@@ -285,6 +296,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				ja,
 			);
 			mainGroup = FD2DF0751903A73E0023EDF7;
 			productRefGroup = FD2DF07F1903A73E0023EDF7 /* Products */;
@@ -301,8 +313,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDCAEF6A190E33F900F6A640 /* Localizable.strings in Resources */,
+				FD4C9D8D190ECE7300C70724 /* haarcascade_righteye_2splits.xml in Resources */,
 				FD2DF08C1903A73E0023EDF7 /* InfoPlist.strings in Resources */,
-				FD2DF0D8190408880023EDF7 /* Localizable.stringsdict in Resources */,
+				FDCAEF6D190E33FF00F6A640 /* Localizable.stringsdict in Resources */,
+				FD4C9D8C190ECE7300C70724 /* haarcascade_lefteye_2splits.xml in Resources */,
 				FD2DF0941903A73E0023EDF7 /* Images.xcassets in Resources */,
 				FD2DF0C81903AB9C0023EDF7 /* Storyboard.storyboard in Resources */,
 			);
@@ -358,9 +373,27 @@
 			isa = PBXVariantGroup;
 			children = (
 				FD2DF08B1903A73E0023EDF7 /* en */,
+				FDCAEF69190E33F100F6A640 /* ja */,
 			);
 			name = InfoPlist.strings;
 			path = CustomerCounter;
+			sourceTree = "<group>";
+		};
+		FDCAEF6C190E33F900F6A640 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FDCAEF6B190E33F900F6A640 /* en */,
+				FDCAEF70190E340800F6A640 /* ja */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		FDCAEF6F190E33FF00F6A640 /* Localizable.stringsdict */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FDCAEF6E190E33FF00F6A640 /* en */,
+			);
+			name = Localizable.stringsdict;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

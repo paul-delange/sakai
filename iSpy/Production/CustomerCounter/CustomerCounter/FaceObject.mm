@@ -9,8 +9,8 @@
 #import "FaceObject.h"
 #import "EyeObject.h"
 
-static cv::CascadeClassifier*   _leftEyeClassifier;
-static cv::CascadeClassifier*   _rightEyeClassifier;
+static cv::CascadeClassifier*   _leftEyeClassifier = new cv::CascadeClassifier([[[NSBundle mainBundle] pathForResource: @"haarcascade_lefteye_2splits" ofType: @"xml"] UTF8String]);
+static cv::CascadeClassifier*   _rightEyeClassifier = new cv::CascadeClassifier([[[NSBundle mainBundle] pathForResource: @"haarcascade_righteye_2splits" ofType: @"xml"] UTF8String]);
 
 static cv::Rect CVRectZero = cv::Rect(0,0,0,0);
 
@@ -22,26 +22,6 @@ static cv::Rect CVRectZero = cv::Rect(0,0,0,0);
 @end
 
 @implementation FaceObject
-
-- (cv::CascadeClassifier*) leftEyeClassifier {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        NSString* classiferPath = [[NSBundle mainBundle] pathForResource: @"haarcascade_lefteye_2splits" ofType: @"xml"];
-        _leftEyeClassifier = new cv::CascadeClassifier([classiferPath UTF8String]);
-    });
-    
-    return _leftEyeClassifier;
-}
-
-- (cv::CascadeClassifier*) rightEyeClassifier {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        NSString* classiferPath = [[NSBundle mainBundle] pathForResource: @"haarcascade_righteye_2splits" ofType: @"xml"];
-        _rightEyeClassifier = new cv::CascadeClassifier([classiferPath UTF8String]);
-    });
-    
-    return _rightEyeClassifier;
-}
 
 - (cv::Rect) detectEye: (cv::Mat) image withClassifier: (cv::CascadeClassifier*) classifier {
     int flags = CV_HAAR_FIND_BIGGEST_OBJECT | CV_HAAR_SCALE_IMAGE;
@@ -66,8 +46,8 @@ static cv::Rect CVRectZero = cv::Rect(0,0,0,0);
 - (NSArray*) eyesInImage: (cv::Mat&) image {
     
     int width = floorf(image.cols/2.);
-    int height = floorf(image.rows/3.);
-    int y = floorf(image.rows/5.);
+    int height = floorf(image.rows/2.);
+    int y = 0;//floorf(image.rows/5.);
     
     cv::Rect leftEyeRect(0, y, width, height);
     cv::Rect rightEyeRect(width, y, width, height);
@@ -114,7 +94,7 @@ static cv::Rect CVRectZero = cv::Rect(0,0,0,0);
         else {
             obj.lostCount++;
             
-            if( obj.lostCount > 1 )
+            if( obj.lostCount > 5 )
                 self.leftEye = nil;
             else
                 leftEyeRect = obj.bounds;
@@ -122,7 +102,7 @@ static cv::Rect CVRectZero = cv::Rect(0,0,0,0);
     }
     
     if(! self.leftEye ) {
-        cv::Rect detectedFrame = [self detectEye: leftEyeFrame withClassifier: [self leftEyeClassifier]];
+        cv::Rect detectedFrame = [self detectEye: leftEyeFrame withClassifier: _leftEyeClassifier];
         
         if( detectedFrame != CVRectZero ) {
             //NSLog(@"Detected left eye");
@@ -174,7 +154,7 @@ static cv::Rect CVRectZero = cv::Rect(0,0,0,0);
             
             obj.lostCount++;
             
-            if( obj.lostCount > 1 )
+            if( obj.lostCount > 5 )
                 self.rightEye = nil;
             else {
                 rightEyeRect = obj.bounds;
@@ -184,10 +164,10 @@ static cv::Rect CVRectZero = cv::Rect(0,0,0,0);
     
     
     if( !self.rightEye ) {
-        cv::Rect detectedFrame = [self detectEye: rightEyeFrame withClassifier: [self rightEyeClassifier]];
+        cv::Rect detectedFrame = [self detectEye: rightEyeFrame withClassifier: _rightEyeClassifier];
         
         if( detectedFrame != CVRectZero ) {
-            NSLog(@"Detected right eye");
+            //NSLog(@"Detected right eye");
             //cv::rectangle(rightEyeFrame, detectedFrame, cv::Scalar(0, 0, 0));
             
             rightEyeRect = detectedFrame;
