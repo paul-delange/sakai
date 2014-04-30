@@ -243,6 +243,7 @@ static CGImageRef CGImageCreateFromOpenCVMatrix(cv::Mat* cvMat) {
 #pragma mark - AVCaptureMetadataOutputObjectsDelegate
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection {
     
+    /*
     [CATransaction begin];
 	[CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
     
@@ -295,6 +296,7 @@ static CGImageRef CGImageCreateFromOpenCVMatrix(cv::Mat* cvMat) {
     }
     
     [CATransaction commit];
+    */
     
     if ( metadataObjects.count == 0 ) {
         _faces = nil;
@@ -324,35 +326,11 @@ static CGImageRef CGImageCreateFromOpenCVMatrix(cv::Mat* cvMat) {
                 NSParameterAssert([face hasRollAngle]);
                 NSParameterAssert([face hasYawAngle]);
                 
-                NSLog(@"Roll: %f, Yaw: %f", face.rollAngle, face.yawAngle);
+                //NSLog(@"Roll: %f, Yaw: %f", face.rollAngle, face.yawAngle);
                 
                 //TODO: Roll depends on the rotation
                 
                 aFaceObject.isFacingCamera = /*fabs(face.rollAngle) < 45 &&*/ fabs(face.yawAngle) < 45;
-                
-                /*if( fabs(face.rollAngle) <= 45 && fabs(face.yawAngle) <= 45 ) {
-                    if( !aFaceObject.hasBeenCounted ){
-                        
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-                            CoreDataStack* stack = delegate.stack;
-                            
-                            NSManagedObjectContext* context = stack.mainQueueManagedObjectContext;
-                            Customer* customer = [Customer insertInManagedObjectContext: context];
-                            customer.timestamp = [NSDate date];
-                            
-                            NSError* error;
-                            [context threadSafeSave: &error];
-                            DLogError(error);
-                            
-                            if( [self.delegate respondsToSelector: @selector(customerDetector:detectedCustomers:)] ) {
-                                [self.delegate customerDetector: self detectedCustomers: [NSSet setWithObject: customer]];
-                            }
-                        });
-                    }
-                    
-                    aFaceObject.hasBeenCounted = YES;
-                } */
                 
                 [facesToSave addObject: aFaceObject];
             }

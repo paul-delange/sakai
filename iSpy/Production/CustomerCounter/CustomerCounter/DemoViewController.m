@@ -31,6 +31,8 @@
     if( self ) {
         _detector = [CustomerDetector new];
         _detector.delegate = self;
+        
+        self.title = NSLocalizedString(@"Recognition Demo", @"");
     }
     return self;
 }
