@@ -34,6 +34,8 @@
 		FD3BB68E190C1AD2008D8798 /* CreditsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3BB68D190C1AD2008D8798 /* CreditsViewController.m */; };
 		FD4C9D8C190ECE7300C70724 /* haarcascade_lefteye_2splits.xml in Resources */ = {isa = PBXBuildFile; fileRef = FD4C9D8A190ECE7300C70724 /* haarcascade_lefteye_2splits.xml */; };
 		FD4C9D8D190ECE7300C70724 /* haarcascade_righteye_2splits.xml in Resources */ = {isa = PBXBuildFile; fileRef = FD4C9D8B190ECE7300C70724 /* haarcascade_righteye_2splits.xml */; };
+		FD4C9D90190EE05C00C70724 /* AdminLock.m in Sources */ = {isa = PBXBuildFile; fileRef = FD4C9D8F190EE05C00C70724 /* AdminLock.m */; };
+		FD4C9D9B190FEE0200C70724 /* ChangePasswordTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD4C9D9A190FEE0200C70724 /* ChangePasswordTableViewCell.m */; };
 		FDCAEF6A190E33F900F6A640 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FDCAEF6C190E33F900F6A640 /* Localizable.strings */; };
 		FDCAEF6D190E33FF00F6A640 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = FDCAEF6F190E33FF00F6A640 /* Localizable.stringsdict */; };
 /* End PBXBuildFile section */
@@ -86,6 +88,10 @@
 		FD3BB68D190C1AD2008D8798 /* CreditsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreditsViewController.m; sourceTree = "<group>"; };
 		FD4C9D8A190ECE7300C70724 /* haarcascade_lefteye_2splits.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = haarcascade_lefteye_2splits.xml; sourceTree = "<group>"; };
 		FD4C9D8B190ECE7300C70724 /* haarcascade_righteye_2splits.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = haarcascade_righteye_2splits.xml; sourceTree = "<group>"; };
+		FD4C9D8E190EE05C00C70724 /* AdminLock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdminLock.h; sourceTree = "<group>"; };
+		FD4C9D8F190EE05C00C70724 /* AdminLock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdminLock.m; sourceTree = "<group>"; };
+		FD4C9D99190FEE0200C70724 /* ChangePasswordTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePasswordTableViewCell.h; sourceTree = "<group>"; };
+		FD4C9D9A190FEE0200C70724 /* ChangePasswordTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePasswordTableViewCell.m; sourceTree = "<group>"; };
 		FDCAEF69190E33F100F6A640 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FDCAEF6B190E33F900F6A640 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		FDCAEF6E190E33FF00F6A640 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
@@ -194,6 +200,8 @@
 		FD2DF0B21903A7740023EDF7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FD4C9D99190FEE0200C70724 /* ChangePasswordTableViewCell.h */,
+				FD4C9D9A190FEE0200C70724 /* ChangePasswordTableViewCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -203,6 +211,8 @@
 			children = (
 				FD2DF0DA1904096C0023EDF7 /* Recognition */,
 				FD2DF0D9190409630023EDF7 /* Core Data */,
+				FD4C9D8E190EE05C00C70724 /* AdminLock.h */,
+				FD4C9D8F190EE05C00C70724 /* AdminLock.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -355,6 +365,7 @@
 				FD3BB68E190C1AD2008D8798 /* CreditsViewController.m in Sources */,
 				FD2DF0B81903A8020023EDF7 /* HomeViewController.m in Sources */,
 				FD2DF0EA19040C460023EDF7 /* findEyeCenter.cpp in Sources */,
+				FD4C9D9B190FEE0200C70724 /* ChangePasswordTableViewCell.m in Sources */,
 				FD2DF0DD19040A300023EDF7 /* CustomerDetector.mm in Sources */,
 				FD2DF0CB1903F4610023EDF7 /* CoreDataStack.m in Sources */,
 				FD2DF0CE1903F6A60023EDF7 /* History.xcdatamodeld in Sources */,
@@ -362,6 +373,7 @@
 				FD2DF0C11903A8290023EDF7 /* AdvertisementViewController.m in Sources */,
 				FD2DF0C41903A9110023EDF7 /* DemoViewController.m in Sources */,
 				FD2DF0E919040C460023EDF7 /* helpers.cpp in Sources */,
+				FD4C9D90190EE05C00C70724 /* AdminLock.m in Sources */,
 				FD2DF0BE1903A8200023EDF7 /* ResultsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -483,6 +495,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CustomerCounter/CustomerCounter-Prefix.pch";
 				INFOPLIST_FILE = "CustomerCounter/CustomerCounter-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -500,6 +513,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CustomerCounter/CustomerCounter-Prefix.pch";
 				INFOPLIST_FILE = "CustomerCounter/CustomerCounter-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

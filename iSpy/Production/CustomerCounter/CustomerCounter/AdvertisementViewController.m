@@ -11,9 +11,13 @@
 
 #import "CustomerDetector.h"
 
+#import "AdminLock.h"
+
+#define kAlertViewConfirmPasscodeTag    743
+
 @import AssetsLibrary;
 
-@interface AdvertisementViewController () <CustomerDetectorDelegate> {
+@interface AdvertisementViewController () <CustomerDetectorDelegate, UIAlertViewDelegate> {
     NSInteger   _itemCount;
     NSInteger   _currentItemIndex;
     
@@ -118,7 +122,21 @@
 }
 
 - (IBAction)unlockGesturePushed:(UITapGestureRecognizer*)sender {
-    [self stopSlideshow];
+    
+    if( [AdminLock tryLock] ) {
+        NSString* msg = NSLocalizedString(@"Enter password:", @"");
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle: nil
+                                                        message: msg
+                                                       delegate: self
+                                              cancelButtonTitle: NSLocalizedString(@"Cancel", @"")
+                                              otherButtonTitles: NSLocalizedString(@"OK", @""), nil];
+        alert.alertViewStyle = UIAlertViewStyleSecureTextInput;
+        alert.tag = kAlertViewConfirmPasscodeTag;
+        [alert show];
+    }
+    else {
+        [self stopSlideshow];
+    }
 }
 
 #pragma mark - NSObject
@@ -261,6 +279,36 @@
                                                   cancelButtonTitle: NSLocalizedString(@"OK", @"")
                                                   otherButtonTitles: nil];
             [alert show];
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+#pragma mark - UIAlertViewDelegate
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch (alertView.tag) {
+        case kAlertViewConfirmPasscodeTag:
+        {
+            if( buttonIndex != alertView.cancelButtonIndex ) {
+                UITextField* passField = [alertView textFieldAtIndex: 0];
+                NSString* pass = [passField.text stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                if( [AdminLock unlockWithPassword: pass] ) {
+                    [self stopSlideshow];
+                }
+                else {
+                    NSString* title = NSLocalizedString(@"Wrong", @"");
+                    NSString* msg = NSLocalizedString(@"This was not the correct password. Please try again.", @"");
+                    UIAlertView* alert = [[UIAlertView alloc] initWithTitle: title
+                                                                    message: msg
+                                                                   delegate: nil
+                                                          cancelButtonTitle: NSLocalizedString(@"OK", @"")
+                                                          otherButtonTitles: nil];
+                    [alert show];
+                }
+            }
+         
             break;
         }
         default:

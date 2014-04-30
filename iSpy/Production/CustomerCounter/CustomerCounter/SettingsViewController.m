@@ -8,7 +8,12 @@
 
 #import "SettingsViewController.h"
 
+#import "AdminLock.h"
+
+#import "ChangePasswordTableViewCell.h"
+
 #define INTERVAL_PICKER_ROW     2
+#define PASSCODE_CHANGE_ROW     1
 
 typedef NS_ENUM(NSUInteger, kTableViewItemType) {
     kTableViewItemTypePassword = 0,
@@ -46,6 +51,7 @@ static inline NSString* NSStringFromNSTimeInterval(NSTimeInterval interval)
 
 @interface SettingsViewController () <UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate> {
     BOOL    _showingIntervalPicker;
+    BOOL    _showingPasscodeChange;
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -53,6 +59,43 @@ static inline NSString* NSStringFromNSTimeInterval(NSTimeInterval interval)
 @end
 
 @implementation SettingsViewController
+
+- (void) passwordChanged: (NSNotification*) notification {
+    if( _showingPasscodeChange ) {
+    
+    [self.tableView beginUpdates];
+    
+    _showingPasscodeChange = NO;
+    
+    NSIndexPath* passcodeIndexPath = [NSIndexPath indexPathForRow: PASSCODE_CHANGE_ROW
+                                                        inSection: 0];
+    NSIndexPath* headerIndexPath = [NSIndexPath indexPathForRow: PASSCODE_CHANGE_ROW-1
+                                                      inSection: 0];
+    
+    [self.tableView deleteRowsAtIndexPaths: @[passcodeIndexPath]
+                          withRowAnimation: UITableViewRowAnimationFade];
+    [self.tableView reloadRowsAtIndexPaths: @[headerIndexPath]
+                          withRowAnimation: UITableViewRowAnimationFade];
+    
+    [self.tableView endUpdates];
+    }
+}
+
+#pragma mark - NSObject
+- (instancetype) initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder: aDecoder];
+    if( self ) {
+        [[NSNotificationCenter defaultCenter] addObserver: self
+                                                 selector: @selector(passwordChanged:)
+                                                     name: kAdminLockPasswordChangedNotification
+                                                   object: nil];
+    }
+    return self;
+}
+
+- (void) dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver: self];
+}
 
 #pragma mark - UIViewController
 - (void)viewDidLoad
@@ -102,6 +145,9 @@ static inline NSString* NSStringFromNSTimeInterval(NSTimeInterval interval)
     if( _showingIntervalPicker && indexPath.row == INTERVAL_PICKER_ROW ) {
         cellIdentifier = @"SlideShowPickerCellIdentifier";
     }
+    else if( _showingPasscodeChange && indexPath.row == PASSCODE_CHANGE_ROW ) {
+        cellIdentifier = @"ChangePasscodeCellIdentifier";
+    }
     else {
         switch (indexPath.row) {
             case kTableViewItemTypeInterval:
@@ -125,6 +171,9 @@ static inline NSString* NSStringFromNSTimeInterval(NSTimeInterval interval)
     NSInteger item = indexPath.row;
     
     if( _showingIntervalPicker && item > INTERVAL_PICKER_ROW ) {
+        item--;
+    }
+    else if( _showingPasscodeChange && item > PASSCODE_CHANGE_ROW ) {
         item--;
     }
     
@@ -152,7 +201,17 @@ static inline NSString* NSStringFromNSTimeInterval(NSTimeInterval interval)
         }
     }
     
-    if( !_showingIntervalPicker ) {
+    if( [cell.reuseIdentifier isEqualToString: @"ChangePasscodeCellIdentifier"] ) {
+        ChangePasswordTableViewCell* cast = (ChangePasswordTableViewCell*)cell;
+        if( [AdminLock tryLock] ) {
+            [cast.oldPasswordField becomeFirstResponder];
+        }
+        else {
+            [cast.passwordField becomeFirstResponder];
+        }
+    }
+    
+    if( !_showingIntervalPicker && !_showingPasscodeChange ) {
     switch (item) {
         case kTableViewItemTypeInterval:
         {
@@ -164,6 +223,29 @@ static inline NSString* NSStringFromNSTimeInterval(NSTimeInterval interval)
         case kTableViewItemTypePassword:
         {
             cell.textLabel.text = NSLocalizedString(@"Password", @"");
+            
+            NSUInteger numberOfLetters = [AdminLock lockLength];
+            
+            if( numberOfLetters ) {
+                UILabel* passwordLabel = [[UILabel alloc] initWithFrame: CGRectMake(0, 0, 160, 32.)];
+                passwordLabel.backgroundColor = [UIColor clearColor];
+                passwordLabel.textAlignment = NSTextAlignmentRight;
+                
+                NSMutableString* encodedString = [[NSMutableString alloc] initWithCapacity: numberOfLetters];
+                for(NSUInteger i=0;i<numberOfLetters;i++) {
+                    [encodedString appendString: @"*"];
+                }
+                
+                passwordLabel.text = encodedString;
+                passwordLabel.textColor = [UIColor grayColor];
+                
+                cell.accessoryView = passwordLabel;
+                cell.accessoryType = UITableViewCellAccessoryNone;
+            }
+            else {
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            }
+            
             break;
         }
         case kTableViewItemTypeResults:
@@ -195,7 +277,7 @@ static inline NSString* NSStringFromNSTimeInterval(NSTimeInterval interval)
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger count = kTableViewItemTypeCount;
     
-    if( _showingIntervalPicker ) {
+    if( _showingIntervalPicker || _showingPasscodeChange ) {
         return count + 1;
     }
     
@@ -204,11 +286,71 @@ static inline NSString* NSStringFromNSTimeInterval(NSTimeInterval interval)
 
 #pragma mark - UITableViewDelegate
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return _showingIntervalPicker && indexPath.row == INTERVAL_PICKER_ROW ? 162. : 44.;
+    if( _showingIntervalPicker && indexPath.row == INTERVAL_PICKER_ROW )
+        return 162.;
+    else if( _showingPasscodeChange && indexPath.row == PASSCODE_CHANGE_ROW )
+        return 168.;
+    else
+        return 44.;
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if( !_showingIntervalPicker && indexPath.row == INTERVAL_PICKER_ROW - 1 ) {
+    
+    NSInteger row = indexPath.row;
+    
+    if( _showingPasscodeChange ) {
+        [tableView beginUpdates];
+        
+        _showingPasscodeChange = NO;
+        
+        NSIndexPath* pickerIndexPath = [NSIndexPath indexPathForRow: PASSCODE_CHANGE_ROW
+                                                          inSection: indexPath.section];
+        
+        [self.tableView deleteRowsAtIndexPaths: @[pickerIndexPath]
+                              withRowAnimation: UITableViewRowAnimationFade];
+        
+        [tableView endUpdates];
+        
+        if( row >= PASSCODE_CHANGE_ROW )
+            row--;
+        
+        if( row == PASSCODE_CHANGE_ROW-1 ) {
+             [tableView deselectRowAtIndexPath: indexPath animated: YES];
+        }
+        else {
+            [self tableView: tableView didSelectRowAtIndexPath: [NSIndexPath indexPathForRow: row inSection: indexPath.section]];
+        }
+        
+        return;
+    }
+    
+    if( _showingIntervalPicker ) {
+        [tableView beginUpdates];
+        
+        _showingIntervalPicker = NO;
+        
+        NSIndexPath* pickerIndexPath = [NSIndexPath indexPathForRow: INTERVAL_PICKER_ROW
+                                                          inSection: indexPath.section];
+        
+        [self.tableView deleteRowsAtIndexPaths: @[pickerIndexPath]
+                              withRowAnimation: UITableViewRowAnimationFade];
+        
+        [tableView endUpdates];
+        
+        if( row >= INTERVAL_PICKER_ROW)
+            row--;
+        
+        if( row == INTERVAL_PICKER_ROW-1 ) {
+            [tableView deselectRowAtIndexPath: indexPath animated: YES];
+        }
+        else {
+            [self tableView: tableView didSelectRowAtIndexPath: [NSIndexPath indexPathForRow: row inSection: indexPath.section]];
+        }
+        
+        return;
+    }
+    
+    if( !_showingIntervalPicker && row == INTERVAL_PICKER_ROW - 1 ) {
         [tableView beginUpdates];
         
         NSIndexPath* pickerIndexPath = [NSIndexPath indexPathForRow: INTERVAL_PICKER_ROW
@@ -218,10 +360,22 @@ static inline NSString* NSStringFromNSTimeInterval(NSTimeInterval interval)
         
         [tableView endUpdates];
     }
+    else if( !_showingPasscodeChange && row == PASSCODE_CHANGE_ROW - 1 ) {
+        [tableView beginUpdates];
+        
+        NSIndexPath* pickerIndexPath = [NSIndexPath indexPathForRow: PASSCODE_CHANGE_ROW
+                                                          inSection: indexPath.section];
+        _showingPasscodeChange = YES;
+        [self.tableView insertRowsAtIndexPaths: @[pickerIndexPath] withRowAnimation: UITableViewRowAnimationFade];
+        
+        [tableView endUpdates];
+    }
     else {
-        switch (indexPath.row) {
+        switch (row) {
             case kTableViewItemTypePassword:
+            {
                 break;
+            }
             case kTableViewItemTypeResults:
             {
                 NSString* identifer = @"PushResultSegue";
@@ -256,7 +410,12 @@ static inline NSString* NSStringFromNSTimeInterval(NSTimeInterval interval)
         }
     }
     
-    [tableView deselectRowAtIndexPath: indexPath animated: YES];
+     [tableView deselectRowAtIndexPath: indexPath animated: YES];
+}
+
+- (BOOL) tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell* cell = [tableView cellForRowAtIndexPath: indexPath];
+    return cell.selectionStyle != UITableViewCellSelectionStyleNone;
 }
 
 #pragma mark - UIPickerViewDataSource

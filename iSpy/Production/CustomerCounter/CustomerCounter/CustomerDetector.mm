@@ -319,10 +319,16 @@ static CGImageRef CGImageCreateFromOpenCVMatrix(cv::Mat* cvMat) {
                 }
                 
                 aFaceObject.bounds = [face bounds];
-                aFaceObject.isFacingCamera = YES;//face.isFacingCamera;
+                
                 
                 NSParameterAssert([face hasRollAngle]);
                 NSParameterAssert([face hasYawAngle]);
+                
+                NSLog(@"Roll: %f, Yaw: %f", face.rollAngle, face.yawAngle);
+                
+                //TODO: Roll depends on the rotation
+                
+                aFaceObject.isFacingCamera = /*fabs(face.rollAngle) < 45 &&*/ fabs(face.yawAngle) < 45;
                 
                 /*if( fabs(face.rollAngle) <= 45 && fabs(face.yawAngle) <= 45 ) {
                     if( !aFaceObject.hasBeenCounted ){
@@ -377,6 +383,7 @@ static CGImageRef CGImageCreateFromOpenCVMatrix(cv::Mat* cvMat) {
     NSSet* faces = self.faces;
     
     for(FaceObject* face in faces) {
+        
         CGRect bounds = [captureOutput rectForMetadataOutputRectOfInterest: face.bounds];
         
         //Probably no eyes in the bottom of the face!!
@@ -390,6 +397,9 @@ static CGImageRef CGImageCreateFromOpenCVMatrix(cv::Mat* cvMat) {
             
             //Draw a square around our search area
             cv::rectangle(gray, faceRect, cv::Scalar(0, 0, 0));
+            
+            if( !face.isFacingCamera )
+                continue;
             
             cv::Mat faceFrame = gray(faceRect).clone();
             NSArray* eyes = [face eyesInImage:faceFrame];
