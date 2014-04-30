@@ -408,7 +408,7 @@ static CGImageRef CGImageCreateFromOpenCVMatrix(cv::Mat* cvMat) {
                 if( !face.hasBeenCounted ){
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        /*AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+                        AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
                         CoreDataStack* stack = delegate.stack;
                         
                         NSManagedObjectContext* context = stack.mainQueueManagedObjectContext;
@@ -418,9 +418,9 @@ static CGImageRef CGImageCreateFromOpenCVMatrix(cv::Mat* cvMat) {
                         NSError* error;
                         [context threadSafeSave: &error];
                         DLogError(error);
-                        */
+                        
                         if( [self.delegate respondsToSelector: @selector(customerDetector:detectedCustomers:)] ) {
-                            [self.delegate customerDetector: self detectedCustomers: nil];
+                            [self.delegate customerDetector: self detectedCustomers: [NSSet setWithObject: customer]];
                         }
                     });
                 }

@@ -9,6 +9,7 @@
 #import "DemoViewController.h"
 
 #import "CustomerDetector.h"
+#import "CoreDataStack.h"
 
 @import AVFoundation;
 
@@ -83,6 +84,17 @@
         self.resultImageView.layer.shadowColor = [[UIColor blackColor] CGColor];
         self.countedLabel.hidden = YES;
     });
+    
+    //Need to delete these customers...
+    NSManagedObjectContext* context = NSManagedObjectContextGetMainThreadContext();
+    for(NSManagedObject* c in customers) {
+        [context deleteObject: c];
+    }
+    
+    NSError* error;
+    [context threadSafeSave: &error];
+    DLogError(error);
+
 }
 
 - (void) customerDetector:(CustomerDetector *)detector encounteredError:(NSError *)error {

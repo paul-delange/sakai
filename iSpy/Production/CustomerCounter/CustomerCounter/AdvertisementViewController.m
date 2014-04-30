@@ -167,7 +167,7 @@
     self.restartBarButton.title = NSLocalizedString(@"Restart Slideshow", @"");
     self.title = kAppName();
     
-#if DEBUG
+#if 0
     AVCaptureVideoPreviewLayer* previewLayer = [_detector previewLayer];
     previewLayer.borderColor = [[UIColor greenColor] CGColor];
     previewLayer.borderWidth = 2.;

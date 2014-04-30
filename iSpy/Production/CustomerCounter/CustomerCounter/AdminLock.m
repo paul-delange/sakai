@@ -36,7 +36,7 @@ static inline NSString* NSStringFromOSStatus(OSStatus status) {
         case errSecDecode:
             return @"errSecDecode : Unable to decode the provided data";
         default:
-            return [NSString stringWithFormat: @"%ld : Unknown OSStatus code", (int)status];
+            return [NSString stringWithFormat: @"%d : Unknown OSStatus code", (int)status];
     }
 }
 

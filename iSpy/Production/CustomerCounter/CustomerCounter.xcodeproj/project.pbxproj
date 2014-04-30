@@ -36,6 +36,7 @@
 		FD4C9D8D190ECE7300C70724 /* haarcascade_righteye_2splits.xml in Resources */ = {isa = PBXBuildFile; fileRef = FD4C9D8B190ECE7300C70724 /* haarcascade_righteye_2splits.xml */; };
 		FD4C9D90190EE05C00C70724 /* AdminLock.m in Sources */ = {isa = PBXBuildFile; fileRef = FD4C9D8F190EE05C00C70724 /* AdminLock.m */; };
 		FD4C9D9B190FEE0200C70724 /* ChangePasswordTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD4C9D9A190FEE0200C70724 /* ChangePasswordTableViewCell.m */; };
+		FD4C9D9E1910D40400C70724 /* UIPromptTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = FD4C9D9D1910D40400C70724 /* UIPromptTextField.m */; };
 		FDCAEF6A190E33F900F6A640 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FDCAEF6C190E33F900F6A640 /* Localizable.strings */; };
 		FDCAEF6D190E33FF00F6A640 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = FDCAEF6F190E33FF00F6A640 /* Localizable.stringsdict */; };
 /* End PBXBuildFile section */
@@ -92,6 +93,8 @@
 		FD4C9D8F190EE05C00C70724 /* AdminLock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdminLock.m; sourceTree = "<group>"; };
 		FD4C9D99190FEE0200C70724 /* ChangePasswordTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePasswordTableViewCell.h; sourceTree = "<group>"; };
 		FD4C9D9A190FEE0200C70724 /* ChangePasswordTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePasswordTableViewCell.m; sourceTree = "<group>"; };
+		FD4C9D9C1910D40400C70724 /* UIPromptTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPromptTextField.h; sourceTree = "<group>"; };
+		FD4C9D9D1910D40400C70724 /* UIPromptTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPromptTextField.m; sourceTree = "<group>"; };
 		FDCAEF69190E33F100F6A640 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FDCAEF6B190E33F900F6A640 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		FDCAEF6E190E33FF00F6A640 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
@@ -202,6 +205,8 @@
 			children = (
 				FD4C9D99190FEE0200C70724 /* ChangePasswordTableViewCell.h */,
 				FD4C9D9A190FEE0200C70724 /* ChangePasswordTableViewCell.m */,
+				FD4C9D9C1910D40400C70724 /* UIPromptTextField.h */,
+				FD4C9D9D1910D40400C70724 /* UIPromptTextField.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -367,6 +372,7 @@
 				FD2DF0EA19040C460023EDF7 /* findEyeCenter.cpp in Sources */,
 				FD4C9D9B190FEE0200C70724 /* ChangePasswordTableViewCell.m in Sources */,
 				FD2DF0DD19040A300023EDF7 /* CustomerDetector.mm in Sources */,
+				FD4C9D9E1910D40400C70724 /* UIPromptTextField.m in Sources */,
 				FD2DF0CB1903F4610023EDF7 /* CoreDataStack.m in Sources */,
 				FD2DF0CE1903F6A60023EDF7 /* History.xcdatamodeld in Sources */,
 				FD2DF0BB1903A8100023EDF7 /* SettingsViewController.m in Sources */,

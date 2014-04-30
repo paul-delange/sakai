@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+#import "UIPromptTextField.h"
+
 @interface ChangePasswordTableViewCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UITextField *oldPasswordField;
-@property (weak, nonatomic) IBOutlet UITextField *passwordField;
+@property (weak, nonatomic) IBOutlet UIPromptTextField *oldPasswordField;
+@property (weak, nonatomic) IBOutlet UIPromptTextField *passwordField;
 
 @end

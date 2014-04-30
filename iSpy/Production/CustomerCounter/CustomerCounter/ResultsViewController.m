@@ -52,7 +52,7 @@ NSString * const NSUserDefaultsResultsDisplayPeriod = @"ResultsPeriod";
                                                        fromDate: date];
             
             NSInteger hour = [components hour];
-            NSString* strDate = [NSString stringWithFormat: @"%d:00-%d:00", hour, hour + 1];
+            NSString* strDate = [NSString stringWithFormat: @"%d:00-%d:00", (int)hour, (int)hour + 1];
             
             NSPredicate* predicate = [NSPredicate predicateWithFormat: @"%K = %@", SAMPLE_DICTIONARY_TIME_KEY, strDate];
             NSMutableDictionary* existingSection = [[mutableData filteredArrayUsingPredicate: predicate] lastObject];

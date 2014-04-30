@@ -227,23 +227,15 @@ static inline NSString* NSStringFromNSTimeInterval(NSTimeInterval interval)
             NSUInteger numberOfLetters = [AdminLock lockLength];
             
             if( numberOfLetters ) {
-                UILabel* passwordLabel = [[UILabel alloc] initWithFrame: CGRectMake(0, 0, 160, 32.)];
-                passwordLabel.backgroundColor = [UIColor clearColor];
-                passwordLabel.textAlignment = NSTextAlignmentRight;
-                
                 NSMutableString* encodedString = [[NSMutableString alloc] initWithCapacity: numberOfLetters];
                 for(NSUInteger i=0;i<numberOfLetters;i++) {
                     [encodedString appendString: @"*"];
                 }
                 
-                passwordLabel.text = encodedString;
-                passwordLabel.textColor = [UIColor grayColor];
-                
-                cell.accessoryView = passwordLabel;
-                cell.accessoryType = UITableViewCellAccessoryNone;
+                cell.detailTextLabel.text = encodedString;
             }
             else {
-                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                cell.detailTextLabel.text = NSLocalizedString(@"Not set", @"");
             }
             
             break;
@@ -289,7 +281,7 @@ static inline NSString* NSStringFromNSTimeInterval(NSTimeInterval interval)
     if( _showingIntervalPicker && indexPath.row == INTERVAL_PICKER_ROW )
         return 162.;
     else if( _showingPasscodeChange && indexPath.row == PASSCODE_CHANGE_ROW )
-        return 168.;
+        return 210.;
     else
         return 44.;
 }
@@ -416,6 +408,13 @@ static inline NSString* NSStringFromNSTimeInterval(NSTimeInterval interval)
 - (BOOL) tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell* cell = [tableView cellForRowAtIndexPath: indexPath];
     return cell.selectionStyle != UITableViewCellSelectionStyleNone;
+}
+
+- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath {
+    if( [cell.reuseIdentifier isEqualToString: @"ChangePasscodeCellIdentifier"] ) {
+        ChangePasswordTableViewCell* cast = (ChangePasswordTableViewCell*)cell;
+        [cast resignFirstResponder];
+    }
 }
 
 #pragma mark - UIPickerViewDataSource
