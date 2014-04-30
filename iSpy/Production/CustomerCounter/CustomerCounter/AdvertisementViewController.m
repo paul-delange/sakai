@@ -250,6 +250,10 @@
 }
 #endif
 
+- (BOOL) prefersStatusBarHidden {
+    return YES;
+}
+
 #pragma mark - CustomerDetectorDelegate
 - (void) customerDetector:(CustomerDetector *)detector detectedCustomers:(NSSet *)customers {
     NSLog(@"Detected: %@", customers);
