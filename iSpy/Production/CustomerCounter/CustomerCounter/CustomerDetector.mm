@@ -44,13 +44,13 @@ static inline AVCaptureVideoOrientation AVCaptureVideoOrientationFromUIDeviceOri
     }
 }
 
-static CGImageRef CGImageCreateFromOpenCVMatrix(cv::Mat* cvMat) {
+static CGImageRef CGImageCreateFromOpenCVMatrix(const cv::Mat& cvMat) {
     
-    CFDataRef data = CFDataCreate(NULL, cvMat->data, cvMat->elemSize() * cvMat->total());
+    CFDataRef data = CFDataCreate(NULL, cvMat.data, cvMat.elemSize() * cvMat.total());
     
     CGColorSpaceRef colorSpace;
     
-    if (cvMat->elemSize() == 1) {
+    if (cvMat.elemSize() == 1) {
         colorSpace = CGColorSpaceCreateDeviceGray();
     } else {
         colorSpace = CGColorSpaceCreateDeviceRGB();
@@ -59,11 +59,11 @@ static CGImageRef CGImageCreateFromOpenCVMatrix(cv::Mat* cvMat) {
     CGDataProviderRef provider = CGDataProviderCreateWithCFData(data);
     
     // Creating CGImage from cv::Mat
-    CGImageRef imageRef = CGImageCreate(cvMat->cols,                                 //width
-                                        cvMat->rows,                                 //height
+    CGImageRef imageRef = CGImageCreate(cvMat.cols,                                 //width
+                                        cvMat.rows,                                 //height
                                         8,                                          //bits per component
-                                        8 * cvMat->elemSize(),                       //bits per pixel
-                                        cvMat->step[0],                            //bytesPerRow
+                                        8 * cvMat.elemSize(),                       //bits per pixel
+                                        cvMat.step[0],                            //bytesPerRow
                                         colorSpace,                                 //colorspace
                                         kCGImageAlphaNone|kCGBitmapByteOrderDefault,// bitmap info
                                         provider,                                   //CGDataProviderRef
@@ -343,7 +343,8 @@ static CGImageRef CGImageCreateFromOpenCVMatrix(cv::Mat* cvMat) {
 
 #pragma mark - AVCaptureVideoDataOutputSampleBufferDelegate
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
-
+    @autoreleasepool {
+        
     CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
     
     //Images are coming in YUV format, the first channel is the intensity (luma)...
@@ -429,7 +430,7 @@ static CGImageRef CGImageCreateFromOpenCVMatrix(cv::Mat* cvMat) {
     }
     
     if( [self.delegate respondsToSelector: @selector(customerDetector:processedImage:)]) {
-        CGImageRef cgImage = CGImageCreateFromOpenCVMatrix(&gray);
+        CGImageRef cgImage = CGImageCreateFromOpenCVMatrix(gray);
         UIImage* uiImage = [UIImage imageWithCGImage: cgImage];
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -441,6 +442,7 @@ static CGImageRef CGImageCreateFromOpenCVMatrix(cv::Mat* cvMat) {
     
     
     CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
+    }
 }
 
 @end
